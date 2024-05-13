@@ -1,4 +1,4 @@
-<p style="font-size:5.0em; font-weight:150em;">  bart. </p>
+# bart.
 
 ## Welcome to Bart
 
