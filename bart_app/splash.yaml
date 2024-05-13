@@ -1,0 +1,35 @@
+# FROM: https://www.youtube.com/watch?v=ShR_aqji3Mg&ab_channel=CodingWithT
+# AND: https://www.youtube.com/watch?v=PpGtiui4rXA&ab_channel=FlutterGuys
+
+# when done updating just run this command ---> dart run flutter_native_splash:create --path=splash.yaml
+
+flutter_native_splash:
+  color: "#FFFFFF"
+
+  android: true
+  web: true
+  ios: true
+
+  color_android: "#FF385C"
+  color_dark_android: "#111111"
+  color_web: "#FF385C"
+  color_dark_web: "#111111"
+
+  image_android: "assets/icons/light_logo_text.png"
+  image_dark_android: "assets/icons/dark_logo_text.png"
+  image_web: "assets/icons/light_logo_text.png"
+  image_dark_web: "assets/icons/dark_logo_text.png"
+
+
+
+  android_12:
+
+    color: "#FF385C"
+    icon_background_color: "#FF385C"
+    color_dark: "#111111"
+    icon_background_color_dark: "#111111"
+
+    image: "assets/icons/light_logo_text.png"
+    image_dark: "assets/icons/dark_logo_text.png"
+
+

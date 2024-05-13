@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "525584307325",
+    "project_id": "bart-app-a79ac",
+    "storage_bucket": "bart-app-a79ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525584307325:android:e9e2fe9784f89be71b0d14",
+        "android_client_info": {
+          "package_name": "com.example.bart_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525584307325-avlbvfd1s93mopr1crf1ait55du2o8ck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bart_app",
+            "certificate_hash": "adaf3069751256433edea78e3e6942603acbc2fb"
+          }
+        },
+        {
+          "client_id": "525584307325-o0lrl5gvnm0n3it0mlqim9p806usr5o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaakM2GpjR6MUUpp-BWqvja1auTYt82kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525584307325-o0lrl5gvnm0n3it0mlqim9p806usr5o2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "525584307325-9u99q59ql3kui6dsdgf8o5m6sb6243du.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bartrApp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525584307325:android:2c236f5cd2e825821b0d14",
+        "android_client_info": {
+          "package_name": "com.example.bartr_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525584307325-o07ffkgl3debhpo4003s00psg5o2ou4t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bartr_app",
+            "certificate_hash": "adaf3069751256433edea78e3e6942603acbc2fb"
+          }
+        },
+        {
+          "client_id": "525584307325-o0lrl5gvnm0n3it0mlqim9p806usr5o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaakM2GpjR6MUUpp-BWqvja1auTYt82kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525584307325-o0lrl5gvnm0n3it0mlqim9p806usr5o2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "525584307325-9u99q59ql3kui6dsdgf8o5m6sb6243du.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bartrApp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
