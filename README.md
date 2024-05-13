@@ -7,7 +7,7 @@ Bart is a mobile application that aims to provide a platform for users to buy, s
 <div align="center">
 <img src="https://firebasestorage.googleapis.com/v0/b/bart-app-a79ac.appspot.com/o/public%2Flauncher_icon.png?alt=media&token=279eda07-ae4a-4736-8f6e-ab137b1cb95c" width=300 height=300>
 </div>
-Founded by @Hembugs and @LahiruHW, we aim to make your exhanges for items & services as convenient as possible!
+Founded by <a href="https://github.com/Hembugs" target="_blank">@Hembugs</a> and <a href="https://github.com/LahiruHW" target="_blank">@LahiruHW</a>, we aim to make your exhanges for items & services as convenient as possible!
 
 ---
 
