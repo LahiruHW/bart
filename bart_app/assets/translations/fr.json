@@ -76,6 +76,7 @@
     "returnOffer.page.tab.returnMoney": "Payer pour cela",
     "returnOffer.page.amount.header": "Combien êtes-vous prêt à payer?",
     "returnOffer.page.btn.continue": "Continuer",
+    "returnOffer.page.amount.snackbar1": "Veuillez saisir un montant",
     
     "trade.confirmation.label1": "Échange d'{itemOwner}",
     "trade.confirmation.label2": "Votre retour",

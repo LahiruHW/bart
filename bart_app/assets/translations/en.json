@@ -76,6 +76,7 @@
     "returnOffer.page.tab.returnMoney": "Pay for it",
     "returnOffer.page.amount.header": "How much are you willing to pay?",
     "returnOffer.page.btn.continue": "Continue",
+    "returnOffer.page.amount.snackbar1": "Please enter an amount",
     
     "trade.confirmation.label1": "Trade from {itemOwner}",
     "trade.confirmation.label2": "Your return trade",

@@ -1,3 +1,4 @@
+import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +29,8 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   late final FocusNode _userNameFocusNode;
-  final List<String> currencyList = ["\$", "£"];
+  // final List<String> currencyList = ["\$", "€"];
+  final List<String> currencyList = ["€"];
   late String currencyUnit;
   late String amount;
   late final TextEditingController _amountController;
@@ -41,6 +43,21 @@ class _PaymentPageState extends State<PaymentPage> {
     currencyUnit = currencyList[0];
     _userNameFocusNode = FocusNode();
     _amountController = TextEditingController();
+  }
+
+  bool validateAmount() {
+    final amount = _amountController.text;
+    if (amount.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        BartSnackBar(
+          message: context.tr('returnOffer.page.amount.snackbar1'),
+          backgroundColor: Colors.red,
+          icon: Icons.info,
+        ).build(context),
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -150,6 +167,10 @@ class _PaymentPageState extends State<PaymentPage> {
                   child: BartMaterialButton(
                     label: context.tr('returnOffer.page.btn.continue'),
                     onPressed: () {
+
+                      // 0. validate the amount
+                      if (!validateAmount()) return;
+
                       final loadingOverlay = LoadingBlockFullScreen(
                         context: _scaffoldKey.currentContext!,
                         dismissable: false,
