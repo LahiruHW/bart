@@ -74,6 +74,7 @@ class MarketListTile extends StatelessWidget {
                     children: [
                       Text(
                         item.itemName,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style:
                             Theme.of(context).textTheme.headlineLarge!.copyWith(
