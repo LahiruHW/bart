@@ -199,36 +199,6 @@ class BartFirestoreServices {
     await itemCollection.doc(docID).set(itemData);
   }
 
-  /// get the map data needed for a single item
-  static Future<Item> getItemData(String itemID) async {
-    final mapData = await itemCollection.doc(itemID).get().then((docSnap) {
-      var data = {
-        'id': itemID,
-        ...docSnap.data() as Map<String, dynamic>,
-      };
-      if (docSnap.exists) {
-        return Future<Map<String, dynamic>>.value(data);
-      } else {
-        return Future<Map<String, dynamic>>.value({});
-      }
-    });
-
-    // get the owner's profile data for the item
-    final ownerID = mapData['itemOwner'];
-    final ownerData = await getUserProfileData(ownerID);
-
-    final Map<String, dynamic> itemMap = {
-      'itemId': mapData['id'],
-      'itemOwnerID': ownerID,
-      'itemOwner': ownerData,
-      'itemDescription': mapData['itemDescription'],
-      'itemName': mapData['itemName'],
-      'imgs': List<String>.from(mapData['imgs']),
-      'preferredInReturn': List<String>.from(mapData['preferredInReturn']),
-      'postedOn': mapData['postedOn'],
-    };
-
-    return Future.value(Item.fromMap(itemMap));
   }
 
   static Future<bool> doesUserNameExist(String newUserName) async {
