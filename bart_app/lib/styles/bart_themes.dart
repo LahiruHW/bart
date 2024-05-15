@@ -188,6 +188,15 @@ class BartAppTheme {
         fontSize: 20,
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: red1,
+      foregroundColor: Colors.white,
+      splashColor: Colors.white.withOpacity(0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      elevation: 10,
+    ),
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -417,6 +426,15 @@ class BartAppTheme {
       hintStyle: BartTextTheme.globalTextTheme.bodySmall!.copyWith(
         fontSize: 20,
       ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: red1,
+      foregroundColor: Colors.white,
+      splashColor: Colors.white.withOpacity(0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      elevation: 10,
     ),
     extensions: {
       BartBrandColours(
