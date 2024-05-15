@@ -1,10 +1,11 @@
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/market_list_item_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:shimmer/shimmer.dart';
 
 class MarketListTile extends StatelessWidget {
   const MarketListTile({
@@ -26,7 +27,6 @@ class MarketListTile extends StatelessWidget {
     final now = DateTime.now();
     final difference = now.difference(timestamp.toDate());
 
-
     // rewrite the logic, but change the order of the if statements
     if (difference.inMinutes < 1) {
       retStr += 'Just now';
@@ -36,7 +36,7 @@ class MarketListTile extends StatelessWidget {
       retStr += '${difference.inHours} hours ago';
     } else if (difference.inDays == 1) {
       retStr += '${difference.inDays} day ago';
-    } else if  (difference.inDays > 1 && difference.inDays < 21)  {
+    } else if (difference.inDays > 1 && difference.inDays < 21) {
       retStr += '${difference.inDays} days ago';
     } else {
       retStr += timeFormatter.format(timestamp.toDate());
@@ -66,35 +66,40 @@ class MarketListTile extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      item.itemName,
-                      style:
-                          Theme.of(context).textTheme.headlineLarge!.copyWith(
-                                color: cardStyle.titleColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                    ),
-                    const Divider(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
-                    Text(
-                      'by ${item.itemOwner.userName.toUpperCase()}',
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    Text(
-                      getTimeDifferenceString(item.postedOn),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        item.itemName,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            Theme.of(context).textTheme.headlineLarge!.copyWith(
+                                  color: cardStyle.titleColor,
+                                  fontSize: (23.5).sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      const Divider(
+                        height: 10,
+                        color: Colors.transparent,
+                      ),
+                      Text(
+                        'by ${item.itemOwner.userName.toUpperCase()}',
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        getTimeDifferenceString(item.postedOn),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
