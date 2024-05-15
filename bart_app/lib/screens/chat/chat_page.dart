@@ -1,12 +1,12 @@
-import 'package:bart_app/common/entity/chat.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bart_app/common/entity/chat.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/widgets/input/chat_input_actions.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
@@ -104,10 +104,14 @@ class _ChatPageState extends State<ChatPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(width: 10),
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
+                        Container(
+                          width: 45,
+                          height: 45,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                           child: widget.chatData.chatImageUrl.isEmpty
                               ? const Icon(
                                   Icons.person,
@@ -116,9 +120,7 @@ class _ChatPageState extends State<ChatPage> {
                               : CachedNetworkImage(
                                   imageUrl: widget.chatData.chatImageUrl,
                                   alignment: Alignment.center,
-                                  fit: BoxFit.fill,
-                                  // width: 20,
-                                  // height: 20,
+                                  fit: BoxFit.cover,
                                 ),
                         ),
                         const SizedBox(width: 10),
