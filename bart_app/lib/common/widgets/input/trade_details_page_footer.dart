@@ -299,6 +299,9 @@ class TradeDetailsPageFooter {
                               // trade.isCompleted = true; // complete the trade
                               trade.acceptedByTrader =
                                   true; // the trader accepts the trade
+                              trade.tradedItem.isListedInMarket =
+                                  false; // item is taken off the market
+                              BartFirestoreServices.updateItem(trade.tradedItem);
                               BartFirestoreServices.updateTrade(trade).then(
                                 (value) {
                                   Future.delayed(

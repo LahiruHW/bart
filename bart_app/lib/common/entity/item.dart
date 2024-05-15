@@ -23,7 +23,7 @@ class Item {
   final List<String> imgs;
   final List<String>? preferredInReturn;
   final Timestamp postedOn;
-  final bool isListedInMarket;
+  bool isListedInMarket;
   final bool isPayment;
 
   factory Item.fromMap(Map<String, dynamic> data) {

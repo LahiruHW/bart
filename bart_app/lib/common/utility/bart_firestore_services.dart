@@ -199,6 +199,9 @@ class BartFirestoreServices {
     await itemCollection.doc(docID).set(itemData);
   }
 
+  /// update a single item
+  static Future<void> updateItem(Item item) async {
+    await itemCollection.doc(item.itemID).update(item.toJson());
   }
 
   static Future<bool> doesUserNameExist(String newUserName) async {
