@@ -58,24 +58,23 @@ class _MarketPageState extends State<MarketPage> {
               ],
             ),
           ),
-          // the search bar
-          SizedBox.fromSize(
-            size: const Size(double.infinity, 70),
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: context.tr("market.search.placeholder"),
-                    prefixIcon: const Icon(Icons.search),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
+          // // the search bar
+          // SizedBox.fromSize(
+          //   size: const Size(double.infinity, 70),
+          //   child: Center(
+          //     child: Container(
+          //       padding: const EdgeInsets.symmetric(
+          //         horizontal: 10,
+          //       ),
+          //       child: TextFormField(
+          //         decoration: InputDecoration(
+          //           hintText: context.tr("market.search.placeholder"),
+          //           prefixIcon: const Icon(Icons.search),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: _onListedItemsPage
                 ? StreamBuilder(
