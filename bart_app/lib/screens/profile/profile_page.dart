@@ -45,9 +45,10 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  void editUserName(BartStateProvider stateProvider) {
+  void editUserName(BartStateProvider stateProvider, String userName) {
     // check if the username is updated at all
-    if (_userNameController.text == stateProvider.userProfile.userName) {
+    // if (_userNameController.text == stateProvider.userProfile.userName) {
+    if (userName == stateProvider.userProfile.userName) {
       _userNameFocusNode.unfocus();
       Future.delayed(
         100.ms,
@@ -63,22 +64,37 @@ class _ProfilePageState extends State<ProfilePage> {
       );
       return;
     }
-    stateProvider.updateUserName(
-      _userNameController.text,
-    );
+    // if not, check if the username exists in the database
+    stateProvider.doesUserNameExist(userName).then((value) {
+      if (value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          BartSnackBar(
+            appearOnTop: true,
+            message: context.tr('profile.page.username.exists'),
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          ).build(context),
+        );
+        _userNameController.text = stateProvider.userProfile.userName;
+        return;
+      } else {
+        stateProvider.updateUserName(userName);
+        // show a snackbar to say that the username has been updated
+        ScaffoldMessenger.of(context).showSnackBar(
+          BartSnackBar(
+            appearOnTop: true,
+            message: context.tr('profile.page.username.updated'),
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          ).build(context),
+        );
+      }
+    });
+
     _userNameFocusNode.unfocus();
     Future.delayed(
       100.ms,
       () => setState(() => _isEditing = false),
-    );
-    // show a snackbar to say that the username has been updated
-    ScaffoldMessenger.of(context).showSnackBar(
-      BartSnackBar(
-        appearOnTop: true,
-        message: context.tr('profile.page.username.updated'),
-        backgroundColor: Colors.green,
-        icon: Icons.check,
-      ).build(context),
     );
     return;
   }
@@ -224,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               onTap: _isEditing ? null : null,
                               onEditingComplete: () =>
-                                  editUserName(stateProvider),
+                                  editUserName(stateProvider, _userNameController.text),
                             ),
                           ),
                           const Spacer(flex: 1),
@@ -237,7 +253,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: Colors.green,
                                     ),
                                     onPressed: () =>
-                                        editUserName(stateProvider),
+                                        editUserName(stateProvider, _userNameController.text),
                                   )
                                 : IconButton(
                                     icon: const Icon(Icons.edit),

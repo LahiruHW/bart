@@ -120,6 +120,11 @@ class BartStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// check if the user name exists in the firestore database
+  Future<bool> doesUserNameExist(String userName) async {
+    return await BartFirestoreServices.doesUserNameExist(userName);
+  }
+
   /// update the user's local profile userName and update the user Profile
   void updateUserName(String newUserName) {
     userProfile.userName = newUserName;

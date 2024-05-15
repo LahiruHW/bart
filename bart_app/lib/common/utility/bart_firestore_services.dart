@@ -231,6 +231,12 @@ class BartFirestoreServices {
     return Future.value(Item.fromMap(itemMap));
   }
 
+  static Future<bool> doesUserNameExist(String newUserName) async {
+    return await userCollection.where('userName', isEqualTo: newUserName).get().then((snapshot) {
+      return snapshot.docs.isNotEmpty;
+    });
+  }
+
   /// update the user's profile
   static Future<void> updateUserProfile(UserLocalProfile newProfile) async {
     await userProfileDocRef(newProfile.userID).update(newProfile.toMap());

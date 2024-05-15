@@ -63,6 +63,7 @@
     "profile.page.profile.email": "Email: ",
     "profile.page.account.type.header": "Account Type: ",
     "profile.page.username.updated": "Username updated successfully",
+    "profile.page.username.exists": "Username already exists",
     "profile.page.username.unchanged": "You kept the same username",
     "profile.page.btn.logout": "Log Out",
     "item.page.title": "Trade from {itemOwner}",

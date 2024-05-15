@@ -63,6 +63,7 @@
     "profile.page.profile.email": "Email: ",
     "profile.page.account.type.header": "Type de compte: ",
     "profile.page.username.updated": "Nom d'utilisateur mis à\njour avec succès",
+    "profile.page.username.exists": "Le nom d'utilisateur existe déjà",
     "profile.page.username.unchanged": "Vous avez gardé le même\nnom d'utilisateur",
     "profile.page.btn.logout": "Déconnexion",
     "item.page.title": "Échange d'{itemOwner}",
