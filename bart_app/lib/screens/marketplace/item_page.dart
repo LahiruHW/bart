@@ -152,6 +152,7 @@ class _ItemPageState extends State<ItemPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
             Text(
               context.tr('item.page.prod.desc'),
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -184,6 +185,7 @@ class _ItemPageState extends State<ItemPage> {
                     ),
               ),
             ),
+            const SizedBox(height: 10),
             Text(
               // '${item.itemOwner.userName} would like in return:',
               context.tr(
@@ -244,6 +246,7 @@ class _ItemPageState extends State<ItemPage> {
                       ],
               ),
             ),
+            const SizedBox(height: 10),
             Center(
               child: SizedBox(
                 width: 150,
