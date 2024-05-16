@@ -141,6 +141,26 @@ class BartFirestoreServices {
     });
   }
 
+  static Future<void> updateChatLastMessageUsingChatObj(
+    Chat chat,
+    String userID,
+    String msg,
+    Timestamp ts,
+  ) async {
+    // if unreadMsgCountMap is null, set it to an empty map using the userIDS
+    if (chat.unreadMsgCountMap.isEmpty) {
+      chat.unreadMsgCountMap = {};
+      for (final user in chat.users) {
+        chat.unreadMsgCountMap[user.userID] = 0;
+      }
+    }
+    final userVal = chat.unreadMsgCountMap[userID] as int;
+    chat.lastUpdated = ts;
+    chat.lastMessage = msg;
+    chat.unreadMsgCountMap[userID] = userVal + 1;
+    await chatDocRef(chat.chatID).update(chat.toMap());
+  }
+
   /// send a message to a chat
   static Future<void> sendMessage(
     String chatID,
@@ -163,6 +183,25 @@ class BartFirestoreServices {
 
   /// update a chatRoom subcollection and the main chat doc
   /// accordingly, when a message is read
+  static Future<void> sendMessageUsingChatObj(
+    Chat chat,
+    String userID,
+    String msgText,
+  ) async {
+    final timeStamp = Timestamp.fromDate(DateTime.now());
+    await updateChatLastMessageUsingChatObj(chat, userID, msgText, timeStamp)
+        .then((_) {
+      final messageData = Message(
+        timeSent: timeStamp,
+        senderID: userID,
+        text: msgText,
+        isSharedTrade: false,
+        isRead: false,
+      );
+      chatRoomCollection(chat.chatID).add(messageData.toMap());
+    });
+  }
+
   static Future<void> updateReadMessage(
     String chatID,
     Message msg,
