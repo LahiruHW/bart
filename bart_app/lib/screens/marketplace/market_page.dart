@@ -1,12 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
-// import 'package:bart_app/common/utility/bart_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/buttons/market_tab_button.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile_list.dart';
-import 'package:go_router/go_router.dart';
 
 class MarketPage extends StatefulWidget {
   const MarketPage({
@@ -19,6 +18,35 @@ class MarketPage extends StatefulWidget {
 
 class _MarketPageState extends State<MarketPage> {
   bool _onListedItemsPage = true;
+  late final TextEditingController _searchController;
+  late final FocusNode _searchFocusNode;
+  String _searchText = '';
+  bool _showClearButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(
+      text: _searchText,
+    );
+    _searchController.addListener(updateText);
+    _searchFocusNode = FocusNode();
+  }
+
+  void updateText() {
+    setState(() {
+      _searchText = _searchController.text;
+      _showClearButton = _searchText.isNotEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(updateText);
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   void _togglePage() {
     setState(() {
@@ -29,7 +57,8 @@ class _MarketPageState extends State<MarketPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      // onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: () => _searchFocusNode.unfocus(),
       child: Scaffold(
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: _onListedItemsPage
@@ -70,33 +99,65 @@ class _MarketPageState extends State<MarketPage> {
                 ],
               ),
             ),
-            // // the search bar
-            // SizedBox.fromSize(
-            //   size: const Size(double.infinity, 70),
-            //   child: Center(
-            //     child: Container(
-            //       padding: const EdgeInsets.symmetric(
-            //         horizontal: 10,
-            //       ),
-            //       child: TextFormField(
-            //         decoration: InputDecoration(
-            //           hintText: context.tr("market.search.placeholder"),
-            //           prefixIcon: const Icon(Icons.search),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+
+            // the search bar
+            SizedBox.fromSize(
+              size: const Size(double.infinity, 70),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  child: TextField(
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    onEditingComplete: () => _searchFocusNode.unfocus(),
+                    decoration: InputDecoration(
+                      hintText: context.tr("market.search.placeholder"),
+                      hintStyle: Theme.of(context)
+                          .inputDecorationTheme
+                          .hintStyle!
+                          .copyWith(fontSize: 18),
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: _showClearButton
+                          ? IconButton(
+                              onPressed: () {
+                                _searchController.clear();
+                                _searchFocusNode.unfocus();
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : null,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             Expanded(
               child: _onListedItemsPage
                   ? StreamBuilder(
-                      // stream: BartFirestoreServices.getItemListStream(),
                       stream:
-                          BartFirestoreServices.getMarketplaceItemListStream(),
+                          BartFirestoreServices.getMarketplaceItemListStream()
+                              .map(
+                        (itemList) => itemList
+                            .where((item) =>
+                                item.doesItemContainQuery(_searchText))
+                            .toList(),
+                      ),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.active &&
-                            snapshot.hasData) {
+                        // if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
+                        if (snapshot.hasData) {
                           final data = snapshot.data as List<Item>;
+
+                          // filter the data based on the search text
+                          _onListedItemsPage
+                              ? data
+                                  .where((item) =>
+                                      item.doesItemContainQuery(_searchText))
+                                  .toList()
+                              : null;
+
                           // debugPrint('------------------------------- MARKET DATA: $data');
                           return ListView.separated(
                             itemCount: data.length,

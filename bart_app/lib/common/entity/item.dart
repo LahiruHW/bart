@@ -68,6 +68,13 @@ class Item {
     };
   }
 
+  bool doesItemContainQuery(String query) {
+    return !isPayment &&
+        (itemName.toLowerCase().contains(query.toLowerCase()) ||
+            itemDescription.toLowerCase().contains(query.toLowerCase()) ||
+            itemOwner.userName.toLowerCase().contains(query.toLowerCase()));
+  }
+
   @override
   String toString() {
     return 'Item: $itemName, posted by: ${itemOwner.userName}, isPayment: $isPayment, on: $postedOn \nDescription: $itemDescription \nPreferred in return: $preferredInReturn \nImages: $imgs \n';
