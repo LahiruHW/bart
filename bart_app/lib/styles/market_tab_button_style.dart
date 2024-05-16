@@ -19,22 +19,22 @@ class BartMarketTabButtonStyle
   final Color enabledForegroundColor;
   final Color disabledForegroundColor;
 
-  Color getBackgroundColor(Set<MaterialState> states) {
-    if (states.contains(MaterialState.disabled)) {
+  Color getBackgroundColor(Set<WidgetState> states) {
+    if (states.contains(WidgetState.disabled)) {
       return disabledBackgroundColor;
     }
     return enabledBackgroundColor;
   }
 
-  double getElevation(Set<MaterialState> states) {
-    if (states.contains(MaterialState.disabled)) {
+  double getElevation(Set<WidgetState> states) {
+    if (states.contains(WidgetState.disabled)) {
       return disabledElevation;
     }
     return enabledElevation;
   }
 
-  Color getForegroundColor(Set<MaterialState> states) {
-    if (states.contains(MaterialState.disabled)) {
+  Color getForegroundColor(Set<WidgetState> states) {
+    if (states.contains(WidgetState.disabled)) {
       return disabledForegroundColor;
     }
     return enabledForegroundColor;
