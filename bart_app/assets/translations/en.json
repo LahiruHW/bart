@@ -72,13 +72,11 @@
     "item.page.empty.prefInReturn": "({itemOwner} hasn't specified anything here)",
     "item.page.btn.returnOffer": "Make an\noffer",
     "item.page.snackbar.msg1": "You can't trade with yourself :(",
-
     "returnOffer.page.tab.returnItem": "Give an item in return",
     "returnOffer.page.tab.returnMoney": "Pay for it",
     "returnOffer.page.amount.header": "How much are you willing to pay?",
     "returnOffer.page.btn.continue": "Continue",
     "returnOffer.page.amount.snackbar1": "Please enter an amount",
-    
     "trade.confirmation.label1": "Trade from {itemOwner}",
     "trade.confirmation.label2": "Your return trade",
     "trade.confirmation.label3": "You're offering",
@@ -104,6 +102,7 @@
     "newItem.confirmation.message.text.fail": "There was a problem posting this item",
     "image.picker.text": "Upload upto 4 pictures of your item you wish to exchange",
     "image.picker.snackbar": "You can only upload a maximum of 4 images",
+    "image.picker.see.delete.btn": "ⓘ Press and hold onto an image to see the delete button",
     "settings.page.title": "Settings",
     "personalisation.header": "Personalisation",
     "dark.mode.label": "Dark Mode",

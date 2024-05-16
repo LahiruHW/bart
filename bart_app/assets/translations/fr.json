@@ -72,13 +72,11 @@
     "item.page.empty.prefInReturn": "({itemOwner} n'a rien précisé ici)",
     "item.page.btn.returnOffer": "Faire une\noffre",
     "item.page.snackbar.msg1": "On ne peut pas commercer avec soi-même :(",
-    
     "returnOffer.page.tab.returnItem": "Donner quelque chose en échange",
     "returnOffer.page.tab.returnMoney": "Payer pour cela",
     "returnOffer.page.amount.header": "Combien êtes-vous prêt à payer?",
     "returnOffer.page.btn.continue": "Continuer",
     "returnOffer.page.amount.snackbar1": "Veuillez saisir un montant",
-    
     "trade.confirmation.label1": "Échange d'{itemOwner}",
     "trade.confirmation.label2": "Votre retour",
     "trade.confirmation.label3": "Vous voulez donner",
@@ -104,6 +102,7 @@
     "newItem.confirmation.message.text.fail": "Il y a eu un problème pour publier cet article",
     "image.picker.text": "Téléchargez jusqu'à 4 photos de l'article que vous souhaitez échanger",
     "image.picker.snackbar": "Un maximum de 4 images est autorisé",
+    "image.picker.see.delete.btn": "ⓘ Appuyez sur une image et maintenez-la enfoncée pour faire apparaître le bouton de suppression.",
     "settings.page.title": "Paramètres",
     "personalisation.header": "Personnalisation",
     "dark.mode.label": "Mode sombre",
