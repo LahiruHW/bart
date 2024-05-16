@@ -133,11 +133,19 @@ class BartFirestoreServices {
   }
 
   static Future<void> updateChatLastMessage(
-      String chatID, String msg, Timestamp ts) async {
+      String chatID, String userID, String msg, Timestamp ts) async {
+    final unreadMsgCountMap = (await chatDocRef(chatID).get())
+        .data()!['unreadMsgCountMap'] as Map<String, dynamic>;
+    final userVal = unreadMsgCountMap[userID] as int;
+    unreadMsgCountMap.remove(userID);
+
     await chatDocRef(chatID).update({
       'lastMessage': msg,
       'lastUpdated': ts,
-      'unreadMsgCount': FieldValue.increment(1),
+      'unreadMsgCountMap': {
+        userID: userVal + 1,
+        ...unreadMsgCountMap,
+      },
     });
   }
 
@@ -162,14 +170,13 @@ class BartFirestoreServices {
   }
 
   /// send a message to a chat
-  static Future<void> sendMessage(
+  static Future<void> sendMessageUsingChatID(
     String chatID,
     String userID,
     String msgText,
   ) async {
-    // final timeStamp = Timestamp.now();
     final timeStamp = Timestamp.fromDate(DateTime.now());
-    await updateChatLastMessage(chatID, msgText, timeStamp).then((_) {
+    await updateChatLastMessage(chatID, userID, msgText, timeStamp).then((_) {
       final messageData = Message(
         timeSent: timeStamp,
         senderID: userID,
@@ -181,8 +188,6 @@ class BartFirestoreServices {
     });
   }
 
-  /// update a chatRoom subcollection and the main chat doc
-  /// accordingly, when a message is read
   static Future<void> sendMessageUsingChatObj(
     Chat chat,
     String userID,
@@ -203,28 +208,23 @@ class BartFirestoreServices {
   }
 
   static Future<void> updateReadMessage(
-    String chatID,
+    Chat chat,
     Message msg,
     String currentUserID,
   ) async {
     final msgID = msg.messageID;
+    final senderID = msg.senderID;
 
-    if (msg.senderID != currentUserID && msg.isRead == false) {
+    // only update a message as read if the message is unread and the sender is not the current user
+    if (senderID != currentUserID && msg.isRead == false) {
       msg.isRead = true;
+      // reduce the unread message count for the sender
+      final userVal = chat.unreadMsgCountMap[senderID] as int;
 
-      // get the number of unread messages in the chat
-      final chatDoc = (await chatDocRef(chatID).get()).data()!;
-      final chat = ChatFirestore.fromMap({'chatID': chatID, ...chatDoc});
-
-      // update the last message in the chatRoom subcollection
-      chatRoomCollection(chatID).doc(msgID).update(msg.toMap());
-
-      // update the main chat doc
-      chatDocRef(chatID).update({
-        'lastUpdated': Timestamp.fromDate(DateTime.now()),
-        'unreadMsgCount':
-            chat.unreadMsgCount > 1 ? FieldValue.increment(-1) : 0,
-      });
+      chat.unreadMsgCountMap[senderID] = (userVal > 1) ? userVal - 1 : 0;
+      // chat.lastUpdated = Timestamp.fromDate(DateTime.now());
+      chatDocRef(chat.chatID).update(chat.toMap());
+      chatRoomCollection(chat.chatID).doc(msgID).update(msg.toMap());
     }
   }
 
@@ -354,39 +354,44 @@ class BartFirestoreServices {
       (chatList, userList, timeNow) {
         // (chatList, userList) {
         return chatList.map(
-          (chatMap) {
+          (chatFirestore) {
             // // check how many users are in the chat
-            final users = List<String>.from(chatMap.users);
+            final users = List<String>.from(chatFirestore.users);
 
             // get a list of the recipients' user profiles using the user id list
             // exclude the current user's profile
-            final userProfileList = users
+            final userProfileList1 = users
                 .map((thisUserID) =>
                     userList.firstWhere((user) => user.userID == thisUserID))
+                .toList();
+            final userProfileList2 = userProfileList1
                 .where((userProfile) => userProfile.userID != userID)
                 .toList();
 
-            if (userProfileList.length == 1) {
-              final recipient = userProfileList.first;
+            if (userProfileList2.length == 1) {
+              final recipient = userProfileList2.first;
               return Chat(
-                chatID: chatMap.chatID,
+                chatID: chatFirestore.chatID,
                 chatImageUrl: recipient.imageUrl ?? "",
                 chatName: recipient.userName,
-                lastMessage: chatMap.lastMessage,
-                lastUpdated: chatMap.lastUpdated,
-                // retrigger: timeNow,
-                unreadMsgCount: chatMap.unreadMsgCount,
+                lastMessage: chatFirestore.lastMessage,
+                lastUpdated: chatFirestore.lastUpdated,
+                usersIDList: chatFirestore.users,
+                users: userProfileList1,
+                unreadMsgCountMap: chatFirestore.unreadMsgCountMap,
+                retrigger: timeNow,
               );
             }
             // TODO:_ if there are more than one user in the chat, return a group chat
             return Chat(
-              chatID: chatMap.chatID,
-              chatImageUrl: chatMap.chatImageUrl,
+              chatID: chatFirestore.chatID,
+              chatImageUrl: chatFirestore.chatImageUrl,
               chatName: 'Group Chat',
-              lastMessage: chatMap.lastMessage,
-              lastUpdated: chatMap.lastUpdated,
+              lastMessage: chatFirestore.lastMessage,
+              lastUpdated: chatFirestore.lastUpdated,
+              users: userProfileList1,
+              unreadMsgCountMap: chatFirestore.unreadMsgCountMap,
               retrigger: timeNow,
-              unreadMsgCount: chatMap.unreadMsgCount,
             );
           },
         ).toList();

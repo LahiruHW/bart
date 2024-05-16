@@ -162,7 +162,7 @@ class _ChatPageState extends State<ChatPage> {
                               onVisibilityChanged: (info) async {
                                 if (info.visibleFraction == 1.0) {
                                   BartFirestoreServices.updateReadMessage(
-                                    widget.chatData.chatID,
+                                    widget.chatData,
                                     message,
                                     provider.userProfile.userID,
                                   );
@@ -206,9 +206,9 @@ class _ChatPageState extends State<ChatPage> {
                   onSend: () {
                     if (_textEditController.text.isNotEmpty) {
                       debugPrint("Send message: ${_textEditController.text}");
-                      BartFirestoreServices.sendMessage(
-                        widget.chatID,
-                        provider.user!.uid,
+                      BartFirestoreServices.sendMessageUsingChatObj(
+                        widget.chatData,
+                        provider.userProfile.userID,
                         _textEditController.text,
                       );
 

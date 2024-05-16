@@ -106,7 +106,7 @@ class TradeDetailsPageFooter {
               ).then((chatID) async {
                 debugPrint("||||||||||||||||||||| chatID: $chatID");
                 if (descriptionTextController!.text.isEmpty) return;
-                return await BartFirestoreServices.sendMessage(
+                return await BartFirestoreServices.sendMessageUsingChatID(
                   chatID,
                   trade.tradedItem.itemOwner.userID,
                   descriptionTextController!.text,

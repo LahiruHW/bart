@@ -1,19 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class ChatListTile extends StatefulWidget {
   const ChatListTile({
     super.key,
     required this.chat,
-    // this.showUnreadCount = false,
     required this.onTap,
   });
 
   final Chat chat;
-  // final bool showUnreadCount;
   final VoidCallback onTap;
 
   @override
@@ -45,6 +45,9 @@ class _ChatListTileState extends State<ChatListTile> {
   @override
   Widget build(BuildContext context) {
     setState(() => timeText = getTimeDifferenceText(widget.chat.lastUpdated));
+    final provider = Provider.of<BartStateProvider>(context, listen: false);
+    final unreadCount =
+        widget.chat.getUnreadMsgCountForUser(provider.userProfile.userID);
     return ListTile(
       title: Text(widget.chat.chatName),
       subtitle: Text(
@@ -68,7 +71,7 @@ class _ChatListTileState extends State<ChatListTile> {
               radius: 30,
               child: Icon(Icons.person),
             ),
-      trailing: widget.chat.unreadMsgCount == 0
+      trailing: unreadCount == 0
           ? Text(timeText)
           : SizedBox(
               width: 100,
@@ -86,9 +89,7 @@ class _ChatListTileState extends State<ChatListTile> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.chat.unreadMsgCount > 99
-                            ? "99+"
-                            : widget.chat.unreadMsgCount.toString(),
+                        unreadCount > 99 ? "99+" : unreadCount.toString(),
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),

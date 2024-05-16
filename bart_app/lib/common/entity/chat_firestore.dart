@@ -8,7 +8,7 @@ class ChatFirestore {
     required this.lastMessage,
     required this.lastUpdated,
     required this.users,
-    this.unreadMsgCount = 0,
+    this.unreadMsgCountMap = const {},
   });
 
   final String chatID;
@@ -17,7 +17,7 @@ class ChatFirestore {
   final String lastMessage;
   final Timestamp lastUpdated;
   final List<String> users;
-  int unreadMsgCount;
+  Map<String, dynamic> unreadMsgCountMap;
 
   factory ChatFirestore.fromMap(Map<String, dynamic> map) {
     return ChatFirestore(
@@ -27,7 +27,7 @@ class ChatFirestore {
       lastMessage: map['lastMessage'],
       lastUpdated: map['lastUpdated'],
       users: List<String>.from(map['users']),
-      unreadMsgCount: map['unreadMsgCount'],
+      unreadMsgCountMap: map['unreadMsgCountMap'],
     );
   }
 
@@ -38,7 +38,7 @@ class ChatFirestore {
       'lastMessage': lastMessage,
       'lastUpdated': lastUpdated,
       'users': users,
-      'unreadMsgCount': unreadMsgCount,
+      'unreadMsgCountMap': unreadMsgCountMap,
     };
   }
 
