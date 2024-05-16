@@ -64,7 +64,7 @@ class HomePageTradeExpansionPanelBuilder {
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black
@@ -78,7 +78,7 @@ class HomePageTradeExpansionPanelBuilder {
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black
@@ -147,7 +147,7 @@ class HomePageTradeExpansionPanelBuilder {
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               color: Theme.of(context)
                                           .colorScheme
-                                          .background
+                                          .surface
                                           .computeLuminance() >
                                       0.5
                                   ? Colors.black

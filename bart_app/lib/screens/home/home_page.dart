@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                 // color: Colors.white,
                 color: Theme.of(context)
                             .colorScheme
-                            .background
+                            .surface
                             .computeLuminance() >
                         0.5
                     ? Colors.white
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Theme.of(context)
                             .colorScheme
-                            .background
+                            .surface
                             .computeLuminance() >
                         0.5
                     ? Colors.white

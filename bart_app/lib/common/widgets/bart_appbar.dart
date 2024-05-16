@@ -64,11 +64,11 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                           : IconButton(
                               icon: const Icon(Icons.arrow_back),
                               style: ButtonStyle(
-                                iconColor: MaterialStateProperty.all<Color>(
+                                iconColor: WidgetStateProperty.all<Color>(
                                   Theme.of(context).appBarTheme.foregroundColor!,
                                 ),
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(
+                                    WidgetStateProperty.all<Color>(
                                   Colors.transparent,
                                 ),
                               ),

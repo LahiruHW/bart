@@ -192,7 +192,7 @@ class _ChatPageState extends State<ChatPage> {
                 Divider(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.white

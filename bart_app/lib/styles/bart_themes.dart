@@ -90,23 +90,23 @@ class BartAppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all(
+        textStyle: WidgetStateProperty.all(
           BartTextTheme.globalTextTheme.labelLarge!.copyWith(
             color: Colors.black,
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        foregroundColor: MaterialStateProperty.all(Colors.black),
-        surfaceTintColor: MaterialStateProperty.all(grey1),
-        padding: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(Colors.white),
+        foregroundColor: WidgetStateProperty.all(Colors.black),
+        surfaceTintColor: WidgetStateProperty.all(grey1),
+        padding: WidgetStateProperty.all(
           const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
-        minimumSize: MaterialStateProperty.all(const Size(300, 60)),
-        maximumSize: MaterialStateProperty.all(const Size(300, 60)),
-        fixedSize: MaterialStateProperty.all(const Size(300, 60)),
+        minimumSize: WidgetStateProperty.all(const Size(300, 60)),
+        maximumSize: WidgetStateProperty.all(const Size(300, 60)),
+        fixedSize: WidgetStateProperty.all(const Size(300, 60)),
       ),
     ),
     listTileTheme: ListTileThemeData(
@@ -136,18 +136,18 @@ class BartAppTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(red1),
-        shape: MaterialStatePropertyAll(
+        backgroundColor: WidgetStatePropertyAll(red1),
+        shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
         ),
-        shadowColor: MaterialStatePropertyAll(Colors.black.withOpacity(0.5)),
-        surfaceTintColor: MaterialStatePropertyAll(BartAppTheme.red1),
-        foregroundColor: const MaterialStatePropertyAll(Colors.white),
+        shadowColor: WidgetStatePropertyAll(Colors.black.withOpacity(0.5)),
+        surfaceTintColor: WidgetStatePropertyAll(BartAppTheme.red1),
+        foregroundColor: const WidgetStatePropertyAll(Colors.white),
         // animationDuration: const Duration(milliseconds: 400),
-        fixedSize: const MaterialStatePropertyAll(Size(double.infinity, 50)),
-        textStyle: MaterialStatePropertyAll(
+        fixedSize: const WidgetStatePropertyAll(Size(double.infinity, 50)),
+        textStyle: WidgetStatePropertyAll(
           BartTextTheme.globalTextTheme.titleSmall!.copyWith(
             fontSize: 15,
             color: Colors.white,
@@ -328,24 +328,24 @@ class BartAppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(grey1),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        surfaceTintColor: MaterialStateProperty.all(grey1),
-        overlayColor: MaterialStateProperty.all(Colors.white.withOpacity(0.1)),
-        textStyle: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(grey1),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        surfaceTintColor: WidgetStateProperty.all(grey1),
+        overlayColor: WidgetStateProperty.all(Colors.white.withOpacity(0.1)),
+        textStyle: WidgetStateProperty.all(
           BartTextTheme.globalTextTheme.labelLarge!.copyWith(
             color: Colors.white,
           ),
         ),
-        padding: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(
           const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
-        minimumSize: MaterialStateProperty.all(const Size(300, 60)),
-        maximumSize: MaterialStateProperty.all(const Size(300, 60)),
-        fixedSize: MaterialStateProperty.all(const Size(300, 60)),
+        minimumSize: WidgetStateProperty.all(const Size(300, 60)),
+        maximumSize: WidgetStateProperty.all(const Size(300, 60)),
+        fixedSize: WidgetStateProperty.all(const Size(300, 60)),
       ),
     ),
     listTileTheme: ListTileThemeData(
@@ -375,18 +375,18 @@ class BartAppTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: const MaterialStatePropertyAll(Colors.black),
-        shape: MaterialStatePropertyAll(
+        backgroundColor: const WidgetStatePropertyAll(Colors.black),
+        shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
         ),
-        shadowColor: MaterialStatePropertyAll(Colors.white.withOpacity(0.1)),
-        surfaceTintColor: const MaterialStatePropertyAll(Colors.black),
-        foregroundColor: MaterialStatePropertyAll(red1),
+        shadowColor: WidgetStatePropertyAll(Colors.white.withOpacity(0.1)),
+        surfaceTintColor: const WidgetStatePropertyAll(Colors.black),
+        foregroundColor: WidgetStatePropertyAll(red1),
         animationDuration: const Duration(milliseconds: 400),
-        fixedSize: const MaterialStatePropertyAll(Size(double.infinity, 50)),
-        textStyle: MaterialStatePropertyAll(
+        fixedSize: const WidgetStatePropertyAll(Size(double.infinity, 50)),
+        textStyle: WidgetStatePropertyAll(
           BartTextTheme.globalTextTheme.titleSmall!.copyWith(
             fontSize: 15,
             color: red1,

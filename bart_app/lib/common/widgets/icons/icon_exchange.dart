@@ -16,7 +16,7 @@ class ExchangeIcon extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           border: Border.all(
             color:
-                Theme.of(context).colorScheme.background.computeLuminance() > 0.5
+                Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
                     ? Colors.black.withOpacity(0.5)
                     : Colors.white.withOpacity(0.5),
             width: 5,
@@ -24,7 +24,7 @@ class ExchangeIcon extends StatelessWidget {
         ),
         child: Icon(
           Icons.compare_arrows_rounded,
-          color: Theme.of(context).colorScheme.background.computeLuminance() > 0.5
+          color: Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
               ? Colors.black.withOpacity(0.5)
               : Colors.white.withOpacity(0.5),
         ),

@@ -36,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 centerMiddle: false,
                 leading: IconButton(
                   style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
+                    backgroundColor: WidgetStatePropertyAll(
                       Colors.transparent,
                     ),
                   ),
@@ -44,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     Icons.arrow_back,
                     color: Theme.of(context)
                                 .colorScheme
-                                .background
+                                .surface
                                 .computeLuminance() >
                             0.5
                         ? Colors.black
@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                         color: Theme.of(context)
                                     .colorScheme
-                                    .background
+                                    .surface
                                     .computeLuminance() >
                                 0.5
                             ? Colors.black

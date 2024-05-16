@@ -21,12 +21,12 @@ class MarketPageTabButton extends StatelessWidget {
       style: ButtonStyle(
         animationDuration: const Duration(milliseconds: 0),
         enableFeedback: true,
-        elevation: MaterialStateProperty.resolveWith(tabStyle.getElevation),
+        elevation: WidgetStateProperty.resolveWith(tabStyle.getElevation),
         backgroundColor:
-            MaterialStateColor.resolveWith(tabStyle.getBackgroundColor),
+            WidgetStateColor.resolveWith(tabStyle.getForegroundColor),
         textStyle: Theme.of(context).filledButtonTheme.style!.textStyle,
         foregroundColor:
-            MaterialStateColor.resolveWith(tabStyle.getForegroundColor),
+            WidgetStateColor.resolveWith(tabStyle.getBackgroundColor),
       ),
       onPressed: !enabled ? onTap : null,
       child: Text(

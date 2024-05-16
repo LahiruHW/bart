@@ -48,7 +48,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                         color: Theme.of(context)
                                     .colorScheme
-                                    .background
+                                    .surface
                                     .computeLuminance() >
                                 0.5
                             ? Colors.black

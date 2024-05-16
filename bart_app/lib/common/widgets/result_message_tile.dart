@@ -26,7 +26,7 @@ class TradeResultMessageTile extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color:
-              Theme.of(context).colorScheme.background.computeLuminance() > 0.5
+              Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
                   ? Colors.white
                   : Colors.black,
           borderRadius: BorderRadius.circular(10),

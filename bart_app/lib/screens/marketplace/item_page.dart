@@ -137,14 +137,14 @@ class _ItemPageState extends State<ItemPage> {
                   dotHeight: 8,
                   activeDotColor: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black
                       : Colors.white,
                   dotColor: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.black.withOpacity(0.3)
@@ -167,7 +167,7 @@ class _ItemPageState extends State<ItemPage> {
               decoration: BoxDecoration(
                 color: Theme.of(context)
                             .colorScheme
-                            .background
+                            .surface
                             .computeLuminance() >
                         0.5
                     ? Colors.white
@@ -204,7 +204,7 @@ class _ItemPageState extends State<ItemPage> {
               decoration: BoxDecoration(
                 color: Theme.of(context)
                             .colorScheme
-                            .background
+                            .surface
                             .computeLuminance() >
                         0.5
                     ? Colors.white

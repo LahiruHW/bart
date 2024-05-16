@@ -240,7 +240,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                               .colorScheme
-                              .background
+                              .surface
                               .computeLuminance() >
                           0.5
                       ? Colors.white

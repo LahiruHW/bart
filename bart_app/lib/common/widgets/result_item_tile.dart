@@ -33,7 +33,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color:
-              Theme.of(context).colorScheme.background.computeLuminance() > 0.5
+              Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
                   ? Colors.white
                   : Colors.black,
           borderRadius: BorderRadius.circular(10),
@@ -54,7 +54,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
                       // color: widget.labelColor ?? Colors.green,
                       color: Theme.of(context)
                                   .colorScheme
-                                  .background
+                                  .surface
                                   .computeLuminance() >
                               0.5
                           ? Colors.black

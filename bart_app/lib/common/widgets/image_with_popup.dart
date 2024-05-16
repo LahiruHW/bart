@@ -18,9 +18,9 @@ class ImageWithPopUpMenu extends StatelessWidget {
       child: MenuAnchor(
         alignmentOffset: const Offset(25, 0),
         style: MenuStyle(
-          padding: const MaterialStatePropertyAll(EdgeInsets.all(0)),
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
           backgroundColor:
-              MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+              WidgetStatePropertyAll(Theme.of(context).colorScheme.surface),
         ),
         controller: MenuController(),
         builder: (context, controller, child) => InkWell(

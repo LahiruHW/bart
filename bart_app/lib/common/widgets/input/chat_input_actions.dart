@@ -51,7 +51,7 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 icon: const Icon(Icons.send),
                 padding: const EdgeInsets.all(20),
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

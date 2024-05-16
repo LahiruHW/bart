@@ -79,7 +79,7 @@ class _BartImagePickerState extends State<BartImagePicker> {
           margin: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color:
-                Theme.of(context).colorScheme.background.computeLuminance() > 0.5
+                Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
                     ? Colors.white
                     : Colors.black,
             border: Border.all(
