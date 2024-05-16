@@ -19,7 +19,8 @@ class ImageWithPopUpMenu extends StatelessWidget {
         alignmentOffset: const Offset(25, 0),
         style: MenuStyle(
           padding: const WidgetStatePropertyAll(EdgeInsets.all(0)),
-          backgroundColor:
+          backgroundColor: const WidgetStatePropertyAll(Colors.red),
+          surfaceTintColor:
               WidgetStatePropertyAll(Theme.of(context).colorScheme.surface),
         ),
         controller: MenuController(),
@@ -51,9 +52,13 @@ class ImageWithPopUpMenu extends StatelessWidget {
               "delete",
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontWeight: FontWeight.normal,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
-            child: const Icon(Icons.delete),
+            child: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),
