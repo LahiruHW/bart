@@ -195,11 +195,6 @@ class _HomePageState extends State<HomePage> {
                   icon: Icons.arrow_forward_rounded,
                   // onPressed: () => GoRouter.of(context).go('/market'),
                   onPressed: () => context.go('/market'),
-                  // onPressed: () =>
-                  //     BartFirestoreServices.addPropertyToCollection(
-                  //   BartFirestoreServices.itemCollection,
-                  //   {'isPayment': false},
-                  // ),
                 ),
                 const SizedBox(width: 10),
                 BartMaterialButton(

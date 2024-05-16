@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:bart_app/common/utility/bart_storage_services.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/index.dart';
@@ -10,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bart_app/common/utility/bart_auth.dart';
 // import 'package:bart_app/common/typedefs/typedef_home_item.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
+import 'package:bart_app/common/utility/bart_storage_services.dart';
 
 class BartFirestoreServices {
   BartFirestoreServices() {
@@ -244,7 +244,10 @@ class BartFirestoreServices {
   }
 
   static Future<bool> doesUserNameExist(String newUserName) async {
-    return await userCollection.where('userName', isEqualTo: newUserName).get().then((snapshot) {
+    return await userCollection
+        .where('userName', isEqualTo: newUserName)
+        .get()
+        .then((snapshot) {
       return snapshot.docs.isNotEmpty;
     });
   }

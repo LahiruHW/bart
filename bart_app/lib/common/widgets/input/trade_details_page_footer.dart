@@ -1,17 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:bart_app/common/utility/bart_firestore_services.dart';
-import 'package:bart_app/common/widgets/bart_snackbar.dart';
-import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/constants/enum_material_button_types.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
 import 'package:bart_app/common/widgets/input/item_description_input.dart';
-import 'package:go_router/go_router.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class TradeDetailsPageFooter {
   TradeDetailsPageFooter({
@@ -301,7 +301,8 @@ class TradeDetailsPageFooter {
                                   true; // the trader accepts the trade
                               trade.tradedItem.isListedInMarket =
                                   false; // item is taken off the market
-                              BartFirestoreServices.updateItem(trade.tradedItem);
+                              BartFirestoreServices.updateItem(
+                                  trade.tradedItem);
                               BartFirestoreServices.updateTrade(trade).then(
                                 (value) {
                                   Future.delayed(
