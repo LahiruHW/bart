@@ -488,11 +488,11 @@ class BartAppTheme {
       ),
       BartMarketTabButtonStyle(
         enabledElevation: 0,
-        enabledBackgroundColor: Colors.black.withOpacity(0.5),
-        enabledForegroundColor: red1.withOpacity(0.5),
+        enabledBackgroundColor: red1.withOpacity(0.5),
+        enabledForegroundColor: Colors.black.withOpacity(0.5),
         disabledElevation: 10,
-        disabledBackgroundColor: Colors.black,
-        disabledForegroundColor: red1,
+        disabledBackgroundColor: red1,
+        disabledForegroundColor: Colors.black,
       ),
       BartMaterialButtonStyle(
         backgroundColor: Colors.black,
