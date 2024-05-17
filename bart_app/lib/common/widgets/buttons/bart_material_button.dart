@@ -87,7 +87,7 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          minWidth: 175,
+          minWidth: 150,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 12.0,
@@ -103,7 +103,7 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
                     softWrap: true,
                     textAlign: TextAlign.center,
                     style: BartTextTheme.labelStyle.copyWith(
-                      fontSize: 19.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
