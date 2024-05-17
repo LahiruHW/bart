@@ -45,6 +45,7 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<BartStateProvider>(
       builder: (context, provider, child) => SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
@@ -60,13 +61,20 @@ class _ItemPageState extends State<ItemPage> {
               ),
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: BartAppTheme.red1,
-                    fontSize: 24,
+                    fontSize: 18,
+                  ),
+            ),
+            Text(
+              item.itemName,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Colors.white,
+                    fontSize: 28,
                   ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.only(top: 20, bottom: 10),
               child: SizedBox.fromSize(
-                size: const Size.fromHeight(300),
+                size: const Size.fromHeight(280),
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: item.imgs.length,
