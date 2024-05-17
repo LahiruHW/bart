@@ -32,8 +32,6 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
   late Item item;
   late String itemID;
-  late final ScrollController _scrollController;
-  // late final RefreshController _refreshController;
   late final PageController _pageController;
 
   @override
@@ -42,55 +40,18 @@ class _ItemPageState extends State<ItemPage> {
     itemID = widget.itemID;
     item = widget.item;
     _scrollController = ScrollController();
-    // _refreshController = RefreshController(
-    //   initialRefresh: false,
-    // );
     _pageController = PageController(initialPage: 0);
   }
-
-  // void _onRefresh() async {
-  //   // debugPrint("ON REFRESH--------------");
-  //   await Future.delayed(const Duration(milliseconds: 1000));
-  //   await BartFirestoreServices.getItemData(itemID).then(
-  //     (newItem) {
-  //       // setState(() => item = Item.fromMap(newItem));
-  //       setState(() => item = newItem);
-  //       _refreshController.refreshCompleted();
-  //     },
-  //   );
-  // }
 
   @override
   void dispose() {
     _pageController.dispose();
     _scrollController.dispose();
-    // _refreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-
-        // SmartRefresher(
-        //   enablePullDown: true,
-        //   header: const ClassicHeader(
-        //     refreshingIcon: SizedBox(
-        //       width: 20,
-        //       height: 20,
-        //       child: CircularProgressIndicator(),
-        //     ),
-        //     releaseText: 'Release to refresh',
-        //     refreshingText: 'Refreshing...',
-        //     completeText: 'Refresh completed',
-        //     failedText: 'Refresh failed',
-        //     idleText: 'Pull down to refresh',
-        //   ),
-        //   onRefresh: _onRefresh,
-        //   controller: _refreshController,
-        //   child:
-
-        Consumer<BartStateProvider>(
       builder: (context, provider, child) => SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
@@ -286,8 +247,5 @@ class _ItemPageState extends State<ItemPage> {
         ),
       ),
     );
-
-    //   ,
-    // );
   }
 }
