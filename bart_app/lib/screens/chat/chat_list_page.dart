@@ -24,7 +24,7 @@ class _ChatListPageState extends State<ChatListPage> {
     return Consumer<BartStateProvider>(
       builder: (context, provider, child) => SingleChildScrollView(
         padding: const EdgeInsets.only(
-          top: 10.0,
+          // top: 10.0,
           bottom: 15.0,
         ),
         scrollDirection: Axis.vertical,
@@ -32,39 +32,10 @@ class _ChatListPageState extends State<ChatListPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 10.0,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: Text(
-                  'Chat',
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                        color: Theme.of(context)
-                                    .colorScheme
-                                    .surface
-                                    .computeLuminance() >
-                                0.5
-                            ? Colors.black
-                            : Colors.white,
-                        fontSize: 45,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-            ),
             StreamBuilder(
               stream: BartFirestoreServices.getChatListTileStream(
                 provider.userProfile.userID,
               ),
-              // BartFirestoreServices.getChatListTileStream2(
-              //   provider.userProfile.userID,
-              //   provider.userProfile.chats,
-              // ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active &&
                     snapshot.hasData) {
