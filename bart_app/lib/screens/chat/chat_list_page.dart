@@ -92,7 +92,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: List.generate(
-                      10,
+                      20,
                       (index) {
                         return const ChatListTileShimmer();
                       },
