@@ -75,13 +75,11 @@ class _HomePageState extends State<HomePage> {
             // 'Incoming Trades',
             title,
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.black
-                      : Colors.white,
+                  color:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.black
+                          : Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -90,13 +88,11 @@ class _HomePageState extends State<HomePage> {
             // '3',
             "$count",
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.black
-                      : Colors.white,
+                  color:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.black
+                          : Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -131,13 +127,11 @@ class _HomePageState extends State<HomePage> {
               ),
               decoration: BoxDecoration(
                 // color: Colors.white,
-                color: Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .computeLuminance() >
-                        0.5
-                    ? Colors.white
-                    : Colors.black,
+                color:
+                    Theme.of(context).colorScheme.surface.computeLuminance() >
+                            0.5
+                        ? Colors.white
+                        : Colors.black,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: StreamBuilder(
@@ -193,15 +187,12 @@ class _HomePageState extends State<HomePage> {
                 BartMaterialButton(
                   label: context.tr('home.btn.go.to.market'),
                   icon: Icons.arrow_forward_rounded,
-                  // onPressed: () => GoRouter.of(context).go('/market'),
                   onPressed: () => context.go('/market'),
                 ),
                 const SizedBox(width: 10),
                 BartMaterialButton(
-                  // label: "List an item\nto trade",
                   label: context.tr('home.btn.list.item'),
                   icon: Icons.add_circle,
-                  // onPressed: () => BartRouter.pushPage(context, 'newItem', null),
                   onPressed: () => context.push('/home/newItem'),
                 ),
               ],
@@ -214,13 +205,11 @@ class _HomePageState extends State<HomePage> {
               ),
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                color: Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .computeLuminance() >
-                        0.5
-                    ? Colors.white
-                    : Colors.black,
+                color:
+                    Theme.of(context).colorScheme.surface.computeLuminance() >
+                            0.5
+                        ? Colors.white
+                        : Colors.black,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: StreamBuilder(

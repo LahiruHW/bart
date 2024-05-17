@@ -211,7 +211,6 @@ class TradeDetailsPageFooter {
                   margin: const EdgeInsets.only(bottom: 40),
                   child: Center(
                     child: Text(
-                      // "Waiting for confirmation from ${trade.tradedItem.itemOwner.userName}",
                       context.tr(
                         'view.trade.page.outgoing.waiting.msg',
                         namedArgs: {
