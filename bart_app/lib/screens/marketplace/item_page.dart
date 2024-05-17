@@ -9,21 +9,16 @@ import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
-// import 'package:pull_to_refresh/pull_to_refresh.dart';
-// import 'package:bart_app/common/utility/bart_router.dart';
-// import 'package:bart_app/common/utility/bart_firestore_services.dart';
 
 class ItemPage extends StatefulWidget {
   const ItemPage({
     super.key,
     required this.item,
     required this.itemID,
-    // required this.currentPath,
   });
 
   final Item item;
   final String itemID;
-  // final String currentPath;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
@@ -39,14 +34,12 @@ class _ItemPageState extends State<ItemPage> {
     super.initState();
     itemID = widget.itemID;
     item = widget.item;
-    _scrollController = ScrollController();
     _pageController = PageController(initialPage: 0);
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -61,7 +54,6 @@ class _ItemPageState extends State<ItemPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              // 'Trade from ${item.itemOwner.userName}',
               context.tr(
                 'item.page.title',
                 namedArgs: {'itemOwner': item.itemOwner.userName},
@@ -96,24 +88,20 @@ class _ItemPageState extends State<ItemPage> {
                 effect: WormEffect(
                   dotWidth: 8,
                   dotHeight: 8,
-                  activeDotColor: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.black
-                      : Colors.white,
-                  dotColor: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.black.withOpacity(0.3)
-                      : Colors.white.withOpacity(0.5),
+                  activeDotColor:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.black
+                          : Colors.white,
+                  dotColor:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.black.withOpacity(0.3)
+                          : Colors.white.withOpacity(0.5),
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 25),
             Text(
               context.tr('item.page.prod.desc'),
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -126,13 +114,11 @@ class _ItemPageState extends State<ItemPage> {
               margin: const EdgeInsets.symmetric(vertical: 10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .computeLuminance() >
-                        0.5
-                    ? Colors.white
-                    : Colors.black,
+                color:
+                    Theme.of(context).colorScheme.surface.computeLuminance() >
+                            0.5
+                        ? Colors.white
+                        : Colors.black,
                 border: Border.all(
                   color: Colors.black.withOpacity(0.2),
                 ),
@@ -148,7 +134,6 @@ class _ItemPageState extends State<ItemPage> {
             ),
             const SizedBox(height: 10),
             Text(
-              // '${item.itemOwner.userName} would like in return:',
               context.tr(
                 'item.page.prefInReturn',
                 namedArgs: {'itemOwner': item.itemOwner.userName},
@@ -163,13 +148,11 @@ class _ItemPageState extends State<ItemPage> {
               margin: const EdgeInsets.symmetric(vertical: 10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .computeLuminance() >
-                        0.5
-                    ? Colors.white
-                    : Colors.black,
+                color:
+                    Theme.of(context).colorScheme.surface.computeLuminance() >
+                            0.5
+                        ? Colors.white
+                        : Colors.black,
                 border: Border.all(
                   color: Colors.black.withOpacity(0.2),
                 ),
@@ -192,7 +175,6 @@ class _ItemPageState extends State<ItemPage> {
                         .toList()
                     : [
                         Text(
-                          // '(${item.itemOwner.userName} hasn\'t specified anything here)',
                           context.tr(
                             'item.page.empty.prefInReturn',
                             namedArgs: {'itemOwner': item.itemOwner.userName},
@@ -213,20 +195,12 @@ class _ItemPageState extends State<ItemPage> {
                 width: 150,
                 height: 80,
                 child: BartMaterialButton(
-                  // label: "Offer an item\nin exchange",
                   label: context.tr('item.page.btn.returnOffer'),
                   onPressed: () {
-                    // BartRouter.pushPage(
-                    //   context,
-                    //   '${widget.currentPath}/returnItem',
-                    //   item,
-                    // );
-
                     // a user can't trade with themselves
                     if (provider.userProfile.userID == item.itemOwner.userID) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         BartSnackBar(
-                          // message: "You can't trade with yourself :(",
                           message: context.tr('item.page.snackbar.msg1'),
                           backgroundColor: Colors.amber,
                           icon: Icons.warning,
