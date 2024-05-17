@@ -399,7 +399,7 @@ class BartFirestoreServices {
           },
         ).toList();
       },
-    );
+    ).asBroadcastStream();
   }
 
   /// check if a chat exist between a number of users,
@@ -461,6 +461,16 @@ class BartFirestoreServices {
         // throw Exception('Chat creation failed');
       },
     );
+  }
+
+  /// get the chat object using the chat id
+  static Future<Chat> getChat(String userID, String chatID) async {
+    // use the stream functions above to get the chat object
+    return getChatListTileStream(userID).map(
+      (chatList) {
+        return chatList.firstWhere((chat) => chat.chatID == chatID);
+      },
+    ).first;
   }
 
   // //////////////////////////////////////////////////////////////////////////////////////////////

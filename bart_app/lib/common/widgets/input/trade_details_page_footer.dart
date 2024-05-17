@@ -125,7 +125,14 @@ class TradeDetailsPageFooter {
                         actionText: "CHAT",
                         backgroundColor: Colors.green,
                         icon: Icons.check_circle,
-                        onPressed: () => context.go('/chat/chatRoom/$chatID'),
+                        onPressed: () async {
+                          await BartFirestoreServices.getChat(userID, chatID)
+                              .then(
+                            (chat) {
+                              context.go('/chat/chatRoom/$chatID', extra: chat);
+                            },
+                          );
+                        },
                       ).build(context),
                     );
                     descriptionTextController!.clear();
@@ -333,9 +340,19 @@ class TradeDetailsPageFooter {
                               trade.offeredItem.itemOwner,
                               trade.tradedItem.itemOwner,
                             ).then(
-                              (chatID) {
-                                context.go('/chat/chatRoom/$chatID');
-                                loadingOverlay.hide();
+                              (chatID) async {
+                                await BartFirestoreServices.getChat(
+                                  userID,
+                                  chatID,
+                                ).then(
+                                  (chat) {
+                                    loadingOverlay.hide();
+                                    context.go(
+                                      '/chat/chatRoom/$chatID',
+                                      extra: chat,
+                                    );
+                                  },
+                                );
                               },
                             );
                           },
