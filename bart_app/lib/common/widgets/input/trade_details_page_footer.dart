@@ -261,7 +261,6 @@ class TradeDetailsPageFooter {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // (trade.offeredItem.itemOwner.userID == userID && tradeType == TradeCompType.successful)
                   (trade.offeredItem.itemOwner.userID == userID)
                       ? SizedBox(
                           width: 150,
@@ -275,9 +274,8 @@ class TradeDetailsPageFooter {
                                     .tr('view.trade.page.btn.handover.done1'),
                             onPressed: () {
                               loadingOverlay.show();
-                              trade.acceptedByTradee =
-                                  true; // the tradee accepts the trade
-                              BartFirestoreServices.updateTrade(trade).then(
+                              // the tradee accepts the trade
+                              BartFirestoreServices.acceptTradeAsTradee(trade.tradeID).then(
                                 (value) {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),
@@ -300,16 +298,16 @@ class TradeDetailsPageFooter {
                             buttonType: BartMaterialButtonType.green,
                             label: context
                                 .tr('view.trade.page.btn.handover.done2'),
-                            onPressed: () {
+                            onPressed: () async {
                               loadingOverlay.show();
-                              // trade.isCompleted = true; // complete the trade
-                              trade.acceptedByTrader =
-                                  true; // the trader accepts the trade
-                              trade.tradedItem.isListedInMarket =
-                                  false; // item is taken off the market
-                              BartFirestoreServices.updateItem(
-                                  trade.tradedItem);
-                              BartFirestoreServices.updateTrade(trade).then(
+                              // item is taken off the market
+                              trade.tradedItem.isListedInMarket = false;
+                              await BartFirestoreServices.updateItem(
+                                trade.tradedItem,
+                              );
+                              // the trader accepts the trade
+                              await BartFirestoreServices.acceptTradeAsTrader(trade.tradeID)
+                                  .then(
                                 (value) {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),

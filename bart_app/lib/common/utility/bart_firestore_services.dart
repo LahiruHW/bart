@@ -670,6 +670,17 @@ class BartFirestoreServices {
     await tradeCollection.doc(trade.tradeID).update(trade.toMap());
   }
 
+  static Future<void> acceptTradeAsTrader(String tradeID) async {
+    await tradeCollection.doc(tradeID).update({
+      'acceptedByTrader': true,
+    });
+  }
+  static Future<void> acceptTradeAsTradee(String tradeID) async {
+    await tradeCollection.doc(tradeID).update({
+      'acceptedByTradee': true,
+    });
+  }
+
   /// cancel a trade
   static Future<bool> cancelTrade(Trade trade) async {
     // delete all the images of the offered from the storage
