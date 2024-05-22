@@ -909,6 +909,41 @@ class BartFirestoreServices {
     });
   }
 
+  /// cleanup unused images in the storage folder
+  static void cleanupStorageImages() async {
+
+    // get all the item ids from the storage folder
+    await BartFirebaseStorageServices.itemFolderRef.listAll().then((result) {
+      final List<String> storageItemIDs = result.prefixes.map((item) {
+        final itemID = item.fullPath.split('/')[1];
+        return itemID;
+      }).toList();
+
+      print(storageItemIDs);
+
+      // get all the item ids from the item collection
+      itemCollection.get().then((snapshot) {
+        final firestoreItemIDs = snapshot.docs.map((doc) {
+          return doc.id;
+        }).toList();
+
+        // if the item id from the storage folder is not in the item collection, delete all the images in the folder
+        for (final storageItemID in storageItemIDs) {
+          if (!firestoreItemIDs.contains(storageItemID)) {
+            BartFirebaseStorageServices.deleteAllItemImages(storageItemID);
+            print("Deleting images for item: $storageItemID");
+          }
+        }
+      });
+    });
+
+    // final x = await BartFirebaseStorageServices.storage.ref("item").listAll();
+    // print(x);
+    // print(x.items);
+    // print(x.prefixes);
+
+  }
+
   /// nuke a given collection by deleting all the documents in it
   static void nukeCollection(CollectionReference collection) {
     collection.get().then((snapshot) {
