@@ -165,9 +165,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
     // somehow this line fixes the locale issue
     debugPrint('------------- ${context.locale.toString()}');
 
-    // final provider = Provider.of<BartStateProvider>(context, listen: false);
-
-    // final (lable1, lable2) = getTradeItemLabels();
     setState(() {
       final val = getTradeItemLabels();
       lable1 = val.$1;
@@ -180,16 +177,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
         BartFirestoreServices.updateTrade(widget.trade);
       }
     }
-    // else {
-    //   // check if the trade is read by the other user
-    //   if (provider.userProfile.userID ==
-    //       widget.trade.tradedItem.itemOwner.userID) {
-    //     if (!widget.trade.isRead) {
-    //       widget.trade.isRead = true;
-    //       BartFirestoreServices.updateTrade(widget.trade);
-    //     }
-    //   }
-    // }
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

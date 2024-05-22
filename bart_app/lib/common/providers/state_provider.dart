@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/utility/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 
 class BartStateProvider extends ChangeNotifier {

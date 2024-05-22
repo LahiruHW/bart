@@ -83,14 +83,11 @@ class BartApp extends StatelessWidget {
             routerConfig: BartRouter.router,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale: context.locale,  // YOU NEED TO USE PROVIDER HERE TOOOO
-            // locale: EasyLocalization.of(context)!.currentLocale,
-
+            locale: context.locale,
             title: 'Bart',
             themeMode: provider.userProfile.settings!.isDarkMode
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            // themeMode: ThemeMode.light,
             theme: BartAppTheme.lightTheme,
             darkTheme: BartAppTheme.darkTheme,
             themeAnimationDuration: const Duration(milliseconds: 800),

@@ -13,30 +13,9 @@ class BartRouter {
   static final _marketNavKey = GlobalKey<NavigatorState>();
   static final _profileNavKey = GlobalKey<NavigatorState>();
 
-  // static void pushPage(BuildContext context, String route, Object? thisExtra) {
-  //   // final currentPath = GoRouter.of(context).routeInformationProvider.value.uri;
-  //   // final currentPath = GoRouter.of(context).routerDelegate.currentConfiguration.uri.toString();
-
-  //   // // get any path parameters
-  //   // final pathParams = GoRouter.of(context).routerDelegate.currentConfiguration.pathParameters;
-  //   final currentPath =
-  //       GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
-  //   // debugPrint("currentPath: $currentPath");
-  //   // debugPrint("route: $currentPath/$route");
-  //   // debugPrint("||||||||||||||||||||||||||||||||||||||||||");
-  //   GoRouter.of(context).push(
-  //     "$currentPath/$route",
-  //     extra: thisExtra,
-  //   );
-  // }
-
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavKey,
-
     initialLocation: '/login-base',
-    // initialLocation: '/home',
-    // initialLocation: '/market',
-
     routes: [
       GoRoute(
         name: "login-base",

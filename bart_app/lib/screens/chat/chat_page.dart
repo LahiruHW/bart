@@ -146,8 +146,6 @@ class _ChatPageState extends State<ChatPage> {
                           (timeStamp) => scrollDown(),
                         );
 
-                        // mark a message as read
-
                         return ListView.builder(
                           padding: const EdgeInsets.only(
                             // top: 10,
@@ -191,13 +189,11 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.white
-                      : Colors.black,
+                  color:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.white
+                          : Colors.black,
                   indent: 0,
                   height: 1,
                 ),
