@@ -1,19 +1,29 @@
+import "dart:io";
 
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:word_generator/word_generator.dart";
 
+import 'package:bart_app/common/constants/use_emulators.dart';
+
 // TODO:_ Implement Apple Login
 
 /// Handles all the authentication related methods and services from the firebase_auth package
 class BartAuthService {
-
   BartAuthService() {
+    _auth = FirebaseAuth.instance;
     debugPrint('------------------------------ AuthService initialized');
+    if (FirebaseEmulatorService.useEmulators) {
+      // final host = Platform.isAndroid ? "192.168.1.7" : "127.0.0.1";
+      // final host = Platform.isAndroid ? "0.0.0.0" : "127.0.0.1";
+      final host = Platform.isAndroid ? Platform.localHostname : "127.0.0.1";
+      _auth.useAuthEmulator(host, 9099);
+      debugPrint('----------------- using AuthService Emulator at: $host:9099');
+    }
   }
 
   // instance of the firebase auth service
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late final FirebaseAuth _auth; // = FirebaseAuth.instance;
 
   /// observes the auth state changes in the firebase auth service
   Stream<User?> get onAuthStateChanged => _auth.authStateChanges();
