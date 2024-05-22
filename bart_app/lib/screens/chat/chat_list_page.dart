@@ -37,9 +37,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 provider.userProfile.userID,
               ),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.active &&
-                    snapshot.hasData) {
-                  // final data = snapshot.data as List<Map<String, dynamic>>;
+                if (snapshot.hasData) {
                   final data = snapshot.data as List<Chat>;
 
                   return data.isNotEmpty

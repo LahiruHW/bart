@@ -1,5 +1,6 @@
+import 'package:bart_app/common/entity/item.dart';
+import 'package:bart_app/common/entity/trade.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:bart_app/common/constants/enum_message_types.dart';
 
 class Message {
   Message({
@@ -7,33 +8,31 @@ class Message {
     required this.timeSent,
     required this.senderID,
     required this.text,
-    required this.isSharedTrade,
+    this.isSharedTrade = false,
     this.isRead = false,
-    
-    // this.msgType = MessageType.text,
-    // this.extra = const {},
+    this.isSharedItem = false,
+    this.extra = const {},
   });
 
   final String messageID;
   final Timestamp timeSent;
   final String senderID;
   final String text;
-  final bool isSharedTrade;
+  bool? isSharedTrade;
   bool? isRead;
-  // final MessageType msgType;
-  // final Map<String, dynamic> extra;
+  bool? isSharedItem;
+  final Map<String, dynamic> extra;
 
   factory Message.fromMap(Map<String, dynamic> json) {
-    // final thisMsgType = MessageType.fromString(json['msgType']);
     return Message(
       messageID: json['msgID'],
       timeSent: json['timeSent'],
       senderID: json['senderID'],
       text: json['text'],
       isSharedTrade: json['isSharedTrade'],
+      isSharedItem: json['isSharedItem'],
       isRead: json['isRead'],
-      // msgType: thisMsgType,
-      // extra: _extraFactory(thisMsgType, json['extra'])
+      extra: json['extra'] as Map<String, dynamic>,
     );
   }
 
@@ -43,41 +42,30 @@ class Message {
       'senderID': senderID,
       'text': text,
       'isSharedTrade': isSharedTrade,
+      'isSharedItem': isSharedItem,
       'isRead': isRead,
-      // 'msgType': msgType.value,
-      // 'extra': _extraToMap(msgType, extra),
+      'extra': _extraToMap(),
     };
   }
 
-  // static Map<String, dynamic> _extraFromMap(MessageType msgType, Map<String, dynamic> extra) {
-  //   switch (msgType) {
-  //     case MessageType.text:
-  //       return {};
-  //     case MessageType.sharedItem:
-  //       return {
-  //         'tradeID': extra['tradeID'],
-  //       };
-  //     default:
-  //       throw Exception('Message.extraFactory: msgType $msgType is invalid or not implemented yet');
-  //   }
-  // }
-
-  // static Map<String, dynamic> _extraToMap(MessageType msgType, Map<String, dynamic> extra) {
-  //   switch (msgType) {
-  //     case MessageType.text:
-  //       return {};
-  //     case MessageType.sharedItem:
-  //       return {
-  //         'tradeID': extra['tradeID'],
-  //       };
-  //     default:
-  //       throw Exception('Message.extraFactory: msgType $msgType is invalid or not implemented yet');
-  //   }
-  // }
+  Map<String, dynamic> _extraToMap() {
+    if (isSharedItem!) {
+      final itemContent = extra['itemContent'] as Item;
+      return {
+        'itemContent': itemContent.itemID,
+      };
+    }
+    if (isSharedTrade!) {
+      final tradeContent = extra['tradeContent'] as Trade;
+      return {
+        'tradeContent': tradeContent.tradeID,
+      };
+    }
+    return extra;
+  }
 
   @override
   String toString() {
     return 'Message{messageID: $messageID, timeSent: $timeSent, senderID: $senderID, text: $text, isSharedTrade: $isSharedTrade, isRead: $isRead}';
   }
-
 }

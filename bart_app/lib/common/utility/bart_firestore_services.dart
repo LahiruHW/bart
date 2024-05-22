@@ -183,16 +183,25 @@ class BartFirestoreServices {
   static Future<void> sendMessageUsingChatID(
     String chatID,
     String userID,
-    String msgText,
-  ) async {
+    String msgText, {
+    bool isSharedTrade = false,
+    bool isSharedItem = false,
+    Trade? tradeContent,
+    Item? itemContent,
+  }) async {
     final timeStamp = Timestamp.fromDate(DateTime.now());
     await updateChatLastMessage(chatID, userID, msgText, timeStamp).then((_) {
       final messageData = Message(
         timeSent: timeStamp,
         senderID: userID,
         text: msgText,
-        isSharedTrade: false,
+        isSharedTrade: isSharedTrade,
+        isSharedItem: isSharedItem,
         isRead: false,
+        extra: {
+          'tradeContent': tradeContent,
+          'itemContent': itemContent,
+        },
       );
       chatRoomCollection(chatID).add(messageData.toMap());
     });
@@ -233,8 +242,8 @@ class BartFirestoreServices {
 
       chat.unreadMsgCountMap[senderID] = (userVal > 1) ? userVal - 1 : 0;
       // chat.lastUpdated = Timestamp.fromDate(DateTime.now());
-      chatDocRef(chat.chatID).update(chat.toMap());
-      chatRoomCollection(chat.chatID).doc(msgID).update(msg.toMap());
+      await chatDocRef(chat.chatID).update(chat.toMap());
+      await chatRoomCollection(chat.chatID).doc(msgID).update(msg.toMap());
     }
   }
 
@@ -275,6 +284,17 @@ class BartFirestoreServices {
       // not using await here to trigger the update in a fire and forget manner
       {'settings': newSettings.toMap()},
     );
+  }
+
+  static Future<UserLocalProfile> getUserProfile(String userID) async {
+    // return getCurrentUserProfileStream(userID).first;
+    return userProfileDocRef(userID).get().then((docSnap) {
+      final data = {
+        'userID': docSnap.id,
+        ...docSnap.data() as Map<String, dynamic>
+      };
+      return UserLocalProfile.fromMap(data);
+    });
   }
 
   // //////////////////////////////////////////////////////////////////////////////////////////////
@@ -334,7 +354,7 @@ class BartFirestoreServices {
         .asBroadcastStream();
   }
 
-  static Stream<List<Message>> chatRoomMessageListStream(String chatID) {
+  static Stream<List<Message>> _chatRoomMessageListStream(String chatID) {
     return chatRoomCollection(chatID)
         .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
         .orderBy('timeSent', descending: false)
@@ -346,6 +366,34 @@ class BartFirestoreServices {
           }).toList(),
         )
         .asBroadcastStream();
+  }
+
+  static Stream<List<Message>> chatRoomMessageListStream(
+    String chatID,
+    String userID,
+  ) {
+    return Rx.combineLatest3(
+      _chatRoomMessageListStream(chatID),
+      getItemListStream(),
+      getTradeListStream(userID),
+      (msgList, itemList, tradeList) {
+        return msgList.map((msg) {
+          if (msg.isSharedItem!) {
+            final String itemID = msg.extra['itemContent'];
+            final itemContent =
+                itemList.firstWhere((item) => item.itemID == itemID);
+            msg.extra['itemContent'] = itemContent;
+          }
+          if (msg.isSharedTrade!) {
+            final String tradeID = msg.extra['tradeContent'];
+            final tradeContent =
+                tradeList.firstWhere((trade) => trade.tradeID == tradeID);
+            msg.extra['tradeContent'] = tradeContent;
+          }
+          return msg;
+        }).toList();
+      },
+    );
   }
 
   static Stream<DateTime> _streamRebuildTrigger() {
@@ -430,7 +478,7 @@ class BartFirestoreServices {
   }
 
   /// create a new chat room
-  static Future<String> createChatRoom(
+  static Future<String> getChatRoomID(
     UserLocalProfile sender,
     UserLocalProfile receiver,
   ) async {
@@ -448,6 +496,10 @@ class BartFirestoreServices {
             chatName: receiver.userName,
             lastMessage: '',
             users: users.map((user) => user.userID).toList(),
+            unreadMsgCountMap: {
+              sender.userID: 0,
+              receiver.userID: 0,
+            },
             lastUpdated: Timestamp.now(),
           );
 
@@ -458,8 +510,18 @@ class BartFirestoreServices {
                 user.chats.add(newChatID);
                 await userProfileDocRef(user.userID).update({
                   'chats': FieldValue.arrayUnion([newChatID]),
+                  'lastUpdated': Timestamp.now(),
+                }).then((_) {
+                  debugPrint(
+                      '====================== ADDED CHAT ID TO USER PROFILE ${user.userID}');
                 });
               }
+              await chatRoomCollection(newChatID).doc("PLACEHOLDER").set({
+                'alert': null,
+              }).then((_) {
+                debugPrint(
+                    '====================== CHATROOM CREATED, RETURNING CHAT ID');
+              });
               return newChatID;
             },
           );

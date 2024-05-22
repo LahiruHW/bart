@@ -100,7 +100,7 @@ class TradeDetailsPageFooter {
             maxCharCount: 200,
             showSendButton: true,
             onSend: () async {
-              await BartFirestoreServices.createChatRoom(
+              await BartFirestoreServices.getChatRoomID(
                 trade.offeredItem.itemOwner,
                 trade.tradedItem.itemOwner,
               ).then((chatID) async {
@@ -110,6 +110,8 @@ class TradeDetailsPageFooter {
                   chatID,
                   trade.tradedItem.itemOwner.userID,
                   descriptionTextController!.text,
+                  isSharedTrade: true,
+                  tradeContent: trade,
                 ).then(
                   (value) async {
                     // show the snackbar to confirm the message was sent
@@ -334,7 +336,7 @@ class TradeDetailsPageFooter {
                         Future.delayed(
                           const Duration(milliseconds: 1500),
                           () {
-                            BartFirestoreServices.createChatRoom(
+                            BartFirestoreServices.getChatRoomID(
                               trade.offeredItem.itemOwner,
                               trade.tradedItem.itemOwner,
                             ).then(

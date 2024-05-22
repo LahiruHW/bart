@@ -137,6 +137,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: StreamBuilder(
                     stream: BartFirestoreServices.chatRoomMessageListStream(
                       widget.chatID,
+                      provider.userProfile.userID,
                     ),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
