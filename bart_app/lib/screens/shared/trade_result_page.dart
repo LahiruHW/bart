@@ -38,7 +38,6 @@ class _TradeResultPageState extends State<TradeResultPage> {
   void goBackToMarket() {
     Future.delayed(
       Duration(seconds: widget.REDIRECT_DELAY_SECONDS),
-      // () => GoRouter.of(context).go('/market'),
       () => context.go('/market'),
     );
   }
@@ -46,7 +45,7 @@ class _TradeResultPageState extends State<TradeResultPage> {
   @override
   Widget build(BuildContext context) {
     goBackToMarket();
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
         horizontal: 15,
