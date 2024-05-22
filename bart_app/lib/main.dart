@@ -12,6 +12,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firebase_messaging.dart';
 
+// import 'package:bart_app/common/constants/use_emulators.dart';
+
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -19,7 +21,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // FirebaseEmulatorService();
   BartFirestoreServices();
+  BartFirebaseStorageServices();
   BartFirebaseMessaging.initNotifications();
   BartAppVersionData.initPackageInfo();
   BartSharedPrefOps.initSharedPreferences();

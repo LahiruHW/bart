@@ -43,6 +43,7 @@ app.*.map.json
 /android/app/release
 
 /TRASH/
+/EMULATOR_DATA/
 # /lib/firebase_options.dart
 firebase.json
 firestore.indexes.json

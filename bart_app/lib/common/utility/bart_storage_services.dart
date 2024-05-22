@@ -3,8 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import 'package:bart_app/common/constants/use_emulators.dart';
+
 class BartFirebaseStorageServices {
-  static final FirebaseStorage storage = FirebaseStorage.instance;
+  BartFirebaseStorageServices() {
+    storage = FirebaseStorage.instance;
+    if (FirebaseEmulatorService.useEmulators) {
+      final host = Platform.isAndroid ? Platform.localHostname : "127.0.0.1";
+      storage.useStorageEmulator(host, 9199);
+      debugPrint('---------------------- using Storage Emulator at $host:9199');
+    }
+  }
+
+  static late final FirebaseStorage storage;
 
   static final userProfileFolderRef = storage.ref().child('user_profile');
 

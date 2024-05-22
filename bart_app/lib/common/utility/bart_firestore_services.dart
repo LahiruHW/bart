@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'dart:io';
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
@@ -11,12 +12,21 @@ import 'package:bart_app/common/utility/bart_auth.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
 
+import 'package:bart_app/common/constants/use_emulators.dart';
+
 class BartFirestoreServices {
   BartFirestoreServices() {
+    _firestore = FirebaseFirestore.instance;
     _firestore.settings = const Settings(persistenceEnabled: true);
+
+    if (FirebaseEmulatorService.useEmulators) {
+      final host = Platform.isAndroid ? Platform.localHostname : "127.0.0.1";
+      _firestore.useFirestoreEmulator(host, 8080);
+      debugPrint('------------------- using Firestore Emulator at: $host:8080');
+    }
   }
 
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static late final FirebaseFirestore _firestore;
 
   static final userCollection = _firestore.collection('user_profile');
   static final userProfileDocRef = (userId) => userCollection.doc(userId);
