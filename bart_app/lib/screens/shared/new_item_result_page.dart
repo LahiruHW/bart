@@ -22,7 +22,7 @@ class NewItemResultPage extends StatefulWidget {
     required this.dateCreated,
   });
 
-  final REDIRECT_DELAY_SECONDS = 5;
+  final REDIRECT_DELAY_SECONDS = 4;
 
   final String messageHeading;
   final String message;
@@ -34,44 +34,117 @@ class NewItemResultPage extends StatefulWidget {
   State<NewItemResultPage> createState() => _NewItemResultPageState();
 }
 
-class _NewItemResultPageState extends State<NewItemResultPage> {
-  void goBackHome() {
-    Future.delayed(
-      Duration(seconds: widget.REDIRECT_DELAY_SECONDS),
-      () => GoRouter.of(context).go('/home'),
+class _NewItemResultPageState extends State<NewItemResultPage>
+    with SingleTickerProviderStateMixin {
+  Timer? _timer;
+  double currentAnimVal = 0.0;
+  late final AnimationController _loadAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAnimController = AnimationController(
+      vsync: this,
+      duration: (widget.REDIRECT_DELAY_SECONDS).seconds,
+    )..addListener(updateAnimation);
+    _loadAnimController.drive(
+      CurveTween(curve: Curves.easeInOutCubic),
     );
+    _startTimer();
+  }
+
+  void updateAnimation() => setState(
+        () => currentAnimVal = _loadAnimController.value,
+      );
+  
+  // check if the current route begins with "/home" or "/market" and go to that route
+  void goBackHome() {
+    final route = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
+    if (route.startsWith('/home')) {
+      context.go('/home');
+    } else if (route.startsWith('/market')) {
+      context.go('/market');
+    } else {
+      context.go('/home');
+    }
+  }
+
+  void _startTimer() {
+    debugPrint('------------------ Timer started');
+    _timer?.cancel();
+    _loadAnimController.forward();
+    _timer = Timer(
+      Duration(seconds: widget.REDIRECT_DELAY_SECONDS),
+      goBackHome,
+    );
+  }
+
+  void _stopTimer() {
+    if (kDebugMode) debugPrint('------------------ Timer stopped');
+    _timer?.cancel();
+    _loadAnimController.stop();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final enabled = (_timer != null);
+    final shouldEnable = TickerMode.of(context);
+    if (enabled != shouldEnable) {
+      (shouldEnable) ? _startTimer() : _stopTimer();
+    }
+  }
+
+  @override
+  void dispose() {
+    _loadAnimController.removeListener(updateAnimation);
+    _loadAnimController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    goBackHome();
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TradeResultMessageTile(
-            messageHeading: widget.messageHeading,
-            message: widget.message,
-            isSuccessful: widget.isSuccessful,
+    final screenwidth = MediaQuery.of(context).size.width;
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 15,
           ),
-          const SizedBox(height: 20),
-          ResultItemTile(
-            item: widget.item,
-            // label: 'Posted by you',
-            label: context.tr('newItem.confirmation.label'),
-          ).animate().moveX(
-                duration: 600.ms,
-                begin: -500,
-                end: 0,
-                curve: Curves.easeInOutCubic,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TradeResultMessageTile(
+                messageHeading: widget.messageHeading,
+                message: widget.message,
+                isSuccessful: widget.isSuccessful,
               ),
-        ],
-      ),
+              const SizedBox(height: 20),
+              ResultItemTile(
+                item: widget.item,
+                // label: 'Posted by you',
+                label: context.tr('newItem.confirmation.label'),
+              ).animate().moveX(
+                    duration: 600.ms,
+                    begin: -500,
+                    end: 0,
+                    curve: Curves.easeInOutCubic,
+                  ),
+            ],
+          ),
+        ),
+        Positioned(
+          left: 0,
+          bottom: 0,
+          child: Container(
+            width: screenwidth * currentAnimVal,
+            height: 5,
+            color: Colors.green,
+          ),
+        ),
+      ],
     );
   }
 }
