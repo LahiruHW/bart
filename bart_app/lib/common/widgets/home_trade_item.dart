@@ -1,6 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/home_trade_widget_style.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
@@ -161,7 +162,7 @@ class TradeWidget extends StatelessWidget {
                 trade.isRead ? context.tr('read') : context.tr("unread"),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: textColor,
-                      fontSize: 15,
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),
               ),
