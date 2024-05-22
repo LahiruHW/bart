@@ -1,11 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/result_item_tile.dart';
 import 'package:bart_app/common/widgets/result_message_tile.dart';
 
