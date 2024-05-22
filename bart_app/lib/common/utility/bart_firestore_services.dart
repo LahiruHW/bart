@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'dart:async';
-
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/index.dart';
@@ -827,10 +826,41 @@ class BartFirestoreServices {
     });
   }
 
-  static void updateAllMessages(String chatID) {
-    chatRoomCollection(chatID).get().then((snapshot) {
+  static void updateAllMessages(Map<String, dynamic> data) {
+    chatCollection.get().then((snapshot) {
       for (DocumentSnapshot doc in snapshot.docs) {
-        doc.reference.update({'isRead': true});
+        final chatID = doc.id;
+        chatRoomCollection(chatID).get().then((snapshot) {
+          for (DocumentSnapshot doc in snapshot.docs) {
+            doc.reference.update(data);
+          }
+        });
+      }
+    });
+  }
+
+  static void cleanupTradesBasedOnItems() async {
+    tradeCollection.get().then((snapshot) async {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        if (doc.id == 'PLACEHOLDER') {
+          continue;
+        }
+        final tradeData = doc.data() as Map<String, dynamic>;
+        final tradedItemID = tradeData['tradedItem'] as String;
+        final offeredItemID = tradeData['offeredItem'] as String;
+
+        final bool bool1 =
+            await itemCollection.doc(tradedItemID).get().then((value) {
+          return value.exists;
+        });
+        final bool bool2 =
+            await itemCollection.doc(offeredItemID).get().then((value) {
+          return value.exists;
+        });
+
+        if (!bool1 || !bool2) {
+          doc.reference.delete();
+        }
       }
     });
   }
