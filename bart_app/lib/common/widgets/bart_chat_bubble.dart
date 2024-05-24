@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:bart_app/common/entity/message.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/styles/bart_chat_bubble_style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
@@ -103,8 +104,11 @@ class BubbleChildFactory extends StatelessWidget {
               ? thisTrade.tradedItem.itemOwner
               : thisTrade.offeredItem.itemOwner;
       final String senderText = (currentUserID == sender.userID)
-          ? "You asked about this trade"
-          : "${sender.userName} is asking about this trade";
+          ? context.tr('chat.bubble.trade.context.subText1')
+          : context.tr(
+              'chat.bubble.trade.context.subText2',
+              namedArgs: {'senderName': sender.userName},
+            );
       return Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
@@ -167,8 +171,11 @@ class BubbleChildFactory extends StatelessWidget {
     if (message.isSharedItem!) {
       final Item thisItem = message.extra['itemContent'];
       final String senderText = (message.senderID == currentUserID)
-          ? "You asked about this item"
-          : "${message.senderName} is asking about this item";
+          ? context.tr('chat.bubble.item.context.subText1')
+          : context.tr(
+              'chat.bubble.item.context.subText2',
+              namedArgs: {'senderName': message.senderName},
+            );
       return Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
