@@ -817,34 +817,103 @@ class BartFirestoreServices {
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
+  // UTILITY FUNCTIONS
 
-  static void addPropertyToCollection(
-    CollectionReference collection,
-    Map<String, dynamic> data,
-  ) {
-    collection
-        .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
-        .get()
-        .then((snapshot) {
-      for (DocumentSnapshot doc in snapshot.docs) {
-        doc.reference.update(data);
-      }
+  /// update the document structure of the item collection
+  static void updateItemSchema() async {
+    final itemIDList = await itemCollection.get().then((snapshot) {
+      return snapshot.docs
+          .where((doc) => doc.id != "PLACEHOLDER")
+          .map((doc) => doc.id)
+          .toList();
     });
+    debugPrint("$itemIDList");
+    for (final itemID in itemIDList) {
+      itemCollection.doc(itemID).get().then((doc) async {
+        final itemData = doc.data() as Map<String, dynamic>;
+        final updatedDoc = Map<String, dynamic>.from(itemData);
+
+        if (!itemData.containsKey('imgs')) {
+          updatedDoc['imgs'] = FieldValue.arrayUnion([]);
+          debugPrint("missing 'imgs' added to item $itemID");
+        }
+        if (!itemData.containsKey('isListedInMarket')) {
+          updatedDoc['isListedInMarket'] = true;
+          debugPrint("missing 'isListedInMarket' added to item $itemID");
+        }
+        if (!itemData.containsKey('isPayment')) {
+          updatedDoc['isPayment'] = false;
+          debugPrint("missing 'isTradeable' added to item $itemID");
+        }
+        if (!itemData.containsKey('itemDescription')) {
+          updatedDoc['itemDescription'] = '';
+          debugPrint("missing 'itemDescription' added to item $itemID");
+        }
+        if (!itemData.containsKey('itemName')) {
+          updatedDoc['itemName'] = '';
+          debugPrint("missing 'itemName' added to item $itemID");
+        }
+        // 'itemOwner' is added at item creation
+        // 'postedOn' is added at item creation
+        if (!itemData.containsKey('preferredInReturn')) {
+          updatedDoc['preferredInReturn'] = FieldValue.arrayUnion([]);
+          debugPrint("missing 'preferredInReturn' added to item $itemID");
+        }
+        await doc.reference.update(updatedDoc);
+      });
+    }
   }
 
-  static void updateAllMessages(Map<String, dynamic> data) {
-    chatCollection.get().then((snapshot) {
-      for (DocumentSnapshot doc in snapshot.docs) {
-        final chatID = doc.id;
-        chatRoomCollection(chatID).get().then((snapshot) {
-          for (DocumentSnapshot doc in snapshot.docs) {
-            doc.reference.update(data);
+  /// update the document structure of all the chatRoom collections
+  static void updateMessagesSchema() async {
+    final chatIDList = await chatCollection.get().then((snapshot) {
+      return snapshot.docs
+          .where((doc) => doc.id != "PLACEHOLDER")
+          .map((doc) => doc.id)
+          .toList();
+    });
+    debugPrint("$chatIDList");
+    for (final chatID in chatIDList) {
+      chatRoomCollection(chatID).get().then((snapshot) async {
+        for (DocumentSnapshot doc in snapshot.docs) {
+          if (doc.id == 'PLACEHOLDER') {
+            continue;
           }
-        });
-      }
-    });
+          final messageData = doc.data() as Map<String, dynamic>;
+          final updatedDoc = Map<String, dynamic>.from(messageData);
+          if (!messageData.containsKey('extra')) {
+            updatedDoc['extra'] = {};
+            debugPrint("missing 'extra' added to message $chatID/${doc.id}");
+          }
+          if (!messageData.containsKey('isRead')) {
+            updatedDoc['isRead'] = false;
+            debugPrint("missing 'isRead' added to message $chatID/${doc.id}");
+          }
+          if (!messageData.containsKey('isSharedItem')) {
+            updatedDoc['isSharedItem'] = false;
+            debugPrint(
+                "missing 'isSharedItem' added to message $chatID/${doc.id}");
+          }
+          if (!messageData.containsKey('isSharedTrade')) {
+            updatedDoc['isSharedTrade'] = false;
+            debugPrint(
+                "missing 'isSharedTrade' added to message $chatID/${doc.id}");
+          }
+          // "senderID" is added at sendinng time
+          if (!messageData.containsKey('senderName')) {
+            updatedDoc['senderName'] = '';
+            debugPrint(
+                "missing 'senderName' added to message $chatID/${doc.id}");
+          }
+          // "text" is attached at sending time
+          // "timeSent" is attached at sending time
+          await doc.reference.update(updatedDoc); // finally update the doc
+        }
+      });
+    }
   }
 
+  /// delete a trade if any involved items in the trade does not exist
   static void cleanupTradesBasedOnItems() async {
     tradeCollection.get().then((snapshot) async {
       for (DocumentSnapshot doc in snapshot.docs) {
