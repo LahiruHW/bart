@@ -7,6 +7,7 @@ class Message {
     this.messageID = "",
     required this.timeSent,
     required this.senderID,
+    this.senderName = "",
     required this.text,
     this.isSharedTrade = false,
     this.isRead = false,
@@ -17,6 +18,7 @@ class Message {
   final String messageID;
   final Timestamp timeSent;
   final String senderID;
+  String senderName;
   final String text;
   bool? isSharedTrade;
   bool? isRead;
@@ -28,6 +30,7 @@ class Message {
       messageID: json['msgID'],
       timeSent: json['timeSent'],
       senderID: json['senderID'],
+      senderName: json['senderName'],
       text: json['text'],
       isSharedTrade: json['isSharedTrade'],
       isSharedItem: json['isSharedItem'],
@@ -40,6 +43,7 @@ class Message {
     return {
       'timeSent': timeSent,
       'senderID': senderID,
+      'senderName': senderName,
       'text': text,
       'isSharedTrade': isSharedTrade,
       'isSharedItem': isSharedItem,
@@ -66,6 +70,6 @@ class Message {
 
   @override
   String toString() {
-    return 'Message{messageID: $messageID, timeSent: $timeSent, senderID: $senderID, text: $text, isSharedTrade: $isSharedTrade, isRead: $isRead}';
+    return 'Message{messageID: $messageID, timeSent: $timeSent, senderName: $senderName, senderID: $senderID, text: $text, isSharedTrade: $isSharedTrade, isRead: $isRead}';
   }
 }

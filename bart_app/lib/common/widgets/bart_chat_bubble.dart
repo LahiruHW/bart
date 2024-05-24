@@ -168,7 +168,7 @@ class BubbleChildFactory extends StatelessWidget {
       final Item thisItem = message.extra['itemContent'];
       final String senderText = (message.senderID == currentUserID)
           ? "You asked about this item"
-          : "${thisItem.itemOwner.userName} is asking about this item";
+          : "${message.senderName} is asking about this item";
       return Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
