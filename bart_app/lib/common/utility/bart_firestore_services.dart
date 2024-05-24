@@ -371,12 +371,16 @@ class BartFirestoreServices {
     String chatID,
     String userID,
   ) {
-    return Rx.combineLatest3(
+    return Rx.combineLatest4(
       _chatRoomMessageListStream(chatID),
       getItemListStream(),
       getTradeListStream(userID),
-      (msgList, itemList, tradeList) {
+      _userProfileCollectionListStream(),
+      (msgList, itemList, tradeList, userList) {
         return msgList.map((msg) {
+          final userProfile = userList.firstWhere(
+            (user) => user.userID == msg.senderID,
+          );
           if (msg.isSharedItem!) {
             final String itemID = msg.extra['itemContent'];
             final itemContent =
@@ -389,6 +393,7 @@ class BartFirestoreServices {
                 tradeList.firstWhere((trade) => trade.tradeID == tradeID);
             msg.extra['tradeContent'] = tradeContent;
           }
+          msg.senderName = userProfile.userName;
           return msg;
         }).toList();
       },
@@ -746,6 +751,7 @@ class BartFirestoreServices {
       'acceptedByTrader': true,
     });
   }
+
   static Future<void> acceptTradeAsTradee(String tradeID) async {
     await tradeCollection.doc(tradeID).update({
       'acceptedByTradee': true,
