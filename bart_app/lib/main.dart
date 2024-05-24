@@ -1,12 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/firebase_options.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:bart_app/common/utility/index.dart';
+import 'package:bart_app/common/utility/bart_router.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';

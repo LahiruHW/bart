@@ -986,7 +986,6 @@ class BartFirestoreServices {
 
   /// cleanup unused images in the storage folder
   static void cleanupStorageImages() async {
-
     // get all the item ids from the storage folder
     await BartFirebaseStorageServices.itemFolderRef.listAll().then((result) {
       final List<String> storageItemIDs = result.prefixes.map((item) {
@@ -1011,12 +1010,6 @@ class BartFirestoreServices {
         }
       });
     });
-
-    // final x = await BartFirebaseStorageServices.storage.ref("item").listAll();
-    // print(x);
-    // print(x.items);
-    // print(x.prefixes);
-
   }
 
   /// nuke a given collection by deleting all the documents in it
