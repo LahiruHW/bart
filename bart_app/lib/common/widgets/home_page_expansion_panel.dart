@@ -24,22 +24,16 @@ class HomePageTradeExpansionPanelBuilder {
   String getEmptyContentText(TradeCompType tradeType) {
     switch (tradeType) {
       case TradeCompType.incoming:
-        // return "No incoming trades to show";
         return tr("no.incoming.trades");
       case TradeCompType.outgoing:
-        // return "No outgoing trades to show";
         return tr("no.outgoing.trades");
       case TradeCompType.successful:
-        // return "No successful trades to show";
         return tr('no.successful.trades');
       case TradeCompType.completeFailed:
-        // return "No failed trades to show";
         return tr('no.failed.trades');
       case TradeCompType.tradeHistory:
-        // return "No trade history to show";
         return tr('no.trade.history');
       default:
-        // return "No trades to show";
         return tr('no.trades.at.all');
     }
   }
@@ -113,19 +107,10 @@ class HomePageTradeExpansionPanelBuilder {
                     trade: trade,
                     tradeType: tradeType,
                     onTap: () {
-                      // BartRouter.pushPage(
-                      //   context,
-                      //   'viewTrade',
-                      //   {
-                      //     'trade': trade,
-                      //     'tradeType': tradeType2,
-                      //   },
-                      // );
                       context.push(
                         '/home/viewTrade',
                         extra: {
                           'trade': trade,
-                          // 'tradeType': tradeType2,
                           'tradeType': tradeType,
                           'userID': userID,
                         },

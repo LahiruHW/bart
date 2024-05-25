@@ -1,6 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
@@ -109,7 +109,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      // 'Bart is a mobile application that aims to provide a platform for users to buy, sell or barter goods and services.\n',
                       context.tr('about.text'),
                       style: const TextStyle(fontSize: 16),
                     ),
@@ -118,8 +117,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      // '${BartAppVersionData.appName} (Version ${BartAppVersionData.version} Build ${BartAppVersionData.buildNumber})',
-                      
                       context.tr('app.version.info', namedArgs: {
                         'versionNum' : BartAppVersionData.version,
                         'buildNum' : BartAppVersionData.buildNumber,

@@ -1,5 +1,3 @@
-import 'package:bart_app/common/utility/bart_firestore_services.dart';
-import 'package:bart_app/common/widgets/input/item_description_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +8,8 @@ import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bart_app/common/utility/bart_firestore_services.dart';
+import 'package:bart_app/common/widgets/input/item_description_input.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
 
 class ItemPage extends StatefulWidget {
