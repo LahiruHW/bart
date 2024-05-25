@@ -135,9 +135,8 @@ class BubbleChildFactory extends StatelessWidget {
 
   Widget _resolveChildBody(BuildContext context) {
     final backgroundColor = isSender
-        ? Colors.white
-        : bubbleTheme.senderBackgroundColor;
-
+        ? bubbleTheme.senderContextBackgroundColor
+        : bubbleTheme.receiverContextBackgroundColor;
     if (message.isSharedTrade!) {
       if (message.extra['tradeContent'] == null) {
         return _errorBody(
@@ -146,7 +145,7 @@ class BubbleChildFactory extends StatelessWidget {
       }
       final Trade? thisTrade = message.extra['tradeContent'];
       final UserLocalProfile sender =
-          (message.senderID == thisTrade.tradedItem.itemOwner.userID)
+          (message.senderID == thisTrade!.tradedItem.itemOwner.userID)
               ? thisTrade.tradedItem.itemOwner
               : thisTrade.offeredItem.itemOwner;
       final String senderText = (currentUserID == sender.userID)
@@ -177,8 +176,8 @@ class BubbleChildFactory extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: isSender
-                          ? bubbleTheme.senderTextColor
-                          : bubbleTheme.receiverBackgroundColor,
+                          ? bubbleTheme.senderContextTextColor
+                          : bubbleTheme.receiverContextTextColor,
                     ),
               ),
             ),
@@ -252,8 +251,8 @@ class BubbleChildFactory extends StatelessWidget {
                 Icon(
                   Icons.subdirectory_arrow_right_rounded,
                   color: isSender
-                      ? bubbleTheme.senderTextColor
-                      : bubbleTheme.receiverBackgroundColor,
+                      ? bubbleTheme.senderContextTextColor
+                      : bubbleTheme.receiverContextTextColor,
                 ),
                 const SizedBox(width: 5),
                 Expanded(
@@ -263,8 +262,8 @@ class BubbleChildFactory extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: isSender
-                              ? bubbleTheme.senderTextColor
-                              : bubbleTheme.receiverBackgroundColor,
+                              ? bubbleTheme.senderContextTextColor
+                              : bubbleTheme.receiverContextTextColor,
                         ),
                   ),
                 ),
@@ -282,9 +281,8 @@ class BubbleChildFactory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: isSender
-          ? CrossAxisAlignment.end
-          : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         _resolveChildBody(context),
         const SizedBox(height: 5),
