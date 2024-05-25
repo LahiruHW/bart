@@ -59,6 +59,8 @@
     "chat.bubble.trade.context.subText2": "{senderName} pose une question sur cet échange",
     "chat.bubble.item.context.subText1": "Vous avez posé une question sur cet article",
     "chat.bubble.item.context.subText2": "{senderName} pose une question sur cet article",
+    "chat.bubble.trade.context.notFoundError": "⚠️ CET ÉCHANGE A ÉTÉ SUPPRIMÉ :(",
+    "chat.bubble.item.context.notFoundError": "⚠️ CET ARTICLE EST SUPPRIMÉ :(",
     "market.page.tab.listedItems": "Articles Listés",
     "market.page.tab.requests": "Demandes",
     "market.search.placeholder": "Recherche",

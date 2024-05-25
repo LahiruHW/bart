@@ -381,17 +381,26 @@ class BartFirestoreServices {
           final userProfile = userList.firstWhere(
             (user) => user.userID == msg.senderID,
           );
+          final Map<String, dynamic> extra = msg.extra;
           if (msg.isSharedItem!) {
-            final String itemID = msg.extra['itemContent'];
-            final itemContent =
-                itemList.firstWhere((item) => item.itemID == itemID);
-            msg.extra['itemContent'] = itemContent;
+            if (extra.containsKey('itemContent')) {
+              final String itemID = extra['itemContent'];
+              final itemContent =
+                  itemList.firstWhere((item) => item.itemID == itemID);
+              msg.extra['itemContent'] = itemContent;
+            } else {
+              msg.extra['itemContent'] = null;
+            }
           }
           if (msg.isSharedTrade!) {
-            final String tradeID = msg.extra['tradeContent'];
-            final tradeContent =
-                tradeList.firstWhere((trade) => trade.tradeID == tradeID);
-            msg.extra['tradeContent'] = tradeContent;
+            if (extra.containsKey('tradeContent')) {
+              final String tradeID = extra['tradeContent'];
+              final tradeContent =
+                  tradeList.firstWhere((trade) => trade.tradeID == tradeID);
+              msg.extra['tradeContent'] = tradeContent;
+            } else {
+              msg.extra['tradeContent'] = null;
+            }
           }
           msg.senderName = userProfile.userName;
           return msg;

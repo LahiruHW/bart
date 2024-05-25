@@ -99,13 +99,52 @@ class BubbleChildFactory extends StatelessWidget {
     return formattedTime;
   }
 
+  Widget _errorBody(String errorText) => Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 5,
+        ),
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: const AssetImage('assets/images/caution-tape.png'),
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.40),
+              BlendMode.dstIn,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 8,
+          ),
+          child: Text(
+            errorText,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+
   Widget _resolveChildBody(BuildContext context) {
     final backgroundColor = isSender
         ? Colors.white
         : bubbleTheme.senderBackgroundColor;
 
     if (message.isSharedTrade!) {
-      final Trade thisTrade = message.extra['tradeContent'];
+      if (message.extra['tradeContent'] == null) {
+        return _errorBody(
+          context.tr('chat.bubble.trade.context.notFoundError'),
+        );
+      }
+      final Trade? thisTrade = message.extra['tradeContent'];
       final UserLocalProfile sender =
           (message.senderID == thisTrade.tradedItem.itemOwner.userID)
               ? thisTrade.tradedItem.itemOwner
@@ -176,6 +215,11 @@ class BubbleChildFactory extends StatelessWidget {
     }
 
     if (message.isSharedItem!) {
+      if (message.extra['itemContent'] == null) {
+        return _errorBody(
+          context.tr('chat.bubble.item.context.notFoundError'),
+        );
+      }
       final Item thisItem = message.extra['itemContent'];
       final String senderText = isSender
           ? context.tr('chat.bubble.item.context.subText1')
