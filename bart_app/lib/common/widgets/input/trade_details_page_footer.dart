@@ -92,58 +92,64 @@ class TradeDetailsPageFooter {
                 ),
           ),
           const SizedBox(height: 10),
-          DescriptionTextField(
-            textController: descriptionTextController!,
-            focusNode: focusNode,
-            minLines: 6,
-            maxLines: 10,
-            maxCharCount: 200,
-            showSendButton: true,
-            onSend: () async {
-              await BartFirestoreServices.getChatRoomID(
-                trade.offeredItem.itemOwner,
-                trade.tradedItem.itemOwner,
-              ).then((chatID) async {
-                debugPrint("||||||||||||||||||||| chatID: $chatID");
-                if (descriptionTextController!.text.isEmpty) return;
-                return await BartFirestoreServices.sendMessageUsingChatID(
-                  chatID,
-                  trade.tradedItem.itemOwner.userID,
-                  descriptionTextController!.text,
-                  isSharedTrade: true,
-                  tradeContent: trade,
-                ).then(
-                  (value) async {
-                    // show the snackbar to confirm the message was sent
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      BartSnackBar(
-                        // message: 'Message sent to ${trade.tradedItem.itemOwner.userName}!',
-                        message: context.tr(
-                          'view.trade.page.incoming.questionSent',
-                          namedArgs: {
-                            'itemOwner': trade.offeredItem.itemOwner.userName,
-                          },
-                        ),
-                        actionText: "CHAT",
-                        backgroundColor: Colors.green,
-                        icon: Icons.check_circle,
-                        onPressed: () async {
-                          await BartFirestoreServices.getChat(userID, chatID)
-                              .then(
-                            (chat) {
-                              context.go('/chat/chatRoom/$chatID', extra: chat);
-                            },
+          (!trade.offeredItem.isPayment)
+              ? DescriptionTextField(
+                  textController: descriptionTextController!,
+                  focusNode: focusNode,
+                  minLines: 6,
+                  maxLines: 10,
+                  maxCharCount: 200,
+                  showSendButton: true,
+                  onSend: () async {
+                    await BartFirestoreServices.getChatRoomID(
+                      trade.offeredItem.itemOwner,
+                      trade.tradedItem.itemOwner,
+                    ).then((chatID) async {
+                      debugPrint("||||||||||||||||||||| chatID: $chatID");
+                      if (descriptionTextController!.text.isEmpty) return;
+                      return await BartFirestoreServices.sendMessageUsingChatID(
+                        chatID,
+                        trade.tradedItem.itemOwner.userID,
+                        descriptionTextController!.text,
+                        isSharedTrade: true,
+                        tradeContent: trade,
+                      ).then(
+                        (value) async {
+                          // show the snackbar to confirm the message was sent
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            BartSnackBar(
+                              message: context.tr(
+                                'view.trade.page.incoming.questionSent',
+                                namedArgs: {
+                                  'itemOwner':
+                                      trade.offeredItem.itemOwner.userName,
+                                },
+                              ),
+                              actionText: "CHAT",
+                              backgroundColor: Colors.green,
+                              icon: Icons.check_circle,
+                              onPressed: () async {
+                                await BartFirestoreServices.getChat(
+                                        userID, chatID)
+                                    .then(
+                                  (chat) {
+                                    context.go('/chat/chatRoom/$chatID',
+                                        extra: chat);
+                                  },
+                                );
+                              },
+                            ).build(context),
                           );
+                          descriptionTextController!.clear();
                         },
-                      ).build(context),
-                    );
-                    descriptionTextController!.clear();
+                      );
+                    });
                   },
-                );
-              });
-            },
-          ),
-          const SizedBox(height: 10),
+                )
+              : const SizedBox(),
+          (!trade.offeredItem.isPayment)
+              ? const SizedBox(height: 10)
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -277,7 +283,9 @@ class TradeDetailsPageFooter {
                             onPressed: () {
                               loadingOverlay.show();
                               // the tradee accepts the trade
-                              BartFirestoreServices.acceptTradeAsTradee(trade.tradeID).then(
+                              BartFirestoreServices.acceptTradeAsTradee(
+                                trade.tradeID,
+                              ).then(
                                 (value) {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),
@@ -308,8 +316,9 @@ class TradeDetailsPageFooter {
                                 trade.tradedItem,
                               );
                               // the trader accepts the trade
-                              await BartFirestoreServices.acceptTradeAsTrader(trade.tradeID)
-                                  .then(
+                              await BartFirestoreServices.acceptTradeAsTrader(
+                                trade.tradeID,
+                              ).then(
                                 (value) {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),
