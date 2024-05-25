@@ -602,6 +602,7 @@ class BartFirestoreServices {
   static Stream<List<TradeFirestore>> _tradeCollectionListStream() {
     return tradeCollection
         .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
+        .orderBy('timeUpdated', descending: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.map(
@@ -743,18 +744,21 @@ class BartFirestoreServices {
 
   /// update a trade in the trade collection
   static Future<void> updateTrade(Trade trade) async {
+    trade.timeUpdated = Timestamp.fromDate(DateTime.now());
     await tradeCollection.doc(trade.tradeID).update(trade.toMap());
   }
 
   static Future<void> acceptTradeAsTrader(String tradeID) async {
     await tradeCollection.doc(tradeID).update({
       'acceptedByTrader': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
     });
   }
 
   static Future<void> acceptTradeAsTradee(String tradeID) async {
     await tradeCollection.doc(tradeID).update({
       'acceptedByTradee': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
     });
   }
 

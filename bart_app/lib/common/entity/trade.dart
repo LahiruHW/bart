@@ -10,7 +10,7 @@ class Trade {
     required this.tradedItem, // owner Id is given in the item, string used for firestore
     required this.offeredItem, // owner Id is given in the item, string used for firestore
     required this.timeCreated,
-    required this.timeUpdated,
+    this.timeUpdated,
     this.isRead = false,
     this.isAccepted = false,      // only used for incoming trades
     this.acceptedByTrader = false,  // only used for successful trades
@@ -27,7 +27,7 @@ class Trade {
   final Item tradedItem;
   final Item offeredItem;
   final Timestamp timeCreated;
-  final Timestamp timeUpdated;
+  Timestamp? timeUpdated;
 
   factory Trade.fromMap(Map<String, dynamic> data) {
     return Trade(
