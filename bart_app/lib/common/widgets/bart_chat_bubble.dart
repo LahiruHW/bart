@@ -22,6 +22,7 @@ class BartChatBubble extends StatelessWidget {
     BuildContext context,
     BartChatBubbleStyle bubbleTheme,
     Message msg,
+    bool isSender,
   ) {
     return Bubble(
       margin: const BubbleEdges.only(top: 10),
@@ -37,6 +38,7 @@ class BartChatBubble extends StatelessWidget {
         message: message,
         bubbleTheme: bubbleTheme,
         currentUserID: currentUserID,
+        isSender: isSender,
       ),
     );
   }
@@ -45,6 +47,7 @@ class BartChatBubble extends StatelessWidget {
     BuildContext context,
     BartChatBubbleStyle bubbleTheme,
     Message msg,
+    bool isSender,
   ) {
     return Bubble(
       margin: const BubbleEdges.only(top: 10),
@@ -60,6 +63,7 @@ class BartChatBubble extends StatelessWidget {
         message: message,
         bubbleTheme: bubbleTheme,
         currentUserID: currentUserID,
+        isSender: isSender,
       ),
     );
   }
@@ -67,9 +71,10 @@ class BartChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bubbleTheme = Theme.of(context).extension<BartChatBubbleStyle>();
+    final isSender = (message.senderID == currentUserID);
     return message.senderID == currentUserID
-        ? buildSenderBubble(context, bubbleTheme!, message)
-        : buildReceiverBubble(context, bubbleTheme!, message);
+        ? buildSenderBubble(context, bubbleTheme!, message, isSender)
+        : buildReceiverBubble(context, bubbleTheme!, message, isSender);
   }
 }
 
@@ -79,11 +84,13 @@ class BubbleChildFactory extends StatelessWidget {
     required this.message,
     required this.bubbleTheme,
     required this.currentUserID,
+    required this.isSender,
   });
 
   final Message message;
   final BartChatBubbleStyle bubbleTheme;
   final String currentUserID;
+  final bool isSender;
 
   String formatTime() {
     final time = message.timeSent;
@@ -93,7 +100,7 @@ class BubbleChildFactory extends StatelessWidget {
   }
 
   Widget _resolveChildBody(BuildContext context) {
-    final backgroundColor = (message.senderID == currentUserID)
+    final backgroundColor = isSender
         ? Colors.white
         : bubbleTheme.senderBackgroundColor;
 
@@ -130,7 +137,7 @@ class BubbleChildFactory extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: (message.senderID == currentUserID)
+                      color: isSender
                           ? bubbleTheme.senderTextColor
                           : bubbleTheme.receiverBackgroundColor,
                     ),
@@ -170,7 +177,7 @@ class BubbleChildFactory extends StatelessWidget {
 
     if (message.isSharedItem!) {
       final Item thisItem = message.extra['itemContent'];
-      final String senderText = (message.senderID == currentUserID)
+      final String senderText = isSender
           ? context.tr('chat.bubble.item.context.subText1')
           : context.tr(
               'chat.bubble.item.context.subText2',
@@ -200,7 +207,7 @@ class BubbleChildFactory extends StatelessWidget {
               children: [
                 Icon(
                   Icons.subdirectory_arrow_right_rounded,
-                  color: (message.senderID == currentUserID)
+                  color: isSender
                       ? bubbleTheme.senderTextColor
                       : bubbleTheme.receiverBackgroundColor,
                 ),
@@ -211,7 +218,7 @@ class BubbleChildFactory extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: (message.senderID == currentUserID)
+                          color: isSender
                               ? bubbleTheme.senderTextColor
                               : bubbleTheme.receiverBackgroundColor,
                         ),
@@ -231,7 +238,7 @@ class BubbleChildFactory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: (message.senderID == currentUserID)
+      crossAxisAlignment: isSender
           ? CrossAxisAlignment.end
           : CrossAxisAlignment.start,
       children: [
@@ -240,7 +247,7 @@ class BubbleChildFactory extends StatelessWidget {
         Text(
           message.text,
           style: bubbleTheme.textStyle.copyWith(
-            color: (message.senderID == currentUserID)
+            color: isSender
                 ? bubbleTheme.senderTextColor
                 : bubbleTheme.receiverTextColor,
           ),
@@ -250,7 +257,7 @@ class BubbleChildFactory extends StatelessWidget {
           textAlign: TextAlign.end,
           style: Theme.of(context).textTheme.labelSmall!.copyWith(
                 fontSize: 10,
-                color: (message.senderID == currentUserID)
+                color: isSender
                     ? bubbleTheme.senderTextColor
                     : bubbleTheme.receiverTextColor,
               ),
