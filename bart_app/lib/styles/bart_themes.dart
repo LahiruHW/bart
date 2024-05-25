@@ -213,6 +213,11 @@ class BartAppTheme {
           fontWeight: FontWeight.w600,
           fontSize: 15,
         ),
+        senderContextBackgroundColor: Colors.white,
+        receiverContextBackgroundColor: red6,
+        senderContextTextColor: red1,
+        receiverContextTextColor: red1,
+
       ),
       BartTradeWidgetStyle(
         incomingTextColour: Colors.white,
@@ -452,6 +457,10 @@ class BartAppTheme {
           fontWeight: FontWeight.w600,
           fontSize: 15,
         ),
+        senderContextBackgroundColor: Colors.white,
+        receiverContextBackgroundColor: red2,
+        senderContextTextColor: Colors.black,
+        receiverContextTextColor: Colors.black,
       ),
       BartTradeWidgetStyle(
         incomingTextColour: red8,
