@@ -12,8 +12,8 @@ class Item {
     this.preferredInReturn = const [],
     required this.postedOn,
     this.isListedInMarket = true,
-    // if isPayment = true, then it is a payment item --> item name and description will be the amount
-    this.isPayment = false,
+    this.isPayment =
+        false, // if it is a payment item --> item name and description will be the amount
   });
 
   final String itemID;

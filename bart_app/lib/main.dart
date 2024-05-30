@@ -20,7 +20,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // FirebaseEmulatorService();
   BartFirestoreServices();
   BartFirebaseStorageServices();
   BartFirebaseMessaging.initNotifications();
@@ -59,7 +58,6 @@ Future<void> main() async {
           child: appRuntime,
         ),
       );
-      // runApp(appRuntime);
     },
   );
 }

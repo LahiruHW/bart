@@ -40,7 +40,6 @@ class ItemFirestore {
   Map<String, dynamic> toJson() {
     return {
       'itemName': itemName,
-      // 'itemOwner': itemOwner.toMap(),
       'itemOwner': itemOwner,
       'itemDescription': itemDescription,
       'imgs': imgs,

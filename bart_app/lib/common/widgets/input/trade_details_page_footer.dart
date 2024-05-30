@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
@@ -32,51 +30,48 @@ class TradeDetailsPageFooter {
 
   void cancelConfirmationDialog(BuildContext thisContext) {
     showDialog(
-        context: thisContext,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-              // title: const Text("Cancel Trade"),
-              title: Text(
-                context.tr('view.trade.page.outgoing.btn.cancel'),
-              ),
-              content:
-                  // const Text("Are you sure you want to cancel this trade?"),
-                  Text(context.tr('view.trade.page.outgoing.cancel.warning')),
-              actions: [
-                TextButton(
-                  onPressed: () async {
-                    loadingOverlay.show(); // first show the loading indicator
-
-                    BartFirestoreServices.cancelTrade(trade).then((cancelled) {
-                      debugPrint("||||||||||||||||||||| cancelled: $cancelled");
-                      loadingOverlay.hide();
-                      if (cancelled) {
-                        ScaffoldMessenger.of(thisContext).showSnackBar(
-                          BartSnackBar(
-                            // message: 'Deleted your outgoing trade to ${trade.tradedItem.itemOwner.userName}',
-                            message: context.tr(
-                              'view.trade.page.outgoing.cancel.msg',
-                              namedArgs: {
-                                'itemOwner': trade.tradedItem.itemOwner.userName
-                              },
-                            ),
-                            backgroundColor: Colors.red,
-                            icon: Icons.check_circle,
-                          ).build(context),
-                        );
-                        Navigator.of(context).pop(); // THEN close the dialog
-                        context.go('/home'); // finally go back home
-                      }
-                    });
-                  },
-                  child: Text(context.tr('yes')),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(context.tr('no')),
-                ),
-              ],
-            ));
+      context: thisContext,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(
+          context.tr('view.trade.page.outgoing.btn.cancel'),
+        ),
+        content:
+            Text(context.tr('view.trade.page.outgoing.cancel.warning')),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              loadingOverlay.show(); // first show the loading indicator
+              BartFirestoreServices.cancelTrade(trade).then((cancelled) {
+                debugPrint("||||||||||||||||||||| cancelled: $cancelled");
+                loadingOverlay.hide();
+                if (cancelled) {
+                  ScaffoldMessenger.of(thisContext).showSnackBar(
+                    BartSnackBar(
+                      message: context.tr(
+                        'view.trade.page.outgoing.cancel.msg',
+                        namedArgs: {
+                          'itemOwner': trade.tradedItem.itemOwner.userName
+                        },
+                      ),
+                      backgroundColor: Colors.red,
+                      icon: Icons.check_circle,
+                    ).build(context),
+                  );
+                  Navigator.of(context).pop(); // THEN close the dialog
+                  context.go('/home'); // finally go back home
+                }
+              });
+            },
+            child: Text(context.tr('yes')),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(context.tr('no')),
+          ),
+        ],
+      ),
+    );
   }
 
   List<Widget> build(BuildContext context) {
@@ -185,10 +180,6 @@ class TradeDetailsPageFooter {
                         );
                       },
                     );
-
-                    // go back to home
-
-                    debugPrint("tapped material button!");
                   },
                 ),
               ),
@@ -213,8 +204,6 @@ class TradeDetailsPageFooter {
                         );
                       },
                     );
-
-                    // go back to home
                   },
                 ),
               ),
@@ -255,7 +244,6 @@ class TradeDetailsPageFooter {
                     width: 150,
                     height: 75,
                     child: BartMaterialButton(
-                      // label: "Cancel Trade",
                       label: context.tr('view.trade.page.outgoing.btn.cancel'),
                       onPressed: () => cancelConfirmationDialog(context),
                     ),
@@ -379,16 +367,6 @@ class TradeDetailsPageFooter {
                   ),
                 ],
               ),
-
-              // Text(
-              //   "Trade completed successfully!",
-              //   textAlign: TextAlign.center,
-              //   style: Theme.of(context).textTheme.titleSmall!.copyWith(
-              //         color: BartAppTheme.red1,
-              //         fontSize: 18,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              // ),
             ),
           ),
         ];
