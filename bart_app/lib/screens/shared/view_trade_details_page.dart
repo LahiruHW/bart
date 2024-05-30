@@ -151,8 +151,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
 
     if (widget.tradeType != TradeCompType.outgoing) {
       if (!widget.trade.isRead) {
-        widget.trade.isRead = true;
-        BartFirestoreServices.updateTrade(widget.trade);
+        BartFirestoreServices.markTradeAsRead(widget.trade.tradeID);
       }
     }
 

@@ -202,10 +202,7 @@ class TradeDetailsPageFooter {
                     loadingOverlay.show();
 
                     // accept & complete the trade
-                    trade.isAccepted = false;
-                    trade.isCompleted = true;
-
-                    BartFirestoreServices.updateTrade(trade).then(
+                    BartFirestoreServices.declineTrade(trade.tradeID).then(
                       (value) {
                         Future.delayed(
                           const Duration(milliseconds: 1500),

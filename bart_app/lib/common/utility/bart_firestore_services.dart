@@ -766,12 +766,6 @@ class BartFirestoreServices {
     await tradeCollection.add(newTrade.toMap());
   }
 
-  /// update a trade in the trade collection
-  static Future<void> updateTrade(Trade trade) async {
-    trade.timeUpdated = Timestamp.fromDate(DateTime.now());
-    await tradeCollection.doc(trade.tradeID).update(trade.toMap());
-  }
-
   static Future<void> acceptTradeAsTrader(String tradeID) async {
     await tradeCollection.doc(tradeID).update({
       'acceptedByTrader': true,
@@ -803,6 +797,14 @@ class BartFirestoreServices {
   static Future<void> markTradeAsRead(String tradeID) {
     return tradeCollection.doc(tradeID).update({
       'isRead': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  static Future<void> declineTrade(String tradeID) async {
+    await tradeCollection.doc(tradeID).update({
+      'isAccepted': false,
+      'isCompleted': true,
       'timeUpdated': Timestamp.fromDate(DateTime.now()),
     });
   }
