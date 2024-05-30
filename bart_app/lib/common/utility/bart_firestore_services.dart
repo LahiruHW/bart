@@ -938,16 +938,39 @@ class BartFirestoreServices {
             updatedDoc['isRead'] = false;
             debugPrint("missing 'isRead' added to message $chatID/${doc.id}");
           }
+
           if (!messageData.containsKey('isSharedItem')) {
             updatedDoc['isSharedItem'] = false;
             debugPrint(
                 "missing 'isSharedItem' added to message $chatID/${doc.id}");
+          } else {
+            if (messageData['isSharedItem'] == true) {
+              final extra = messageData['extra'] as Map<String, dynamic>;
+              if (!extra.containsKey('itemContent')) {
+                updatedDoc['isSharedItem'] = false;
+                updatedDoc['extra'] = {...extra};
+                debugPrint(
+                    "item context msg without any item content cleaned up in message $chatID/${doc.id}");
+              }
+            }
           }
+
           if (!messageData.containsKey('isSharedTrade')) {
             updatedDoc['isSharedTrade'] = false;
             debugPrint(
                 "missing 'isSharedTrade' added to message $chatID/${doc.id}");
+          } else {
+            if (messageData['isSharedTrade'] == true) {
+              final extra = messageData['extra'] as Map<String, dynamic>;
+              if (!extra.containsKey('tradeContent')) {
+                updatedDoc['isSharedTrade'] = false;
+                updatedDoc['extra'] = {...extra};
+                debugPrint(
+                    "trade context msg without any trade content cleaned up in message $chatID/${doc.id}");
+              }
+            }
           }
+
           // "senderID" is added at sendinng time
           if (!messageData.containsKey('senderName')) {
             updatedDoc['senderName'] = '';
@@ -958,6 +981,63 @@ class BartFirestoreServices {
           // "timeSent" is attached at sending time
           await doc.reference.update(updatedDoc); // finally update the doc
         }
+      });
+    }
+  }
+
+  /// update the document structure of the chat collection
+  static void updateChatSchema() async {
+    final chatIDList = await chatCollection.get().then((snapshot) {
+      return snapshot.docs
+          .where((doc) => doc.id != "PLACEHOLDER")
+          .map((doc) => doc.id)
+          .toList();
+    });
+
+    debugPrint("$chatIDList");
+    for (final chatID in chatIDList) {
+      chatDocRef(chatID).get().then((doc) async {
+        final chatData = doc.data() as Map<String, dynamic>;
+        final updatedDoc = Map<String, dynamic>.from(chatData);
+
+        if (!chatData.containsKey('chatImageUrl')) {
+          updatedDoc['chatImageUrl'] = '';
+          debugPrint("missing 'chatImageUrl' added to chat $chatID");
+        }
+        if (!chatData.containsKey('chatName')) {
+          updatedDoc['chatName'] = '';
+          debugPrint("missing 'chatName' added to chat $chatID");
+        }
+        if (!chatData.containsKey('lastMessage')) {
+          updatedDoc['lastMessage'] = '';
+          debugPrint("missing 'lastMessage' added to chat $chatID");
+        }
+        if (!chatData.containsKey('lastUpdated')) {
+          updatedDoc['lastUpdated'] = Timestamp.now();
+          debugPrint("missing 'lastUpdated' added to chat $chatID");
+        }
+        if (!chatData.containsKey('users')) {
+          updatedDoc['users'] = FieldValue.arrayUnion([]);
+          debugPrint("missing 'users' added to chat $chatID");
+          updatedDoc['unreadMsgCountMap'] = {};
+          debugPrint("missing 'unreadMsgCountMap' added to chat $chatID");
+        } else {
+          final List<String> userIDList = chatData['users'];
+          // only update unreadMsgCountMap if:
+          //    1) it is not there already,
+          //    2) users is present and is not empty
+          if (!chatData.containsKey('unreadMsgCountMap') &&
+              userIDList.isNotEmpty) {
+            final Map<String, int> unreadMsgCountMap = {};
+            for (final user in userIDList) {
+              unreadMsgCountMap[user] = 0;
+            }
+            updatedDoc['unreadMsgCountMap'] = unreadMsgCountMap;
+            debugPrint("missing 'unreadMsgCountMap' added to chat $chatID");
+          }
+        }
+
+        await doc.reference.update(updatedDoc);
       });
     }
   }
@@ -983,7 +1063,10 @@ class BartFirestoreServices {
         });
 
         if (!bool1 || !bool2) {
+          debugPrint("DELETING INVALID TRADE: ${doc.id}");
           doc.reference.delete();
+        } else {
+          debugPrint("TRADE: ${doc.id} is valid");
         }
       }
     });
@@ -1054,7 +1137,9 @@ class BartFirestoreServices {
         for (final storageItemID in storageItemIDs) {
           if (!firestoreItemIDs.contains(storageItemID)) {
             BartFirebaseStorageServices.deleteAllItemImages(storageItemID);
-            print("Deleting images for item: $storageItemID");
+            debugPrint("Deleting images for item: $storageItemID");
+          } else {
+            debugPrint("Item images in folder: $storageItemID is valid");
           }
         }
       });
