@@ -767,16 +767,34 @@ class BartFirestoreServices {
   }
 
   static Future<void> acceptTradeAsTrader(String tradeID) async {
-    await tradeCollection.doc(tradeID).update({
-      'acceptedByTrader': true,
-      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    final tradeDoc = tradeCollection.doc(tradeID);
+    await _firestore.runTransaction((transaction) async {
+      final snapshot = await transaction.get(tradeDoc);
+      final data = snapshot.data() as Map<String, dynamic>;
+      const bool acceptedByTrader = true;
+      final bool acceptedByTradee = data['acceptedByTradee'];
+      final isCompleted = (acceptedByTradee && acceptedByTrader);
+      transaction.update(tradeDoc, {
+        'acceptedByTrader': acceptedByTrader,
+        'isCompleted': isCompleted,
+        'timeUpdated': Timestamp.fromDate(DateTime.now()),
+      });
     });
   }
 
   static Future<void> acceptTradeAsTradee(String tradeID) async {
-    await tradeCollection.doc(tradeID).update({
-      'acceptedByTradee': true,
-      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    final tradeDoc = tradeCollection.doc(tradeID);
+    await _firestore.runTransaction((transaction) async {
+      final snapshot = await transaction.get(tradeDoc);
+      final data = snapshot.data() as Map<String, dynamic>;
+      final bool acceptedByTrader = data['acceptedByTrader'];
+      const bool acceptedByTradee = true;
+      final isCompleted = (acceptedByTradee && acceptedByTrader);
+      transaction.update(tradeDoc, {
+        'acceptedByTradee': acceptedByTrader,
+        'isCompleted': isCompleted,
+        'timeUpdated': Timestamp.fromDate(DateTime.now()),
+      });
     });
   }
 
