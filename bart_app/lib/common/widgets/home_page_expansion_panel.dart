@@ -1,6 +1,8 @@
+import 'package:bart_app/styles/index.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/home_trade_item.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
@@ -35,6 +37,25 @@ class HomePageTradeExpansionPanelBuilder {
         return tr('no.trade.history');
       default:
         return tr('no.trades.at.all');
+    }
+  }
+
+  Color getShimmerColour(BuildContext context, TradeCompType tradeType) {
+    final tradeStyle = Theme.of(context).extension<BartTradeWidgetStyle>()!;
+    switch (tradeType) {
+      case TradeCompType.incoming:
+        return tradeStyle.incomingTextColour;
+      case TradeCompType.outgoing:
+        return tradeStyle.outgoingTextColour;
+      case TradeCompType.successful:
+        return tradeStyle.completeSuccessTextColour;
+      case TradeCompType.tradeHistory:
+        // return tradeStyle.tradeHistoryTextColour;
+        return Colors.green;
+      case TradeCompType.failed:
+        return Colors.red;
+      default:
+        return Colors.amber;
     }
   }
 
@@ -83,6 +104,7 @@ class HomePageTradeExpansionPanelBuilder {
   }
 
   ExpansionPanel build(BuildContext context) {
+    final shimmerColor = getShimmerColour(context, tradeType);
     return ExpansionPanel(
       isExpanded: isExpanded,
       canTapOnHeader: true,
@@ -97,7 +119,7 @@ class HomePageTradeExpansionPanelBuilder {
         children: tradeList.isNotEmpty // maybe implement the view limiter here?
             ? tradeList.map(
                 (trade) {
-                  return TradeWidget(
+                  final thisTradeWidget = TradeWidget(
                     userID: userID,
                     trade: trade,
                     tradeType: tradeType,
@@ -112,6 +134,14 @@ class HomePageTradeExpansionPanelBuilder {
                       );
                     },
                   );
+                  if (trade == tradeList.first && !trade.isRead) {
+                    return thisTradeWidget.animate().shimmer(
+                          color: shimmerColor,
+                          duration: 1000.ms,
+                          delay: 300.ms,
+                        );
+                  }
+                  return thisTradeWidget;
                 },
               ).toList()
             : tradeType == TradeCompType.none
