@@ -249,8 +249,7 @@ class TradeDetailsPageFooter {
               : Container(),
 
           // show a button to cancel the trade
-          (!trade.isAccepted &&
-                  (!trade.acceptedByTradee && !trade.acceptedByTrader))
+          (!trade.isAccepted && !trade.isCompleted)
               ? Center(
                   child: SizedBox(
                     width: 150,
