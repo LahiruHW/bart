@@ -634,12 +634,19 @@ class BartFirestoreServices {
               (tradeFirestore) {
                 final tradedItem = itemList.firstWhere(
                   (item) => item.itemID == tradeFirestore.tradedItem,
+                  orElse: () => throw Exception(
+                      'Traded item not found for trade ${tradeFirestore.tradeID}'),
                 );
                 final offeredItem = itemList.firstWhere(
                   (item) => item.itemID == tradeFirestore.offeredItem,
+                  orElse: () => throw Exception(
+                      'Offered item not found for trade ${tradeFirestore.tradeID}'),
                 );
                 return Trade.fromFirestore(
-                    tradeFirestore, tradedItem, offeredItem);
+                  tradeFirestore,
+                  tradedItem,
+                  offeredItem,
+                );
               },
             )
             // only get a list of trades where the current
