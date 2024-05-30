@@ -26,7 +26,9 @@ class BartMarketListItemStyle extends ThemeExtension<BartMarketListItemStyle> {
 
   @override
   ThemeExtension<BartMarketListItemStyle> lerp(
-      covariant ThemeExtension<BartMarketListItemStyle>? other, double t) {
+    covariant ThemeExtension<BartMarketListItemStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }

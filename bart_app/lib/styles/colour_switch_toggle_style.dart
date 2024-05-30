@@ -27,7 +27,9 @@ class BartThemeModeToggleStyle
 
   @override
   ThemeExtension<BartThemeModeToggleStyle> lerp(
-      covariant ThemeExtension<BartThemeModeToggleStyle>? other, double t) {
+    covariant ThemeExtension<BartThemeModeToggleStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }

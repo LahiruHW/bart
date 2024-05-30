@@ -73,14 +73,15 @@ class BartMaterialButtonStyleGreen
 
   @override
   ThemeExtension<BartMaterialButtonStyleGreen> lerp(
-      covariant ThemeExtension<BartMaterialButtonStyleGreen>? other, double t) {
+    covariant ThemeExtension<BartMaterialButtonStyleGreen>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }
 
     if (other is BartMaterialButtonStyleGreen) {
       return BartMaterialButtonStyleGreen(
-        // buttonStyle: buttonStyle!.lerp(other.buttonStyle, t) as BartMaterialButtonStyle?,
         buttonStyle:
             buttonStyle!.lerp(other.buttonStyle, t) as BartMaterialButtonStyle?,
       );

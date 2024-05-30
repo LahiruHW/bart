@@ -1,15 +1,15 @@
-import 'package:bart_app/common/widgets/bart_snackbar.dart';
-import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/styles/bart_brand_colour_style.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/buttons/apple_action_button.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
+import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
 import 'package:bart_app/common/widgets/buttons/google_action_button.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 

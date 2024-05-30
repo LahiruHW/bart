@@ -22,7 +22,9 @@ class BartShimmerLoadStyle extends ThemeExtension<BartShimmerLoadStyle> {
 
   @override
   ThemeExtension<BartShimmerLoadStyle> lerp(
-      covariant ThemeExtension<BartShimmerLoadStyle>? other, double t) {
+    covariant ThemeExtension<BartShimmerLoadStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }

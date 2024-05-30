@@ -77,7 +77,7 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
       tradeHistoryTextColour:
           tradeHistoryTextColour ?? this.tradeHistoryTextColour,
       tradeHistoryBackgroundColour:
-          tradeHistoryBackgroundColour ?? this.tradeHistoryBackgroundColour,  
+          tradeHistoryBackgroundColour ?? this.tradeHistoryBackgroundColour,
       tradeHistoryShadowColour:
           tradeHistoryShadowColour ?? this.tradeHistoryShadowColour,
     );
@@ -85,7 +85,9 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
 
   @override
   ThemeExtension<BartTradeWidgetStyle> lerp(
-      covariant ThemeExtension<BartTradeWidgetStyle>? other, double t) {
+    covariant ThemeExtension<BartTradeWidgetStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }
@@ -107,19 +109,21 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
         completeSuccessTextColour: Color.lerp(
             completeSuccessTextColour, other.completeSuccessTextColour, t)!,
         completeSuccessBackgroundColour: Color.lerp(
-            completeSuccessBackgroundColour, other.completeSuccessBackgroundColour, t)!,
+            completeSuccessBackgroundColour,
+            other.completeSuccessBackgroundColour,
+            t)!,
         completeSuccessShadowColour: Color.lerp(
             completeSuccessShadowColour, other.completeSuccessShadowColour, t)!,
-        completeFailTextColour:
-            Color.lerp(completeFailTextColour, other.completeFailTextColour, t)!,
-        completeFailBackgroundColour: Color.lerp(
-            completeFailBackgroundColour, other.completeFailBackgroundColour, t)!,
+        completeFailTextColour: Color.lerp(
+            completeFailTextColour, other.completeFailTextColour, t)!,
+        completeFailBackgroundColour: Color.lerp(completeFailBackgroundColour,
+            other.completeFailBackgroundColour, t)!,
         completeFailShadowColour: Color.lerp(
             completeFailShadowColour, other.completeFailShadowColour, t)!,
-        tradeHistoryTextColour:
-            Color.lerp(tradeHistoryTextColour, other.tradeHistoryTextColour, t)!,
-        tradeHistoryBackgroundColour: Color.lerp(
-            tradeHistoryBackgroundColour, other.tradeHistoryBackgroundColour, t)!,
+        tradeHistoryTextColour: Color.lerp(
+            tradeHistoryTextColour, other.tradeHistoryTextColour, t)!,
+        tradeHistoryBackgroundColour: Color.lerp(tradeHistoryBackgroundColour,
+            other.tradeHistoryBackgroundColour, t)!,
         tradeHistoryShadowColour: Color.lerp(
             tradeHistoryShadowColour, other.tradeHistoryShadowColour, t)!,
       );

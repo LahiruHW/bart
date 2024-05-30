@@ -1,6 +1,6 @@
-import 'package:bart_app/styles/colour_switch_toggle_style.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/styles/index.dart';
+import 'package:bart_app/styles/colour_switch_toggle_style.dart';
 
 class BartAppTheme {
   BartAppTheme._();
@@ -217,7 +217,6 @@ class BartAppTheme {
         receiverContextBackgroundColor: red6,
         senderContextTextColor: red1,
         receiverContextTextColor: red1,
-
       ),
       BartTradeWidgetStyle(
         incomingTextColour: Colors.white,

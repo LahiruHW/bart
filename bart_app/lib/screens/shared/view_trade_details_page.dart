@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/result_item_tile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/icons/icon_exchange.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';

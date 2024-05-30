@@ -38,7 +38,9 @@ class BartPaymentPageStyle extends ThemeExtension<BartPaymentPageStyle> {
 
   @override
   ThemeExtension<BartPaymentPageStyle> lerp(
-      covariant ThemeExtension<BartPaymentPageStyle>? other, double t) {
+    covariant ThemeExtension<BartPaymentPageStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }
@@ -54,8 +56,8 @@ class BartPaymentPageStyle extends ThemeExtension<BartPaymentPageStyle> {
             currencyDropdownIconColor, other.currencyDropdownIconColor, t)!,
         textFieldBackgroundColor: Color.lerp(
             textFieldBackgroundColor, other.textFieldBackgroundColor, t)!,
-        textFieldTextColor: Color.lerp(
-            textFieldTextColor, other.textFieldTextColor, t)!,
+        textFieldTextColor:
+            Color.lerp(textFieldTextColor, other.textFieldTextColor, t)!,
       );
     }
     return this;

@@ -1,5 +1,5 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class BartFirebaseMessaging {
   static final FirebaseMessaging _fbMessaging = FirebaseMessaging.instance;

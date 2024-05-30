@@ -1,5 +1,5 @@
-import 'package:bart_app/styles/bart_payment_page_style.dart';
 import 'package:flutter/material.dart';
+import 'package:bart_app/styles/bart_payment_page_style.dart';
 
 class CurrencyDropDownMenu extends StatelessWidget {
   const CurrencyDropDownMenu({

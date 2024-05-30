@@ -31,7 +31,9 @@ class BartBrandColours extends ThemeExtension<BartBrandColours> {
 
   @override
   ThemeExtension<BartBrandColours> lerp(
-      covariant ThemeExtension<BartBrandColours>? other, double t) {
+    covariant ThemeExtension<BartBrandColours>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }

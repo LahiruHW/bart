@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BartImageTools {
-
-
   static Future<String> pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -15,7 +12,6 @@ class BartImageTools {
     return returnedImage!.path;
   }
 
-
   static Future<List<String>> pickImagesFromGallery() async {
     final returnedImages = await ImagePicker().pickMultiImage(
       imageQuality: 50,
@@ -23,7 +19,6 @@ class BartImageTools {
 
     return returnedImages.map((e) => e.path).toList();
   }
-
 
   static void viewImage(BuildContext context, String imagePath) {
     showDialog(
@@ -38,7 +33,6 @@ class BartImageTools {
       },
     );
   }
-
 
   // Future<void> getLostData() async {
   //   final ImagePicker picker = ImagePicker();
@@ -55,6 +49,4 @@ class BartImageTools {
   //     throw Exception('Lost data error');
   //   }
   // }
-
-
 }

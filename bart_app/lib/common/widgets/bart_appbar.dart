@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_function_declarations_over_variables
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -65,10 +63,11 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                               icon: const Icon(Icons.arrow_back),
                               style: ButtonStyle(
                                 iconColor: WidgetStateProperty.all<Color>(
-                                  Theme.of(context).appBarTheme.foregroundColor!,
+                                  Theme.of(context)
+                                      .appBarTheme
+                                      .foregroundColor!,
                                 ),
-                                backgroundColor:
-                                    WidgetStateProperty.all<Color>(
+                                backgroundColor: WidgetStateProperty.all<Color>(
                                   Colors.transparent,
                                 ),
                               ),

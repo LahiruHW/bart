@@ -1,8 +1,8 @@
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:bart_app/common/providers/state_provider.dart';
-import 'package:bart_app/styles/colour_switch_toggle_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/styles/colour_switch_toggle_style.dart';
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 class BartThemeModeToggle extends StatefulWidget {
   const BartThemeModeToggle({

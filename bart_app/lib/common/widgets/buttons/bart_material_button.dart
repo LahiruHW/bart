@@ -1,9 +1,8 @@
-import 'package:bart_app/common/constants/enum_material_button_types.dart';
-import 'package:bart_app/styles/bart_material_button_style.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/styles/bart_material_button_style.dart';
+import 'package:bart_app/common/constants/enum_material_button_types.dart';
 
 class BartMaterialButton extends StatefulWidget {
   const BartMaterialButton({

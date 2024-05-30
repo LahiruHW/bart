@@ -1,9 +1,9 @@
 
-import 'package:bart_app/common/widgets/side_nav_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/widgets/bart_appbar.dart';
 import 'package:bart_app/common/widgets/bottom_nav_bar.dart';
+import 'package:bart_app/common/widgets/side_nav_drawer.dart';
 
 class Base extends StatefulWidget {
   const Base({

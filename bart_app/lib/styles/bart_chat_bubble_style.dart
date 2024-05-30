@@ -56,7 +56,9 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
 
   @override
   ThemeExtension<BartChatBubbleStyle> lerp(
-      covariant ThemeExtension<BartChatBubbleStyle>? other, double t) {
+    covariant ThemeExtension<BartChatBubbleStyle>? other,
+    double t,
+  ) {
     if (other == null) return this;
     if (other is BartChatBubbleStyle) {
       return BartChatBubbleStyle(

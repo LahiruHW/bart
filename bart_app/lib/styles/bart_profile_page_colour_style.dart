@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 
-class BartProfilePageColourStyle extends ThemeExtension<BartProfilePageColourStyle>{
-  
+class BartProfilePageColourStyle
+    extends ThemeExtension<BartProfilePageColourStyle> {
   BartProfilePageColourStyle({
     required this.gradientColourTop,
     required this.gradientColourBottom,
@@ -16,8 +15,7 @@ class BartProfilePageColourStyle extends ThemeExtension<BartProfilePageColourSty
   final Color containerColor;
   final Color profileInfoCardColor;
   final Color textColor;
-  
-  
+
   @override
   ThemeExtension<BartProfilePageColourStyle> copyWith({
     Color? gradientColourTop,
@@ -36,20 +34,25 @@ class BartProfilePageColourStyle extends ThemeExtension<BartProfilePageColourSty
   }
 
   @override
-  ThemeExtension<BartProfilePageColourStyle> lerp(covariant ThemeExtension<BartProfilePageColourStyle>? other, double t) {
+  ThemeExtension<BartProfilePageColourStyle> lerp(
+    covariant ThemeExtension<BartProfilePageColourStyle>? other,
+    double t,
+  ) {
     if (other == null) {
       return this;
     }
     if (other is BartProfilePageColourStyle) {
       return BartProfilePageColourStyle(
-        gradientColourTop: Color.lerp(gradientColourTop, other.gradientColourTop, t)!,
-        gradientColourBottom: Color.lerp(gradientColourBottom, other.gradientColourBottom, t)!,
+        gradientColourTop:
+            Color.lerp(gradientColourTop, other.gradientColourTop, t)!,
+        gradientColourBottom:
+            Color.lerp(gradientColourBottom, other.gradientColourBottom, t)!,
         containerColor: Color.lerp(containerColor, other.containerColor, t)!,
-        profileInfoCardColor: Color.lerp(profileInfoCardColor, other.profileInfoCardColor, t)!,
+        profileInfoCardColor:
+            Color.lerp(profileInfoCardColor, other.profileInfoCardColor, t)!,
         textColor: Color.lerp(textColor, other.textColor, t)!,
       );
     }
     return this;
   }
-  
 }

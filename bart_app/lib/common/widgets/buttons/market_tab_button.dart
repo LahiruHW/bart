@@ -1,5 +1,5 @@
-import 'package:bart_app/styles/market_tab_button_style.dart';
 import 'package:flutter/material.dart';
+import 'package:bart_app/styles/market_tab_button_style.dart';
 
 class MarketPageTabButton extends StatelessWidget {
   const MarketPageTabButton({

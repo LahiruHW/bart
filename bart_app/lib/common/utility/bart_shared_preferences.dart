@@ -1,6 +1,4 @@
 import 'dart:convert';
-// import 'dart:js_interop';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';

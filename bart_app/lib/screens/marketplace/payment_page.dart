@@ -1,4 +1,3 @@
-import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +7,7 @@ import 'package:bart_app/common/entity/trade.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/styles/bart_payment_page_style.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
