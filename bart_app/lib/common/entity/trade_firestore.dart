@@ -26,6 +26,19 @@ class TradeFirestore {
   final Timestamp timeCreated;
   final Timestamp timeUpdated;
 
+  @override
+  bool operator ==(Object other) {
+    if (other is TradeFirestore) {
+      final result = tradeID == other.tradeID;
+      return result;
+    } else if (other is! TradeFirestore) {
+      return identical(this, other);
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => tradeID.hashCode;
 
   factory TradeFirestore.fromMap(Map<String, dynamic> data) {
     return TradeFirestore(

@@ -42,6 +42,20 @@ class Trade {
   bool isTrader(String userID) => tradedItem.itemOwner.userID == userID;
   bool isTradee(String userID) => offeredItem.itemOwner.userID == userID;
 
+  @override
+  bool operator ==(Object other) {
+    if (other is Trade) {
+      final result = tradeID == other.tradeID;
+      return result;
+    } else if (other is! Trade) {
+      return identical(this, other);
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => tradeID.hashCode;
+
   factory Trade.fromMap(Map<String, dynamic> data) {
     return Trade(
       tradeID: data['tradeID'],
