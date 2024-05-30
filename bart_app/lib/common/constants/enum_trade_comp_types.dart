@@ -2,9 +2,9 @@ enum TradeCompType{
   incoming('incoming'),              // isAccepted = false and submitted to an item you posted on the market
   outgoing('outgoing'),              // isAccepted = false and submitted to an item you offered to someone else
   successful('successful'),          // isAccepted = true
-  completeFailed('completeFailed'),  // isAccepted = false
+  failed('failed'),  // isAccepted = false
   tradeHistory('tradeHistory'),      // isAccepted = true or false, but isRead = true
-  empty('empty');                    // used for empty values
+  none('none');                    // used for empty values
 
   final String value;
   const TradeCompType(this.value);
@@ -20,12 +20,12 @@ enum TradeCompType{
         return TradeCompType.outgoing;
       case 'successful':
         return TradeCompType.successful;
-      case 'completeFailed':
-        return TradeCompType.completeFailed;
+      case 'failed':
+        return TradeCompType.failed;
       case 'tradeHistory':
         return TradeCompType.tradeHistory;
-      case 'empty':
-        return TradeCompType.empty;
+      case 'none':
+        return TradeCompType.none;
       default:
         throw Exception('TradeCompletionType.fromString: Invalid value: $value');
     }

@@ -32,7 +32,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
   late final TextEditingController _descriptionTextController;
   late final ScrollController _scrollController;
   late final FocusNode _focusNode;
-  // late final LoadingBlockFullScreen _loadingOverlay;
   late String lable1;
   late String lable2;
 
@@ -43,7 +42,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
     _focusNode = FocusNode();
     _descriptionTextController = TextEditingController();
     _focusNode.addListener(() {
-      // if (_focusNode.hasFocus || _focusNode.hasPrimaryFocus) {
       if (_focusNode.hasFocus) {
         Future.delayed(
           const Duration(milliseconds: 300),
@@ -87,12 +85,8 @@ class _ViewTradePageState extends State<ViewTradePage> {
   (String, String) getTradeItemLabels() {
     final trader = widget.trade.tradedItem.itemOwner.userName;
     final tradee = widget.trade.offeredItem.itemOwner.userName;
-    switch (widget.tradeType) {
+    switch (widget.trade.tradeCompType) {
       case TradeCompType.incoming:
-        // return (
-        //   "Your listed item",
-        //   "$tradee is offering you",
-        // );
         return (
           tr('view.trade.page.incoming.label1'),
           tr(
@@ -101,10 +95,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
           ),
         );
       case TradeCompType.outgoing:
-        // return (
-        //   "$trader's listed item",
-        //   "You offered",
-        // );
         return (
           tr(
             'view.trade.page.outgoing.label1',
@@ -113,10 +103,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
           tr('view.trade.page.outgoing.label2'),
         );
       case TradeCompType.successful:
-        // return (
-        //   "Offered by $trader",
-        //   "Offered by $tradee, accepted by $trader",
-        // );
         return (
           tr(
             'view.trade.page.successful.label1',
@@ -127,11 +113,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
             namedArgs: {'tradee': tradee, 'trader': trader},
           ),
         );
-      case TradeCompType.completeFailed:
-        // return (
-        //   "Offered by $trader",
-        //   "Offered by $tradee, rejected by $trader",
-        // );
+      case TradeCompType.failed:
         return (
           tr(
             'view.trade.page.completeFailed.label1',
@@ -143,10 +125,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
           ),
         );
       default:
-        // return (
-        //   "Offered by $trader",
-        //   "Offered by $tradee",
-        // );
         return (
           tr(
             'view.trade.page.default.label1',
@@ -166,9 +144,9 @@ class _ViewTradePageState extends State<ViewTradePage> {
     debugPrint('------------- ${context.locale.toString()}');
 
     setState(() {
-      final val = getTradeItemLabels();
-      lable1 = val.$1;
-      lable2 = val.$2;
+      final labels = getTradeItemLabels();
+      lable1 = labels.$1;
+      lable2 = labels.$2;
     });
 
     if (widget.tradeType != TradeCompType.outgoing) {
@@ -204,16 +182,12 @@ class _ViewTradePageState extends State<ViewTradePage> {
                 key: ValueKey(context.locale.toString()),
                 label: lable2,
                 item: widget.trade.offeredItem,
-                labelColor: widget.tradeType == TradeCompType.completeFailed
-                    ? Colors.red
-                    : null,
                 onTap: !widget.trade.offeredItem.isPayment
                     ? () => viewImage(context, widget.trade.offeredItem.imgs[0])
                     : () {},
               ),
               const SizedBox(height: 20),
               Text(
-                // 'Product Description: ',
                 context.tr('view.trade.page.prodDesc'),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: BartAppTheme.red1,
@@ -253,7 +227,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
                 descriptionTextController: _descriptionTextController,
                 focusNode: _focusNode,
                 loadingOverlay: LoadingBlockFullScreen(
-                  // context: scaffoldKey.currentContext!,
                   context: context,
                   dismissable: false,
                 ),

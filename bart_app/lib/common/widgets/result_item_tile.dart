@@ -8,13 +8,11 @@ class ResultItemTile extends StatefulWidget {
     super.key,
     required this.label,
     required this.item,
-    this.labelColor,
-    this.onTap,
+    required this.onTap,
   });
 
   Item item;
   String label;
-  Color? labelColor;
   VoidCallback? onTap;
 
   @override
@@ -32,10 +30,9 @@ class _ResultItemTileState extends State<ResultItemTile> {
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color:
-              Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
-                  ? Colors.white
-                  : Colors.black,
+          color: Theme.of(context).colorScheme.surface.computeLuminance() > 0.5
+              ? Colors.white
+              : Colors.black,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.black.withOpacity(0.2),
@@ -51,7 +48,6 @@ class _ResultItemTileState extends State<ResultItemTile> {
                 widget.label,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      // color: widget.labelColor ?? Colors.green,
                       color: Theme.of(context)
                                   .colorScheme
                                   .surface

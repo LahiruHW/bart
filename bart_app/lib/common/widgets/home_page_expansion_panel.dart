@@ -29,7 +29,7 @@ class HomePageTradeExpansionPanelBuilder {
         return tr("no.outgoing.trades");
       case TradeCompType.successful:
         return tr('no.successful.trades');
-      case TradeCompType.completeFailed:
+      case TradeCompType.failed:
         return tr('no.failed.trades');
       case TradeCompType.tradeHistory:
         return tr('no.trade.history');
@@ -96,7 +96,6 @@ class HomePageTradeExpansionPanelBuilder {
         isExpanded,
         title: title,
         count: tradeList.isNotEmpty ? tradeList.length : 0,
-        // count: tradeList.length,
       ),
       body: Column(
         children: tradeList.isNotEmpty // maybe implement the view limiter here?
@@ -119,7 +118,7 @@ class HomePageTradeExpansionPanelBuilder {
                   );
                 },
               ).toList()
-            : tradeType == TradeCompType.empty
+            : tradeType == TradeCompType.none
                 ? [
                     const ShimmerHomeTradeWidget(),
                     const ShimmerHomeTradeWidget(),

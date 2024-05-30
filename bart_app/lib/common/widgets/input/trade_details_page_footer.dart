@@ -164,15 +164,23 @@ class TradeDetailsPageFooter {
                     loadingOverlay.show();
 
                     // accept & complete the trade
-                    trade.isAccepted = true;
-
-                    BartFirestoreServices.updateTrade(trade).then(
+                    BartFirestoreServices.markTradeAsAccepted(
+                      trade.tradeID,
+                    ).then(
                       (value) {
                         Future.delayed(
                           const Duration(milliseconds: 1500),
                           () {
                             loadingOverlay.hide();
-                            GoRouter.of(context).pop();
+                            trade.tradeCompType = TradeCompType.successful;
+                            context.replace(
+                              '/home/viewTrade',
+                              extra: {
+                                'trade': trade,
+                                'tradeType': trade.tradeCompType,
+                                'userID': userID,
+                              },
+                            );
                           },
                         );
                       },
@@ -312,12 +320,16 @@ class TradeDetailsPageFooter {
                               loadingOverlay.show();
                               // item is taken off the market
                               trade.tradedItem.isListedInMarket = false;
-                              await BartFirestoreServices.updateItem(
-                                trade.tradedItem,
-                              );
-                              // the trader accepts the trade
-                              await BartFirestoreServices.acceptTradeAsTrader(
-                                trade.tradeID,
+                              await Future.wait(
+                                [
+                                  BartFirestoreServices.updateItem(
+                                    trade.tradedItem,
+                                  ),
+                                  // the trader accepts the trade
+                                  BartFirestoreServices.acceptTradeAsTrader(
+                                    trade.tradeID,
+                                  ),
+                                ],
                               ).then(
                                 (value) {
                                   Future.delayed(

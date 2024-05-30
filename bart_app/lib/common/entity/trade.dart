@@ -2,6 +2,7 @@ import 'package:bart_app/common/entity/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bart_app/common/entity/trade_firestore.dart';
 // import 'package:bart_app/common/typedefs/typedef_home_item.dart';
+import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 // class Trade extends HomeItem {
 class Trade {
@@ -12,10 +13,11 @@ class Trade {
     required this.timeCreated,
     this.timeUpdated,
     this.isRead = false,
-    this.isAccepted = false,      // only used for incoming trades
-    this.acceptedByTrader = false,  // only used for successful trades
-    this.acceptedByTradee = false,  // only used for successful trades
-    this.isCompleted = false,
+    this.isAccepted = false, // only used for incoming trades
+    this.acceptedByTrader = false, // only used for successful trades
+    this.acceptedByTradee = false, // only used for successful trades
+    this.isCompleted = false, // USE TO SEE IF TRADE BELONGS IN TRADE HISTORY
+    this.tradeCompType = TradeCompType.none,
   });
 
   final String tradeID;
@@ -28,6 +30,17 @@ class Trade {
   final Item offeredItem;
   final Timestamp timeCreated;
   Timestamp? timeUpdated;
+  TradeCompType tradeCompType;
+
+  bool isUserInTrade(String userID) {
+    return tradedItem.itemOwner.userID == userID ||
+        offeredItem.itemOwner.userID == userID;
+  }
+
+  bool acceptedByBoth() => acceptedByTrader && acceptedByTradee;
+
+  bool isTrader(String userID) => tradedItem.itemOwner.userID == userID;
+  bool isTradee(String userID) => offeredItem.itemOwner.userID == userID;
 
   factory Trade.fromMap(Map<String, dynamic> data) {
     return Trade(
@@ -76,5 +89,5 @@ class Trade {
 
   @override
   String toString() =>
-      'Trade: $tradeID, traded: ${tradedItem.itemName}, offered: ${offeredItem.itemName}, timeCreated: $timeCreated, timeUpdated: $timeUpdated';
+      'Trade: $tradeID, traded: ${tradedItem.itemName}, offered: ${offeredItem.itemName}, timeCreated: $timeCreated, timeUpdated: $timeUpdated, tradeCompType: $tradeCompType';
 }

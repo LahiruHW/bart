@@ -10,6 +10,7 @@ import 'package:bart_app/common/utility/bart_auth.dart';
 // import 'package:bart_app/common/typedefs/typedef_home_item.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
+import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 import 'package:bart_app/common/constants/use_emulators.dart';
 
@@ -644,9 +645,7 @@ class BartFirestoreServices {
             // only get a list of trades where the current
             // user is either the trader or the tradee
             .where(
-              (thisTrade) =>
-                  thisTrade.tradedItem.itemOwner.userID == userID ||
-                  thisTrade.offeredItem.itemOwner.userID == userID,
+              (thisTrade) => thisTrade.isUserInTrade(userID),
             )
             .toList();
       },
@@ -660,14 +659,17 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-            (trade) =>
-                (!trade.isAccepted) &&
-                (!trade.isCompleted) &&
-                (!trade.acceptedByTradee &&
-                    !trade.acceptedByTrader) && ////////////////
-                (trade.tradedItem.itemOwner.userID == userID),
-          )
-          .toList();
+        (trade) =>
+            (!trade.isAccepted) &&
+            (!trade.isCompleted) &&
+            trade.isTrader(userID),
+      )
+          .map(
+        (trade) {
+          trade.tradeCompType = TradeCompType.incoming;
+          return trade;
+        },
+      ).toList();
     });
   }
 
@@ -678,14 +680,17 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-            (trade) =>
-                (!trade.isCompleted) &&
-                (!trade.isAccepted) &&
-                (!trade.acceptedByTradee &&
-                    !trade.acceptedByTrader) && ////////////////
-                (trade.offeredItem.itemOwner.userID == userID),
-          )
-          .toList();
+        (trade) =>
+            (!trade.isCompleted) &&
+            (!trade.isAccepted) &&
+            trade.isTradee(userID),
+      )
+          .map(
+        (trade) {
+          trade.tradeCompType = TradeCompType.outgoing;
+          return trade;
+        },
+      ).toList();
     });
   }
 
@@ -696,15 +701,18 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-            (trade) =>
-                (!trade.isCompleted) &&
-                (trade.isAccepted) &&
-                (!trade.acceptedByTrader ||
-                    !trade.acceptedByTradee) && ////////////////////
-                (trade.tradedItem.itemOwner.userID == userID ||
-                    trade.offeredItem.itemOwner.userID == userID),
-          )
-          .toList();
+        (trade) =>
+            (!trade.isCompleted) &&
+            (trade.isAccepted) &&
+            !trade.acceptedByBoth() &&
+            trade.isUserInTrade(userID),
+      )
+          .map(
+        (trade) {
+          trade.tradeCompType = TradeCompType.successful;
+          return trade;
+        },
+      ).toList();
     });
   }
 
@@ -727,17 +735,24 @@ class BartFirestoreServices {
   }
 
   /// get the stream of trades that are completed (i.e. trade history)
-  static Stream<List<Trade>> getCompletedTradeListStream(String userID) {
+  static Stream<List<Trade>> getCompletedTradeHistoryListStream(String userID) {
     return getTradeListStream(userID).map(
       (tradeList) => tradeList
           .where(
-            // (trade) => trade.isCompleted,
-            // (trade) => trade.acceptedByTrader && trade.acceptedByTradee,
-            (trade) =>
-                trade.isCompleted ||
-                (trade.acceptedByTrader && trade.acceptedByTradee),
-          )
-          .toList(),
+        (trade) =>
+            // trade.isCompleted ||
+            // (trade.acceptedByTrader && trade.acceptedByTradee),
+            (trade.isCompleted && trade.isAccepted && trade.acceptedByBoth()) ||
+            (trade.isCompleted && !trade.isAccepted && !trade.acceptedByBoth()),
+      )
+          .map((trade) {
+        if (trade.isCompleted) {
+          trade.tradeCompType = (trade.isAccepted && trade.acceptedByBoth())
+              ? TradeCompType.tradeHistory
+              : TradeCompType.failed;
+        }
+        return trade;
+      }).toList(),
     );
   }
 
@@ -767,6 +782,27 @@ class BartFirestoreServices {
   static Future<void> acceptTradeAsTradee(String tradeID) async {
     await tradeCollection.doc(tradeID).update({
       'acceptedByTradee': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  static Future<void> markTradeAsCompleted(String tradeID) async {
+    await tradeCollection.doc(tradeID).update({
+      'isCompleted': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  static Future<void> markTradeAsAccepted(String tradeID) {
+    return tradeCollection.doc(tradeID).update({
+      'isAccepted': true,
+      'timeUpdated': Timestamp.fromDate(DateTime.now()),
+    });
+  }
+
+  static Future<void> markTradeAsRead(String tradeID) {
+    return tradeCollection.doc(tradeID).update({
+      'isRead': true,
       'timeUpdated': Timestamp.fromDate(DateTime.now()),
     });
   }

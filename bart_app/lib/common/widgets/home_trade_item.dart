@@ -41,7 +41,7 @@ class TradeWidget extends StatelessWidget {
           tileStyle.completeSuccessTextColour,
           tileStyle.completeSuccessShadowColour,
         );
-      case TradeCompType.completeFailed:
+      case TradeCompType.failed:
         return (
           tileStyle.completeFailBackgroundColour,
           tileStyle.completeFailTextColour,
@@ -81,7 +81,7 @@ class TradeWidget extends StatelessWidget {
                 namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName})
             : tr('successful.trade.label2',
                 namedArgs: {'itemOwner': trade.offeredItem.itemOwner.userName});
-      case TradeCompType.completeFailed:
+      case TradeCompType.failed:
         // return (userID == trade.offeredItem.itemOwner.userID)
         //     ? "${trade.tradedItem.itemOwner.userName} rejected your trade offer!"
         //     : "You rejected ${trade.offeredItem.itemOwner.userName}'s trade offer!";

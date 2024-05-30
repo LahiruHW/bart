@@ -124,8 +124,8 @@ class _NewItemResultPageState extends State<NewItemResultPage>
               const SizedBox(height: 20),
               ResultItemTile(
                 item: widget.item,
-                // label: 'Posted by you',
                 label: context.tr('newItem.confirmation.label'),
+                onTap: null,
               ).animate().moveX(
                     duration: 600.ms,
                     begin: -500,

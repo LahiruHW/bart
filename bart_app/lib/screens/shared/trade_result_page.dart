@@ -120,6 +120,7 @@ class _TradeResultPageState extends State<TradeResultPage>
                     'trade.confirmation.label1',
                     namedArgs: {'itemOwner': widget.item1.itemOwner.userName},
                   ),
+                  onTap: null,
                 ).animate().moveX(
                       duration: 600.ms,
                       begin: -500,
@@ -134,6 +135,7 @@ class _TradeResultPageState extends State<TradeResultPage>
                   label: !widget.item2.isPayment
                       ? context.tr('trade.confirmation.label2')
                       : context.tr('trade.confirmation.label3'),
+                  onTap: null,
                 ).animate().moveX(
                       duration: 600.ms,
                       begin: 500,

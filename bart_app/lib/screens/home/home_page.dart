@@ -212,8 +212,14 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: StreamBuilder(
-                stream: BartFirestoreServices.getCompletedTradeListStream(
+                stream:
+                    BartFirestoreServices.getCompletedTradeHistoryListStream(
                   provider.userProfile.userID,
+                ).map(
+                  (tradeList) => tradeList
+                      .where((trade) =>
+                          trade.tradeCompType == TradeCompType.tradeHistory)
+                      .toList(),
                 ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
