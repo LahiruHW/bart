@@ -57,20 +57,19 @@ class Item {
     );
   }
 
-  factory Item.empty() {
-    return Item(
-      itemID: "",
-      itemName: "",
-      itemDescription: "",
-      itemOwner: UserLocalProfile(),
-      imgs: [],
-      preferredInReturn: null,
-      postedOn: Timestamp.now(),
-      isListedInMarket: false,
-      isPayment: false,
-      isNull: true,
-    );
-  }
+  static final Item _invalidObj = Item(
+    itemID: "",
+    itemName: "",
+    itemDescription: "",
+    itemOwner: UserLocalProfile(),
+    imgs: [],
+    preferredInReturn: null,
+    postedOn: Timestamp.now(),
+    isListedInMarket: false,
+    isPayment: false,
+    isNull: true,
+  );
+  factory Item.empty() => _invalidObj;
 
   Item copyWith({
     String? itemDescription,

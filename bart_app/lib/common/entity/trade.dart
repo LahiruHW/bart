@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:bart_app/common/entity/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bart_app/common/entity/trade_firestore.dart';
@@ -89,22 +91,22 @@ class Trade {
     );
   }
 
-  factory Trade.empty() {
-    return Trade(
-      tradeID: "",
-      tradedItem: Item.empty(),
-      offeredItem: Item.empty(),
-      timeCreated: Timestamp.now(),
-      timeUpdated: Timestamp.now(),
-      isRead: true,
-      isAccepted: false,
-      acceptedByTrader: false,
-      acceptedByTradee: false,
-      isCompleted: false,
-      tradeCompType: TradeCompType.none,
-      isNull: true,
-    );
-  }
+  static final Trade _invalidObj = Trade(
+    tradeID: "",
+    tradedItem: Item.empty(),
+    offeredItem: Item.empty(),
+    timeCreated: Timestamp.now(),
+    timeUpdated: Timestamp.now(),
+    isRead: true,
+    isAccepted: false,
+    acceptedByTrader: false,
+    acceptedByTradee: false,
+    isCompleted: false,
+    tradeCompType: TradeCompType.none,
+    isNull: true,
+  );
+
+  factory Trade.empty() => _invalidObj;
 
   Trade copyWith({
     bool? isRead,
