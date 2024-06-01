@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ImageWithPopUpMenu extends StatelessWidget {
   const ImageWithPopUpMenu({
@@ -11,6 +12,21 @@ class ImageWithPopUpMenu extends StatelessWidget {
 
   final String imagePath;
   final VoidCallback onDelete;
+
+  Widget _buildImage() => Uri.parse(imagePath).isAbsolute
+      ? CachedNetworkImage(
+          imageUrl: imagePath,
+          width: 150,
+          height: 150,
+          fit: BoxFit.fitHeight,
+          alignment: Alignment.center,
+        )
+      : Image.file(
+          File(imagePath),
+          width: 150,
+          height: 150,
+          fit: BoxFit.fitHeight,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +53,7 @@ class ImageWithPopUpMenu extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Image.file(
-              File(imagePath),
-              width: 150,
-              height: 150,
-              fit: BoxFit.fitHeight,
-            ),
+            child: _buildImage(),
           ),
         ),
         menuChildren: [
