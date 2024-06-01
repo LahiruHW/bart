@@ -79,6 +79,19 @@ class BartRouter {
                         userID: userID,
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        name: 'editTrade',
+                        path: 'editTrade',
+                        builder: (context, state) {
+                          final data = state.extra as Map<String, dynamic>;
+                          final trade = data['trade'] as Trade;
+                          return trade.offeredItem.isPayment
+                              ? EditTradePagePayment(trade: trade)
+                              : EditTradePageOffer(trade: trade);
+                        },
+                      )
+                    ],
                   ),
                   GoRoute(
                     name: 'newItem',

@@ -236,6 +236,29 @@ class TradeDetailsPageFooter {
                 )
               : Container(),
 
+          // show a button to edit the trade
+          (!trade.isAccepted && !trade.isCompleted)
+              ? Center(
+                  child: SizedBox(
+                    width: 150,
+                    height: 75,
+                    child: BartMaterialButton(
+                      label: context.tr('view.trade.page.btn.editTrade'),
+                      onPressed: () {
+                        context.push(
+                          '/home/viewTrade/editTrade',
+                          extra: {'trade': trade},
+                        );
+                      },
+                    ),
+                  ),
+                )
+              : Container(),
+
+          (!trade.isAccepted && !trade.isCompleted)
+              ? const SizedBox(height: 10)
+              : Container(),
+
           // show a button to cancel the trade
           (!trade.isAccepted && !trade.isCompleted)
               ? Center(
