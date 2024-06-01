@@ -386,8 +386,10 @@ class BartFirestoreServices {
           if (msg.isSharedItem!) {
             if (extra.containsKey('itemContent')) {
               final String itemID = extra['itemContent'];
-              final itemContent =
-                  itemList.firstWhere((item) => item.itemID == itemID);
+              final itemContent = itemList.firstWhere(
+                (item) => item.itemID == itemID,
+                orElse: () => Item.empty(),
+              );
               msg.extra['itemContent'] = itemContent;
             } else {
               msg.extra['itemContent'] = null;
@@ -396,8 +398,10 @@ class BartFirestoreServices {
           if (msg.isSharedTrade!) {
             if (extra.containsKey('tradeContent')) {
               final String tradeID = extra['tradeContent'];
-              final tradeContent =
-                  tradeList.firstWhere((trade) => trade.tradeID == tradeID);
+              final tradeContent = tradeList.firstWhere(
+                (trade) => trade.tradeID == tradeID,
+                orElse: () => Trade.empty(),
+              );
               msg.extra['tradeContent'] = tradeContent;
             } else {
               msg.extra['tradeContent'] = null;
