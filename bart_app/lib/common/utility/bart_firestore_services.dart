@@ -638,13 +638,11 @@ class BartFirestoreServices {
               (tradeFirestore) {
                 final tradedItem = itemList.firstWhere(
                   (item) => item.itemID == tradeFirestore.tradedItem,
-                  orElse: () => throw Exception(
-                      'Traded item not found for trade ${tradeFirestore.tradeID}'),
+                  orElse: () => Item.empty(),
                 );
                 final offeredItem = itemList.firstWhere(
                   (item) => item.itemID == tradeFirestore.offeredItem,
-                  orElse: () => throw Exception(
-                      'Offered item not found for trade ${tradeFirestore.tradeID}'),
+                  orElse: () => Item.empty(),
                 );
                 return Trade.fromFirestore(
                   tradeFirestore,
@@ -652,6 +650,10 @@ class BartFirestoreServices {
                   offeredItem,
                 );
               },
+            )
+            // remove all the trades which have empty items
+            .where(
+              (trade) => !trade.tradedItem.isNull && !trade.offeredItem.isNull,
             )
             // only get a list of trades where the current
             // user is either the trader or the tradee
