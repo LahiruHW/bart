@@ -842,6 +842,9 @@ class BartFirestoreServices {
     ).then(
       (_) async {
         debugPrint("1. ||||||||||||||||||||| DELETED ALL IMAGES FROM STORAGE");
+        // make sure the traded item put back onto the market
+        trade.tradedItem.isListedInMarket = true;
+        await updateItem(trade.tradedItem);
         // delete the offered item from the item collection
         return await itemCollection.doc(trade.offeredItem.itemID).delete().then(
           (_) async {
