@@ -87,6 +87,33 @@ class Trade {
     );
   }
 
+  Trade copyWith({
+    bool? isRead,
+    bool? isAccepted,
+    bool? acceptedByTrader,
+    bool? acceptedByTradee,
+    bool? isCompleted,
+    Item? tradedItem,
+    Item? offeredItem,
+    Timestamp? timeCreated,
+    Timestamp? timeUpdated,
+    TradeCompType? tradeCompType,
+  }) {
+    return Trade(
+      tradeID: tradeID,
+      isRead: isRead ?? this.isRead,
+      isAccepted: isAccepted ?? this.isAccepted,
+      acceptedByTrader: acceptedByTrader ?? this.acceptedByTrader,
+      acceptedByTradee: acceptedByTradee ?? this.acceptedByTradee,
+      isCompleted: isCompleted ?? this.isCompleted,
+      tradedItem: tradedItem ?? this.tradedItem,
+      offeredItem: offeredItem ?? this.offeredItem,
+      timeCreated: timeCreated ?? this.timeCreated,
+      timeUpdated: timeUpdated ?? this.timeUpdated,
+      tradeCompType: tradeCompType ?? this.tradeCompType,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'tradedItem': tradedItem.itemID,

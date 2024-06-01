@@ -55,6 +55,29 @@ class Item {
     );
   }
 
+  Item copyWith({
+    String? itemDescription,
+    String? itemName,
+    UserLocalProfile? itemOwner,
+    List<String>? imgs,
+    List<String>? preferredInReturn,
+    Timestamp? postedOn,
+    bool? isListedInMarket,
+    bool? isPayment,
+  }) {
+    return Item(
+      itemID: itemID,
+      itemName: itemName ?? this.itemName,
+      itemOwner: itemOwner ?? this.itemOwner,
+      itemDescription: itemDescription ?? this.itemDescription,
+      imgs: imgs ?? this.imgs,
+      preferredInReturn: preferredInReturn ?? this.preferredInReturn,
+      postedOn: postedOn ?? this.postedOn,
+      isListedInMarket: isListedInMarket ?? this.isListedInMarket,
+      isPayment: isPayment ?? this.isPayment,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'itemName': itemName,
