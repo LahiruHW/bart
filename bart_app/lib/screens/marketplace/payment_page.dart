@@ -28,9 +28,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  late final FocusNode _userNameFocusNode;
-  // final List<String> currencyList = ["\$", "€"];
-  final List<String> currencyList = ["€"];
+  final List<String> currencyList = ["€"]; // ["\$", "€"];
   late String currencyUnit;
   late String amount;
   late final TextEditingController _amountController;
@@ -41,7 +39,6 @@ class _PaymentPageState extends State<PaymentPage> {
     super.initState();
     _scaffoldKey = GlobalKey<ScaffoldState>();
     currencyUnit = currencyList[0];
-    _userNameFocusNode = FocusNode();
     _amountController = TextEditingController();
   }
 
@@ -62,7 +59,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   void dispose() {
-    _userNameFocusNode.dispose();
     _amountController.dispose();
     super.dispose();
   }
@@ -85,7 +81,6 @@ class _PaymentPageState extends State<PaymentPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                // "How much are you willing to pay?",
                 context.tr('returnOffer.page.amount.header'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -93,9 +88,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       fontSize: 25,
                     ),
               ),
-
               const SizedBox(height: 20),
-
               Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 50,
@@ -167,7 +160,6 @@ class _PaymentPageState extends State<PaymentPage> {
                   child: BartMaterialButton(
                     label: context.tr('returnOffer.page.btn.continue'),
                     onPressed: () {
-
                       // 0. validate the amount
                       if (!validateAmount()) return;
 
