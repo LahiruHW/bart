@@ -18,6 +18,7 @@ class Trade {
     this.acceptedByTradee = false, // only used for successful trades
     this.isCompleted = false, // USE TO SEE IF TRADE BELONGS IN TRADE HISTORY
     this.tradeCompType = TradeCompType.none,
+    this.isNull = false,
   });
 
   final String tradeID;
@@ -31,6 +32,7 @@ class Trade {
   final Timestamp timeCreated;
   Timestamp? timeUpdated;
   TradeCompType tradeCompType;
+  bool isNull;
 
   bool isUserInTrade(String userID) {
     return tradedItem.itemOwner.userID == userID ||
@@ -84,6 +86,23 @@ class Trade {
       acceptedByTrader: tradeFirestore.acceptedByTrader,
       acceptedByTradee: tradeFirestore.acceptedByTradee,
       isCompleted: tradeFirestore.isCompleted,
+    );
+  }
+
+  factory Trade.empty() {
+    return Trade(
+      tradeID: "",
+      tradedItem: Item.empty(),
+      offeredItem: Item.empty(),
+      timeCreated: Timestamp.now(),
+      timeUpdated: Timestamp.now(),
+      isRead: true,
+      isAccepted: false,
+      acceptedByTrader: false,
+      acceptedByTradee: false,
+      isCompleted: false,
+      tradeCompType: TradeCompType.none,
+      isNull: true,
     );
   }
 

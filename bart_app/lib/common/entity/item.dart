@@ -14,6 +14,7 @@ class Item {
     this.isListedInMarket = true,
     this.isPayment =
         false, // if it is a payment item --> item name and description will be the amount
+    this.isNull = false,
   });
 
   final String itemID;
@@ -25,6 +26,7 @@ class Item {
   final Timestamp postedOn;
   bool isListedInMarket;
   final bool isPayment;
+  bool isNull;
 
   factory Item.fromMap(Map<String, dynamic> data) {
     return Item(
@@ -52,6 +54,21 @@ class Item {
       postedOn: itemFirestore.postedOn,
       isListedInMarket: itemFirestore.isListedInMarket,
       isPayment: itemFirestore.isPayment,
+    );
+  }
+
+  factory Item.empty() {
+    return Item(
+      itemID: "",
+      itemName: "",
+      itemDescription: "",
+      itemOwner: UserLocalProfile(),
+      imgs: [],
+      preferredInReturn: null,
+      postedOn: Timestamp.now(),
+      isListedInMarket: false,
+      isPayment: false,
+      isNull: true,
     );
   }
 
