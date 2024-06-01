@@ -88,7 +88,8 @@ class _ResultItemTileState extends State<ResultItemTile> {
                       ),
                       child: Text(
                         widget.item.itemName,
-                        style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
                           color: Colors.green,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
