@@ -8,6 +8,7 @@ class TempStateProvider extends ChangeNotifier {
 
   List<String>? _imagePaths;
   List<String> get imagePaths => _imagePaths ?? [];
+  set imagePaths(List<String> imgs) => _imagePaths = imgs;
 
   void setImagePaths(List<String> paths) {
     _imagePaths = paths;
