@@ -32,6 +32,8 @@ class _ItemPageState extends State<ItemPage> {
   late final FocusNode focusNode;
   late final PageController _pageController;
   late final TextEditingController _textEditController;
+  late final TransformationController _transformationController;
+  bool _isZooming = false;
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _ItemPageState extends State<ItemPage> {
     focusNode = FocusNode();
     _textEditController = TextEditingController();
     _pageController = PageController(initialPage: 0);
+    _transformationController = TransformationController();
   }
 
   @override
@@ -57,6 +60,9 @@ class _ItemPageState extends State<ItemPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Consumer<BartStateProvider>(
         builder: (context, provider, child) => SingleChildScrollView(
+          physics: _isZooming
+              ? const NeverScrollableScrollPhysics()
+              : const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(
             horizontal: 15,
             vertical: 10,
@@ -87,11 +93,26 @@ class _ItemPageState extends State<ItemPage> {
                   child: PageView.builder(
                     controller: _pageController,
                     itemCount: item.imgs.length,
+                    physics: _isZooming
+                        ? const NeverScrollableScrollPhysics()
+                        : const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Hero(
                         tag: item.itemID,
-                        child: CachedNetworkImage(
-                          imageUrl: item.imgs[index],
+                        child: InteractiveViewer(
+                          panAxis: PanAxis.free,
+                          panEnabled: true,
+                          scaleEnabled: true,
+                          transformationController: _transformationController,
+                          onInteractionUpdate: (details) {
+                            setState(
+                              () => _isZooming =
+                                  (details.scale > 1.0 || details.scale < 1.0),
+                            );
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: item.imgs[index],
+                          ),
                         ),
                       );
                     },
