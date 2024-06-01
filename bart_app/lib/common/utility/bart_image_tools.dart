@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -25,10 +26,15 @@ class BartImageTools {
       context: context,
       builder: (context) {
         return Dialog(
-          child: Image.file(
-            File(imagePath),
-            fit: BoxFit.cover,
-          ),
+          child: Uri.parse(imagePath).isAbsolute
+              ? CachedNetworkImage(
+                  imageUrl: imagePath,
+                  fit: BoxFit.cover,
+                )
+              : Image.file(
+                  File(imagePath),
+                  fit: BoxFit.cover,
+                ),
         );
       },
     );
