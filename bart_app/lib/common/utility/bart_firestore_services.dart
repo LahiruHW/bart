@@ -868,6 +868,68 @@ class BartFirestoreServices {
     });
   }
 
+  /// update trade
+  static Future<void> updateTrade(Trade trade) async {
+    await tradeCollection.doc(trade.tradeID).update(trade.toMap());
+  }
+
+  /// save edit trade changes
+  static Future<bool> saveEditItemTradeChanges(Trade trade) async {
+    // 1. go through the list of images and upload ones that aren't urls onto storage
+    return await BartFirebaseStorageServices.uploadItemImages(
+      trade.offeredItem.imgs,
+      trade.offeredItem.itemID,
+    ).then(
+      (imgList) async {
+        debugPrint("1. |||||||||||||||| UPDATED OFFERED ITEM IMAGES");
+        // 2. update the offeredItem in the item collection
+        return await updateItem(trade.offeredItem.copyWith(imgs: imgList)).then(
+          (value) async {
+            debugPrint("2. |||||||||||||||| UPDATED OFFERED ITEM IN FIRESTORE");
+            // 3. update current trade in the trade collection
+            return updateTrade(trade).then(
+              (value) {
+                return true;
+              },
+            ).onError((error, stackTrace) {
+              debugPrint("3. |||||| ERROR UPDATING TRADE IN FIRESTORE: $error");
+              return false;
+            });
+          },
+        ).onError((error, stackTrace) {
+          debugPrint(
+              "2. ||||||||||||| ERROR UPDATING OFFERED ITEM IN FIRESTORE: $error");
+          return false;
+        });
+      },
+    ).onError((error, stackTrace) {
+      debugPrint("1. ||||||||||||| ERROR UPDATING OFFERED ITEM IMAGES: $error");
+      return false;
+    });
+  }
+
+  static Future<bool> saveEditPaymentTradeChanges(Trade trade) async {
+    // 1. update the offered payment item in the item collection
+    return await updateItem(trade.offeredItem).then(
+      (value) async {
+        debugPrint("1. |||||||||||||||||||| UPDATED PAYMENT ITEM IN FIRESTORE");
+        // 2. update the current trade in the trade collection
+        return await updateTrade(trade).then(
+          (value) async {
+            debugPrint("2. ||||||||||||||||||||||| UPDATED TRADE IN FIRESTORE");
+            return true;
+          },
+        ).onError((error, stackTrace) {
+          debugPrint("2. ||||||||||| ERROR UPDATING TRADE IN FIRESTORE $error");
+          return false;
+        });
+      },
+    ).onError((error, stackTrace) {
+      debugPrint("1. |||||||| ERROR UPDATING PAYMENT ITEM IN FIRESTORE $error");
+      return false;
+    });
+  }
+
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
