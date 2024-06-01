@@ -138,7 +138,7 @@ class BubbleChildFactory extends StatelessWidget {
         ? bubbleTheme.senderContextBackgroundColor
         : bubbleTheme.receiverContextBackgroundColor;
     if (message.isSharedTrade!) {
-      if (message.extra['tradeContent'] == null) {
+      if (message.extra['tradeContent'] == null || message.extra['tradeContent'].isNull) {
         return _errorBody(
           context.tr('chat.bubble.trade.context.notFoundError'),
         );
@@ -214,7 +214,7 @@ class BubbleChildFactory extends StatelessWidget {
     }
 
     if (message.isSharedItem!) {
-      if (message.extra['itemContent'] == null) {
+      if (message.extra['itemContent'] == null || message.extra['itemContent'].isNull) {
         return _errorBody(
           context.tr('chat.bubble.item.context.notFoundError'),
         );
