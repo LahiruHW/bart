@@ -24,6 +24,9 @@ class BartFirebaseStorageServices {
 
   // upload an image to a particular firebase storage folder - item/{item_id}/
   static Future<String> uploadItemImage(String imgPath, String itemID) async {
+    // check if the image path is a url
+    if (Uri.parse(imgPath).isAbsolute) return imgPath;
+
     // get the name of the image file from the path
     final imgName = imgPath.split('/').last;
     debugPrint("||||||||||||||| Image name: $imgName");
