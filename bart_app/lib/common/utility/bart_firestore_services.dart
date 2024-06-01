@@ -977,6 +977,10 @@ class BartFirestoreServices {
     debugPrint("$itemIDList");
     for (final itemID in itemIDList) {
       itemCollection.doc(itemID).get().then((doc) async {
+        if (doc.id == 'PLACEHOLDER') {
+          return;
+        }
+
         final itemData = doc.data() as Map<String, dynamic>;
         final updatedDoc = Map<String, dynamic>.from(itemData);
 
@@ -1115,12 +1119,12 @@ class BartFirestoreServices {
           debugPrint("missing 'lastUpdated' added to chat $chatID");
         }
         if (!chatData.containsKey('users')) {
-          updatedDoc['users'] = FieldValue.arrayUnion([]);
+          updatedDoc['users'] = FieldValue.arrayUnion(List<String>.from([]));
           debugPrint("missing 'users' added to chat $chatID");
           updatedDoc['unreadMsgCountMap'] = {};
           debugPrint("missing 'unreadMsgCountMap' added to chat $chatID");
         } else {
-          final List<String> userIDList = chatData['users'];
+          final List<String> userIDList = List<String>.from(chatData['users']) ;
           // only update unreadMsgCountMap if:
           //    1) it is not there already,
           //    2) users is present and is not empty
