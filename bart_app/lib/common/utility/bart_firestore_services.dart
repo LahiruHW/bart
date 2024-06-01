@@ -1154,6 +1154,10 @@ class BartFirestoreServices {
           return value.exists;
         });
 
+        if (bool1){
+          await itemCollection.doc(tradedItemID).update({'isListedInMarket': true});
+        }
+
         if (!bool1 || !bool2) {
           debugPrint("DELETING INVALID TRADE: ${doc.id}");
           doc.reference.delete();
