@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -154,20 +153,14 @@ class _NewItemPageState extends State<NewItemPage> {
           tempProvider.clearAllTempData();
           // ADD THE OBJECT DEFINITION FOR THE TRADE RESULT PAGE
           final Map<String, dynamic> obj = {
-            // 'messageHeading': 'Trade Successful',
-            // 'message': 'You have successfully launched a return trade',
-            'messageHeading': context.tr('trade.result.message.title.heading.success'), // todo:_IMPLEMENT THE FAILED ONES ALSO!!
+            'messageHeading': context.tr(
+                'trade.result.message.title.heading.success'), // todo:_IMPLEMENT THE FAILED ONES ALSO!!
             'message': context.tr('trade.result.message.text.success'),
             'isSuccessful': true,
             'item1': widget.returnForItem,
             'item2': newItem,
             'dateCreated': newTrade.timeCreated,
           };
-          // BartRouter.pushPage(
-          //   context,
-          //   '${widget.currentPath}/tradeResult',
-          //   obj,
-          // );
           context.push(
             '/market/item/${widget.returnForItem!.itemID}/returnItem/tradeResult',
             extra: obj,
@@ -226,7 +219,8 @@ class _NewItemPageState extends State<NewItemPage> {
         loadingOverlay.hide();
         tempProvider.clearAllTempData();
         final Map<String, dynamic> obj = {
-          'messageHeading': context.tr('newItem.confirmation.title.heading.success'),
+          'messageHeading':
+              context.tr('newItem.confirmation.title.heading.success'),
           'message': context.tr('newItem.confirmation.message.text.success'),
           'isSuccessful': true,
           'item': newItem,
@@ -262,14 +256,10 @@ class _NewItemPageState extends State<NewItemPage> {
                 : const EdgeInsets.only(
                     left: 10, right: 10, top: 30, bottom: 30),
             child: Form(
-              // onChanged: () {
-              //   debugPrint('form changed');
-              // },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    // "Give your item a name:",
                     context.tr('newItem.page.itemNameHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,
@@ -281,7 +271,6 @@ class _NewItemPageState extends State<NewItemPage> {
                     child: TextField(
                       controller: _nameTextController,
                       decoration: InputDecoration(
-                        // hintText: "Item name",
                         hintText: context.tr('newItem.page.itemNameHint'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -291,7 +280,6 @@ class _NewItemPageState extends State<NewItemPage> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    // "Upload up to 4 pictures of the item you wish to exchange:",
                     context.tr('newItem.page.itemImagesHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,
@@ -317,7 +305,6 @@ class _NewItemPageState extends State<NewItemPage> {
                   _isReturnOffer
                       ? const SizedBox(height: 0)
                       : Text(
-                          // "What would you ideally like in exchange?",
                           context.tr("newItem.page.prefInReturnHeader"),
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -328,7 +315,6 @@ class _NewItemPageState extends State<NewItemPage> {
                   _isReturnOffer
                       ? const SizedBox(height: 0)
                       : Text(
-                          // "If there is more than one item you would like, separate them with commas (eg: apple, bowl) ",
                           context.tr('newItem.page.prefInReturnSub'),
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -346,8 +332,8 @@ class _NewItemPageState extends State<NewItemPage> {
                             minLines: 1,
                             maxLines: 5,
                             decoration: InputDecoration(
-                              // hintText: "Preferred in return",
-                              hintText: context.tr('newItem.page.prefInReturnHint'),
+                              hintText:
+                                  context.tr('newItem.page.prefInReturnHint'),
                             ),
                           ),
                         ),
@@ -357,7 +343,6 @@ class _NewItemPageState extends State<NewItemPage> {
                       width: 150,
                       height: 75,
                       child: BartMaterialButton(
-                        // label: "Continue",
                         label: context.tr('newItem.page.btn.continue'),
                         onPressed: () => _isReturnOffer
                             ? returnOfferCallback(

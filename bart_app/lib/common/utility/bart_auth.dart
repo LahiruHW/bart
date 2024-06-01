@@ -21,7 +21,7 @@ class BartAuthService {
   }
 
   // instance of the firebase auth service
-  late final FirebaseAuth _auth; // = FirebaseAuth.instance;
+  late final FirebaseAuth _auth;
 
   /// observes the auth state changes in the firebase auth service
   Stream<User?> get onAuthStateChanged => _auth.authStateChanges();

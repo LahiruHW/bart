@@ -36,8 +36,7 @@ class TradeDetailsPageFooter {
         title: Text(
           context.tr('view.trade.page.outgoing.btn.cancel'),
         ),
-        content:
-            Text(context.tr('view.trade.page.outgoing.cancel.warning')),
+        content: Text(context.tr('view.trade.page.outgoing.cancel.warning')),
         actions: [
           TextButton(
             onPressed: () async {

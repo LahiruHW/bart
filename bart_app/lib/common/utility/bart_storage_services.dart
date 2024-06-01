@@ -54,7 +54,6 @@ class BartFirebaseStorageServices {
             .ref(element.fullPath)
             .delete()
             .then((value) => debugPrint("Deleted image: ${element.fullPath}"));
-        // element.delete();
       });
     });
   }
