@@ -1247,6 +1247,31 @@ class BartFirestoreServices {
     });
   }
 
+  // go through all chatIds in each user_profile doc and remove chats that are not in the chat collection
+  static void cleanupChatsIfUnused() async {
+    final userList = await userCollection
+        .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
+        .get()
+        .then((snapshot) {
+      return snapshot.docs
+          .map((doc) => {'id': doc.id, 'chats': doc.data()['chats']})
+          .toList();
+    });
+
+    for (final user in userList) {
+      final List<String> chatIDs = List<String>.from(user['chats']);
+      for (final chatID in chatIDs) {
+        final chatDoc = await chatDocRef(chatID).get();
+        if (!chatDoc.exists) {
+          debugPrint("DELETING CHAT: $chatID FROM USER: ${user['id']}");
+          userCollection.doc(user['id']).update({
+            'chats': FieldValue.arrayRemove([chatID]),
+          });
+        }
+      }
+    }
+  }
+
   // remove any document from the itemCollection that has the value 'We don't have that much time left' for the key 'itemDescription'
   static void removeItemWithProperty(
       CollectionReference collection, String key, String value) {
