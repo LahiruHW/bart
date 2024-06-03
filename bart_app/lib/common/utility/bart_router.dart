@@ -193,6 +193,7 @@ class BartRouter {
                       final itemID = state.pathParameters['id']!;
                       Item item = state.extra as Item;
                       return MaterialPage(
+                        key: ValueKey(itemID),
                         child: ItemPage(
                           itemID: itemID,
                           item: item,
