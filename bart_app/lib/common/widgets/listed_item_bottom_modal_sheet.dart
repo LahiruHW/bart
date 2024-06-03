@@ -69,7 +69,7 @@ class ListedItemBottomModalSheet {
       builder: (context) {
         return SizedBox(
           width: double.infinity,
-          height: 300,
+          height: MediaQuery.of(context).size.height * 0.35,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
