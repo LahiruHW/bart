@@ -134,7 +134,7 @@ class HomePageTradeExpansionPanelBuilder {
                       );
                     },
                   );
-                  if (trade == tradeList.first && !trade.isRead) {
+                  if (!trade.isRead) {
                     return thisTradeWidget.animate().shimmer(
                           color: shimmerColor,
                           duration: 1000.ms,
