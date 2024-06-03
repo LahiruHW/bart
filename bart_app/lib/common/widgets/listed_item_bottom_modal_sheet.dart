@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
@@ -66,7 +65,7 @@ class ListedItemBottomModalSheet {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: BartAppTheme.black1,
+      backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
       builder: (context) {
         return SizedBox(
           width: double.infinity,
