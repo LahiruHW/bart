@@ -56,7 +56,6 @@ class _NewItemPageState extends State<NewItemPage> {
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
-          // message: 'Please provide a name for your item',
           message: tr('newItem.page.snackbar1'),
           backgroundColor: Colors.red,
           icon: Icons.error,
@@ -67,7 +66,6 @@ class _NewItemPageState extends State<NewItemPage> {
     if (imgList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
-          // message: 'Please upload at least one image of your item',
           message: tr('newItem.page.snackbar2'),
           backgroundColor: Colors.red,
           icon: Icons.error,
@@ -78,7 +76,6 @@ class _NewItemPageState extends State<NewItemPage> {
     if (description.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
-          // message: 'Please provide a description for your item',
           message: tr('newItem.page.snackbar3'),
           backgroundColor: Colors.red,
           icon: Icons.error,

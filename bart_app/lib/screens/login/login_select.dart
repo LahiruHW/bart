@@ -76,7 +76,6 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                     },
                   );
                 }, // update the user state
-                // title: "Login with Google",
                 title: context.tr('login.with.google'),
                 titleColor: brandTheme.loginBtnTextColor,
               ),

@@ -65,35 +65,24 @@ class TradeWidget extends StatelessWidget {
   String getTitle(Trade trade) {
     switch (tradeType) {
       case TradeCompType.incoming:
-        // return "You have an offer from ${trade.offeredItem.itemOwner.userName}";
         return tr('incoming.trade.label',
             namedArgs: {'itemOwner': trade.offeredItem.itemOwner.userName});
       case TradeCompType.outgoing:
-        // return "Your return trade offer to ${trade.tradedItem.itemOwner.userName}";
         return tr('outgoing.trade.label',
             namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName});
       case TradeCompType.successful:
-        // return (userID == trade.offeredItem.itemOwner.userID)
-        //     ? "${trade.tradedItem.itemOwner.userName} accepted your trade offer!"
-        //     : "You accepted ${trade.offeredItem.itemOwner.userName}'s trade offer!";
         return (userID == trade.offeredItem.itemOwner.userID)
             ? tr('successful.trade.label1',
                 namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName})
             : tr('successful.trade.label2',
                 namedArgs: {'itemOwner': trade.offeredItem.itemOwner.userName});
       case TradeCompType.failed:
-        // return (userID == trade.offeredItem.itemOwner.userID)
-        //     ? "${trade.tradedItem.itemOwner.userName} rejected your trade offer!"
-        //     : "You rejected ${trade.offeredItem.itemOwner.userName}'s trade offer!";
         return (userID == trade.offeredItem.itemOwner.userID)
             ? tr('failed.trade.label1',
                 namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName})
             : tr('failed.trade.label2',
                 namedArgs: {'itemOwner': trade.offeredItem.itemOwner.userName});
       case TradeCompType.tradeHistory:
-        // return (userID == trade.offeredItem.itemOwner.userID)
-        //     ? "You traded with ${trade.tradedItem.itemOwner.userName}"
-        //     : "${trade.offeredItem.itemOwner.userName} traded with you";
         return (userID == trade.offeredItem.itemOwner.userID)
             ? tr('trade.history.label1',
                 namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName})

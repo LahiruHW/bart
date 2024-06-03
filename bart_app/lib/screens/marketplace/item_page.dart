@@ -276,7 +276,6 @@ class _ItemPageState extends State<ItemPage> {
                               // show the snackbar to confirm the message was sent
                               ScaffoldMessenger.of(context).showSnackBar(
                                 BartSnackBar(
-                                  // message: 'Message sent to ${trade.tradedItem.itemOwner.userName}!',
                                   message: context.tr(
                                     'view.trade.page.incoming.questionSent',
                                     namedArgs: {

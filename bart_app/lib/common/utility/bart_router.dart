@@ -101,7 +101,6 @@ class BartRouter {
                       return const NewItemPage(
                         isReturnOffer: false,
                         returnForItem: null,
-                        // currentPath: state.path!,
                       );
                     },
                     routes: [
@@ -180,7 +179,6 @@ class BartRouter {
                         child: ItemPage(
                           itemID: itemID,
                           item: item,
-                          // currentPath: state.path!,
                         ),
                       );
                     },
@@ -206,11 +204,7 @@ class BartRouter {
                         path: 'returnItem',
                         builder: (context, state) {
                           Item item = state.extra as Item;
-                          return ReturnOfferPage(
-                            returnForItem: item,
-                            // currentPath: state.path!,
-                            currentPath: 'item/${item.itemID}/returnItem',
-                          );
+                          return ReturnOfferPage(returnForItem: item);
                         },
                         routes: [
                           GoRoute(
@@ -229,10 +223,6 @@ class BartRouter {
                                 dateCreated: data['dateCreated'],
                               );
                             },
-                            // redirect: (context, state) => Future.delayed(
-                            //   const Duration(milliseconds: 2500),
-                            //   () => '/market',
-                            // ),
                           ),
                         ],
                       ),

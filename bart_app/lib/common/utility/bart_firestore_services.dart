@@ -1172,7 +1172,7 @@ class BartFirestoreServices {
           updatedDoc['unreadMsgCountMap'] = {};
           debugPrint("missing 'unreadMsgCountMap' added to chat $chatID");
         } else {
-          final List<String> userIDList = List<String>.from(chatData['users']) ;
+          final List<String> userIDList = List<String>.from(chatData['users']);
           // only update unreadMsgCountMap if:
           //    1) it is not there already,
           //    2) users is present and is not empty

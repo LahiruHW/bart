@@ -151,7 +151,6 @@ class _MarketPageState extends State<MarketPage> {
                             .toList(),
                       ),
                       builder: (context, snapshot) {
-                        // if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
                         if (snapshot.hasData) {
                           final data = snapshot.data as List<Item>;
 
@@ -176,11 +175,6 @@ class _MarketPageState extends State<MarketPage> {
                                 item: thisItem,
                                 onTap: () {
                                   debugPrint('tapped');
-                                  // BartRouter.pushPage(
-                                  //   context,
-                                  //   'item/${data[index].itemID}',
-                                  //   thisItem,
-                                  // );
                                   context.push(
                                     '/market/item/${thisItem.itemID}',
                                     extra: thisItem,
@@ -210,11 +204,6 @@ class _MarketPageState extends State<MarketPage> {
                       ),
                     ),
             ),
-            // // put a small space at the bottom
-            // Container(
-            //   height: 5,
-            //   color: Colors.transparent,
-            // ),
           ],
         ),
       ),

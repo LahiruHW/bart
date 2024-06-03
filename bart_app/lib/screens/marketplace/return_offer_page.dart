@@ -12,11 +12,9 @@ class ReturnOfferPage extends StatefulWidget {
   const ReturnOfferPage({
     super.key,
     this.returnForItem,
-    required this.currentPath,
   });
 
   final Item? returnForItem;
-  final String currentPath;
 
   @override
   State<ReturnOfferPage> createState() => _ReturnOfferPageState();
@@ -47,7 +45,6 @@ class _ReturnOfferPageState extends State<ReturnOfferPage> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: MarketPageTabButton(
-                      // title: 'Give an item in return',
                       title: context.tr('returnOffer.page.tab.returnItem'),
                       enabled: _onItemReturnPage,
                       onTap: _togglePage,
@@ -56,7 +53,6 @@ class _ReturnOfferPageState extends State<ReturnOfferPage> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: MarketPageTabButton(
-                      // title: 'Pay for it',
                       title: context.tr('returnOffer.page.tab.returnMoney'),
                       enabled: !_onItemReturnPage,
                       onTap: _togglePage,

@@ -47,7 +47,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void editUserName(BartStateProvider stateProvider, String userName) {
     // check if the username is updated at all
-    // if (_userNameController.text == stateProvider.userProfile.userName) {
     if (userName == stateProvider.userProfile.userName) {
       _userNameFocusNode.unfocus();
       Future.delayed(
@@ -79,7 +78,6 @@ class _ProfilePageState extends State<ProfilePage> {
         return;
       } else {
         stateProvider.updateUserName(userName);
-        // show a snackbar to say that the username has been updated
         ScaffoldMessenger.of(context).showSnackBar(
           BartSnackBar(
             appearOnTop: true,

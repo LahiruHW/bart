@@ -115,7 +115,6 @@ class MarketListTile extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
-                        // imageUrl: imgs[0],
                         imageUrl: item.imgs[0],
                         fit: BoxFit.contain,
                         placeholder: (context, url) => Shimmer.fromColors(
