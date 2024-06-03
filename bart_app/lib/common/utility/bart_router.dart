@@ -1,3 +1,4 @@
+import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -90,6 +91,14 @@ class BartRouter {
                               ? EditTradePagePayment(trade: trade)
                               : EditTradePageOffer(trade: trade);
                         },
+                        onExit: (context, state) {
+                          final tempProvider = Provider.of<TempStateProvider>(
+                            context,
+                            listen: false,
+                          );
+                          tempProvider.clearAllTempData();
+                          return true;
+                        },
                       )
                     ],
                   ),
@@ -102,6 +111,14 @@ class BartRouter {
                         isReturnOffer: false,
                         returnForItem: null,
                       );
+                    },
+                    onExit: (context, state) {
+                      final tempProvider = Provider.of<TempStateProvider>(
+                        context,
+                        listen: false,
+                      );
+                      tempProvider.clearAllTempData();
+                      return true;
                     },
                     routes: [
                       GoRoute(
