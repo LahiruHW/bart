@@ -13,6 +13,7 @@ export 'shared/base.dart';
 export 'shared/new_item_page.dart';
 export 'shared/trade_result_page.dart';
 export 'shared/new_item_result_page.dart';
+export 'shared/view_image_page.dart';
 export 'shared/view_trade_details_page.dart';
 export 'edit/edit_trade_page_offer.dart';
 export 'edit/edit_trade_page_payment.dart';

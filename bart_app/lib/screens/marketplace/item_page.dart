@@ -32,7 +32,6 @@ class _ItemPageState extends State<ItemPage> {
   late final FocusNode focusNode;
   late final PageController _pageController;
   late final TextEditingController _textEditController;
-  late final TransformationController _transformationController;
   bool _isZooming = false;
 
   @override
@@ -43,7 +42,6 @@ class _ItemPageState extends State<ItemPage> {
     focusNode = FocusNode();
     _textEditController = TextEditingController();
     _pageController = PageController(initialPage: 0);
-    _transformationController = TransformationController();
   }
 
   @override
@@ -99,17 +97,11 @@ class _ItemPageState extends State<ItemPage> {
                     itemBuilder: (context, index) {
                       return Hero(
                         tag: item.itemID,
-                        child: InteractiveViewer(
-                          panAxis: PanAxis.free,
-                          panEnabled: true,
-                          scaleEnabled: true,
-                          transformationController: _transformationController,
-                          onInteractionUpdate: (details) {
-                            setState(
-                              () => _isZooming =
-                                  (details.scale > 1.0 || details.scale < 1.0),
-                            );
-                          },
+                        child: GestureDetector(
+                          onTap: () => context.push(
+                            '/viewImage',
+                            extra: item.imgs[index],
+                          ),
                           child: CachedNetworkImage(
                             imageUrl: item.imgs[index],
                           ),
@@ -238,7 +230,6 @@ class _ItemPageState extends State<ItemPage> {
                   : const SizedBox(),
               (provider.userProfile.userID != item.itemOwner.userID)
                   ? Text(
-                      // 'Ask a question about the product: ',
                       context.tr('view.trade.page.incoming.askQuestion'),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: BartAppTheme.red1,

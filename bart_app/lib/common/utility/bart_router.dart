@@ -41,6 +41,18 @@ class BartRouter {
             const MaterialPage(child: SettingsPage(), maintainState: true),
       ),
 
+      GoRoute(
+        name: 'viewImage',
+        path: '/viewImage',
+        pageBuilder: (context, state) {
+          final String imgUrl = state.extra as String;
+          return MaterialPage(
+            child: ViewImagePage(imgUrl: imgUrl),
+            maintainState: false,
+          );
+        },
+      ),
+
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
         builder: (context, state, child) => Base(bodyWidget: child),
