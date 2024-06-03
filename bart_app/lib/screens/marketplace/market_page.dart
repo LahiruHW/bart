@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/buttons/market_tab_button.dart';
@@ -60,6 +62,7 @@ class _MarketPageState extends State<MarketPage> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<BartStateProvider>(context, listen: false);
     return GestureDetector(
       // onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onTap: () => _searchFocusNode.unfocus(),
@@ -180,15 +183,19 @@ class _MarketPageState extends State<MarketPage> {
                                     extra: thisItem,
                                   );
                                 },
-                                onLongPress: () => ListedItemBottomModalSheet(
-                                  item: thisItem,
-                                  context: context,
-                                  loadingOverlay: LoadingBlockFullScreen(
-                                    context: context,
-                                    dismissable: false,
-                                  ),
-                                  scaffoldKey: _scaffoldKey,
-                                ).show(),
+                                onLongPress: (provider.userProfile.userID ==
+                                        thisItem.itemOwner.userID)
+                                    ? () => ListedItemBottomModalSheet(
+                                          item: thisItem,
+                                          context: context,
+                                          loadingOverlay:
+                                              LoadingBlockFullScreen(
+                                            context: context,
+                                            dismissable: false,
+                                          ),
+                                          scaffoldKey: _scaffoldKey,
+                                        ).show()
+                                    : () {},
                               );
                             },
                           );
