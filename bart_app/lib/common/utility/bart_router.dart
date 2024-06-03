@@ -186,6 +186,22 @@ class BartRouter {
                     },
                     routes: [
                       GoRoute(
+                        name: 'editItem', // /market/item/:id/editItem
+                        path: 'editItem',
+                        builder: (context, state) {
+                          final data = state.extra as Map<String, dynamic>;
+                          final item = data['item'] as Item;
+                          return EditItemPage(tradedItem: item);
+                        },
+                        onExit: (context, state) {
+                          final tempProvider = Provider.of<TempStateProvider>(
+                              context,
+                              listen: false);
+                          tempProvider.clearAllTempData();
+                          return true;
+                        },
+                      ),
+                      GoRoute(
                         name: 'returnItem', // /market/item/:id/returnItem
                         path: 'returnItem',
                         builder: (context, state) {

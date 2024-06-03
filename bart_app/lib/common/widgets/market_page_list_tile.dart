@@ -12,10 +12,12 @@ class MarketListTile extends StatelessWidget {
     super.key,
     required this.item,
     required this.onTap,
+    this.onLongPress,
     this.cardHeight = 130,
   });
 
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
   final double cardHeight;
   final Item item;
 
@@ -59,6 +61,7 @@ class MarketListTile extends StatelessWidget {
       surfaceTintColor: cardStyle.cardTheme.surfaceTintColor,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress ?? () {},
         child: Padding(
           padding: const EdgeInsets.only(left: 15),
           child: Row(

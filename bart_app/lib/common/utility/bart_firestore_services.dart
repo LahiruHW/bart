@@ -608,6 +608,54 @@ class BartFirestoreServices {
     );
   }
 
+  /// save item edits
+  static Future<bool> saveEditItemPostingChanges(Item item) async {
+    // 1. go through the list of images and upload ones that aren't urls onto storage
+    return await BartFirebaseStorageServices.uploadItemImages(
+      item.imgs,
+      item.itemID,
+    ).then(
+      (imgList) async {
+        debugPrint("1. |||||||||||||||| UPDATED TRADED ITEM IMAGES");
+        // 2. update the offeredItem in the item collection
+        return await updateItem(item.copyWith(imgs: imgList)).then(
+          (value) async {
+            debugPrint("2. |||||||||||||||| UPDATED TRADED ITEM IN FIRESTORE");
+            return true;
+          },
+        ).onError((error, stackTrace) {
+          debugPrint(
+              "2. ||||||||||||| ERROR UPDATING TRADED ITEM IN FIRESTORE: $error");
+          return false;
+        });
+      },
+    ).onError((error, stackTrace) {
+      debugPrint("1. ||||||||||||| ERROR UPDATING TRADED ITEM IMAGES: $error");
+      return false;
+    });
+  }
+
+  static Future<void> deleteItem(Item item) async {
+    // 1. delete all the images them from cloud storage
+    return await BartFirebaseStorageServices.deleteAllItemImages(
+      item.itemID,
+    ).then(
+      (value) async {
+        debugPrint("1. |||||||||||||||| DELETED ITEM IMAGES");
+        // 2. delete the item from the item collection
+        return await itemCollection.doc(item.itemID).delete().then(
+          (value) {
+            debugPrint("2. |||||||||||||||| DELETED ITEM IN FIRESTORE");
+          },
+        ).onError((error, stackTrace) {
+          debugPrint("2. ||||||||||| ERROR DELETING ITEM IN FIRESTORE: $error");
+        });
+      },
+    ).onError((error, stackTrace) {
+      debugPrint("1. ||||||||||||| ERROR DELETING ITEM IMAGES: $error");
+    });
+  }
+
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////

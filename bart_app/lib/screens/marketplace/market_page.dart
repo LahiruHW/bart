@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/buttons/market_tab_button.dart';
+import 'package:bart_app/common/widgets/listed_item_bottom_modal_sheet.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile_list.dart';
 
 class MarketPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class MarketPage extends StatefulWidget {
 
 class _MarketPageState extends State<MarketPage> {
   bool _onListedItemsPage = true;
+  late final GlobalKey<ScaffoldState> _scaffoldKey;
   late final TextEditingController _searchController;
   late final FocusNode _searchFocusNode;
   String _searchText = '';
@@ -26,6 +29,7 @@ class _MarketPageState extends State<MarketPage> {
   @override
   void initState() {
     super.initState();
+    _scaffoldKey = GlobalKey<ScaffoldState>();
     _searchController = TextEditingController(
       text: _searchText,
     );
@@ -60,6 +64,7 @@ class _MarketPageState extends State<MarketPage> {
       // onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onTap: () => _searchFocusNode.unfocus(),
       child: Scaffold(
+        key: _scaffoldKey,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: _onListedItemsPage
             ? FloatingActionButton(
@@ -181,6 +186,15 @@ class _MarketPageState extends State<MarketPage> {
                                     extra: thisItem,
                                   );
                                 },
+                                onLongPress: () => ListedItemBottomModalSheet(
+                                  item: thisItem,
+                                  context: context,
+                                  loadingOverlay: LoadingBlockFullScreen(
+                                    context: context,
+                                    dismissable: false,
+                                  ),
+                                  scaffoldKey: _scaffoldKey,
+                                ).show(),
                               );
                             },
                           );
