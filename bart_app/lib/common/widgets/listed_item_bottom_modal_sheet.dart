@@ -39,7 +39,8 @@ class ListedItemBottomModalSheet {
               await BartFirestoreServices.deleteItem(item).then(
                 (value) {
                   loadingOverlay.hide();
-                  ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+                  ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                      .showSnackBar(
                     BartSnackBar(
                       message: tr('item.page.delete.item.snackbar1'),
                       backgroundColor: Colors.green,
@@ -65,7 +66,8 @@ class ListedItemBottomModalSheet {
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+      backgroundColor:
+          Theme.of(context).bottomNavigationBarTheme.backgroundColor,
       builder: (context) {
         return SizedBox(
           width: double.infinity,
