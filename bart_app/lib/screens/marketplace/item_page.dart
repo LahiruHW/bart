@@ -32,7 +32,6 @@ class _ItemPageState extends State<ItemPage> {
   late final FocusNode focusNode;
   late final PageController _pageController;
   late final TextEditingController _textEditController;
-  bool _isZooming = false;
 
   @override
   void initState() {
@@ -58,9 +57,7 @@ class _ItemPageState extends State<ItemPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Consumer<BartStateProvider>(
         builder: (context, provider, child) => SingleChildScrollView(
-          physics: _isZooming
-              ? const NeverScrollableScrollPhysics()
-              : const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(
             horizontal: 15,
             vertical: 10,
@@ -91,9 +88,7 @@ class _ItemPageState extends State<ItemPage> {
                   child: PageView.builder(
                     controller: _pageController,
                     itemCount: item.imgs.length,
-                    physics: _isZooming
-                        ? const NeverScrollableScrollPhysics()
-                        : const BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Hero(
                         tag: item.itemID,
