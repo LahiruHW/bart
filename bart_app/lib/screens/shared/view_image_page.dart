@@ -41,8 +41,14 @@ class _ViewImagePageState extends State<ViewImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        primary: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => context.pop(),
+        ),
       ),
       body: Center(
         child: SizedBox.expand(
