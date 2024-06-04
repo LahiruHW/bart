@@ -635,7 +635,7 @@ class BartFirestoreServices {
     });
   }
 
-  static Future<void> deleteItem(Item item) async {
+  static Future<bool> deleteItem(Item item) async {
     // 1. delete all the images them from cloud storage
     return await BartFirebaseStorageServices.deleteAllItemImages(
       item.itemID,
@@ -646,13 +646,16 @@ class BartFirestoreServices {
         return await itemCollection.doc(item.itemID).delete().then(
           (value) {
             debugPrint("2. |||||||||||||||| DELETED ITEM IN FIRESTORE");
+            return true;
           },
         ).onError((error, stackTrace) {
           debugPrint("2. ||||||||||| ERROR DELETING ITEM IN FIRESTORE: $error");
+          return false;
         });
       },
     ).onError((error, stackTrace) {
       debugPrint("1. ||||||||||||| ERROR DELETING ITEM IMAGES: $error");
+      return false;
     });
   }
 

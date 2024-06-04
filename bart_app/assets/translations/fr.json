@@ -88,6 +88,7 @@
     "item.page.btn.deleteItem": "Supprimer Objet",
     "item.page.delete.item.warning": "Êtes-vous sûr de vouloir supprimer cet objet?",
     "item.page.delete.item.snackbar1": "L'objet a été supprimé avec succès",
+    "item.page.delete.item.snackbar2": "Une erreur s'est produite lors\nde la suppression de cet objet",
     "returnOffer.page.tab.returnItem": "Donner quelque chose en échange",
     "returnOffer.page.tab.returnMoney": "Payer pour cela",
     "returnOffer.page.amount.header": "Combien êtes-vous prêt à payer?",

@@ -37,16 +37,27 @@ class ListedItemBottomModalSheet {
               Navigator.of(context).pop(); // close the dialog
               loadingOverlay.show();
               await BartFirestoreServices.deleteItem(item).then(
-                (value) {
+                (result) {
                   loadingOverlay.hide();
-                  ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                      .showSnackBar(
-                    BartSnackBar(
-                      message: tr('item.page.delete.item.snackbar1'),
-                      backgroundColor: Colors.green,
-                      icon: Icons.error,
-                    ).build(scaffoldKey.currentContext!),
-                  );
+                  if (result) {
+                    ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                        .showSnackBar(
+                      BartSnackBar(
+                        message: tr('item.page.delete.item.snackbar1'),
+                        backgroundColor: Colors.green,
+                        icon: Icons.done,
+                      ).build(scaffoldKey.currentContext!),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                        .showSnackBar(
+                      BartSnackBar(
+                        message: tr('item.page.delete.item.snackbar2'),
+                        backgroundColor: Colors.red,
+                        icon: Icons.error,
+                      ).build(scaffoldKey.currentContext!),
+                    );
+                  }
                 },
               );
             },
