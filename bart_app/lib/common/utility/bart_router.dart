@@ -45,9 +45,14 @@ class BartRouter {
         name: 'viewImage',
         path: '/viewImage',
         pageBuilder: (context, state) {
-          final String imgUrl = state.extra as String;
+          final data = state.extra as Map<String, dynamic>;
+          final String imgUrl = data['imgUrl'] as String;
+          final String cacheKey = data['cacheKey'] as String;
           return MaterialPage(
-            child: ViewImagePage(imgUrl: imgUrl),
+            child: ViewImagePage(
+              imgUrl: imgUrl,
+              cacheKey: cacheKey,
+            ),
             maintainState: false,
           );
         },

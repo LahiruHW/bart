@@ -5,6 +5,7 @@ import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -95,10 +96,18 @@ class _ItemPageState extends State<ItemPage> {
                         child: GestureDetector(
                           onTap: () => context.push(
                             '/viewImage',
-                            extra: item.imgs[index],
+                            extra: {
+                              'imgUrl': item.imgs[index],
+                              'cacheKey': 'item_${item.itemID}_$index',
+                            },
                           ),
                           child: CachedNetworkImage(
+                            key: UniqueKey(),
                             imageUrl: item.imgs[index],
+                            cacheManager: BartImageTools.customCacheManager,
+                            progressIndicatorBuilder:
+                                BartImageTools.progressLoader,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       );

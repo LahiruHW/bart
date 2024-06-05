@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -118,6 +119,11 @@ class _ChatPageState extends State<ChatPage> {
                                   color: Colors.white,
                                 )
                               : CachedNetworkImage(
+                                  key: UniqueKey(),
+                                  cacheManager:
+                                      BartImageTools.customCacheManager,
+                                  progressIndicatorBuilder:
+                                      BartImageTools.progressLoader,
                                   imageUrl: widget.chatData.chatImageUrl,
                                   alignment: Alignment.center,
                                   fit: BoxFit.cover,
@@ -181,7 +187,9 @@ class _ChatPageState extends State<ChatPage> {
                           child: SizedBox(
                             width: 100,
                             height: 100,
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.0,
+                            ),
                           ),
                         );
                       }

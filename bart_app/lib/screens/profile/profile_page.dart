@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_text.dart';
@@ -363,6 +364,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 clipBehavior: Clip.hardEdge,
                                 // this should be a column with  [image, username]
                                 child: CachedNetworkImage(
+                                  key: UniqueKey(),
+                                  cacheManager:
+                                      BartImageTools.customCacheManager,
+                                  cacheKey: 'profile_image',
+                                  progressIndicatorBuilder:
+                                      BartImageTools.progressLoader,
                                   imageUrl: stateProvider.userProfile.imageUrl!,
                                   fit: BoxFit.cover,
                                 ),

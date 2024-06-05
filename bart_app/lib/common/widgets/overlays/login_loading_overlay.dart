@@ -16,7 +16,9 @@ class LoadingBlockFullScreen {
       context: context,
       barrierDismissible: dismissable,
       builder: (context) => const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+        ),
       ),
     );
   }

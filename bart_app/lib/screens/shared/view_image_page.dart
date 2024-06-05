@@ -2,14 +2,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 
 class ViewImagePage extends StatefulWidget {
   const ViewImagePage({
     super.key,
     required this.imgUrl,
+    required this.cacheKey,
   });
 
   final String imgUrl;
+  final String cacheKey;
 
   @override
   State<ViewImagePage> createState() => _ViewImagePageState();
@@ -69,6 +72,10 @@ class _ViewImagePageState extends State<ViewImagePage>
 
   Widget _buildImage() => Uri.parse(widget.imgUrl).isAbsolute
       ? CachedNetworkImage(
+          key: UniqueKey(),
+          cacheKey: widget.cacheKey,
+          cacheManager: BartImageTools.customCacheManager,
+          progressIndicatorBuilder: BartImageTools.progressLoader,
           imageUrl: widget.imgUrl,
           alignment: Alignment.center,
         )

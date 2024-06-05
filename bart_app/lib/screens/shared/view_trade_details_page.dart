@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/widgets/result_item_tile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:bart_app/common/providers/state_provider.dart';
@@ -76,7 +77,11 @@ class _ViewTradePageState extends State<ViewTradePage> {
       builder: (context) {
         return Container(
           margin: const EdgeInsets.all(80.0),
-          child: CachedNetworkImage(imageUrl: imagePath),
+          child: CachedNetworkImage(
+            key: UniqueKey(),
+            imageUrl: imagePath,
+            progressIndicatorBuilder: BartImageTools.progressLoader,
+          ),
         );
       },
     );

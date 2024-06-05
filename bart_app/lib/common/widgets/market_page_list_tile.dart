@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/market_list_item_style.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class MarketListTile extends StatelessWidget {
@@ -115,13 +115,11 @@ class MarketListTile extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: CachedNetworkImage(
+                        key: UniqueKey(),
                         imageUrl: item.imgs[0],
+                        cacheManager: BartImageTools.customCacheManager,
                         fit: BoxFit.contain,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey,
-                          highlightColor: Colors.white,
-                          child: Container(color: Colors.grey),
-                        ),
+                        progressIndicatorBuilder: BartImageTools.progressLoader,
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       ),

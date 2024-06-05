@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/item.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ignore: must_be_immutable
@@ -70,6 +71,9 @@ class _ResultItemTileState extends State<ResultItemTile> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: CachedNetworkImage(
+                        key: UniqueKey(),
+                        cacheManager: BartImageTools.customCacheManager,
+                        progressIndicatorBuilder: BartImageTools.progressLoader,
                         width: 90,
                         height: 90,
                         imageUrl: widget.item.imgs[0],
@@ -89,7 +93,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
                       child: Text(
                         widget.item.itemName,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.green,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,

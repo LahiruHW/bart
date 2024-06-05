@@ -5,6 +5,7 @@ import 'package:bart_app/common/entity/trade.dart';
 import 'package:bart_app/common/entity/message.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/styles/bart_chat_bubble_style.dart';
+import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
 
@@ -185,9 +186,12 @@ class BubbleChildFactory extends StatelessWidget {
             Expanded(
               flex: 2,
               child: CachedNetworkImage(
+                key: UniqueKey(),
                 width: 70,
                 height: 70,
                 imageUrl: thisTrade.tradedItem.imgs[0],
+                progressIndicatorBuilder: BartImageTools.progressLoader,
+                cacheManager: BartImageTools.customCacheManager,
               ),
             ),
             Transform(
@@ -203,9 +207,12 @@ class BubbleChildFactory extends StatelessWidget {
             Expanded(
               flex: 2,
               child: CachedNetworkImage(
+                key: UniqueKey(),
                 width: 70,
                 height: 70,
                 imageUrl: thisTrade.offeredItem.imgs[0],
+                progressIndicatorBuilder: BartImageTools.progressLoader,
+                cacheManager: BartImageTools.customCacheManager,
               ),
             ),
           ],
@@ -238,10 +245,13 @@ class BubbleChildFactory extends StatelessWidget {
         child: Column(
           children: [
             CachedNetworkImage(
+              key: UniqueKey(),
               imageUrl: thisItem.imgs[0],
               fit: BoxFit.contain,
               height: 200,
               width: 200,
+              progressIndicatorBuilder: BartImageTools.progressLoader,
+              cacheManager: BartImageTools.customCacheManager,
             ),
             const SizedBox(height: 5),
             Row(

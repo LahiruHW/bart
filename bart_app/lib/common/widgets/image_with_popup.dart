@@ -15,6 +15,9 @@ class ImageWithPopUpMenu extends StatelessWidget {
 
   Widget _buildImage() => Uri.parse(imagePath).isAbsolute
       ? CachedNetworkImage(
+          key: UniqueKey(),
+          cacheManager: BartImageTools.customCacheManager,
+          progressIndicatorBuilder: BartImageTools.progressLoader,
           imageUrl: imagePath,
           width: 150,
           height: 150,
