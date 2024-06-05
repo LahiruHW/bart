@@ -238,8 +238,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     : Colors.transparent,
                               ),
                               onTap: _isEditing ? null : null,
-                              onEditingComplete: () =>
-                                  editUserName(stateProvider, _userNameController.text),
+                              onEditingComplete: () => editUserName(
+                                stateProvider,
+                                _userNameController.text,
+                              ),
                             ),
                           ),
                           const Spacer(flex: 1),
@@ -251,8 +253,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Icons.check,
                                       color: Colors.green,
                                     ),
-                                    onPressed: () =>
-                                        editUserName(stateProvider, _userNameController.text),
+                                    onPressed: () => editUserName(
+                                      stateProvider,
+                                      _userNameController.text,
+                                    ),
                                   )
                                 : IconButton(
                                     icon: const Icon(Icons.edit),

@@ -25,20 +25,8 @@ class ProfileInfoHeaderShimmer extends StatelessWidget {
               color: shimmerStyle.baseColor,
               borderRadius: BorderRadius.circular(50.0),
             ),
-            // clipBehavior: Clip.hardEdge,
-            // this should be a column with  [image, username]
-            // child: CachedNetworkImage(
-            //   imageUrl: stateProvider.userProfile.imageUrl!,
-            //   fit: BoxFit.cover,
-            // ),
           ),
           const SizedBox(height: 10.0),
-          // Text(
-          //   stateProvider.userProfile.userName,
-          //   style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          //         fontSize: 30,
-          //       ),
-          // ),
           Container(
             color: shimmerStyle.baseColor,
             width: 150,
