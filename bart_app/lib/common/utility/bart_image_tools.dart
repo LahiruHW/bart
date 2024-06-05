@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class BartImageTools {
   static Future<String> pickImageFromGallery() async {
@@ -28,8 +29,10 @@ class BartImageTools {
         return Dialog(
           child: Uri.parse(imagePath).isAbsolute
               ? CachedNetworkImage(
+                  key: UniqueKey(),
                   imageUrl: imagePath,
                   fit: BoxFit.cover,
+                  progressIndicatorBuilder: BartImageTools.progressLoader,
                 )
               : Image.file(
                   File(imagePath),
@@ -55,4 +58,38 @@ class BartImageTools {
   //     throw Exception('Lost data error');
   //   }
   // }
+
+  static final customCacheManager = CacheManager(
+    Config(
+      'bartImageCache',
+      stalePeriod: const Duration(days: 7),
+      maxNrOfCacheObjects: 150,
+    ),
+  );
+
+  static Widget progressLoader(
+    BuildContext context,
+    String url,
+    DownloadProgress dp,
+  ) {
+    if (dp.totalSize == null) {
+      return const SizedBox();
+    }
+    return Center(
+      child: CircularProgressIndicator(
+        strokeCap: StrokeCap.round,
+        value: dp.progress,
+        valueColor: const AlwaysStoppedAnimation<Color>(
+          Colors.red,
+        ),
+        strokeWidth: 1.0,
+      ),
+    );
+  }
+}
+
+extension ImageExtension on num {
+  int cacheSize(BuildContext context) {
+    return (this * MediaQuery.of(context).devicePixelRatio).round();
+  }
 }
