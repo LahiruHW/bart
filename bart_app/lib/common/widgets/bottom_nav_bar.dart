@@ -128,56 +128,6 @@ class _BartBottomNavBarState extends State<BartBottomNavBar> {
       child: widget.curvedTopEdges
           ? buildTopCurvedBottomNavBar(context)
           : buildNormalBottomNavBar(context),
-
-      // Container(
-      //   decoration: BoxDecoration(
-      //     color: Colors.red,
-      //     borderRadius: BorderRadius.only(
-      //       topRight: Radius.circular(widget.edgeRadius),
-      //       topLeft: Radius.circular(widget.edgeRadius),
-      //     ),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: Colors.black.withOpacity(0.25),
-      //         spreadRadius: 0,
-      //         blurRadius: 5,
-      //       ),
-      //     ],
-      //   ),
-      //   child: ClipRRect(
-      //     clipper: BottomNavBarClipper(edgeRadius: widget.edgeRadius),
-      //     clipBehavior: Clip.antiAlias,
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(widget.edgeRadius),
-      //       topRight: Radius.circular(widget.edgeRadius),
-      //     ),
-      //     child: BottomNavigationBar(
-      //       elevation: Theme.of(context).bottomNavigationBarTheme.elevation,
-      //       backgroundColor:
-      //           Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-      //       currentIndex: selectedIndex,
-      //       showUnselectedLabels: false,
-      //       items: const <BottomNavigationBarItem>[
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.home_outlined),
-      //           activeIcon: Icon(Icons.home_sharp),
-      //           label: 'Home',
-      //         ),
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.chat_outlined),
-      //           activeIcon: Icon(Icons.chat_rounded),
-      //           label: 'Chat',
-      //         ),
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.shopping_bag_outlined),
-      //           activeIcon: Icon(Icons.shopping_bag_rounded),
-      //           label: 'Market',
-      //         ),
-      //       ],
-      //       onTap: (index) => _onTappedNew(context, index),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
