@@ -86,6 +86,8 @@
     "edit.item.confirm.error.snackbar": "Erreur de mise à jour de ce poste",
     "item.page.btn.editItem": "Editer Objet",
     "item.page.btn.deleteItem": "Supprimer Objet",
+    "item.page.btn.viewItem": "Voir l'objet",
+    "item.page.btn.viewRestricted": "Vous ne pouvez modifier ou supprimer que vos propres objets",
     "item.page.delete.item.warning": "Êtes-vous sûr de vouloir supprimer cet objet?",
     "item.page.delete.item.snackbar1": "L'objet a été supprimé avec succès",
     "item.page.delete.item.snackbar2": "Une erreur s'est produite lors\nde la suppression de cet objet",

@@ -183,19 +183,17 @@ class _MarketPageState extends State<MarketPage> {
                                     extra: thisItem,
                                   );
                                 },
-                                onLongPress: (provider.userProfile.userID ==
-                                        thisItem.itemOwner.userID)
-                                    ? () => ListedItemBottomModalSheet(
-                                          item: thisItem,
-                                          context: context,
-                                          loadingOverlay:
-                                              LoadingBlockFullScreen(
-                                            context: context,
-                                            dismissable: false,
-                                          ),
-                                          scaffoldKey: _scaffoldKey,
-                                        ).show()
-                                    : () {},
+                                onLongPress: () => ListedItemBottomModalSheet(
+                                  item: thisItem,
+                                  context: context,
+                                  loadingOverlay: LoadingBlockFullScreen(
+                                    context: context,
+                                    dismissable: false,
+                                  ),
+                                  scaffoldKey: _scaffoldKey,
+                                  isCurrentUser: (provider.userProfile.userID ==
+                                      thisItem.itemOwner.userID),
+                                ).show(),
                               );
                             },
                           );
