@@ -79,8 +79,7 @@ class ListedItemBottomModalSheet {
       context: parentContext,
       isScrollControlled: true,
       showDragHandle: true,
-      backgroundColor:
-          Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+      backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       builder: (context) {
         return SizedBox(
           width: double.infinity,

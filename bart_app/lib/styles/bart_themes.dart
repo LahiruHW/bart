@@ -197,6 +197,9 @@ class BartAppTheme {
       ),
       elevation: 10,
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: Colors.white,
+    ),
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -439,6 +442,9 @@ class BartAppTheme {
         borderRadius: BorderRadius.circular(20.0),
       ),
       elevation: 10,
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: black1,
     ),
     extensions: {
       BartBrandColours(
