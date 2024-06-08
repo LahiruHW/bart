@@ -42,8 +42,7 @@ class ListedItemBottomModalSheet {
                 (result) {
                   loadingOverlay.hide();
                   if (result) {
-                    ScaffoldMessenger.of(parentContext)
-                        .showSnackBar(
+                    ScaffoldMessenger.of(parentContext).showSnackBar(
                       BartSnackBar(
                         message: tr('item.page.delete.item.snackbar1'),
                         backgroundColor: Colors.green,
@@ -51,8 +50,7 @@ class ListedItemBottomModalSheet {
                       ).build(parentContext),
                     );
                   } else {
-                    ScaffoldMessenger.of(parentContext)
-                        .showSnackBar(
+                    ScaffoldMessenger.of(parentContext).showSnackBar(
                       BartSnackBar(
                         message: tr('item.page.delete.item.snackbar2'),
                         backgroundColor: Colors.red,

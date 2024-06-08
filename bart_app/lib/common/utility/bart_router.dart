@@ -320,7 +320,7 @@ class BartRouter {
                 pageBuilder: (context, state) => const MaterialPage(
                   child: ProfilePage(),
                 ),
-                routes: [],
+                routes: const [],
               ),
             ],
           ),

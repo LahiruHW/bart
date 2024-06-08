@@ -33,7 +33,6 @@ class _BaseState extends State<Base> {
         trailing: IconButton(
           icon: const Icon(Icons.menu),
           style: ButtonStyle(
-            // foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
             foregroundColor: WidgetStateProperty.all<Color>(
               Theme.of(context).appBarTheme.foregroundColor!,
             ),
