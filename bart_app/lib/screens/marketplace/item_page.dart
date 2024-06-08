@@ -33,6 +33,7 @@ class _ItemPageState extends State<ItemPage> {
   late final FocusNode focusNode;
   late final PageController _pageController;
   late final TextEditingController _textEditController;
+  int _currentPageVal = 0;
 
   @override
   void initState() {
@@ -41,12 +42,23 @@ class _ItemPageState extends State<ItemPage> {
     item = widget.item;
     focusNode = FocusNode();
     _textEditController = TextEditingController();
-    _pageController = PageController(initialPage: 0);
+    _pageController = PageController(
+      initialPage: 0,
+    )..addListener(_updatePageNum);
+  }
+
+  void _updatePageNum() {
+    if (_pageController.page! % 1 == 0) {
+      setState(
+        () => _currentPageVal = _pageController.page!.toInt(),
+      );
+    }
   }
 
   @override
   void dispose() {
     focusNode.dispose();
+    _pageController.removeListener(_updatePageNum);
     _pageController.dispose();
     _textEditController.dispose();
     super.dispose();
@@ -91,26 +103,26 @@ class _ItemPageState extends State<ItemPage> {
                     itemCount: item.imgs.length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Hero(
-                        tag: item.itemID,
-                        child: GestureDetector(
-                          onTap: () => context.push(
-                            '/viewImage',
-                            extra: {
-                              'imgUrl': item.imgs[index],
-                              'cacheKey': 'item_${item.itemID}_$index',
-                            },
-                          ),
-                          child: CachedNetworkImage(
-                            key: UniqueKey(),
-                            imageUrl: item.imgs[index],
-                            cacheManager: BartImageTools.customCacheManager,
-                            progressIndicatorBuilder:
-                                BartImageTools.progressLoader,
-                            fit: BoxFit.contain,
-                          ),
+                      final returnWidget = GestureDetector(
+                        onTap: () => context.push(
+                          '/viewImage',
+                          extra: {
+                            'imgUrl': item.imgs[index],
+                            'cacheKey': 'item_${item.itemID}_$index',
+                          },
+                        ),
+                        child: CachedNetworkImage(
+                          key: UniqueKey(),
+                          imageUrl: item.imgs[index],
+                          cacheManager: BartImageTools.customCacheManager,
+                          progressIndicatorBuilder:
+                              BartImageTools.progressLoader,
+                          fit: BoxFit.contain,
                         ),
                       );
+                      return _currentPageVal == 0
+                          ? Hero(tag: item.itemID, child: returnWidget)
+                          : returnWidget;
                     },
                   ),
                 ),
@@ -323,7 +335,7 @@ class _ItemPageState extends State<ItemPage> {
                             }
 
                             context.push(
-                              '/market/item/${item.itemID}/returnItem',
+                              '/market/listed-items/item/${item.itemID}/returnItem',
                               extra: item,
                             );
                           },

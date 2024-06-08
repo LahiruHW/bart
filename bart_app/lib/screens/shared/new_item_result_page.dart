@@ -63,7 +63,7 @@ class _NewItemResultPageState extends State<NewItemResultPage>
     if (route.startsWith('/home')) {
       context.go('/home');
     } else if (route.startsWith('/market')) {
-      context.go('/market');
+      context.go('/market/listed-items');
     } else {
       context.go('/home');
     }

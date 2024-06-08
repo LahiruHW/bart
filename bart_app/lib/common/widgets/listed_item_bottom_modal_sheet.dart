@@ -12,19 +12,19 @@ class ListedItemBottomModalSheet {
     required this.item,
     required this.context,
     required this.loadingOverlay,
-    required this.scaffoldKey,
+    required this.parentContext,
     required this.isCurrentUser,
   });
 
   final Item item;
   final BuildContext context;
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final BuildContext parentContext;
   final LoadingBlockFullScreen loadingOverlay;
   final bool isCurrentUser;
 
   Future<void> deleteConfirmationDialog(BuildContext thisContext) async {
     showDialog(
-      context: thisContext,
+      context: parentContext,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text(
@@ -42,22 +42,22 @@ class ListedItemBottomModalSheet {
                 (result) {
                   loadingOverlay.hide();
                   if (result) {
-                    ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                    ScaffoldMessenger.of(parentContext)
                         .showSnackBar(
                       BartSnackBar(
                         message: tr('item.page.delete.item.snackbar1'),
                         backgroundColor: Colors.green,
                         icon: Icons.done,
-                      ).build(scaffoldKey.currentContext!),
+                      ).build(parentContext),
                     );
                   } else {
-                    ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                    ScaffoldMessenger.of(parentContext)
                         .showSnackBar(
                       BartSnackBar(
                         message: tr('item.page.delete.item.snackbar2'),
                         backgroundColor: Colors.red,
                         icon: Icons.error,
-                      ).build(scaffoldKey.currentContext!),
+                      ).build(parentContext),
                     );
                   }
                 },
@@ -76,7 +76,7 @@ class ListedItemBottomModalSheet {
 
   show() {
     showModalBottomSheet(
-      context: context,
+      context: parentContext,
       isScrollControlled: true,
       showDragHandle: true,
       backgroundColor:
@@ -100,7 +100,7 @@ class ListedItemBottomModalSheet {
                       onTap: () {
                         Navigator.pop(context); // close the modal sheet
                         context.push(
-                          '/market/item/${item.itemID}/editItem',
+                          '/market/listed-items/item/${item.itemID}/editItem',
                           extra: {'item': item},
                         );
                       },
@@ -140,7 +140,7 @@ class ListedItemBottomModalSheet {
                       onTap: () {
                         Navigator.pop(context); // close the modal sheet
                         context.push(
-                          '/market/item/${item.itemID}',
+                          '/market/listed-items/item/${item.itemID}',
                           extra: item,
                         );
                       },

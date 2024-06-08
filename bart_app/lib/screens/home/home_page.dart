@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                 BartMaterialButton(
                   label: context.tr('home.btn.go.to.market'),
                   icon: Icons.arrow_forward_rounded,
-                  onPressed: () => context.go('/market'),
+                  onPressed: () => context.go('/market/listed-items'),
                 ),
                 const SizedBox(width: 10),
                 BartMaterialButton(

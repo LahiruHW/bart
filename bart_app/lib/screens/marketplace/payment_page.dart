@@ -237,7 +237,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             'dateCreated': paymentTrade.timeCreated,
                           };
                           context.push(
-                            '/market/item/${widget.returnForItem.itemID}/returnItem/tradeResult',
+                            '/market/listed-items/item/${widget.returnForItem.itemID}/returnItem/tradeResult',
                             extra: obj,
                           );
                         });

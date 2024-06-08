@@ -59,7 +59,7 @@ class _TradeResultPageState extends State<TradeResultPage>
         () => currentAnimVal = _loadAnimController.value,
       );
 
-  void goBackToMarket() => context.go('/market');
+  void goBackToMarket() => context.go('/market/listed-items');
 
   void _startTimer() {
     debugPrint('------------------ Timer started');

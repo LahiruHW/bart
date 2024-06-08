@@ -1,10 +1,10 @@
-import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/index.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 class BartRouter {
@@ -12,6 +12,8 @@ class BartRouter {
   static final _homeNavKey = GlobalKey<NavigatorState>();
   static final _chatNavKey = GlobalKey<NavigatorState>();
   static final _marketNavKey = GlobalKey<NavigatorState>();
+  static final _marketListedItemsNavKey = GlobalKey<NavigatorState>();
+  static final _marketRequestsNavKey = GlobalKey<NavigatorState>();
   static final _profileNavKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
@@ -60,6 +62,7 @@ class BartRouter {
 
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
+        parentNavigatorKey: _rootNavKey,
         builder: (context, state, child) => Base(bodyWidget: child),
         branches: [
           // StatefulShellBranch for the HOME tab ----------------------------------------------
@@ -194,73 +197,112 @@ class BartRouter {
           StatefulShellBranch(
             navigatorKey: _marketNavKey,
             routes: [
-              GoRoute(
-                name: "market", // /market
-                path: '/market',
-                pageBuilder: (context, state) => const MaterialPage(
-                  child: MarketPage(),
-                  maintainState: true,
+              // Sub StatefulShellBranch for the MARKET tab ---------------------------------------------
+              StatefulShellRoute.indexedStack(
+                builder: (context, state, child) => MarketBase(
+                  bodyWidget: child,
                 ),
-                routes: [
-                  GoRoute(
-                    name: 'item', // /market/item/:id
-                    path: 'item/:id',
-                    parentNavigatorKey: _marketNavKey,
-                    pageBuilder: (context, state) {
-                      final itemID = state.pathParameters['id']!;
-                      Item item = state.extra as Item;
-                      return MaterialPage(
-                        key: ValueKey(itemID),
-                        child: ItemPage(
-                          itemID: itemID,
-                          item: item,
-                        ),
-                      );
-                    },
+                branches: [
+                  StatefulShellBranch(
+                    navigatorKey: _marketListedItemsNavKey,
                     routes: [
                       GoRoute(
-                        name: 'editItem', // /market/item/:id/editItem
-                        path: 'editItem',
-                        builder: (context, state) {
-                          final data = state.extra as Map<String, dynamic>;
-                          final item = data['item'] as Item;
-                          return EditItemPage(tradedItem: item);
-                        },
-                        onExit: (context, state) {
-                          final tempProvider = Provider.of<TempStateProvider>(
-                              context,
-                              listen: false);
-                          tempProvider.clearAllTempData();
-                          return true;
-                        },
-                      ),
-                      GoRoute(
-                        name: 'returnItem', // /market/item/:id/returnItem
-                        path: 'returnItem',
-                        builder: (context, state) {
-                          Item item = state.extra as Item;
-                          return ReturnOfferPage(returnForItem: item);
+                        parentNavigatorKey: _marketListedItemsNavKey,
+                        name: "market/listed-items", // market/listed-items
+                        path: '/market/listed-items',
+                        pageBuilder: (context, state) {
+                          return MaterialPage(
+                            child: MarketListedItemsPage(
+                              parentContext: _rootNavKey.currentContext!,
+                            ),
+                            maintainState: true,
+                          );
                         },
                         routes: [
                           GoRoute(
-                            name: 'tradeResult',
-                            path: 'tradeResult',
-                            builder: (context, state) {
-                              final data = state.extra as Map<String, dynamic>;
-                              Item item1 = data['item1'] as Item;
-                              Item item2 = data['item2'] as Item;
-                              return TradeResultPage(
-                                messageHeading: data['messageHeading'],
-                                message: data['message'],
-                                isSuccessful: data['isSuccessful'],
-                                item1: item1,
-                                item2: item2,
-                                dateCreated: data['dateCreated'],
+                            name: 'item', // market/listed-items/item/:id
+                            path: 'item/:id',
+                            parentNavigatorKey: _marketNavKey,
+                            pageBuilder: (context, state) {
+                              final itemID = state.pathParameters['id']!;
+                              Item item = state.extra as Item;
+                              return MaterialPage(
+                                key: ValueKey(itemID),
+                                child: ItemPage(
+                                  itemID: itemID,
+                                  item: item,
+                                ),
                               );
                             },
+                            routes: [
+                              GoRoute(
+                                name:
+                                    'editItem', // market/listed-items/item/:id/editItem
+                                path: 'editItem',
+                                builder: (context, state) {
+                                  final data =
+                                      state.extra as Map<String, dynamic>;
+                                  final item = data['item'] as Item;
+                                  return EditItemPage(tradedItem: item);
+                                },
+                                onExit: (context, state) {
+                                  final tempProvider =
+                                      Provider.of<TempStateProvider>(context,
+                                          listen: false);
+                                  tempProvider.clearAllTempData();
+                                  return true;
+                                },
+                              ),
+                              GoRoute(
+                                name:
+                                    'returnItem', // market/listed-items/item/:id/returnItem
+                                path: 'returnItem',
+                                builder: (context, state) {
+                                  Item item = state.extra as Item;
+                                  return ReturnOfferPage(returnForItem: item);
+                                },
+                                routes: [
+                                  GoRoute(
+                                    name: 'tradeResult',
+                                    path: 'tradeResult',
+                                    builder: (context, state) {
+                                      final data =
+                                          state.extra as Map<String, dynamic>;
+                                      Item item1 = data['item1'] as Item;
+                                      Item item2 = data['item2'] as Item;
+                                      return TradeResultPage(
+                                        messageHeading: data['messageHeading'],
+                                        message: data['message'],
+                                        isSuccessful: data['isSuccessful'],
+                                        item1: item1,
+                                        item2: item2,
+                                        dateCreated: data['dateCreated'],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    navigatorKey: _marketRequestsNavKey,
+                    routes: [
+                      GoRoute(
+                          parentNavigatorKey: _marketRequestsNavKey,
+                          name: 'market/requests',
+                          path: '/market/requests',
+                          pageBuilder: (context, state) {
+                            return MaterialPage(
+                              child: MarketRequestsPage(
+                                parentContext: _rootNavKey.currentContext!,
+                              ),
+                              maintainState: true,
+                            );
+                          }),
                     ],
                   ),
                 ],

@@ -7,8 +7,13 @@ import 'package:flutter/material.dart';
 class TempStateProvider extends ChangeNotifier {
 
   List<String>? _imagePaths;
+  String? _marketSearchText;
+
   List<String> get imagePaths => _imagePaths ?? [];
   set imagePaths(List<String> imgs) => _imagePaths = imgs;
+
+  String get searchText => _marketSearchText ?? '';
+  set searchText(String searchTxt) => _marketSearchText = searchTxt;
 
   void setImagePaths(List<String> paths) {
     _imagePaths = paths;
@@ -23,6 +28,11 @@ class TempStateProvider extends ChangeNotifier {
   void clearAllTempData() {
     debugPrint('----------------------------------- Clearing all temp data');
     _imagePaths = [];
+    notifyListeners();
+  }
+
+  void setSearchText(String text) {
+    _marketSearchText = text;
     notifyListeners();
   }
 
