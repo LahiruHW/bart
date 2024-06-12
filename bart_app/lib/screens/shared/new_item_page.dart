@@ -159,7 +159,7 @@ class _NewItemPageState extends State<NewItemPage> {
             'dateCreated': newTrade.timeCreated,
           };
           context.push(
-            '/market/listed-items/item/${widget.returnForItem!.itemID}/returnItem/tradeResult',
+            '/item/${widget.returnForItem!.itemID}/returnItem/tradeResult',
             extra: obj,
           );
         });

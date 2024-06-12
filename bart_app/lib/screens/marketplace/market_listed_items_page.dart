@@ -58,7 +58,7 @@ class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
                       onTap: () {
                         debugPrint('tapped');
                         context.push(
-                          '/market/listed-items/item/${thisItem.itemID}',
+                          '/item/${thisItem.itemID}',
                           extra: thisItem,
                         );
                       },
