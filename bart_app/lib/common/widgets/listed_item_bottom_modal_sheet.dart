@@ -79,80 +79,100 @@ class ListedItemBottomModalSheet {
       showDragHandle: true,
       backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       builder: (context) {
-        return SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.35,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: isCurrentUser
-                ? [
-                    MarketListTile(
-                      item: item,
-                      onTap: () {},
-                      onLongPress: () {},
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.edit),
-                      title: Text(context.tr('item.page.btn.editItem')),
-                      onTap: () {
-                        Navigator.pop(context); // close the modal sheet
-                        context.push(
-                          '/market/listed-items/item/${item.itemID}/editItem',
-                          extra: {'item': item},
-                        );
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                    ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                      title: Text(
-                        context.tr('item.page.btn.deleteItem'),
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                      onTap: () async {
-                        Navigator.pop(context); // close the modal sheet
-                        await deleteConfirmationDialog(context);
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                    ),
-                  ]
-                : [
-                    MarketListTile(
-                      item: item,
-                      onTap: () {},
-                      onLongPress: () {},
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.remove_red_eye_rounded),
-                      title: Text(context.tr('item.page.btn.viewItem')),
-                      onTap: () {
-                        Navigator.pop(context); // close the modal sheet
-                        context.push(
-                          '/market/listed-items/item/${item.itemID}',
-                          extra: item,
-                        );
-                      },
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      context.tr('item.page.btn.viewRestricted'),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-          ),
+        return Wrap(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(
+                bottom: 30,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: isCurrentUser
+                    ? [
+                        MarketListTile(
+                          item: item,
+                          onTap: () {},
+                          onLongPress: () {},
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.remove_red_eye_rounded),
+                          title: Text(context.tr('item.page.btn.viewItem')),
+                          onTap: () {
+                            Navigator.pop(context); // close the modal sheet
+                            context.push(
+                              '/item/${item.itemID}',
+                              extra: item,
+                            );
+                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.edit),
+                          title: Text(context.tr('item.page.btn.editItem')),
+                          onTap: () {
+                            Navigator.pop(context); // close the modal sheet
+                            context.push(
+                              '/item/${item.itemID}/editItem',
+                              extra: {'item': item},
+                            );
+                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          title: Text(
+                            context.tr('item.page.btn.deleteItem'),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                          onTap: () async {
+                            Navigator.pop(context); // close the modal sheet
+                            await deleteConfirmationDialog(context);
+                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                        ),
+                      ]
+                    : [
+                        MarketListTile(
+                          item: item,
+                          onTap: () {},
+                          onLongPress: () {},
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.remove_red_eye_rounded),
+                          title: Text(context.tr('item.page.btn.viewItem')),
+                          onTap: () {
+                            Navigator.pop(context); // close the modal sheet
+                            context.push(
+                              '/item/${item.itemID}',
+                              extra: item,
+                            );
+                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          context.tr('item.page.btn.viewRestricted'),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+              ),
+            ),
+          ],
         );
       },
     );
