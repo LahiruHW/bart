@@ -63,11 +63,13 @@ class BartRouter {
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: _rootNavKey,
+        restorationScopeId: 'root',
         builder: (context, state, child) => Base(bodyWidget: child),
         branches: [
           // StatefulShellBranch for the HOME tab ----------------------------------------------
           StatefulShellBranch(
             navigatorKey: _homeNavKey,
+            restorationScopeId: 'home',
             routes: [
               GoRoute(
                 name: 'home',
@@ -166,6 +168,7 @@ class BartRouter {
           // StatefulShellBranch for the CHAT tab ----------------------------------------------
           StatefulShellBranch(
             navigatorKey: _chatNavKey,
+            restorationScopeId: 'chat',
             routes: [
               GoRoute(
                 name: "chat",
@@ -196,15 +199,18 @@ class BartRouter {
           // StatefulShellBranch for the MARKET tab ---------------------------------------------
           StatefulShellBranch(
             navigatorKey: _marketNavKey,
+            restorationScopeId: 'market',
             routes: [
               // Sub StatefulShellBranch for the MARKET tab ---------------------------------------------
               StatefulShellRoute.indexedStack(
+                restorationScopeId: 'market-base',
                 builder: (context, state, child) => MarketBase(
                   bodyWidget: child,
                 ),
                 branches: [
                   StatefulShellBranch(
                     navigatorKey: _marketListedItemsNavKey,
+                    restorationScopeId: 'market-listed-items',
                     routes: [
                       GoRoute(
                         parentNavigatorKey: _marketListedItemsNavKey,
@@ -313,6 +319,7 @@ class BartRouter {
           // StatefulShellBranch for the PROFILE tab ---------------------------------------------
           StatefulShellBranch(
             navigatorKey: _profileNavKey,
+            restorationScopeId: 'profile',
             routes: [
               GoRoute(
                 name: "profile",
