@@ -49,7 +49,7 @@ class _MarketBaseState extends State<MarketBase> {
     super.dispose();
   }
 
-  void _togglePage() {
+  void _toggleMarketTab() {
     setState(() {
       _onListedItemsPage = !_onListedItemsPage;
       _onListedItemsPage
@@ -88,7 +88,7 @@ class _MarketBaseState extends State<MarketBase> {
                     child: MarketPageTabButton(
                       title: context.tr("market.page.tab.listedItems"),
                       enabled: _onListedItemsPage,
-                      onTap: _togglePage,
+                      onTap: _toggleMarketTab,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -96,7 +96,7 @@ class _MarketBaseState extends State<MarketBase> {
                     child: MarketPageTabButton(
                       title: context.tr("market.page.tab.requests"),
                       enabled: !_onListedItemsPage,
-                      onTap: _togglePage,
+                      onTap: _toggleMarketTab,
                     ),
                   ),
                   const SizedBox(width: 10),
