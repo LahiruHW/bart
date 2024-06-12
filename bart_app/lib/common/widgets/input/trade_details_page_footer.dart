@@ -53,7 +53,7 @@ class TradeDetailsPageFooter {
                           'itemOwner': trade.tradedItem.itemOwner.userName
                         },
                       ),
-                      backgroundColor: Colors.red,
+                      backgroundColor: Colors.green,
                       icon: Icons.check_circle,
                     ).build(context),
                   );
