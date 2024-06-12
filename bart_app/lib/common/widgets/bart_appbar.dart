@@ -72,7 +72,7 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 ),
                               ),
                               onPressed: () => showBackButton & canPop
-                                  ? GoRouter.of(context).pop()
+                                  ? context.pop()
                                   : null,
                             ),
                       middle: showTitle

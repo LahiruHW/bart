@@ -51,7 +51,6 @@ class MarketListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardStyle = Theme.of(context).extension<BartMarketListItemStyle>()!;
-
     return Card(
       elevation: 7,
       color: cardStyle.cardTheme.color,
@@ -108,21 +107,19 @@ class MarketListTile extends StatelessWidget {
               ),
               SizedBox(
                 height: cardHeight,
-                child: Hero(
-                  tag: item.itemID,
-                  child: AspectRatio(
-                    aspectRatio: 1.0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CachedNetworkImage(
-                        key: UniqueKey(),
-                        imageUrl: item.imgs[0],
-                        cacheManager: BartImageTools.customCacheManager,
-                        fit: BoxFit.contain,
-                        progressIndicatorBuilder: BartImageTools.progressLoader,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CachedNetworkImage(
+                      key: UniqueKey(),
+                      cacheKey: 'item_${item.itemID}_0',
+                      imageUrl: item.imgs[0],
+                      cacheManager: BartImageTools.customCacheManager,
+                      fit: BoxFit.contain,
+                      progressIndicatorBuilder: BartImageTools.progressLoader,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),

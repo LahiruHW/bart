@@ -8,11 +8,11 @@ class ViewImagePage extends StatefulWidget {
   const ViewImagePage({
     super.key,
     required this.imgUrl,
-    required this.cacheKey,
+    required this.imgKey,
   });
 
   final String imgUrl;
-  final String cacheKey;
+  final String imgKey;
 
   @override
   State<ViewImagePage> createState() => _ViewImagePageState();
@@ -73,7 +73,7 @@ class _ViewImagePageState extends State<ViewImagePage>
   Widget _buildImage() => Uri.parse(widget.imgUrl).isAbsolute
       ? CachedNetworkImage(
           key: UniqueKey(),
-          cacheKey: widget.cacheKey,
+          cacheKey: widget.imgKey,
           cacheManager: BartImageTools.customCacheManager,
           progressIndicatorBuilder: BartImageTools.progressLoader,
           imageUrl: widget.imgUrl,
@@ -107,7 +107,11 @@ class _ViewImagePageState extends State<ViewImagePage>
             child: GestureDetector(
               onDoubleTapDown: (d) => setState(() => _doubleTapDetails = d),
               onDoubleTap: _handleImageZoom,
-              child: _buildImage(),
+              child: Hero(
+                tag: widget.imgKey,
+                transitionOnUserGestures: true,
+                child: _buildImage(),
+              ),
             ),
           ),
         ),
