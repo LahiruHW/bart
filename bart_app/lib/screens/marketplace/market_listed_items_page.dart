@@ -10,19 +10,14 @@ import 'package:bart_app/common/widgets/listed_item_bottom_modal_sheet.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile_list.dart';
 
-class MarketListedItemsPage extends StatefulWidget {
+class MarketListedItemsPage extends StatelessWidget {
   const MarketListedItemsPage({
     super.key,
-    required this.parentContext,
+    required this.modalContext,
   });
 
-  final BuildContext parentContext;
+  final BuildContext modalContext;
 
-  @override
-  State<StatefulWidget> createState() => _MarketListedItemsPageState();
-}
-
-class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer2<BartStateProvider, TempStateProvider>(
@@ -44,7 +39,6 @@ class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
                         .where((item) => item.doesItemContainQuery(searchText))
                         .toList()
                     : null;
-                // debugPrint('------------------------------- MARKET DATA: $data');
                 return ListView.separated(
                   itemCount: data.length,
                   separatorBuilder: (context, index) => const Divider(
@@ -56,7 +50,6 @@ class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
                     return MarketListTile(
                       item: thisItem,
                       onTap: () {
-                        debugPrint('tapped');
                         context.push(
                           '/item/${thisItem.itemID}',
                           extra: thisItem,
@@ -69,7 +62,7 @@ class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
                           context: context,
                           dismissable: false,
                         ),
-                        parentContext: widget.parentContext,
+                        parentContext: modalContext,
                         isCurrentUser: (stateProvider.userProfile.userID ==
                             thisItem.itemOwner.userID),
                       ).show(),
