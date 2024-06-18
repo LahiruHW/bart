@@ -8,7 +8,7 @@ import 'package:bart_app/common/widgets/image_with_popup.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 
-const int MAX_IMAGES = 4;
+const int MAX_IMAGES = 4; // Maximum number of images that can be uploaded
 
 class BartImagePicker extends StatefulWidget {
   const BartImagePicker({
@@ -47,42 +47,37 @@ class _BartImagePickerState extends State<BartImagePicker> {
   Widget build(BuildContext context) {
     return Consumer<TempStateProvider>(
       builder: (context, provider, child) => GestureDetector(
-        // onTap: _imagePaths.length == 4
         onTap: provider.imagePaths.length == MAX_IMAGES
             ? null
-            : () => BartImageTools.pickImagesFromGallery().then((imgList) {
-                  // final tempLst = [..._imagePaths, ...imgList];
-                  final tempLst = [...provider.imagePaths, ...imgList];
+            : () => BartImageTools.pickImagesFromGallery().then(
+                  (imgList) {
+                    final tempLst = [...provider.imagePaths, ...imgList];
 
-                  if (tempLst.length > MAX_IMAGES) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content:
-                            // Text("You can only upload a maximum of 4 images"),
-                            Text(tr('image.picker.snackbar')),
-                      ),
-                    );
-                    tempLst.removeRange(MAX_IMAGES, tempLst.length);
-                  }
-
-                  // setState(() {
-                  //   _imagePaths = tempLst;
-                  // });
-                  provider.setImagePaths(tempLst);
-                }),
+                    if (tempLst.length > MAX_IMAGES) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            tr('image.picker.snackbar'),
+                          ),
+                        ),
+                      );
+                      tempLst.removeRange(MAX_IMAGES, tempLst.length);
+                    }
+                    provider.setImagePaths(tempLst);
+                  },
+                ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              // padding: _imagePaths.isEmpty
+              height: 150,
               padding: provider.imagePaths.isEmpty
                   ? const EdgeInsets.symmetric(vertical: 45)
                   : const EdgeInsets.symmetric(
                       vertical: 5,
                       horizontal: 2.5,
                     ),
-              // margin: const EdgeInsets.symmetric(vertical: 10),
               margin: const EdgeInsets.only(top: 10),
               decoration: BoxDecoration(
                 color:
@@ -95,14 +90,12 @@ class _BartImagePickerState extends State<BartImagePicker> {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              // child: _imagePaths.isEmpty
               child: provider.imagePaths.isEmpty
                   ? Column(
                       children: [
                         const Icon(Icons.upload),
                         const SizedBox(height: 10),
                         Text(
-                          // "Upload upto MAX_IMAGES pictures of your item you wish to exchange",
                           context.tr('image.picker.text'),
                           textAlign: TextAlign.center,
                           style:
