@@ -20,7 +20,6 @@ class BartImagePicker extends StatefulWidget {
 }
 
 class _BartImagePickerState extends State<BartImagePicker> {
-  // late List<String> _imagePaths = []; // List of image paths - a max of 4
 
   @override
   void initState() {
