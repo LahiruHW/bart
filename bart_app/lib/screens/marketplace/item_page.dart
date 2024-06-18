@@ -323,7 +323,7 @@ class _ItemPageState extends State<ItemPage> {
                             }
 
                             context.push(
-                              '/market/listed-items/item/${item.itemID}/returnItem',
+                              '/item/${item.itemID}/returnItem',
                               extra: item,
                             );
                           },
