@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -105,33 +106,26 @@ class _BartImagePickerState extends State<BartImagePicker> {
                         ),
                       ],
                     )
-                  : SingleChildScrollView(
+                  : ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          // ..._imagePaths.map(
-                          ...provider.imagePaths.map(
-                            (img) => ImageWithPopUpMenu(
-                              imagePath: img,
-                              onDelete: () {
-                                // setState(() => _imagePaths.remove(img));
-                                provider.removeImagePath(img);
-                              },
-                            ),
-                          ),
-                          // if (_imagePaths.length < 4) imgPlaceholder(),
-                          if (provider.imagePaths.length < MAX_IMAGES) imgPlaceholder(),
-                        ]
-                            .animate(
-                              delay: 300.ms,
-                              interval: 50.ms,
-                            )
-                            .fadeIn(
-                              duration: 400.ms,
-                              curve: Curves.easeInOutCubic,
-                            ),
+                      dragStartBehavior: DragStartBehavior.down,
+                      shrinkWrap: true,
+                      itemCount: provider.imagePaths.length,
+                      itemBuilder: (context, index) => ImageWithPopUpMenu(
+                        key: ValueKey('img_$index'),
+                        imagePath: provider.imagePaths[index],
+                        onDelete: () {
+                          provider.removeImagePath(provider.imagePaths[index]);
+                        },
                       ),
-                    ),
+                    )
+                      .animate(
+                        delay: 300.ms,
+                      )
+                      .fadeIn(
+                        duration: 400.ms,
+                        curve: Curves.easeInOutCubic,
+                      ),
             ),
             provider.imagePaths.isNotEmpty
                 ? Container(
