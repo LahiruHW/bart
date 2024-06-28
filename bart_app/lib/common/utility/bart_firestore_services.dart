@@ -11,6 +11,7 @@ import 'package:bart_app/common/utility/bart_auth.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
+import 'package:bart_app/common/constants/enum_user_request_types.dart';
 
 import 'package:bart_app/common/constants/use_emulators.dart';
 
@@ -42,6 +43,7 @@ class BartFirestoreServices {
   static final tradeCollection = _firestore.collection('trade');
 
   static final requestCollection = _firestore.collection('request');
+  static final userRequestCollection = _firestore.collection('user_request');
 
   // static final _transformer1 =
   //     StreamTransformer<List<HomeItem>, List<Trade>>.fromHandlers(
@@ -140,6 +142,18 @@ class BartFirestoreServices {
         return Future<Map<String, dynamic>>.value({});
       }
     });
+  }
+
+  static Future<void> deleteUserProfile(String userID) async {
+    // get all the trades that involve the user
+
+    // // get all items that the user has posted
+    // final itemList = await itemCollection
+    //     .where('itemOwner', isEqualTo: userID)
+    //     .get()
+    //     .then((snapshot) => snapshot.docs);
+
+    await userProfileDocRef(userID).delete();
   }
 
   static Future<void> updateChatLastMessage(
@@ -381,6 +395,7 @@ class BartFirestoreServices {
         return msgList.map((msg) {
           final userProfile = userList.firstWhere(
             (user) => user.userID == msg.senderID,
+            orElse: () => UserLocalProfile.empty(),
           );
           final Map<String, dynamic> extra = msg.extra;
           if (msg.isSharedItem!) {
@@ -440,15 +455,24 @@ class BartFirestoreServices {
             // get a list of the recipients' user profiles using the user id list
             // exclude the current user's profile
             final userProfileList1 = users
-                .map((thisUserID) =>
-                    userList.firstWhere((user) => user.userID == thisUserID))
+                .map(
+                  (thisUserID) => userList.firstWhere(
+                    (user) => user.userID == thisUserID,
+                    orElse: () => UserLocalProfile.empty(),
+                  ),
+                )
                 .toList();
             final userProfileList2 = userProfileList1
-                .where((userProfile) => userProfile.userID != userID)
+                .where(
+                  (userProfile) =>
+                      (!userProfile.isNull) && (userProfile.userID != userID),
+                )
                 .toList();
 
-            if (userProfileList2.length == 1) {
-              final recipient = userProfileList2.first;
+            if (userProfileList2.length <= 1) {
+              final recipient = (userProfileList2.isNotEmpty)
+                  ? userProfileList2.first
+                  : UserLocalProfile.empty();
               return Chat(
                 chatID: chatFirestore.chatID,
                 chatImageUrl: recipient.imageUrl ?? "",
@@ -594,6 +618,7 @@ class BartFirestoreServices {
           (item) {
             final owner = userList.firstWhere(
               (user) => user.userID == item.itemOwner,
+              orElse: () => UserLocalProfile.empty(),
             );
             return Item.fromFirestore(item, owner);
           },
@@ -1011,6 +1036,21 @@ class BartFirestoreServices {
   }
 
   // the above stream of requests must be combined with the user profile stream to get the user's profile data
+
+  // //////////////////////////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////////////////////////////
+  // USER REQUEST FUNCTIONS
+
+  /// make a request for users to get a copy of their own data
+  static Future<void> makeDataRequest(String userID) async {
+    final newUserRequest = UserRequest(
+      userID: userID,
+      requestType: UserReqType.showMyData,
+      timeCreated: Timestamp.now(),
+    );
+    userRequestCollection.add(newUserRequest.toMap());
+  }
 
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////

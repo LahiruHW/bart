@@ -91,6 +91,25 @@ class BartAuthService {
     throw UnimplementedError();
   }
 
+  Future<void> deleteAccount() async {
+    try {
+      await _auth.currentUser!.delete();
+    } catch (e) {
+
+
+      await _auth.currentUser!.reauthenticateWithCredential(
+        GoogleAuthProvider.credential(),
+      )
+          .then(
+        (value) async {
+          await _auth.currentUser!.delete();
+        },
+      );
+
+      
+    }
+  }
+
   static String getRandomName() {
     final WordGenerator wordGenerator = WordGenerator();
     final PasswordGenerator passwordGenerator = PasswordGenerator();

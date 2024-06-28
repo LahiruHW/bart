@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
+import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 const statusBarHeight = 35.0;
 
@@ -17,6 +22,125 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  void _deleteDialog(BuildContext context, BartStateProvider provider) {
+    final loadingOverlay = LoadingBlockFullScreen(
+      context: context,
+      dismissable: false,
+    );
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(
+          context.tr('my.account.delete.dialog.header'),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.tr('my.account.delete.dialog.body1'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              context.tr('my.account.delete.dialog.body2'),
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(),
+            child: Text(
+              context.tr('no'),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              context.pop();
+              loadingOverlay.show();
+              BartFirestoreServices.deleteUserProfile(
+                provider.userProfile.userID,
+              ).then(
+                (value) {
+                  provider.deleteAccount().then(
+                    (value) {
+                      loadingOverlay.hide();
+                      context.go('/login-base');
+                    },
+                  );
+                },
+              );
+            },
+            child: Text(context.tr('yes')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showMyDataDialog(BuildContext context, BartStateProvider provider) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text(
+          context.tr('my.account.show.my.data.dialog.header'),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              context.tr('my.account.show.my.data.dialog.body1'),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              context.tr('my.account.show.my.data.dialog.body2'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              context.tr('my.account.show.my.data.dialog.body3'),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              BartFirestoreServices.makeDataRequest(
+                provider.userProfile.userID,
+              ).then(
+                (_) {
+                  context.pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    BartSnackBar(
+                      message: context.tr('my.account.show.my.data.snackbar1'),
+                      icon: Icons.check_circle_outline_rounded,
+                      backgroundColor: Colors.green,
+                    ).build(context),
+                  );
+                },
+              );
+            },
+            child: Text(
+              context.tr('yes'),
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.pop(),
+            child: Text(
+              context.tr('no'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
@@ -97,6 +221,61 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ],
+              ),
+
+              Consumer<BartStateProvider>(
+                builder: (context, provider, child) => ExpansionTile(
+                  leading: const Icon(Icons.person_outline_outlined),
+                  title: Text(
+                    context.tr('my.account.header'),
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  maintainState: true,
+                  children: [
+                    Material(
+                      color: Theme.of(context).listTileTheme.tileColor,
+                      child: InkWell(
+                        child: ListTile(
+                          isThreeLine: true,
+                          title:
+                              Text(context.tr('my.account.show.my.data.top')),
+                          subtitle: Text(
+                            context.tr('my.account.show.my.data.bottom'),
+                          ),
+                          onTap: () => _showMyDataDialog(context, provider),
+                          enableFeedback: true,
+                        ),
+                      ),
+                    ),
+                    Material(
+                      child: InkWell(
+                        onLongPress: () => _deleteDialog(context, provider),
+                        child: ListTile(
+                          title: Text(
+                            context.tr('my.account.delete.top'),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                          subtitle: Text(
+                            context.tr('my.account.delete.bottom'),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              BartSnackBar(
+                                icon: Icons.info_outline_rounded,
+                                message:
+                                    context.tr('my.account.delete.snackbar1'),
+                                backgroundColor: Colors.amber,
+                              ).build(context),
+                            );
+                          },
+                          enabled: true,
+                          enableFeedback: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               ExpansionTile(
                 leading: const Icon(Icons.info),

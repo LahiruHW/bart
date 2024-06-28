@@ -10,6 +10,7 @@ class UserLocalProfile {
   String? imageUrl;
   UserSettings? settings;
   String? localeString;
+  bool isNull;
 
   UserLocalProfile({
     this.userID = "",
@@ -19,7 +20,20 @@ class UserLocalProfile {
     this.imageUrl,
     this.settings,
     this.localeString = "en",
+    this.isNull = false,
   });
+
+  static final UserLocalProfile _invalidObj = UserLocalProfile(
+    userID: "",
+    userName: "Deleted User",
+    isFirstLogin: false,
+    chats: [],
+    imageUrl: null,
+    settings: null,
+    localeString: null,
+    isNull: true,
+  );
+  factory UserLocalProfile.empty() => _invalidObj;
 
   factory UserLocalProfile.fromMap(Map<String, dynamic> json) {
     return UserLocalProfile(

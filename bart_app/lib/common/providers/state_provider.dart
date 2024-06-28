@@ -38,6 +38,11 @@ class BartStateProvider extends ChangeNotifier {
         );
   }
 
+  Future<void> deleteAccount() async {
+    clearUserInstance();
+    await authService.deleteAccount();
+  }
+
   /// sets up the user account using the usercredential object
   Future<void> setupUserAccount(UserCredential userCred) async {
     debugPrint('|||||||||||||||||||||||||||||||||||||||||||  ${userCred.user}');
