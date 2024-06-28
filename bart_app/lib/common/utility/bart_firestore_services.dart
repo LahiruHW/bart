@@ -146,14 +146,27 @@ class BartFirestoreServices {
   }
 
   static Future<void> deleteUserProfile(String userID) async {
-    // get all the trades that involve the user
 
-    // // get all items that the user has posted
-    // final itemList = await itemCollection
-    //     .where('itemOwner', isEqualTo: userID)
-    //     .get()
-    //     .then((snapshot) => snapshot.docs);
+    // get all items that the user has posted
+    final itemList = await itemCollection
+        .where('itemOwner', isEqualTo: userID)
+        .get()
+        .then((snapshot) => snapshot.docs);
 
+    // get all the trades that contains the user's items
+    final tradeList = await tradeCollection
+        .where('tradedItem', whereIn: itemList.map((e) => e.id).toList())
+        .get()
+        .then((snapshot) => snapshot.docs);
+
+    // delete each trade and each item
+    for (final trade in tradeList) {
+      await trade.reference.delete();
+    }
+    for (final item in itemList) {
+      await item.reference.delete();
+    } 
+    // finally delete the user profile
     await userProfileDocRef(userID).delete();
   }
 
