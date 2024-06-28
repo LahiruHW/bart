@@ -25,6 +25,7 @@ class BartFirestoreServices {
       _firestore.useFirestoreEmulator(host, 8080);
       debugPrint('------------------- using Firestore Emulator at: $host:8080');
     }
+    debugPrint('------------------------------ FirestoreServices initialized');
   }
 
   static late final FirebaseFirestore _firestore;
@@ -227,7 +228,8 @@ class BartFirestoreServices {
     String msgText,
   ) async {
     final timeStamp = Timestamp.fromDate(DateTime.now());
-    await updateChatLastMessageUsingChatObj(chat, userID, msgText, timeStamp)
+    // await updateChatLastMessageUsingChatObj(chat, userID, msgText, timeStamp)
+    await updateChatLastMessage(chat.chatID, userID, msgText, timeStamp)
         .then((_) {
       final messageData = Message(
         timeSent: timeStamp,
