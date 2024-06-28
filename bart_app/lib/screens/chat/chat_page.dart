@@ -94,9 +94,6 @@ class _ChatPageState extends State<ChatPage> {
             ),
             child: Column(
               children: [
-                // const Text("Chat Page"),
-                // Text("Chat ID: ${widget.chatID}"),
-
                 // show the image and the name of the user you're chatting with
                 SizedBox(
                   height: 60,

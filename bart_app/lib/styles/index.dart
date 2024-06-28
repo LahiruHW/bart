@@ -7,3 +7,4 @@ export 'bart_chat_bubble_style.dart';
 export 'home_trade_widget_style.dart';
 export 'bart_profile_page_colour_style.dart';
 export 'bart_payment_page_style.dart';
+export 'colour_switch_toggle_style.dart';

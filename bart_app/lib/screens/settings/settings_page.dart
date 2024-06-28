@@ -311,20 +311,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     padding: const EdgeInsets.all(10),
                     child: Text(
                       context.tr('app.version.info', namedArgs: {
-                        'versionNum' : BartAppVersionData.version,
-                        'buildNum' : BartAppVersionData.buildNumber,
+                        'versionNum': BartAppVersionData.version,
+                        'buildNum': BartAppVersionData.buildNumber,
                       }),
-                      
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
               ),
-              // Text(
-              //   BartAppVersionData.packageName,
-              //   textAlign: TextAlign.center,
-              // ),
             ],
           ),
         ),
