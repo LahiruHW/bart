@@ -277,6 +277,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
+
+              ListTile(
+                leading: const Icon(Icons.privacy_tip_rounded),
+                title: Text(
+                  context.tr('privacy.policy.header'),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                onTap: () => context.push(
+                  '/privacyPolicy',
+                  extra:
+                      'assets/translations/${context.tr('privacy.policy.fileName')}',
+                ),
+              ),
+
               ExpansionTile(
                 leading: const Icon(Icons.info),
                 title: Text(

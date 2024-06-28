@@ -60,6 +60,18 @@ class BartRouter {
         },
       ),
 
+      GoRoute(
+          name: 'privacyPolicy',
+          path: '/privacyPolicy',
+          pageBuilder: (context, state) {
+            final fileName = state.extra as String;
+            return MaterialPage(
+              child: PrivacyPolicyPage(
+                fileName: fileName,
+              ),
+            );
+          }),
+
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: _rootNavKey,
