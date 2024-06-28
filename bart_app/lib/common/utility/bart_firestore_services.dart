@@ -146,28 +146,33 @@ class BartFirestoreServices {
   }
 
   static Future<void> deleteUserProfile(String userID) async {
+    // only delete if the user profile still exists
+    final userProfile = await userProfileDocRef(userID).get();
 
-    // get all items that the user has posted
-    final itemList = await itemCollection
-        .where('itemOwner', isEqualTo: userID)
-        .get()
-        .then((snapshot) => snapshot.docs);
+    if (userProfile.exists) {
+      // get all items that the user has posted
+      final itemList = await itemCollection
+          .where('itemOwner', isEqualTo: userID)
+          .get()
+          .then((snapshot) => snapshot.docs);
 
-    // get all the trades that contains the user's items
-    final tradeList = await tradeCollection
-        .where('tradedItem', whereIn: itemList.map((e) => e.id).toList())
-        .get()
-        .then((snapshot) => snapshot.docs);
-
-    // delete each trade and each item
-    for (final trade in tradeList) {
-      await trade.reference.delete();
+      if (itemList.isNotEmpty) {
+        // get all the trades that contains the user's items
+        final tradeList = await tradeCollection
+            .where('tradedItem', whereIn: itemList.map((e) => e.id).toList())
+            .get()
+            .then((snapshot) => snapshot.docs);
+        // delete each trade and each item
+        for (final trade in tradeList) {
+          await trade.reference.delete();
+        }
+        for (final item in itemList) {
+          await item.reference.delete();
+        }
+      }
+      // finally delete the user profile
+      await userProfileDocRef(userID).delete();
     }
-    for (final item in itemList) {
-      await item.reference.delete();
-    } 
-    // finally delete the user profile
-    await userProfileDocRef(userID).delete();
   }
 
   static Future<void> updateChatLastMessage(
