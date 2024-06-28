@@ -38,9 +38,26 @@ class BartStateProvider extends ChangeNotifier {
         );
   }
 
-  Future<void> deleteAccount() async {
-    clearUserInstance();
-    await authService.deleteAccount();
+  Future<bool> deleteAccount() async {
+    if (authService.currentUser != null) {
+      debugPrint(
+          '--------------------- StateProvider user is deleting account');
+      await authService
+          .deleteAccount()
+          .then(
+            (_) => clearUserInstance(),
+          )
+          .onError(
+            (error, stackTrace) => throw Exception(error),
+          );
+      return true;
+    } else if (authService.currentUser == null) {
+      debugPrint('--------------------- StateProvider user is already deleted');
+      clearUserInstance();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /// sets up the user account using the usercredential object

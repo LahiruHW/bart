@@ -22,13 +22,13 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  void _deleteDialog(BuildContext context, BartStateProvider provider) {
+  void _deleteDialog(BuildContext parentContext, BartStateProvider provider) {
     final loadingOverlay = LoadingBlockFullScreen(
-      context: context,
+      context: parentContext,
       dismissable: false,
     );
     showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text(
@@ -64,17 +64,21 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               context.pop();
               loadingOverlay.show();
-              BartFirestoreServices.deleteUserProfile(
+              await BartFirestoreServices.deleteUserProfile(
                 provider.userProfile.userID,
               ).then(
-                (value) {
-                  provider.deleteAccount().then(
+                (value) async {
+                  await provider.deleteAccount().then(
                     (value) {
                       loadingOverlay.hide();
-                      context.go('/login-base');
+                      if (value) {
+                        parentContext.go('/login-base');
+                      } else {
+                        throw Exception('Account deletion failed');
+                      }
                     },
                   );
                 },
