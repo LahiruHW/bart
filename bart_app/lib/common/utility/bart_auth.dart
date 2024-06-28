@@ -95,18 +95,26 @@ class BartAuthService {
     try {
       await _auth.currentUser!.delete();
     } catch (e) {
+      _reauthenticateAndDelete();
+    }
+  }
 
-
-      await _auth.currentUser!.reauthenticateWithCredential(
-        GoogleAuthProvider.credential(),
-      )
-          .then(
-        (value) async {
-          await _auth.currentUser!.delete();
-        },
-      );
-
-      
+  /// based on: https://medium.com/@Ruben.Aster/delete-user-accounts-in-flutter-apps-with-firebase-auth-de3740d3ba54
+  void _reauthenticateAndDelete() async {
+    try {
+      final providerData = _auth.currentUser!.providerData.first;
+      if (GoogleAuthProvider().providerId == providerData.providerId) {
+        await _auth.currentUser!
+            .reauthenticateWithProvider(GoogleAuthProvider());
+      } else if (AppleAuthProvider().providerId == providerData.providerId) {
+        await _auth.currentUser!
+            .reauthenticateWithProvider(AppleAuthProvider());
+      } else {
+        throw Exception("Provider not supported");
+      }
+      await _auth.currentUser?.delete();
+    } catch (e) {
+      debugPrint('Error reauthenticating and deleting account: $e');
     }
   }
 
