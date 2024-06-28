@@ -6,6 +6,7 @@ import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bart_app/common/entity/user_local_profile.dart';
 import 'package:bart_app/common/widgets/input/chat_input_actions.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 
@@ -205,28 +206,39 @@ class _ChatPageState extends State<ChatPage> {
                   indent: 0,
                   height: 1,
                 ),
-                ChatInputGroup(
-                  controller: _textEditController,
-                  focusNode: _focusNode,
-                  onSend: () {
-                    if (_textEditController.text.isNotEmpty) {
-                      debugPrint("Send message: ${_textEditController.text}");
-                      BartFirestoreServices.sendMessageUsingChatObj(
-                        widget.chatData,
-                        provider.userProfile.userID,
-                        _textEditController.text,
-                      );
 
-                      _textEditController.clear();
-                      scrollDown(offset: 100);
-                    } else {
-                      // BartFirestoreServices.nukeCollection(
-                      //   BartFirestoreServices.chatRoomCollection(widget.chatID),
-                      // );
-                      debugPrint("Empty message");
-                    }
-                  },
-                ),
+                // if there is a user in the chatData that is deleted, show a message
+
+                widget.chatData.users.contains(UserLocalProfile.empty())
+                    ? Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: const Text(
+                          "This user has deleted their account. You can no longer chat with them.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      )
+                    : ChatInputGroup(
+                        controller: _textEditController,
+                        focusNode: _focusNode,
+                        onSend: () {
+                          if (_textEditController.text.isNotEmpty) {
+                            debugPrint(
+                                "Send message: ${_textEditController.text}");
+                            BartFirestoreServices.sendMessageUsingChatObj(
+                              widget.chatData,
+                              provider.userProfile.userID,
+                              _textEditController.text,
+                            );
+
+                            _textEditController.clear();
+                            scrollDown(offset: 100);
+                          }
+                        },
+                      ),
               ],
             ),
           ),
