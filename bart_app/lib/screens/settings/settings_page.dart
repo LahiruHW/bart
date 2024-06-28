@@ -36,16 +36,21 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               context.tr('my.account.delete.dialog.body1'),
             ),
             const SizedBox(height: 20),
-            Text(
-              context.tr('my.account.delete.dialog.body2'),
-              style: const TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                context.tr('my.account.delete.dialog.body2'),
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -93,6 +98,7 @@ class _SettingsPageState extends State<SettingsPage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               context.tr('my.account.show.my.data.dialog.body1'),
@@ -102,9 +108,11 @@ class _SettingsPageState extends State<SettingsPage> {
               context.tr('my.account.show.my.data.dialog.body2'),
             ),
             const SizedBox(height: 20),
-            Text(
-              context.tr('my.account.show.my.data.dialog.body3'),
-              textAlign: TextAlign.center,
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                context.tr('my.account.show.my.data.dialog.body3'),
+              ),
             ),
           ],
         ),
