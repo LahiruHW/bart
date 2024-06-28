@@ -234,7 +234,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
-
               Consumer<BartStateProvider>(
                 builder: (context, provider, child) => ExpansionTile(
                   leading: const Icon(Icons.person_outline_outlined),
@@ -289,7 +288,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
-
               ListTile(
                 leading: const Icon(Icons.privacy_tip_rounded),
                 title: Text(
@@ -302,7 +300,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       'assets/translations/${context.tr('privacy.policy.fileName')}',
                 ),
               ),
-
               ExpansionTile(
                 leading: const Icon(Icons.info),
                 title: Text(

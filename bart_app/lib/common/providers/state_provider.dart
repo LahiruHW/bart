@@ -87,7 +87,6 @@ class BartStateProvider extends ChangeNotifier {
   /// clear the user instance and all user data after sign out
   void clearUserInstance() async {
     user = null;
-    // userProfile = UserLocalProfile(settings: UserSettings());
     final tempUserProfile = UserLocalProfile(settings: UserSettings());
     userProfile =
         UserLocalProfile.mergeCurrentSettings(userProfile, tempUserProfile);
@@ -96,9 +95,7 @@ class BartStateProvider extends ChangeNotifier {
     BartSharedPrefOps.clearUserProfile();
     BartImageTools.customCacheManager.emptyCache();
 
-    debugPrint(
-        '--------------------- StateProvider user signed out & userProfile cleared');
-    // userProfileStream = null;
+    debugPrint('-------------------- StateProvider user & userProfile cleared');
     notifyListeners();
   }
 
@@ -131,7 +128,8 @@ class BartStateProvider extends ChangeNotifier {
 
   /// switch the user's locale and update the user profile
   void switchLocale(String localeString, BuildContext context) {
-    debugPrint('--------------------- StateProvider userProfile locale switched to $localeString');
+    debugPrint(
+        '--------------------- StateProvider userProfile locale switched to $localeString');
     userProfile.updateLocaleString(localeString);
     final currentLocale = userProfile.localeFromString(localeString);
     context.setLocale(currentLocale);
