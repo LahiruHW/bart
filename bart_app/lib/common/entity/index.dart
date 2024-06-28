@@ -9,3 +9,4 @@ export 'chat.dart';
 export 'chat_firestore.dart';
 export 'request.dart';
 export 'request_firestore.dart';
+export 'user_request.dart';
