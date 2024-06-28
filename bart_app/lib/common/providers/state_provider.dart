@@ -75,7 +75,9 @@ class BartStateProvider extends ChangeNotifier {
     userProfile =
         UserLocalProfile.mergeCurrentSettings(userProfile, tempUserProfile);
 
+    // clear sharedpref and image cache
     BartSharedPrefOps.clearUserProfile();
+    BartImageTools.customCacheManager.emptyCache();
 
     debugPrint(
         '--------------------- StateProvider user signed out & userProfile cleared');
