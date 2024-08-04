@@ -90,7 +90,7 @@ class MarketListTile extends StatelessWidget {
                         color: Colors.transparent,
                       ),
                       Text(
-                        'by ${item.itemOwner.userName.toUpperCase()}',
+                        'by ${item.itemOwner.userName}',
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
