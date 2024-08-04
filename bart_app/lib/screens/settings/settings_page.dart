@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
+// import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
@@ -15,8 +16,10 @@ const statusBarHeight = 35.0;
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
     super.key,
+    required this.beginAllExpanded,
   });
-
+  final bool beginAllExpanded;
+  static final GlobalKey<ScaffoldState> globalKey = GlobalKey();
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
@@ -159,6 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Theme(
       data: theme,
       child: Scaffold(
+        key: SettingsPage.globalKey,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -206,6 +210,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               ExpansionTile(
+                // key: BartTuteWidgetKeys.settingsPagePersonalisation,
+                initiallyExpanded: widget.beginAllExpanded,
                 leading: const Icon(Icons.design_services_outlined),
                 title: Text(
                   context.tr('personalisation.header'),
@@ -236,6 +242,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Consumer<BartStateProvider>(
                 builder: (context, provider, child) => ExpansionTile(
+                  initiallyExpanded: widget.beginAllExpanded,
                   leading: const Icon(Icons.person_outline_outlined),
                   title: Text(
                     context.tr('my.account.header'),
@@ -301,6 +308,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               ExpansionTile(
+                initiallyExpanded: widget.beginAllExpanded,
                 leading: const Icon(Icons.info),
                 title: Text(
                   context.tr('about.header'),

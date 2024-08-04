@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/widgets/bart_appbar.dart';
 import 'package:bart_app/common/widgets/bottom_nav_bar.dart';
 import 'package:bart_app/common/widgets/side_nav_drawer.dart';
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 
 class Base extends StatefulWidget {
   const Base({
@@ -12,18 +13,18 @@ class Base extends StatefulWidget {
   });
 
   final StatefulNavigationShell bodyWidget;
+  static final GlobalKey<ScaffoldState> globalKey = GlobalKey();
 
   @override
   State<Base> createState() => _BaseState();
 }
 
 class _BaseState extends State<Base> {
-  final GlobalKey<ScaffoldState> globalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final index = widget.bodyWidget.currentIndex;
     return Scaffold(
-      key: globalKey,
+      key: Base.globalKey,
       drawerEnableOpenDragGesture: true,
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 8,
       extendBody: false,
@@ -31,6 +32,7 @@ class _BaseState extends State<Base> {
         showBackButton: true,
         showTitle: true,
         trailing: IconButton(
+          key: BartTuteWidgetKeys.appBarHamburgerMenu,
           icon: const Icon(Icons.menu),
           style: ButtonStyle(
             foregroundColor: WidgetStateProperty.all<Color>(
@@ -40,7 +42,7 @@ class _BaseState extends State<Base> {
               Colors.transparent,
             ),
           ),
-          onPressed: () => globalKey.currentState!.openEndDrawer(),
+          onPressed: () => Base.globalKey.currentState!.openEndDrawer(),
         ),
       ),
       body: widget.bodyWidget,

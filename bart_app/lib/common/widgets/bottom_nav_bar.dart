@@ -1,3 +1,4 @@
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
@@ -64,21 +65,25 @@ class _BartBottomNavBarState extends State<BartBottomNavBar> {
       showUnselectedLabels: false,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          key: BartTuteWidgetKeys.bottomNavBarHome,
           icon: const Icon(Icons.home_outlined),
           activeIcon: const Icon(Icons.home_sharp),
           label: context.tr('bottom.navbar.home'),
         ),
         BottomNavigationBarItem(
+          key: BartTuteWidgetKeys.bottomNavBarChats,
           icon: const Icon(Icons.chat_outlined),
           activeIcon: const Icon(Icons.chat_rounded),
           label: context.tr('bottom.navbar.chat'),
         ),
         BottomNavigationBarItem(
+          key: BartTuteWidgetKeys.bottomNavBarMarket,
           icon: const Icon(Icons.shopping_bag_outlined),
           activeIcon: const Icon(Icons.shopping_bag_rounded),
           label: context.tr('bottom.navbar.market'),
         ),
         BottomNavigationBarItem(
+          key: BartTuteWidgetKeys.bottomNavBarProfile,
           icon: const Icon(Icons.person_outline_rounded),
           activeIcon: const Icon(Icons.person_rounded),
           label: context.tr('bottom.navbar.profile'),

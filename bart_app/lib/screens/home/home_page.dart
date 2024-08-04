@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/home_page_expansion_panel.dart';
@@ -157,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                         isExpanded: isITExpanded,
                         tradeType: TradeCompType.incoming,
                         userID: provider.userProfile.userID,
+                        tuteKey: BartTuteWidgetKeys.homePageIncomingTrades,
                       ).build(context),
                       HomePageTradeExpansionPanelBuilder(
                         title: context.tr('outgoing.trades.title'),
@@ -165,6 +167,7 @@ class _HomePageState extends State<HomePage> {
                         isExpanded: isOTExpanded,
                         tradeType: TradeCompType.outgoing,
                         userID: provider.userProfile.userID,
+                        tuteKey: BartTuteWidgetKeys.homePageOutgoingTrades,
                       ).build(context),
                       HomePageTradeExpansionPanelBuilder(
                         title: context.tr('tbc.trades.title'),
@@ -173,6 +176,7 @@ class _HomePageState extends State<HomePage> {
                         isExpanded: isSTExpanded,
                         tradeType: TradeCompType.toBeCompleted,
                         userID: provider.userProfile.userID,
+                        tuteKey: BartTuteWidgetKeys.homePageTBCTrades,
                       ).build(context),
                     ],
                   );
@@ -238,6 +242,7 @@ class _HomePageState extends State<HomePage> {
                         isExpanded: isFTExpanded,
                         tradeType: TradeCompType.tradeHistory,
                         userID: provider.userProfile.userID,
+                        tuteKey: BartTuteWidgetKeys.homePageSTH,
                       ).build(context),
                     ],
                   );

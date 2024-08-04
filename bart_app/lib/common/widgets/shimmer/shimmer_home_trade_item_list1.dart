@@ -1,3 +1,4 @@
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/home_page_expansion_panel.dart';
 import 'package:flutter/material.dart';
@@ -10,26 +11,29 @@ class ShimmerHomeTradeWidgetList1 {
       materialGapSize: 0,
       elevation: 0,
       children: [
-        const HomePageTradeExpansionPanelBuilder(
+        HomePageTradeExpansionPanelBuilder(
           title: "Incoming Trades",
           tradeList: [],
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
+          tuteKey: BartTuteWidgetKeys.homePageIncomingTrades,
         ).build(context),
-        const HomePageTradeExpansionPanelBuilder(
+        HomePageTradeExpansionPanelBuilder(
           title: "Outgoing Trades",
           tradeList: [],
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
+          tuteKey: BartTuteWidgetKeys.homePageOutgoingTrades,
         ).build(context),
-        const HomePageTradeExpansionPanelBuilder(
+        HomePageTradeExpansionPanelBuilder(
           title: "Successful",
           tradeList: [],
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
+          tuteKey: BartTuteWidgetKeys.homePageTBCTrades,
         ).build(context),
       ],
     );

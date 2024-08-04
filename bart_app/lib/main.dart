@@ -12,6 +12,7 @@ import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firebase_messaging.dart';
+import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,11 @@ Future<void> main() async {
         create: (context) => TempStateProvider(),
       ),
     ],
-    child: const BartApp(),
+    // child: const BartApp(),
+    builder: (context, child) {
+      BartTutorialCoach.createTutorial(context);
+      return const BartApp();
+    },
   );
 
   await SystemChrome.setPreferredOrientations([

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:bart_app/screens/shared/base.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
+import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class BartSideNavMenu extends StatelessWidget {
@@ -37,21 +40,33 @@ class BartSideNavMenu extends StatelessWidget {
                   ),
             ),
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.notifications_none_outlined),
-          //   title: const Text('Notifications'),
-          //   titleTextStyle: Theme.of(context).textTheme.headlineSmall,
-          //   onTap: () {},
-          // ),
           ListTile(
+            contentPadding: const EdgeInsets.only(left: 20),
+            leading: const Icon(Icons.tour_outlined),
+            title: Text(context.tr('tute.start.header')),
+            subtitle: Text(context.tr('tute.start.subHeader')),
+            titleTextStyle: Theme.of(context).textTheme.headlineSmall,
+            onTap: () {
+              Base.globalKey.currentState!.closeEndDrawer();
+              BartAnalyticsEngine.userBeginsTutorial();
+              Future.delayed(
+                const Duration(milliseconds: 200),
+                () => context.go('/home'),
+              ).then(
+                (val) => BartTutorialCoach.showTutorial(
+                  Base.globalKey.currentContext!,
+                ),
+              );
+            },
+          ),
+          ListTile(
+            key: BartTuteWidgetKeys.sideNavMenuSettings,
             contentPadding: const EdgeInsets.only(left: 20),
             leading: const Icon(Icons.settings_outlined),
             title: Text(context.tr('side.navmenu.settings')),
             titleTextStyle: Theme.of(context).textTheme.headlineSmall,
-            // onTap: () {},
-            onTap: () => GoRouter.of(context).push('/settings'),
+            onTap: () => GoRouter.of(context).push('/settings', extra: {'beginAllExpanded': false}),
           ),
-
           ListTile(
             contentPadding: const EdgeInsets.only(left: 20),
             leading: const Icon(

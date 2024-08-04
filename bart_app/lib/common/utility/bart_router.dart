@@ -37,11 +37,18 @@ class BartRouter {
       ),
 
       GoRoute(
-        name: "settings",
-        path: '/settings',
-        pageBuilder: (context, state) =>
-            const MaterialPage(child: SettingsPage(), maintainState: true),
-      ),
+          name: "settings",
+          path: '/settings',
+          pageBuilder: (context, state) {
+            final data = state.extra as Map<String, dynamic>;
+            final bool expandAll = data['beginAllExpanded'] as bool;
+            return MaterialPage(
+              child: SettingsPage(
+                beginAllExpanded: expandAll,
+              ),
+              maintainState: false,
+            );
+          }),
 
       GoRoute(
         name: 'viewImage',

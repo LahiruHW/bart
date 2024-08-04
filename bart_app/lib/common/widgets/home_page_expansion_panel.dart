@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/styles/home_trade_widget_style.dart';
 import 'package:bart_app/common/widgets/home_trade_item.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item.dart';
@@ -15,6 +16,7 @@ class HomePageTradeExpansionPanelBuilder {
     required this.isExpanded,
     required this.tradeType,
     required this.userID,
+    required this.tuteKey,
   });
 
   final String title;
@@ -22,6 +24,7 @@ class HomePageTradeExpansionPanelBuilder {
   final bool isExpanded;
   final List<Trade> tradeList;
   final TradeCompType tradeType;
+  final GlobalKey tuteKey;
 
   String getEmptyContentText(TradeCompType tradeType) {
     switch (tradeType) {
@@ -66,6 +69,7 @@ class HomePageTradeExpansionPanelBuilder {
     int count = 0,
   }) {
     return Container(
+      key: tuteKey,
       padding: const EdgeInsets.only(
         left: 10.0 + 5.0,
         bottom: 8.0,

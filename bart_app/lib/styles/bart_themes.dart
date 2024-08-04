@@ -299,6 +299,12 @@ class BartAppTheme {
         textFieldBackgroundColor: Colors.white,
         textFieldTextColor: Colors.black,
       ),
+      BartTutorialContentStyle(
+        contentTextColour: Colors.black,
+        contentBackgroundColour: Colors.white,
+        overlayShadowColour: Colors.red,
+        buttonTextColor: Colors.red,
+      ),
     },
   );
 
@@ -543,6 +549,12 @@ class BartAppTheme {
         currencyDropdownTextColor: Colors.black,
         textFieldBackgroundColor: Colors.black,
         textFieldTextColor: Colors.white,
+      ),
+      BartTutorialContentStyle(
+        contentTextColour: Colors.white,
+        contentBackgroundColour: Colors.black,
+        overlayShadowColour: Colors.red,
+        buttonTextColor: Colors.red,
       ),
     },
   );
