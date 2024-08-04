@@ -29,8 +29,8 @@ class HomePageTradeExpansionPanelBuilder {
         return tr("no.incoming.trades");
       case TradeCompType.outgoing:
         return tr("no.outgoing.trades");
-      case TradeCompType.successful:
-        return tr('no.successful.trades');
+      case TradeCompType.toBeCompleted:
+        return tr('no.tbc.trades');
       case TradeCompType.failed:
         return tr('no.failed.trades');
       case TradeCompType.tradeHistory:
@@ -47,7 +47,7 @@ class HomePageTradeExpansionPanelBuilder {
         return tradeStyle.incomingTextColour;
       case TradeCompType.outgoing:
         return tradeStyle.outgoingTextColour;
-      case TradeCompType.successful:
+      case TradeCompType.toBeCompleted:
         return tradeStyle.completeSuccessTextColour;
       case TradeCompType.tradeHistory:
         // return tradeStyle.tradeHistoryTextColour;

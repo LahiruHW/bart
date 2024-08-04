@@ -35,7 +35,7 @@ class TradeWidget extends StatelessWidget {
           tileStyle.outgoingTextColour,
           tileStyle.outgoingShadowColour,
         );
-      case TradeCompType.successful:
+      case TradeCompType.toBeCompleted:
         return (
           tileStyle.completeSuccessBackgroundColour,
           tileStyle.completeSuccessTextColour,
@@ -70,7 +70,7 @@ class TradeWidget extends StatelessWidget {
       case TradeCompType.outgoing:
         return tr('outgoing.trade.label',
             namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName});
-      case TradeCompType.successful:
+      case TradeCompType.toBeCompleted:
         return (userID == trade.offeredItem.itemOwner.userID)
             ? tr('successful.trade.label1',
                 namedArgs: {'itemOwner': trade.tradedItem.itemOwner.userName})

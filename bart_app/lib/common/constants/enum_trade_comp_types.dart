@@ -1,7 +1,7 @@
 enum TradeCompType{
   incoming('incoming'),              // isAccepted = false and submitted to an item you posted on the market
   outgoing('outgoing'),              // isAccepted = false and submitted to an item you offered to someone else
-  successful('successful'),          // isAccepted = true
+  toBeCompleted('toBeCompleted'),          // isAccepted = true
   failed('failed'),  // isAccepted = false
   tradeHistory('tradeHistory'),      // isAccepted = true or false, but isRead = true
   none('none');                    // used for empty values
@@ -18,8 +18,8 @@ enum TradeCompType{
         return TradeCompType.incoming;
       case 'outgoing':
         return TradeCompType.outgoing;
-      case 'successful':
-        return TradeCompType.successful;
+      case 'toBeCompleted':
+        return TradeCompType.toBeCompleted;
       case 'failed':
         return TradeCompType.failed;
       case 'tradeHistory':

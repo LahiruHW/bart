@@ -105,7 +105,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
           ),
           tr('view.trade.page.outgoing.label2'),
         );
-      case TradeCompType.successful:
+      case TradeCompType.toBeCompleted:
         return (
           tr(
             'view.trade.page.successful.label1',

@@ -167,11 +167,11 @@ class _HomePageState extends State<HomePage> {
                         userID: provider.userProfile.userID,
                       ).build(context),
                       HomePageTradeExpansionPanelBuilder(
-                        title: context.tr('successful.title'),
+                        title: context.tr('tbc.trades.title'),
                         tradeList: snapshot.hasData ? trades[2] : [],
                         // tradeList: trades[2],
                         isExpanded: isSTExpanded,
-                        tradeType: TradeCompType.successful,
+                        tradeType: TradeCompType.toBeCompleted,
                         userID: provider.userProfile.userID,
                       ).build(context),
                     ],

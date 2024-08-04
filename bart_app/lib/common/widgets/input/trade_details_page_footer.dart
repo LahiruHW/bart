@@ -166,7 +166,7 @@ class TradeDetailsPageFooter {
                           const Duration(milliseconds: 1500),
                           () {
                             loadingOverlay.hide();
-                            trade.tradeCompType = TradeCompType.successful;
+                            trade.tradeCompType = TradeCompType.toBeCompleted;
                             context.replace(
                               '/home/viewTrade',
                               extra: {
@@ -274,7 +274,7 @@ class TradeDetailsPageFooter {
               : Container(),
         ];
 
-      case TradeCompType.successful:
+      case TradeCompType.toBeCompleted:
         return [
           Container(
             padding: const EdgeInsets.all(15.0),

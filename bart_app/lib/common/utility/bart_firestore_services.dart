@@ -818,7 +818,7 @@ class BartFirestoreServices {
       )
           .map(
         (trade) {
-          trade.tradeCompType = TradeCompType.successful;
+          trade.tradeCompType = TradeCompType.toBeCompleted;
           return trade;
         },
       ).toList();
