@@ -50,7 +50,9 @@ class _ReturnOfferPageState extends State<ReturnOfferPage> {
                       onTap: _togglePage,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 8),
+                  Text(context.tr('or')),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: MarketPageTabButton(
                       title: context.tr('returnOffer.page.tab.returnMoney'),
