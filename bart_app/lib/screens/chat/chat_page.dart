@@ -71,6 +71,36 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  Widget _dateSeparator(BuildContext context, String date) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Divider(
+            thickness: 0.5,
+            color: Theme.of(context).dividerColor,
+          ),
+          Center(
+            child: Container(
+              height: 20,
+              width: 80,
+              alignment: Alignment.center,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Text(
+                date,
+                style: TextStyle(
+                  color: Theme.of(context).dividerColor,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _textEditController.dispose();
@@ -150,35 +180,66 @@ class _ChatPageState extends State<ChatPage> {
                           (timeStamp) => scrollDown(),
                         );
 
-                        return ListView.builder(
-                          padding: const EdgeInsets.only(
-                            // top: 10,
-                            bottom: 10,
-                          ),
-                          shrinkWrap: true,
+                        final firstMsgDT =
+                            snapshot.data!.first.timeSent.toDate();
+                        final diff =
+                            DateTime.now().difference(firstMsgDT).inDays;
+                        final date = diff < 1
+                            ? "Today"
+                            : diff == 1
+                                ? "Yesterday"
+                                : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
+
+                        return ListView(
                           controller: _scrollController,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            final message = snapshot.data![index];
-                            return VisibilityDetector(
-                              key: Key(message.messageID),
-                              onVisibilityChanged: (info) async {
-                                if (info.visibleFraction == 1.0) {
-                                  BartFirestoreServices.updateReadMessage(
-                                    widget.chatData,
-                                    message,
-                                    provider.userProfile.userID,
-                                  );
-                                }
-                                // var visiblePT = info.visibleFraction * 100;
-                                // debugPrint('Widget ${info.key} is $visiblePT% visible');
+                          children: [
+                            _dateSeparator(context, date),
+                            ListView.separated(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                final message = snapshot.data![index];
+                                return VisibilityDetector(
+                                  key: Key(message.messageID),
+                                  onVisibilityChanged: (info) async {
+                                    if (info.visibleFraction == 1.0) {
+                                      BartFirestoreServices.updateReadMessage(
+                                        widget.chatData,
+                                        message,
+                                        provider.userProfile.userID,
+                                      );
+                                    }
+                                    // var visiblePT = info.visibleFraction * 100;
+                                    // debugPrint('Widget ${info.key} is $visiblePT% visible');
+                                  },
+                                  child: BartChatBubble(
+                                    message: message,
+                                    currentUserID: provider.user!.uid,
+                                  ),
+                                );
                               },
-                              child: BartChatBubble(
-                                message: message,
-                                currentUserID: provider.user!.uid,
-                              ),
-                            );
-                          },
+                              separatorBuilder: (context, index) {
+                                final currentDT = DateTime.now();
+                                final currentMsg = snapshot.data![index];
+                                final currentMsgDT = currentMsg.timeSent.toDate();
+                                final nextMsg = snapshot.data![index + 1];
+                                final nextMsgDT = nextMsg.timeSent.toDate();
+                                final showDate = !nextMsg.isSameDayAsMsg(currentMsg);
+                                if (showDate) {
+                                  final diff = currentDT.difference(nextMsgDT).inDays;
+                                  final date = diff == 0
+                                      ? "Today"
+                                      : diff == 1
+                                          ? "Yesterday"
+                                          : "${currentMsgDT.day}/${currentMsgDT.month}/${currentMsgDT.year}";
+                                  return _dateSeparator(context, date);
+                                }
+                                return const SizedBox(height: 1);
+                              },
+                            ),
+                          ],
                         );
                       } else {
                         return const Center(

@@ -68,6 +68,14 @@ class Message {
     return extra;
   }
 
+  bool isSameDayAsMsg(Message other) {
+    final DateTime thisTime = timeSent.toDate();
+    final DateTime otherTime = other.timeSent.toDate();
+    return thisTime.day == otherTime.day &&
+        thisTime.month == otherTime.month &&
+        thisTime.year == otherTime.year;
+  }
+
   @override
   String toString() {
     return 'Message{messageID: $messageID, timeSent: $timeSent, senderName: $senderName, senderID: $senderID, text: $text, isSharedTrade: $isSharedTrade, isRead: $isRead}';
