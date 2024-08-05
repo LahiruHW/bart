@@ -184,17 +184,23 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BartMaterialButton(
-                  label: context.tr('home.btn.go.to.market'),
-                  icon: Icons.arrow_forward_rounded,
-                  onPressed: () => context.go('/market/listed-items'),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: BartMaterialButton(
+                    label: context.tr('home.btn.go.to.market'),
+                    icon: Icons.arrow_forward_rounded,
+                    onPressed: () => context.go('/market/listed-items'),
+                  ),
                 ),
                 const SizedBox(width: 10),
-                BartMaterialButton(
-                  label: context.tr('home.btn.list.item'),
-                  icon: Icons.add_circle,
-                  onPressed: () => context.push('/home/newItem'),
+                Expanded(
+                  child: BartMaterialButton(
+                    label: context.tr('home.btn.list.item'),
+                    icon: Icons.add_circle,
+                    onPressed: () => context.push('/home/newItem'),
+                  ),
                 ),
+                const SizedBox(width: 8),
               ],
             ),
             const SizedBox(height: 20),
