@@ -23,7 +23,7 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox.fromSize(
-        size: const Size(double.infinity, 80),
+        size: const Size(double.infinity, 75),
         child: Row(
           children: [
             Expanded(
@@ -35,7 +35,8 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                   hintText: "Type a message...",
                   hintStyle: TextStyle(
                     color: Colors.grey[400],
-                    fontSize: 18,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -51,6 +52,7 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 icon: const Icon(Icons.send),
                 padding: const EdgeInsets.all(20),
                 style: ButtonStyle(
+                  // fixedSize: WidgetStateProperty.all(const Size.fromHeight(50)),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
