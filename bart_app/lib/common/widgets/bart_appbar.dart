@@ -8,12 +8,10 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// that deals with the positioning of the [leading], [middle] and [trailing] widgets
   const BartAppBar({
     super.key,
-    this.showBackButton = false,
     this.showTitle = true,
     this.trailing,
   });
 
-  final bool showBackButton;
   final bool showTitle;
   final Widget? trailing;
 
@@ -57,7 +55,7 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     NavigationToolbar(
                       centerMiddle: true,
-                      leading: !(showBackButton & canPop)
+                      leading: (!canPop)
                           ? null
                           : IconButton(
                               icon: const Icon(Icons.arrow_back),
@@ -71,8 +69,8 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   Colors.transparent,
                                 ),
                               ),
-                              onPressed: () => showBackButton & canPop
-                                  ? context.pop()
+                              onPressed: () => canPop
+                                  ? GoRouter.of(context).pop()
                                   : null,
                             ),
                       middle: showTitle

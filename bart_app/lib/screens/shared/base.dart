@@ -29,7 +29,6 @@ class _BaseState extends State<Base> {
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 8,
       extendBody: false,
       appBar: BartAppBar(
-        showBackButton: true,
         showTitle: true,
         trailing: IconButton(
           key: BartTuteWidgetKeys.appBarHamburgerMenu,
