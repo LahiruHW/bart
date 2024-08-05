@@ -1,11 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:bart_app/screens/settings/settings_page.dart';
-// import 'package:bart_app/styles/bart_tutorial_content_style.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_target_content.dart';
@@ -19,9 +18,8 @@ class BartTutorialCoach {
   static late TutorialCoachMark tuteCoach2;
   static late BuildContext _context;
   static late Size _screenSize;
-  // static late BartTutorialContentStyle _tuteStyle;
 
-  static const animationDurationMS = 380;
+  static const _animationDurationMS = 380;
 
   static void _handleTouches(TargetFocus target) {
     switch (target.identify) {
@@ -51,10 +49,10 @@ class BartTutorialCoach {
     tuteCoach1 = TutorialCoachMark(
       targets: _createTargets(),
       focusAnimationDuration: const Duration(
-        milliseconds: animationDurationMS,
+        milliseconds: _animationDurationMS,
       ),
       unFocusAnimationDuration: const Duration(
-        milliseconds: animationDurationMS,
+        milliseconds: _animationDurationMS,
       ),
       hideSkip: true,
       colorShadow: Colors.blue.withOpacity(0.1),

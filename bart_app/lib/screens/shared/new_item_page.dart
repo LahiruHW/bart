@@ -286,7 +286,6 @@ class _NewItemPageState extends State<NewItemPage> {
                   const BartImagePicker(),
                   const SizedBox(height: 10),
                   Text(
-                    // "Provide a description of your item:",
                     context.tr('newItem.page.itemDescHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,

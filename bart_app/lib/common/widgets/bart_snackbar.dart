@@ -60,7 +60,6 @@ class BartSnackBar {
         ],
       ),
       backgroundColor: backgroundColor,
-      // padding: const EdgeInsets.only(left: 10),
 
       padding: const EdgeInsets.symmetric(
         vertical: 5,

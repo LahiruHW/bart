@@ -83,7 +83,6 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
 
               const SizedBox(height: 15),
               AppleActionButton(
-                // onPressed: () {}, // update the user state
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     BartSnackBar(

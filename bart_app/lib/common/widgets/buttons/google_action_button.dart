@@ -21,9 +21,7 @@ class GoogleActionButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            title,
-          ),
+          Text(title),
           const SizedBox(width: 10),
           Image.asset(
             "assets/icons/logo_google_96x96.png",

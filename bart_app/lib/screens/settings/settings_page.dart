@@ -193,7 +193,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ? Colors.black
                           : Colors.white,
                     ),
-                    onPressed: () => GoRouter.of(context).pop(),
+                    onPressed: () => context.pop(),
                   ),
                   middle: Text(
                     context.tr('settings.page.title'),
@@ -215,7 +215,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.design_services_outlined),
                 title: Text(
                   context.tr('personalisation.header'),
-                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 maintainState: true,
                 children: [
@@ -246,7 +245,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   leading: const Icon(Icons.person_outline_outlined),
                   title: Text(
                     context.tr('my.account.header'),
-                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   maintainState: true,
                   children: [
@@ -299,7 +297,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.privacy_tip_rounded),
                 title: Text(
                   context.tr('privacy.policy.header'),
-                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 onTap: () => context.push(
                   '/privacyPolicy',
@@ -312,7 +309,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.info),
                 title: Text(
                   context.tr('about.header'),
-                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 maintainState: false,
                 children: [
