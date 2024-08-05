@@ -126,44 +126,48 @@ class _ChatPageState extends State<ChatPage> {
               children: [
                 // show the image and the name of the user you're chatting with
                 SizedBox(
-                  height: 60,
+                  height: 50,
                   width: double.infinity,
-                  child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 45,
-                          height: 45,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: widget.chatData.chatImageUrl.isEmpty
-                              ? const Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                )
-                              : CachedNetworkImage(
-                                  key: UniqueKey(),
-                                  cacheManager:
-                                      BartImageTools.customCacheManager,
-                                  progressIndicatorBuilder:
-                                      BartImageTools.progressLoader,
-                                  imageUrl: widget.chatData.chatImageUrl,
-                                  alignment: Alignment.center,
-                                  fit: BoxFit.cover,
-                                ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 10),
+                      Container(
+                        width: 35,
+                        height: 35,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          widget.chatData.chatName,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                      ],
-                    ),
+                        child: widget.chatData.chatImageUrl.isEmpty
+                            ? const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              )
+                            : CachedNetworkImage(
+                                key: UniqueKey(),
+                                cacheManager:
+                                    BartImageTools.customCacheManager,
+                                progressIndicatorBuilder:
+                                    BartImageTools.progressLoader,
+                                imageUrl: widget.chatData.chatImageUrl,
+                                alignment: Alignment.center,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        widget.chatData.chatName,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                              fontSize: 18,
+                            ),
+                      ),
+                    ],
                   ),
                 ),
 
