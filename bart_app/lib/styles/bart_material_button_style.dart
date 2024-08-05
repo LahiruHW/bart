@@ -90,3 +90,42 @@ class BartMaterialButtonStyleGreen
     return this;
   }
 }
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class BartMaterialButtonDisabledStyle
+    extends ThemeExtension<BartMaterialButtonDisabledStyle> {
+  BartMaterialButtonDisabledStyle({this.buttonStyle});
+
+  final BartMaterialButtonStyle? buttonStyle;
+
+  @override
+  ThemeExtension<BartMaterialButtonDisabledStyle> copyWith({
+    BartMaterialButtonStyle? buttonStyle,
+  }) {
+    return BartMaterialButtonDisabledStyle(
+      buttonStyle: buttonStyle ?? this.buttonStyle,
+    );
+  }
+
+  @override
+  ThemeExtension<BartMaterialButtonDisabledStyle> lerp(
+    covariant ThemeExtension<BartMaterialButtonDisabledStyle>? other,
+    double t,
+  ) {
+    if (other == null) {
+      return this;
+    }
+
+    if (other is BartMaterialButtonDisabledStyle) {
+      return BartMaterialButtonDisabledStyle(
+        buttonStyle:
+            buttonStyle!.lerp(other.buttonStyle, t) as BartMaterialButtonStyle?,
+      );
+    }
+
+    return this;
+  }
+}

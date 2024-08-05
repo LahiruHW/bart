@@ -10,6 +10,7 @@ class BartMaterialButton extends StatefulWidget {
     required this.label,
     required this.onPressed,
     this.icon,
+    this.isEnabled = true,
     this.buttonType = BartMaterialButtonType.normal,
   });
 
@@ -17,19 +18,29 @@ class BartMaterialButton extends StatefulWidget {
   final IconData? icon;
   final VoidCallback? onPressed;
   final BartMaterialButtonType? buttonType;
+  final bool isEnabled;
 
   BartMaterialButtonStyle getTheme(BuildContext context) {
     final buttonStyle = Theme.of(context).extension<BartMaterialButtonStyle>()!;
     final buttonStyleGreen = Theme.of(context)
         .extension<BartMaterialButtonStyleGreen>()!
         .buttonStyle!;
-    switch (buttonType) {
-      case BartMaterialButtonType.normal:
-        return buttonStyle;
-      case BartMaterialButtonType.green:
-        return buttonStyleGreen;
-      default:
-        return buttonStyle;
+    final buttonStyleDisabled = Theme.of(context)
+        .extension<BartMaterialButtonDisabledStyle>()!
+        .buttonStyle!;
+    if (!isEnabled) {
+      return buttonStyleDisabled;
+    } else {
+      switch (buttonType) {
+        case BartMaterialButtonType.normal:
+          return buttonStyle;
+        case BartMaterialButtonType.green:
+          return buttonStyleGreen;
+        case BartMaterialButtonType.disabled:
+          return buttonStyleDisabled;
+        default:
+          return buttonStyle;
+      }
     }
   }
 
@@ -42,7 +53,6 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
 
   @override
   Widget build(BuildContext context) {
-    // final buttonStyle = Theme.of(context).extension<BartMaterialButtonStyle>()!;
     final buttonStyle = widget.getTheme(context);
 
     return GestureDetector(
@@ -77,7 +87,7 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
         ),
         child: MaterialButton(
           textColor: buttonStyle.textColor,
-          onPressed: widget.onPressed,
+          onPressed: widget.isEnabled ? widget.onPressed : null,
           color: buttonStyle.backgroundColor,
           // splashColor: buttonStyle.splashColor,
           // highlightColor: buttonStyle.splashColor,

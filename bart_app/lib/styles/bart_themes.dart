@@ -280,6 +280,14 @@ class BartAppTheme {
           elevatedShadowColor: Colors.black.withOpacity(0.3),
         ),
       ),
+      BartMaterialButtonDisabledStyle(
+        buttonStyle: BartMaterialButtonStyle(
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          splashColor: Colors.transparent,
+          elevatedShadowColor: Colors.transparent,
+        ),
+      ),
       BartShimmerLoadStyle(
         baseColor: Colors.grey,
         highlightColor: Colors.white,
@@ -532,6 +540,14 @@ class BartAppTheme {
           textColor: green2,
           splashColor: Colors.transparent,
           elevatedShadowColor: green2.withOpacity(0.85),
+        ),
+      ),
+      BartMaterialButtonDisabledStyle(
+        buttonStyle: BartMaterialButtonStyle(
+          backgroundColor: Colors.black,
+          textColor: Colors.grey,
+          splashColor: Colors.transparent,
+          elevatedShadowColor: Colors.grey.withOpacity(0.85),
         ),
       ),
       BartShimmerLoadStyle(
