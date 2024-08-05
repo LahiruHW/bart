@@ -143,11 +143,7 @@ class TradeWidget extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               flex: 1,
-              child:
-                  // tradeType == TradeCompletionType.tradeHistory
-                  // ? // MAKE THE HISTORY TILE CHANGES HERE
-                  // :
-                  Text(
+              child: Text(
                 trade.isRead ? context.tr('read') : context.tr("unread"),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: textColor,

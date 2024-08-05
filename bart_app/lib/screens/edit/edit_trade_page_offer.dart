@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

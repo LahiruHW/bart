@@ -45,8 +45,8 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
 
   // extract the amount from the currencyAmount string
   String extractAmount(String currencyAmount) {
-    for (final unit in currencyList){
-      if (currencyAmount.contains(unit)){
+    for (final unit in currencyList) {
+      if (currencyAmount.contains(unit)) {
         currencyAmount = currencyAmount.replaceAll(unit, '');
         break;
       }

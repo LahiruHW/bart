@@ -164,7 +164,6 @@ class TradeDetailsPageFooter {
                 child: BartMaterialButton(
                   isEnabled: !isMsgSending,
                   buttonType: BartMaterialButtonType.green,
-                  // label: "Accept",
                   label: context.tr('accept'),
                   onPressed: () {
                     whileSending();
@@ -380,7 +379,6 @@ class TradeDetailsPageFooter {
                     width: 150,
                     height: 75,
                     child: BartMaterialButton(
-                      // label: "Go to chat",
                       label: context.tr('view.trade.page.btn.goToChat'),
                       isEnabled: !isMsgSending,
                       onPressed: () {
