@@ -131,11 +131,11 @@ class TradeWidget extends StatelessWidget {
               flex: 6,
               child: Text(
                 title,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: textColor,
-                      fontSize: 15.spMin,
+                      fontSize: 12.spMin,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -151,7 +151,7 @@ class TradeWidget extends StatelessWidget {
                 trade.isRead ? context.tr('read') : context.tr("unread"),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: textColor,
-                      fontSize: 10.sp,
+                      fontSize: 12.spMin,
                       fontWeight: FontWeight.bold,
                     ),
               ),

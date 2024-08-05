@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/item.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -56,7 +57,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
                               0.5
                           ? Colors.black
                           : Colors.white,
-                      fontSize: 20,
+                      fontSize: 16.spMin,
                     ),
               ),
             ),
@@ -93,9 +94,9 @@ class _ResultItemTileState extends State<ResultItemTile> {
                       child: Text(
                         widget.item.itemName,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.green,
-                          fontSize: 25,
+                          fontSize: 25.spMin,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
