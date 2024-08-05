@@ -199,6 +199,7 @@ class BartAppTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Colors.white,
     ),
+    dividerColor: Colors.black38,
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -451,6 +452,7 @@ class BartAppTheme {
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: black1,
     ),
+    dividerColor: Colors.white38,
     extensions: {
       BartBrandColours(
         logoColor: red1,
