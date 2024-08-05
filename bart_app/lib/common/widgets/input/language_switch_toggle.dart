@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/styles/colour_switch_toggle_style.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
@@ -30,7 +31,14 @@ class _BartLocaleToggleState extends State<BartLocaleToggle> {
     final provider = Provider.of<BartStateProvider>(context, listen: false);
     final switchStyle =
         Theme.of(context).extension<BartThemeModeToggleStyle>()!;
-
+    final enText = Text(
+      'EN',
+      style: TextStyle(color: switchStyle.iconColor, fontSize: 15.spMin),
+    );
+    final frText = Text(
+      'FR',
+      style: TextStyle(color: switchStyle.iconColor, fontSize: 15.spMin),
+    );
     return SizedBox(
       child: AnimatedToggleSwitch<String>.dual(
           animationCurve: Curves.easeInOut,
@@ -41,12 +49,8 @@ class _BartLocaleToggleState extends State<BartLocaleToggle> {
           spacing: 5,
           height: 40,
           fittingMode: FittingMode.preventHorizontalOverlapping,
-          iconBuilder: (String value) => value == 'en'
-              ? Text('EN', style: TextStyle(color: switchStyle.iconColor))
-              : Text('FR', style: TextStyle(color: switchStyle.iconColor)),
-          textBuilder: (String value) => value == 'en'
-              ? Text('FR', style: TextStyle(color: switchStyle.iconColor))
-              : Text('EN', style: TextStyle(color: switchStyle.iconColor)),
+          iconBuilder: (String value) => value == 'en' ? enText : frText,
+          textBuilder: (String value) => value == 'en' ? frText : enText,
           styleBuilder: (val) => ToggleStyle(
                 backgroundColor: switchStyle.backgroundColor,
                 borderColor: Colors.transparent,

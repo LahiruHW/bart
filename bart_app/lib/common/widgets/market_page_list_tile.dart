@@ -13,7 +13,7 @@ class MarketListTile extends StatelessWidget {
     required this.item,
     required this.onTap,
     this.onLongPress,
-    this.cardHeight = 130,
+    this.cardHeight = 125,
   });
 
   final VoidCallback onTap;
@@ -85,8 +85,8 @@ class MarketListTile extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
-                      const Divider(
-                        height: 10,
+                      Divider(
+                        height: 10.h,
                         color: Colors.transparent,
                       ),
                       Text(
@@ -109,7 +109,7 @@ class MarketListTile extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: cardHeight,
+                height: cardHeight.h,
                 child: AspectRatio(
                   aspectRatio: 1.0,
                   child: Padding(

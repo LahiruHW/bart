@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/styles/bart_brand_colour_style.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
@@ -47,14 +48,14 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
       backgroundColor: brandTheme.logoBackgroundColor,
       body: Center(
         child: SizedBox(
-          height: 400,
+          height: 450.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 "bart.",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 100,
+                      fontSize: 90.spMin,
                       color: brandTheme.logoColor,
                     ),
               ),

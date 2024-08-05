@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/home_trade_widget_style.dart';
 import 'package:bart_app/common/widgets/home_trade_item.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
@@ -77,27 +78,40 @@ class HomePageTradeExpansionPanelBuilder {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.surface.computeLuminance() >
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: 0.65.sw,
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context)
+                                  .colorScheme
+                                  .surface
+                                  .computeLuminance() >
                               0.5
                           ? Colors.black
                           : Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontSize: 18.spMin,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
           ),
           Text(
             "$count",
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.surface.computeLuminance() >
-                              0.5
-                          ? Colors.black
-                          : Colors.white,
-                  fontSize: 20,
+                  color: Theme.of(context)
+                              .colorScheme
+                              .surface
+                              .computeLuminance() >
+                          0.5
+                      ? Colors.black
+                      : Colors.white,
+                  fontSize: 19.spMin,
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -154,7 +168,7 @@ class HomePageTradeExpansionPanelBuilder {
                   ]
                 : [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.spMin),
                       child: Text(
                         getEmptyContentText(tradeType),
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -163,9 +177,9 @@ class HomePageTradeExpansionPanelBuilder {
                                           .surface
                                           .computeLuminance() >
                                       0.5
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 15,
+                                  ? Colors.black.withOpacity(0.6)
+                                  : Colors.white.withOpacity(0.6),
+                              fontSize: 14.spMin,
                               fontWeight: FontWeight.normal,
                             ),
                       ),

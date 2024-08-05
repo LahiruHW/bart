@@ -46,6 +46,9 @@ class BartSnackBar {
             child: Text(
               message,
               overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              maxLines: 2,
+              textScaler: const TextScaler.linear(0.9),
               style: TextStyle(
                 fontSize: 18.spMin,
                 color: backgroundColor.computeLuminance() > 0.5

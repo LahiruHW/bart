@@ -136,7 +136,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(width: 10.0),
                   Text(
                     userInfo.providerId,
-                    style: Theme.of(context).textTheme.labelLarge,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      fontSize: 18.spMin,
+                    ),
                   ),
                 ],
               ),
@@ -163,24 +165,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 profileStyle.gradientColourBottom,
               ],
             ),
-          ),
-          child: Stack(
-            children: [
-              // information container
-              Container(
-                margin: const EdgeInsets.only(top: 120.0),
-                height: 1000,
-                padding: const EdgeInsets.only(
-                  top: 110,
-                  left: 20.0,
-                  right: 20.0,
-                  bottom: 20.0,
-                ),
-                decoration: BoxDecoration(
-                  color: profileStyle.containerColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+            child: Stack(
+              children: [
+                // information container
+                Container(
+                  margin: const EdgeInsets.only(top: 120.0),
+                  height: MediaQuery.of(context).size.height - 220,
+                  padding: EdgeInsets.only(
+                    top: 95.h,
+                    left: 20.w,
+                    right: 20.w,
+                    bottom: 20.w,
                   ),
                 ),
                 child: Container(
@@ -204,8 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.tr('profile.page.profile.info.header'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.spMin,
                                   ),
                         ),
                       ),
@@ -294,8 +288,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.tr('profile.page.account.type.header'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.spMin,
                                   ),
                         ),
                       ),
@@ -377,19 +370,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                   imageUrl: stateProvider.userProfile.imageUrl!,
                                   fit: BoxFit.cover,
                                 ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  stateProvider.userProfile.userName,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .copyWith(
-                                        fontSize: 20.sp,
-                                      ),
+                                const SizedBox(height: 10.0),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    stateProvider.userProfile.userName,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                          fontSize: 20.sp,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ],

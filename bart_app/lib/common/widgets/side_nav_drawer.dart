@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
@@ -31,12 +32,13 @@ class BartSideNavMenu extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 75,
-            padding: const EdgeInsets.only(top: 20, left: 20),
+            padding: EdgeInsets.only(top: 20.h, left: 20.w),
+            margin: EdgeInsets.only(bottom: 15.h),
             child: Text(
               'bart.',
               textAlign: TextAlign.start,
               style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
-                    fontSize: 40,
+                    fontSize: 40.spMin,
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -46,7 +48,13 @@ class BartSideNavMenu extends StatelessWidget {
             leading: const Icon(Icons.tour_outlined),
             title: Text(context.tr('tute.start.header')),
             subtitle: Text(context.tr('tute.start.subHeader')),
-            titleTextStyle: Theme.of(context).textTheme.headlineSmall,
+            titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: 22.spMin,
+            ),
+            subtitleTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontWeight: FontWeight.normal,
+              fontSize: 16.spMin,
+            ),
             onTap: () {
               Base.globalKey.currentState!.closeEndDrawer();
               BartAnalyticsEngine.userBeginsTutorial();
@@ -65,7 +73,9 @@ class BartSideNavMenu extends StatelessWidget {
             contentPadding: const EdgeInsets.only(left: 20),
             leading: const Icon(Icons.settings_outlined),
             title: Text(context.tr('side.navmenu.settings')),
-            titleTextStyle: Theme.of(context).textTheme.headlineSmall,
+            titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: 22.spMin,
+            ),
             onTap: () => GoRouter.of(context).push('/settings', extra: {'beginAllExpanded': false}),
           ),
           ListTile(
@@ -77,6 +87,7 @@ class BartSideNavMenu extends StatelessWidget {
             title: Text(context.tr('side.navmenu.logout')),
             titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Theme.of(context).colorScheme.error,
+                  fontSize: 22.spMin,
                 ),
             onTap: () async {
               loadingOverlay.show();

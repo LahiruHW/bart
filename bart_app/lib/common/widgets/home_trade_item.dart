@@ -135,7 +135,7 @@ class TradeWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: textColor,
-                      fontSize: 15,
+                      fontSize: 15.spMin,
                       fontWeight: FontWeight.bold,
                     ),
               ),

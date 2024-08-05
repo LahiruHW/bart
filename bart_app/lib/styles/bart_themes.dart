@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/styles/index.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BartAppTheme {
   BartAppTheme._();
@@ -92,6 +93,7 @@ class BartAppTheme {
         textStyle: WidgetStateProperty.all(
           BartTextTheme.globalTextTheme.labelLarge!.copyWith(
             color: Colors.black,
+            fontSize: 18.spMin,
           ),
         ),
         backgroundColor: WidgetStateProperty.all(Colors.white),
@@ -101,11 +103,11 @@ class BartAppTheme {
           const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         ),
         shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
         ),
-        minimumSize: WidgetStateProperty.all(const Size(300, 60)),
-        maximumSize: WidgetStateProperty.all(const Size(300, 60)),
-        fixedSize: WidgetStateProperty.all(const Size(300, 60)),
+        minimumSize: WidgetStateProperty.all(Size(300.w, 60.h)),
+        maximumSize: WidgetStateProperty.all(Size(300.w, 60.h)),
+        fixedSize: WidgetStateProperty.all(Size(300.w, 60.h)),
       ),
     ),
     listTileTheme: ListTileThemeData(
@@ -116,18 +118,18 @@ class BartAppTheme {
       dense: false,
       enableFeedback: true,
       titleTextStyle: BartTextTheme.globalTextTheme.bodyLarge!.copyWith(
-        fontSize: 25,
+        fontSize: 25.spMin,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
       subtitleTextStyle: BartTextTheme.globalTextTheme.bodySmall!.copyWith(
-        fontSize: 18,
+        fontSize: 18.spMin,
         color: Colors.black.withOpacity(0.8),
         fontWeight: FontWeight.normal,
       ),
       leadingAndTrailingTextStyle:
           BartTextTheme.globalTextTheme.bodySmall!.copyWith(
-        fontSize: 15,
+        fontSize: 15.spMin,
         color: Colors.black.withOpacity(0.9),
         fontWeight: FontWeight.normal,
       ),
@@ -348,17 +350,18 @@ class BartAppTheme {
         textStyle: WidgetStateProperty.all(
           BartTextTheme.globalTextTheme.labelLarge!.copyWith(
             color: Colors.white,
+            fontSize: 18.spMin,
           ),
         ),
         padding: WidgetStateProperty.all(
           const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         ),
         shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
         ),
-        minimumSize: WidgetStateProperty.all(const Size(300, 60)),
-        maximumSize: WidgetStateProperty.all(const Size(300, 60)),
-        fixedSize: WidgetStateProperty.all(const Size(300, 60)),
+        minimumSize: WidgetStateProperty.all(Size(300.w, 60.h)),
+        maximumSize: WidgetStateProperty.all(Size(300.w, 60.h)),
+        fixedSize: WidgetStateProperty.all(Size(300.w, 60.h)),
       ),
     ),
     listTileTheme: ListTileThemeData(
@@ -369,7 +372,7 @@ class BartAppTheme {
       dense: false,
       enableFeedback: true,
       titleTextStyle: BartTextTheme.globalTextTheme.bodyLarge!.copyWith(
-        fontSize: 25,
+        fontSize: 25.spMin,
         color: Colors.white,
         fontWeight: FontWeight.bold,
       ),

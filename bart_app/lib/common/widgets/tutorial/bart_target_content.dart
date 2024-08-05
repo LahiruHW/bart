@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/bart_tutorial_content_style.dart';
 
 class BartTargetContent extends StatefulWidget {
@@ -58,7 +59,10 @@ class _BartTargetContentState extends State<BartTargetContent> {
         children: [
           Text(
             widget.text,
-            style: TextStyle(color: contentStyle.contentTextColour),
+            style: TextStyle(
+              color: contentStyle.contentTextColour,
+              fontSize: 16.spMin,
+            ),
           ),
           widget.extraContent ?? const SizedBox(height: 10),
           Row(
@@ -69,7 +73,10 @@ class _BartTargetContentState extends State<BartTargetContent> {
                       onPressed: widget.onSkip,
                       child: Text(
                         widget.skipText!,
-                        style: TextStyle(color: contentStyle.buttonTextColor),
+                        style: TextStyle(
+                          color: contentStyle.buttonTextColor,
+                          fontSize: 18.spMin,
+                        ),
                       ),
                     )
                   : const SizedBox(width: 1),
@@ -79,7 +86,10 @@ class _BartTargetContentState extends State<BartTargetContent> {
                       onPressed: widget.onPrevious!,
                       child: Text(
                         widget.previousText!,
-                        style: TextStyle(color: contentStyle.buttonTextColor),
+                        style: TextStyle(
+                          color: contentStyle.buttonTextColor,
+                          fontSize: 18.spMin,
+                        ),
                       ),
                     )
                   : const SizedBox(width: 1),
@@ -88,7 +98,10 @@ class _BartTargetContentState extends State<BartTargetContent> {
                       onPressed: widget.onNext!,
                       child: Text(
                         widget.nextText!,
-                        style: TextStyle(color: contentStyle.buttonTextColor),
+                        style: TextStyle(
+                          color: contentStyle.buttonTextColor,
+                          fontSize: 18.spMin,
+                        ),
                       ),
                     )
                   : const SizedBox(width: 1),

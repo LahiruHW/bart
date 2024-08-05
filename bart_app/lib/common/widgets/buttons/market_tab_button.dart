@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/market_tab_button_style.dart';
 
 class MarketPageTabButton extends StatelessWidget {
@@ -32,6 +33,7 @@ class MarketPageTabButton extends StatelessWidget {
       child: Text(
         title,
         textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 14.spMin),
       ),
     );
   }

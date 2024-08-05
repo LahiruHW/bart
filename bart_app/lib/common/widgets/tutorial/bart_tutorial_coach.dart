@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:bart_app/screens/settings/settings_page.dart';
 // import 'package:bart_app/styles/bart_tutorial_content_style.dart';
@@ -189,22 +190,39 @@ class BartTutorialCoach {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-                    Text(tr('tute.homepage.tbc.2')),
+                    Text(
+                      tr('tute.homepage.tbc.2'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
                     const SizedBox(height: 8),
                     HomeWidgetsExample.buildTBCTrade1(),
                     const SizedBox(height: 8),
                     Text(
-                      tr('or'),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      tr(
+                        'or',
+                      ),
+                      style: TextStyle(
+                        fontSize: 16.spMin,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    Text(tr('tute.homepage.tbc.3')),
+                    Text(
+                      tr('tute.homepage.tbc.3'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
                     const SizedBox(height: 8),
                     HomeWidgetsExample.buildTBCTrade2(),
                     const SizedBox(height: 8),
-                    Text(tr('tute.homepage.tbc.4')),
+                    Text(
+                      tr('tute.homepage.tbc.4'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
                     const SizedBox(height: 10),
-                    Text(tr('tute.homepage.tbc.5')),
+                    Text(
+                      tr('tute.homepage.tbc.5'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
                   ],
                 ),
                 onSkip: () => _skip(controller),
@@ -390,12 +408,15 @@ class BartTutorialCoach {
                 skipText: tr('skip'),
                 previousText: tr('back'),
                 nextText: tr('next'),
-                text: tr('tute.marketPage.2'),
-                extraContent: const Column(
+                text: tr('tute.marketPage.2.1'),
+                extraContent: Column(
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+                    // Text('You can make all your listed items available for trade here and make return offers to other users.'),
                     Text(
-                        'You can make all your listed items available for trade here and make return offers to other users.'),
+                      tr('tute.marketPage.2.2'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
                   ],
                 ),
                 onSkip: () => _skip(controller),
