@@ -86,7 +86,8 @@ class BartAppTheme {
       backgroundColor: Colors.white,
       collapsedBackgroundColor: Colors.white,
       childrenPadding: EdgeInsets.symmetric(horizontal: 10),
-      textColor: Colors.black,
+      textColor: Colors.red,
+      collapsedTextColor: Colors.black,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -339,7 +340,8 @@ class BartAppTheme {
       backgroundColor: black2,
       collapsedBackgroundColor: black2,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 10),
-      textColor: Colors.white,
+      textColor: Colors.red,
+      collapsedTextColor: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
