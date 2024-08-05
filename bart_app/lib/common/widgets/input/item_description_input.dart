@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DescriptionTextField extends StatefulWidget {
   const DescriptionTextField({
@@ -36,14 +37,14 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
       maxLines: widget.maxLines,
       maxLength: widget.maxCharCount,
       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-            fontSize: 15,
+            fontSize: 14.spMin,
             fontWeight: FontWeight.normal,
           ),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10),
         // hintText: 'Description',
         hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
-              fontSize: 12,
+              fontSize: 14.spMin,
               fontWeight: FontWeight.normal,
             ),
         suffixIcon: widget.showSendButton

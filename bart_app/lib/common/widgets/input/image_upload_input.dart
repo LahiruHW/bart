@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/image_with_popup.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
@@ -21,7 +22,6 @@ class BartImagePicker extends StatefulWidget {
 }
 
 class _BartImagePickerState extends State<BartImagePicker> {
-
   @override
   void initState() {
     super.initState();
@@ -91,20 +91,33 @@ class _BartImagePickerState extends State<BartImagePicker> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: provider.imagePaths.isEmpty
-                  ? Column(
-                      children: [
-                        const Icon(Icons.upload),
-                        const SizedBox(height: 10),
-                        Text(
-                          context.tr('image.picker.text'),
-                          textAlign: TextAlign.center,
-                          style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontSize: 12,
+                  ? FittedBox(
+                      alignment: Alignment.center,
+                      fit: BoxFit.scaleDown,
+                      child: SizedBox(
+                        width: 0.95.sw,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.upload),
+                            const SizedBox(height: 10),
+                            Text(
+                              context.tr('image.picker.text'),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    fontSize: 12.spMin,
                                     fontWeight: FontWeight.normal,
                                   ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     )
                   : ListView.builder(
                       scrollDirection: Axis.horizontal,

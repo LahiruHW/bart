@@ -6,6 +6,7 @@ import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
@@ -249,9 +250,9 @@ class _NewItemPageState extends State<NewItemPage> {
           body: SingleChildScrollView(
             padding: widget.isReturnOffer
                 ? const EdgeInsets.only(
-                    left: 10, right: 10, top: 10, bottom: 30)
+                    left: 12, right: 12, top: 10, bottom: 30)
                 : const EdgeInsets.only(
-                    left: 10, right: 10, top: 30, bottom: 30),
+                    left: 12, right: 12, top: 30, bottom: 30),
             child: Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,15 +261,23 @@ class _NewItemPageState extends State<NewItemPage> {
                     context.tr('newItem.page.itemNameHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,
-                          fontSize: 20,
+                          fontSize: 18.spMin,
                         ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 5),
                     child: TextField(
                       controller: _nameTextController,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontSize: 14.spMin,
+                            fontWeight: FontWeight.normal,
+                          ),
                       decoration: InputDecoration(
                         hintText: context.tr('newItem.page.itemNameHint'),
+                        hintStyle: TextStyle(
+                          fontSize: 14.spMin,
+                          fontWeight: FontWeight.normal,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -280,7 +289,7 @@ class _NewItemPageState extends State<NewItemPage> {
                     context.tr('newItem.page.itemImagesHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,
-                          fontSize: 20,
+                          fontSize: 18.spMin,
                         ),
                   ),
                   const BartImagePicker(),
@@ -289,10 +298,10 @@ class _NewItemPageState extends State<NewItemPage> {
                     context.tr('newItem.page.itemDescHeader'),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: BartAppTheme.red1,
-                          fontSize: 20,
+                          fontSize: 18.spMin,
                         ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   DescriptionTextField(
                     textController: _descriptionTextController,
                   ),
@@ -305,7 +314,7 @@ class _NewItemPageState extends State<NewItemPage> {
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: BartAppTheme.red1,
-                                    fontSize: 20,
+                                    fontSize: 18.spMin,
                                   ),
                         ),
                   _isReturnOffer
@@ -315,7 +324,7 @@ class _NewItemPageState extends State<NewItemPage> {
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: BartAppTheme.red1,
-                                    fontSize: 10,
+                                    fontSize: 10.spMin,
                                   ),
                         ),
                   _isReturnOffer
@@ -327,9 +336,21 @@ class _NewItemPageState extends State<NewItemPage> {
                             maxLength: 500,
                             minLines: 1,
                             maxLines: 5,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  fontSize: 14.spMin,
+                                  fontWeight: FontWeight.normal,
+                                ),
                             decoration: InputDecoration(
-                              hintText:
-                                  context.tr('newItem.page.prefInReturnHint'),
+                              hintText: context.tr(
+                                'newItem.page.prefInReturnHint',
+                              ),
+                              hintStyle: TextStyle(
+                                fontSize: 14.spMin,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
                         ),
