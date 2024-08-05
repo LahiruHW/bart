@@ -33,6 +33,7 @@ class _ItemPageState extends State<ItemPage> {
   late final FocusNode focusNode;
   late final PageController _pageController;
   late final TextEditingController _textEditController;
+  bool _isSending = false;
 
   @override
   void initState() {
@@ -250,7 +251,9 @@ class _ItemPageState extends State<ItemPage> {
                       maxLines: 10,
                       maxCharCount: 200,
                       showSendButton: true,
+                      isSending: _isSending,
                       onSend: () async {
+                        setState(() => _isSending = true);
                         await BartFirestoreServices.getChatRoomID(
                           await BartFirestoreServices.getUserProfile(
                             provider.userProfile.userID,
@@ -268,6 +271,7 @@ class _ItemPageState extends State<ItemPage> {
                             itemContent: item,
                           ).then(
                             (value) async {
+                              setState(() => _isSending = false);
                               // show the snackbar to confirm the message was sent
                               ScaffoldMessenger.of(context).showSnackBar(
                                 BartSnackBar(

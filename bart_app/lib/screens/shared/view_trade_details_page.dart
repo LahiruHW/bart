@@ -33,6 +33,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
   late final FocusNode _focusNode;
   late String lable1;
   late String lable2;
+  bool _isMsgSending = false;
 
   @override
   void initState() {
@@ -230,6 +231,13 @@ class _ViewTradePageState extends State<ViewTradePage> {
                   context: context,
                   dismissable: false,
                 ),
+                isMsgSending: _isMsgSending,
+                whileSending: () {
+                  setState(() => _isMsgSending = true);
+                },
+                onSent: () {
+                  setState(() => _isMsgSending = false);
+                },
               ).build(context),
             ],
           ),

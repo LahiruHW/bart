@@ -19,6 +19,9 @@ class TradeDetailsPageFooter {
     this.descriptionTextController,
     this.focusNode,
     required this.loadingOverlay,
+    required this.isMsgSending,
+    required this.whileSending,
+    required this.onSent,
   });
 
   final Trade trade;
@@ -27,6 +30,9 @@ class TradeDetailsPageFooter {
   final TradeCompType tradeType;
   final TextEditingController? descriptionTextController;
   final LoadingBlockFullScreen loadingOverlay;
+  final bool isMsgSending;
+  final Function whileSending;
+  final Function onSent;
 
   void cancelConfirmationDialog(BuildContext thisContext) {
     showDialog(
@@ -94,7 +100,9 @@ class TradeDetailsPageFooter {
                   maxLines: 10,
                   maxCharCount: 200,
                   showSendButton: true,
+                  isSending: isMsgSending,
                   onSend: () async {
+                    whileSending();
                     await BartFirestoreServices.getChatRoomID(
                       trade.offeredItem.itemOwner,
                       trade.tradedItem.itemOwner,
@@ -109,6 +117,7 @@ class TradeDetailsPageFooter {
                         tradeContent: trade,
                       ).then(
                         (value) async {
+                          onSent();
                           // show the snackbar to confirm the message was sent
                           ScaffoldMessenger.of(context).showSnackBar(
                             BartSnackBar(

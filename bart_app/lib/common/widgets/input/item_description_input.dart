@@ -10,6 +10,7 @@ class DescriptionTextField extends StatefulWidget {
     this.showSendButton = false,
     this.focusNode,
     this.onSend,
+    this.isSending = false,
   }) : assert(showSendButton == false || onSend != null);
 
   final TextEditingController textController;
@@ -19,6 +20,7 @@ class DescriptionTextField extends StatefulWidget {
   final bool showSendButton;
   final FocusNode? focusNode;
   final VoidCallback? onSend;
+  final bool isSending;
 
   @override
   State<DescriptionTextField> createState() => _DescriptionTextFieldState();
@@ -46,13 +48,27 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
             ),
         suffixIcon: widget.showSendButton
             ? Column(
-                children: [
-                  IconButton(
-                    onPressed: widget.onSend,
-                    icon: const Icon(Icons.send),
-                  ),
-                  const Text("send")
-                ],
+                children: !widget.isSending
+                    ? [
+                        IconButton(
+                          onPressed: widget.onSend,
+                          icon: const Icon(Icons.send),
+                        ),
+                        const Text("send")
+                      ]
+                    : [
+                        const IconButton(
+                          onPressed: null,
+                          isSelected: false,
+                          disabledColor: Colors.grey,
+                          splashColor: Colors.transparent,
+                          icon: Icon(Icons.more_horiz),
+                        ),
+                        const Text(
+                          "sending",
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
               )
             : null,
       ),
