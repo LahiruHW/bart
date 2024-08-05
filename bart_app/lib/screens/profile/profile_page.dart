@@ -152,18 +152,19 @@ class _ProfilePageState extends State<ProfilePage> {
           setState(() => _isEditing = false);
         });
       },
-      child: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.center,
-              stops: const [0.01, 0.3],
-              colors: [
-                profileStyle.gradientColourTop,
-                profileStyle.gradientColourBottom,
-              ],
+      child: ListView(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.center,
+                stops: const [0.01, 0.3],
+                colors: [
+                  profileStyle.gradientColourTop,
+                  profileStyle.gradientColourBottom,
+                ],
+              ),
             ),
             child: Stack(
               children: [
@@ -177,198 +178,214 @@ class _ProfilePageState extends State<ProfilePage> {
                     right: 20.w,
                     bottom: 20.w,
                   ),
-                ),
-                child: Container(
                   decoration: BoxDecoration(
-                    color: profileStyle.profileInfoCardColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black.withOpacity(0.6),
-                    //     blurRadius: 5.0,
-                    //   ),
-                    // ],
+                    color: profileStyle.containerColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
                   ),
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FittedBox(
-                        fit: BoxFit.contain,
-                        child: Text(
-                          context.tr('profile.page.profile.info.header'),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: profileStyle.profileInfoCardColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.black.withOpacity(0.6),
+                      //     blurRadius: 5.0,
+                      //   ),
+                      // ],
+                    ),
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            context.tr('profile.page.profile.info.header'),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  fontSize: 25.spMin,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        const SizedBox(height: 5.0),
+                        Text(
+                          context.tr('profile.page.profile.username'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 18.spMin,
                                   ),
                         ),
-                      ),
-                      const SizedBox(height: 5.0),
-                      Text(
-                        context.tr('profile.page.profile.username'),
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontSize: 18.sp,
-                            ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 18,
-                            child: TextField(
-                              maxLines: 1,
-                              minLines: 1,
-                              enabled: _isEditing,
-                              focusNode: _userNameFocusNode,
-                              controller: _userNameController,
-                              decoration: InputDecoration(
-                                disabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 18,
+                              child: TextField(
+                                maxLines: 1,
+                                minLines: 1,
+                                enabled: _isEditing,
+                                focusNode: _userNameFocusNode,
+                                controller: _userNameController,
+                                decoration: InputDecoration(
+                                  disabledBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
                                   ),
+                                  fillColor: _isEditing
+                                      ? profileStyle.containerColor
+                                      : Colors.transparent,
                                 ),
-                                fillColor: _isEditing
-                                    ? profileStyle.containerColor
-                                    : Colors.transparent,
-                              ),
-                              onTap: _isEditing ? null : null,
-                              onEditingComplete: () => editUserName(
-                                stateProvider,
-                                _userNameController.text,
+                                onTap: _isEditing ? null : null,
+                                onEditingComplete: () => editUserName(
+                                  stateProvider,
+                                  _userNameController.text,
+                                ),
                               ),
                             ),
-                          ),
-                          const Spacer(flex: 1),
-                          Expanded(
-                            flex: 5,
-                            child: _isEditing
-                                ? IconButton(
-                                    icon: const Icon(
-                                      Icons.check,
-                                      color: Colors.green,
+                            const Spacer(flex: 1),
+                            Expanded(
+                              flex: 5,
+                              child: _isEditing
+                                  ? IconButton(
+                                      icon: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                      onPressed: () => editUserName(
+                                        stateProvider,
+                                        _userNameController.text,
+                                      ),
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: openKeyboard,
                                     ),
-                                    onPressed: () => editUserName(
-                                      stateProvider,
-                                      _userNameController.text,
-                                    ),
-                                  )
-                                : IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: openKeyboard,
-                                  ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        context.tr('profile.page.profile.email'),
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontSize: 18.sp,
                             ),
-                      ),
-                      stateProvider.user == null
-                          ? BartTextShimmer(
-                              textHeight: 10,
-                              textLength: 100.sp,
-                            )
-                          : Text(
-                              stateProvider.user!.email == null
-                                  ? '(Email not given by provider)'
-                                  : stateProvider.user!.email!,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                      const SizedBox(height: 5.0),
-                      Divider(
-                        color: profileStyle.textColor.withOpacity(0.1),
-                      ),
-                      const SizedBox(height: 10.0),
-                      FittedBox(
-                        fit: BoxFit.contain,
-                        child: Text(
-                          context.tr('profile.page.account.type.header'),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                        Text(
+                          context.tr('profile.page.profile.email'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 18.spMin,
                                   ),
                         ),
-                      ),
-                      const SizedBox(height: 10.0),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, val) => providerList[val],
-                        separatorBuilder: (context, val) =>
-                            const SizedBox(height: 10),
-                        itemCount: providerList.length,
-                      ),
-                      const SizedBox(height: 30.0),
-                      BartMaterialButton(
-                        label: context.tr('profile.page.btn.logout'),
-                        onPressed: () async {
-                          loadingOverlay.show();
-                          await stateProvider.signOut().then(
-                            (value) {
-                              if (value) {
-                                Future.delayed(
-                                  const Duration(milliseconds: 2000),
-                                  () {
-                                    loadingOverlay.hide();
-                                    context.go('/login-base');
-                                  },
-                                );
-                              } else {
-                                loadingOverlay.hide();
-                                // TODO:_ SHOW ERROR MESSAGE HERE
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ).animate().moveY(
-                  begin: MediaQuery.of(context).size.height + 100,
-                  end: 0.0,
-                  duration: const Duration(milliseconds: 800),
-                  curve: Curves.easeInOutCubic,
-                  delay: 400.ms),
-
-              // profile image + username container
-              Align(
-                alignment: Alignment.topCenter,
-                child: stateProvider.user == null
-                    ? const ProfileInfoHeaderShimmer()
-                    : StreamBuilder(
-                        stream:
-                            BartFirestoreServices.getCurrentUserProfileStream(
-                          stateProvider.user!.uid,
+                        stateProvider.user == null
+                            ? BartTextShimmer(
+                                textHeight: 10,
+                                textLength: 100.sp,
+                              )
+                            : Text(
+                                stateProvider.user!.email == null
+                                    ? '(Email not given by provider)'
+                                    : stateProvider.user!.email!,
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                        const SizedBox(height: 5.0),
+                        Divider(
+                          color: profileStyle.textColor.withOpacity(0.1),
                         ),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const ProfileInfoHeaderShimmer();
-                          }
-
-                          return Column(
-                            children: [
-                              Container(
-                                width: 100,
-                                height: 100,
-                                margin: const EdgeInsets.only(top: 70.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(50.0),
+                        const SizedBox(height: 10.0),
+                        FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            context.tr('profile.page.account.type.header'),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  fontSize: 25.spMin,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                clipBehavior: Clip.hardEdge,
-                                // this should be a column with  [image, username]
-                                child: CachedNetworkImage(
-                                  key: UniqueKey(),
-                                  cacheManager:
-                                      BartImageTools.customCacheManager,
-                                  cacheKey: 'profile_image',
-                                  progressIndicatorBuilder:
-                                      BartImageTools.progressLoader,
-                                  imageUrl: stateProvider.userProfile.imageUrl!,
-                                  fit: BoxFit.cover,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (context, val) => providerList[val],
+                          separatorBuilder: (context, val) =>
+                              const SizedBox(height: 10),
+                          itemCount: providerList.length,
+                        ),
+                        const SizedBox(height: 30.0),
+                        BartMaterialButton(
+                          label: context.tr('profile.page.btn.logout'),
+                          onPressed: () async {
+                            loadingOverlay.show();
+                            await stateProvider.signOut().then(
+                              (value) {
+                                if (value) {
+                                  Future.delayed(
+                                    const Duration(milliseconds: 2000),
+                                    () {
+                                      loadingOverlay.hide();
+                                      context.go('/login-base');
+                                    },
+                                  );
+                                } else {
+                                  loadingOverlay.hide();
+                                  // TODO:_ SHOW ERROR MESSAGE HERE
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ).animate().moveY(
+                    begin: MediaQuery.of(context).size.height + 100,
+                    end: 0.0,
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.easeInOutCubic,
+                    delay: 400.ms),
+
+                // profile image + username container
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: stateProvider.user == null
+                      ? const ProfileInfoHeaderShimmer()
+                      : StreamBuilder(
+                          stream:
+                              BartFirestoreServices.getCurrentUserProfileStream(
+                            stateProvider.user!.uid,
+                          ),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const ProfileInfoHeaderShimmer();
+                            }
+
+                            return Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  margin: const EdgeInsets.only(top: 70.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(50.0),
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  // this should be a column with  [image, username]
+                                  child: CachedNetworkImage(
+                                    key: UniqueKey(),
+                                    cacheManager:
+                                        BartImageTools.customCacheManager,
+                                    cacheKey: 'profile_image',
+                                    progressIndicatorBuilder:
+                                        BartImageTools.progressLoader,
+                                    imageUrl:
+                                        stateProvider.userProfile.imageUrl!,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 const SizedBox(height: 10.0),
                                 SizedBox(
@@ -384,19 +401,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-              ).animate().fadeIn(
-                    duration: 400.ms,
-                    curve: Curves.easeInOutCubic,
-                    delay: 1600.ms,
-                  ),
-            ],
+                              ],
+                            );
+                          },
+                        ),
+                ).animate().fadeIn(
+                      duration: 400.ms,
+                      curve: Curves.easeInOutCubic,
+                      delay: 1600.ms,
+                    ),
+              ],
+            ),
           ),
-        ).animate().fadeIn(
+        ].animate().fadeIn(
               duration: 400.ms,
               curve: Curves.easeInOutCubic,
             ),
