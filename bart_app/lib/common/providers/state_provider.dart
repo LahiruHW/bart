@@ -33,9 +33,12 @@ class BartStateProvider extends ChangeNotifier {
 
   /// calls the sign in with google method from the auth service,
   Future<void> signInWithGoogle() async {
-    await authService.signInWithGoogle().then(setupUserAccount).onError(
-          (error, stackTrace) => throw Exception(error),
-        );
+    await authService.signInWithGoogle().then((userCred) async {
+      await setupUserAccount(userCred);
+      BartAnalyticsEngine.userLogsInAE(LoginType.google, user!.uid);
+    }).onError(
+      (error, stackTrace) => throw Exception(error),
+    );
   }
 
   Future<bool> deleteAccount() async {
@@ -108,14 +111,14 @@ class BartStateProvider extends ChangeNotifier {
   Future<bool> signOut() async {
     if (authService.currentUser != null) {
       debugPrint('--------------------- StateProvider user signing out');
-      await authService
-          .signOut()
-          .then(
-            (value) => clearUserInstance(),
-          )
-          .onError(
-            (error, stackTrace) => throw Exception(error),
-          );
+      await authService.signOut().then(
+        (value) {
+          BartAnalyticsEngine.userLogsOutAE();
+          clearUserInstance();
+        },
+      ).onError(
+        (error, stackTrace) => throw Exception(error),
+      );
       return true;
     } else if (authService.currentUser == null) {
       debugPrint('--------------------- StateProvider user already signed out');

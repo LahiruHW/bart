@@ -4,3 +4,4 @@ export 'bart_firestore_services.dart';
 export 'bart_image_tools.dart';
 export 'bart_shared_preferences.dart';
 export 'bart_storage_services.dart';
+export 'bart_firebase_analytics.dart';

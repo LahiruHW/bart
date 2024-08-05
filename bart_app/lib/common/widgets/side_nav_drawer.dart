@@ -5,6 +5,7 @@ import 'package:bart_app/screens/shared/base.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
+import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 

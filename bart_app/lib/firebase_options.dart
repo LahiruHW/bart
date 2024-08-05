@@ -47,6 +47,7 @@ class DefaultFirebaseOptions {
     projectId: 'bart-app-a79ac',
     authDomain: 'bart-app-a79ac.firebaseapp.com',
     storageBucket: 'bart-app-a79ac.appspot.com',
+    measurementId: 'G-3Q876LEMLC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -86,6 +87,7 @@ class DefaultFirebaseOptions {
     projectId: 'bart-app-a79ac',
     authDomain: 'bart-app-a79ac.firebaseapp.com',
     storageBucket: 'bart-app-a79ac.appspot.com',
+    measurementId: 'G-3Q876LEMLC',
   );
 
 }

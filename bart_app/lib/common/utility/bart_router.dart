@@ -5,6 +5,7 @@ import 'package:bart_app/screens/index.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
+import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 class BartRouter {
@@ -30,6 +31,7 @@ class BartRouter {
           final provider =
               Provider.of<BartStateProvider>(context, listen: false);
           if (provider.userProfile.userID.isNotEmpty) {
+            BartAnalyticsEngine.setCurrentUID(provider.userProfile.userID);
             return '/home';
           }
           return null;
@@ -236,6 +238,7 @@ class BartRouter {
                         name: "market/listed-items", // market/listed-items
                         path: '/market/listed-items',
                         pageBuilder: (context, state) {
+                          BartAnalyticsEngine.userGoToListedItems();
                           return MaterialPage(
                             child: MarketListedItemsPage(
                               modalContext: _rootNavKey.currentContext!,
@@ -277,6 +280,7 @@ class BartRouter {
                 pageBuilder: (context, state) {
                   final itemID = state.pathParameters['id']!;
                   Item item = state.extra as Item;
+                  BartAnalyticsEngine.userGoToItemPage(itemID);
                   return CustomTransitionPage(
                     child: ItemPage(item: item, itemID: itemID),
                     barrierColor: Theme.of(context).scaffoldBackgroundColor,

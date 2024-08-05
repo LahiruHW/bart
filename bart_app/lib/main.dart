@@ -20,7 +20,8 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then(BartAnalyticsEngine.init);
+  BartAnalyticsEngine.logAppOpen();
   BartFirestoreServices();
   BartFirebaseStorageServices();
   BartFirebaseMessaging.initNotifications();
@@ -73,29 +74,34 @@ class BartApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      // designSize: ,
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, widget) {
-        return Consumer<BartStateProvider>(
-          builder: (context, provider, child) => MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: BartRouter.router,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            title: 'Bart',
-            themeMode: provider.userProfile.settings!.isDarkMode
-                ? ThemeMode.dark
-                : ThemeMode.light,
-            theme: BartAppTheme.lightTheme,
-            darkTheme: BartAppTheme.darkTheme,
-            themeAnimationDuration: const Duration(milliseconds: 800),
-            themeAnimationCurve: Curves.easeInOut,
-          ),
-        );
+    return PopScope(
+      onPopInvoked: (val) {
+        BartAnalyticsEngine.logAppClose();
       },
+      child: ScreenUtilInit(
+        // designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, widget) {
+          return Consumer<BartStateProvider>(
+            builder: (context, provider, child) => MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: BartRouter.router,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              title: 'Bart',
+              themeMode: provider.userProfile.settings!.isDarkMode
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+              theme: BartAppTheme.lightTheme,
+              darkTheme: BartAppTheme.darkTheme,
+              themeAnimationDuration: const Duration(milliseconds: 800),
+              themeAnimationCurve: Curves.easeInOut,
+            ),
+          );
+        },
+      ),
     );
   }
 }
