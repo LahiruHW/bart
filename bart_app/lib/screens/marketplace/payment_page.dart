@@ -90,9 +90,9 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               const SizedBox(height: 20),
               Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 10,
+                margin: EdgeInsets.symmetric(
+                  horizontal: 50.w,
+                  vertical: 10.h,
                 ),
                 child: TextField(
                   maxLines: 1,
@@ -109,7 +109,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     hintFadeDuration: const Duration(milliseconds: 500),
                     hintStyle: TextStyle(
                       letterSpacing: 1.5,
-                      fontSize: 50.sp,
+                      fontSize: 50.spMin,
                     ),
                     fillColor: paymentPageStyle.textFieldBackgroundColor,
                     contentPadding: const EdgeInsets.symmetric(

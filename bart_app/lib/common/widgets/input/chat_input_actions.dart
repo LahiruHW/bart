@@ -31,6 +31,10 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
               child: TextFormField(
                 focusNode: widget.focusNode,
                 controller: widget.controller,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
                 decoration: InputDecoration(
                   hintText: "Type a message...",
                   hintStyle: TextStyle(

@@ -47,7 +47,7 @@ class BartSnackBar {
               message,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 18.spMin,
                 color: backgroundColor.computeLuminance() > 0.5
                     ? Colors.black
                     : Colors.white,

@@ -81,7 +81,7 @@ class MarketListTile extends StatelessWidget {
                         style:
                             Theme.of(context).textTheme.headlineLarge!.copyWith(
                                   color: cardStyle.titleColor,
-                                  fontSize: (23.5).sp,
+                                  fontSize: 25.spMin,
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
@@ -93,13 +93,16 @@ class MarketListTile extends StatelessWidget {
                         'by ${item.itemOwner.userName}',
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               fontWeight: FontWeight.bold,
+                              fontSize: 20.spMin,
                             ),
                       ),
                       Text(
                         getTimeDifferenceString(item.postedOn),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall,
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          fontSize: 16.spMin,
+                        ),
                       ),
                     ],
                   ),
