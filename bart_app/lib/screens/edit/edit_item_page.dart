@@ -30,6 +30,7 @@ class _EditItemPageState extends State<EditItemPage> {
   late final TextEditingController _nameTextController;
   late final TextEditingController _descriptionTextController;
   late final TextEditingController _returnsTextController;
+  bool _isBtnEnabled = true;
 
   @override
   void initState() {
@@ -198,7 +199,9 @@ class _EditItemPageState extends State<EditItemPage> {
                         height: 75,
                         child: BartMaterialButton(
                           label: context.tr('edit.trade.page.btn.confirm'),
+                          isEnabled: _isBtnEnabled,
                           onPressed: () {
+                            setState(() => _isBtnEnabled = false);
                             final isFormValid = validateForm(
                               name: _nameTextController.text,
                               description: _descriptionTextController.text,
@@ -219,6 +222,7 @@ class _EditItemPageState extends State<EditItemPage> {
                             ).then(
                               (result) {
                                 loadOverlay.hide();
+                                setState(() => _isBtnEnabled = true);
                                 if (result) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     BartSnackBar(

@@ -30,6 +30,7 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
   late final GlobalKey<ScaffoldState> _scaffoldKey;
   late final TextEditingController _nameTextController;
   late final TextEditingController _descriptionTextController;
+  bool _isBtnEnabled = true;
 
   @override
   void initState() {
@@ -163,7 +164,9 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
                         height: 75,
                         child: BartMaterialButton(
                           label: context.tr('edit.trade.page.btn.confirm'),
+                          isEnabled: _isBtnEnabled,
                           onPressed: () {
+                            setState(() => _isBtnEnabled = false);
                             final isFormValid = validateForm(
                               name: _nameTextController.text,
                               description: _descriptionTextController.text,
@@ -199,6 +202,7 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
                                     ).build(context),
                                   );
                                   tempProvider.clearAllTempData();
+                                  setState(() => _isBtnEnabled = true);
                                   context.go('/home/viewTrade', extra: {
                                     'trade': editedTrade,
                                     'tradeType': editedTrade.tradeCompType,

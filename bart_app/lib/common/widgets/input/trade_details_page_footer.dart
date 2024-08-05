@@ -46,9 +46,11 @@ class TradeDetailsPageFooter {
         actions: [
           TextButton(
             onPressed: () async {
+              whileSending();
               loadingOverlay.show(); // first show the loading indicator
               BartFirestoreServices.cancelTrade(trade).then((cancelled) {
                 debugPrint("||||||||||||||||||||| cancelled: $cancelled");
+                onSent();
                 loadingOverlay.hide();
                 if (cancelled) {
                   ScaffoldMessenger.of(thisContext).showSnackBar(
@@ -160,10 +162,12 @@ class TradeDetailsPageFooter {
                 width: 150,
                 height: 75,
                 child: BartMaterialButton(
+                  isEnabled: !isMsgSending,
                   buttonType: BartMaterialButtonType.green,
                   // label: "Accept",
                   label: context.tr('accept'),
                   onPressed: () {
+                    whileSending();
                     loadingOverlay.show();
 
                     // accept & complete the trade
@@ -174,6 +178,7 @@ class TradeDetailsPageFooter {
                         Future.delayed(
                           const Duration(milliseconds: 1500),
                           () {
+                            onSent();
                             loadingOverlay.hide();
                             trade.tradeCompType = TradeCompType.toBeCompleted;
                             context.replace(
@@ -197,12 +202,15 @@ class TradeDetailsPageFooter {
                 height: 75,
                 child: BartMaterialButton(
                   label: context.tr('decline'),
+                  isEnabled: !isMsgSending,
                   onPressed: () {
+                    whileSending();
                     loadingOverlay.show();
 
                     // accept & complete the trade
                     BartFirestoreServices.declineTrade(trade.tradeID).then(
                       (value) {
+                        onSent();
                         Future.delayed(
                           const Duration(milliseconds: 1500),
                           () {
@@ -276,6 +284,7 @@ class TradeDetailsPageFooter {
                     height: 75,
                     child: BartMaterialButton(
                       label: context.tr('view.trade.page.outgoing.btn.cancel'),
+                      isEnabled: !isMsgSending,
                       onPressed: () => cancelConfirmationDialog(context),
                     ),
                   ),
@@ -298,12 +307,14 @@ class TradeDetailsPageFooter {
                           height: 75,
                           child: BartMaterialButton(
                             buttonType: BartMaterialButtonType.green,
+                            isEnabled: !isMsgSending,
                             label: trade.offeredItem.isPayment
                                 ? context
                                     .tr('view.trade.page.btn.handover.done3')
                                 : context
                                     .tr('view.trade.page.btn.handover.done1'),
                             onPressed: () {
+                              whileSending();
                               loadingOverlay.show();
                               // the tradee accepts the trade
                               BartFirestoreServices.acceptTradeAsTradee(
@@ -313,6 +324,7 @@ class TradeDetailsPageFooter {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),
                                     () {
+                                      onSent();
                                       context.go('/home');
                                       loadingOverlay.hide();
                                     },
@@ -329,9 +341,11 @@ class TradeDetailsPageFooter {
                           height: 75,
                           child: BartMaterialButton(
                             buttonType: BartMaterialButtonType.green,
+                            isEnabled: !isMsgSending,
                             label: context
                                 .tr('view.trade.page.btn.handover.done2'),
                             onPressed: () async {
+                              whileSending();
                               loadingOverlay.show();
                               // item is taken off the market
                               trade.tradedItem.isListedInMarket = false;
@@ -350,6 +364,7 @@ class TradeDetailsPageFooter {
                                   Future.delayed(
                                     const Duration(milliseconds: 1500),
                                     () {
+                                      onSent();
                                       context.go('/home');
                                       loadingOverlay.hide();
                                     },
@@ -367,7 +382,9 @@ class TradeDetailsPageFooter {
                     child: BartMaterialButton(
                       // label: "Go to chat",
                       label: context.tr('view.trade.page.btn.goToChat'),
+                      isEnabled: !isMsgSending,
                       onPressed: () {
+                        whileSending();
                         loadingOverlay.show();
                         Future.delayed(
                           const Duration(milliseconds: 1500),
@@ -383,6 +400,7 @@ class TradeDetailsPageFooter {
                                 ).then(
                                   (chat) {
                                     loadingOverlay.hide();
+                                    onSent();
                                     context.go(
                                       '/chat/chatRoom/$chatID',
                                       extra: chat,

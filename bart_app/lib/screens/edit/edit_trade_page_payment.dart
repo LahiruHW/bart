@@ -32,6 +32,7 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
   late String amount;
   late final TextEditingController _amountController;
   late final GlobalKey<ScaffoldState> _scaffoldKey;
+  bool _isBtnEnabled = true;
 
   @override
   void initState() {
@@ -174,7 +175,9 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
                   height: 75,
                   child: BartMaterialButton(
                     label: context.tr('edit.trade.page.btn.confirm'),
+                    isEnabled: _isBtnEnabled,
                     onPressed: () {
+                      setState(() => _isBtnEnabled = false);
                       // 0. validate the amount
                       if (!validateAmount()) return;
 
@@ -212,6 +215,7 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
                       ).then(
                         (result) {
                           loadOverlay.hide();
+                          setState(() => _isBtnEnabled = true);
                           if (result) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               BartSnackBar(
