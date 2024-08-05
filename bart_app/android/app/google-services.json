@@ -14,54 +14,18 @@
       },
       "oauth_client": [
         {
+          "client_id": "525584307325-b9fdccs633q4i2q6r206abu4m7vklmgq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bart.trade.app",
+            "certificate_hash": "44e9ca6940ecce1546ee288b5d7f6674523d3449"
+          }
+        },
+        {
           "client_id": "525584307325-rca7dn83cdm641u905f543backooshs2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bart.trade.app",
-            "certificate_hash": "adaf3069751256433edea78e3e6942603acbc2fb"
-          }
-        },
-        {
-          "client_id": "525584307325-acsluakujkm3gircod0rs7ho2cbb92tg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBaakM2GpjR6MUUpp-BWqvja1auTYt82kk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "525584307325-acsluakujkm3gircod0rs7ho2cbb92tg.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "525584307325-1dknuudb72voh2k2m75ta9tl4vbueod0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bart.trade.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:525584307325:android:e9e2fe9784f89be71b0d14",
-        "android_client_info": {
-          "package_name": "com.example.bart_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "525584307325-avlbvfd1s93mopr1crf1ait55du2o8ck.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.bart_app",
             "certificate_hash": "adaf3069751256433edea78e3e6942603acbc2fb"
           }
         },
