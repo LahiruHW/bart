@@ -35,7 +35,6 @@ Future<void> main() async {
         create: (context) => TempStateProvider(),
       ),
     ],
-    // child: const BartApp(),
     builder: (context, child) {
       BartTutorialCoach.createTutorial(context);
       return const BartApp();

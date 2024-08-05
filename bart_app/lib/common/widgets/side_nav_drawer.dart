@@ -79,20 +79,6 @@ class BartSideNavMenu extends StatelessWidget {
                 ),
             onTap: () async {
               loadingOverlay.show();
-
-              // Future.delayed(
-              //   const Duration(milliseconds: 0),
-              //   () => GoRouter.of(context).go('/login-base'),
-              // ).then(
-              //   (value) {
-              //     Future.delayed(
-              //       const Duration(milliseconds: 3000), // was 3500 before
-              //       () => stateProvider.signOut(),
-              //     );
-              //     // stateProvider.clearUserProfileInstance();  <------ this should go here
-              //   },
-              // );
-
               await stateProvider.signOut().then(
                 (value) {
                   if (value) {

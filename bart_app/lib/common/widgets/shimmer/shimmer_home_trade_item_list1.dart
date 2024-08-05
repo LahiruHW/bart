@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/home_page_expansion_panel.dart';
-import 'package:flutter/material.dart';
 
 class ShimmerHomeTradeWidgetList1 {
   ExpansionPanelList show(BuildContext context) {

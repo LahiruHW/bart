@@ -154,7 +154,6 @@ class _HomePageState extends State<HomePage> {
                       HomePageTradeExpansionPanelBuilder(
                         title: context.tr('incoming.trades.title'),
                         tradeList: snapshot.hasData ? trades[0] : [],
-                        // tradeList: trades[0],
                         isExpanded: isITExpanded,
                         tradeType: TradeCompType.incoming,
                         userID: provider.userProfile.userID,
@@ -163,7 +162,6 @@ class _HomePageState extends State<HomePage> {
                       HomePageTradeExpansionPanelBuilder(
                         title: context.tr('outgoing.trades.title'),
                         tradeList: snapshot.hasData ? trades[1] : [],
-                        // tradeList: trades[1],
                         isExpanded: isOTExpanded,
                         tradeType: TradeCompType.outgoing,
                         userID: provider.userProfile.userID,
@@ -172,7 +170,6 @@ class _HomePageState extends State<HomePage> {
                       HomePageTradeExpansionPanelBuilder(
                         title: context.tr('tbc.trades.title'),
                         tradeList: snapshot.hasData ? trades[2] : [],
-                        // tradeList: trades[2],
                         isExpanded: isSTExpanded,
                         tradeType: TradeCompType.toBeCompleted,
                         userID: provider.userProfile.userID,

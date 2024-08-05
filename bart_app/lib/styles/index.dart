@@ -8,3 +8,4 @@ export 'home_trade_widget_style.dart';
 export 'bart_profile_page_colour_style.dart';
 export 'bart_payment_page_style.dart';
 export 'colour_switch_toggle_style.dart';
+export 'bart_tutorial_content_style.dart';
