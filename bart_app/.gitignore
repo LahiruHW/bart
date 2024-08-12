@@ -50,3 +50,5 @@ firestore.indexes.json
 firestore.rules
 storage.rules
 .firebaserc
+*.env
+bart_env.g.dart
