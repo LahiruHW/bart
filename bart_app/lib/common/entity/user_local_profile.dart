@@ -5,6 +5,7 @@ import 'package:bart_app/common/entity/settings.dart';
 class UserLocalProfile {
   final String userID;
   String userName;
+  String fullName;
   bool isFirstLogin;
   final List<String> chats; // list of chatIDs
   String? imageUrl;
@@ -15,6 +16,7 @@ class UserLocalProfile {
   UserLocalProfile({
     this.userID = "",
     this.userName = "",
+    this.fullName = "",
     this.isFirstLogin = true,
     this.chats = const [],
     this.imageUrl,
@@ -26,6 +28,7 @@ class UserLocalProfile {
   static final UserLocalProfile _invalidObj = UserLocalProfile(
     userID: "",
     userName: "Deleted User",
+    fullName: "Deleted User",
     isFirstLogin: false,
     chats: [],
     imageUrl: null,
@@ -39,6 +42,7 @@ class UserLocalProfile {
     return UserLocalProfile(
       userID: json['userID'],
       userName: json['userName'],
+      fullName: json['fullName'],
       chats: List<String>.from(json['chats'] ?? []),
       isFirstLogin: json['isFirstLogin'],
       imageUrl: json['imageUrl'],
@@ -53,6 +57,7 @@ class UserLocalProfile {
     return UserLocalProfile(
       userID: newObj.userID,
       userName: newObj.userName,
+      fullName: newObj.fullName,
       chats: newObj.chats,
       isFirstLogin: newObj.isFirstLogin,
       imageUrl: newObj.imageUrl,
@@ -63,6 +68,7 @@ class UserLocalProfile {
 
   Map<String, dynamic> toMap() => {
         'userName': userName,
+        'fullName': fullName,
         'chats': FieldValue.arrayUnion(chats),
         'isFirstLogin': isFirstLogin,
         'imageUrl': imageUrl ?? "",
@@ -75,6 +81,7 @@ class UserLocalProfile {
     return UserLocalProfile(
       userID: json['userID'],
       userName: json['userName'],
+      fullName: json['fullName'],
       chats: List<String>.from(json['chats'] ?? []),
       isFirstLogin: json['isFirstLogin'],
       imageUrl: json['imageUrl'],
@@ -87,6 +94,7 @@ class UserLocalProfile {
   Map<String, dynamic> toJson() => {
         'userID': userID,
         'userName': userName,
+        'fullName': fullName,
         'chats': chats,
         'isFirstLogin': isFirstLogin,
         'imageUrl': imageUrl,
@@ -112,6 +120,6 @@ class UserLocalProfile {
 
   @override
   String toString() {
-    return 'UserLocalProfile: {userID: $userID, userName: $userName, locale: $localeString, isFirstLogin: $isFirstLogin, imageUrl: $imageUrl, $settings, chats: $chats}';
+    return 'UserLocalProfile: {userID: $userID, userName: $userName, fullName: $fullName, locale: $localeString, isFirstLogin: $isFirstLogin, imageUrl: $imageUrl, $settings, chats: $chats}';
   }
 }
