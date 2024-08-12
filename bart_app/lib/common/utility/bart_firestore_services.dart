@@ -305,6 +305,16 @@ class BartFirestoreServices {
     });
   }
 
+  /// see if a full name already exists in the user collection
+  static Future<bool> doesFullNameExist(String newFullName) async {
+    return await userCollection
+        .where('fullName', isEqualTo: newFullName)
+        .get()
+        .then((snapshot) {
+      return snapshot.docs.isNotEmpty;
+    });
+  }
+
   /// update the user's profile
   static Future<void> updateUserProfile(UserLocalProfile newProfile) async {
     await userProfileDocRef(newProfile.userID).update(newProfile.toMap());
