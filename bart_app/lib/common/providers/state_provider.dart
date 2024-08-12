@@ -150,9 +150,26 @@ class BartStateProvider extends ChangeNotifier {
     return await BartFirestoreServices.doesUserNameExist(userName);
   }
 
+  /// check if the full name exists in the firestore database
+  Future<bool> doesFullNameExist(String fullName) async {
+    return await BartFirestoreServices.doesFullNameExist(fullName);
+  }
+
   /// update the user's local profile userName and update the user Profile
   void updateUserName(String newUserName) {
     userProfile.userName = newUserName;
+    userProfile.isFirstLogin = false;
+    BartSharedPrefOps.saveUserProfile(userProfile);
+    // handling setting changes when user is logged out
+    if (userProfile.userID.isNotEmpty) {
+      BartFirestoreServices.updateUserProfile(userProfile);
+    }
+    notifyListeners();
+  }
+
+  /// update the user's local profile userName and update the user Profile
+  void updateFullName(String newFullName) {
+    userProfile.fullName = newFullName;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {

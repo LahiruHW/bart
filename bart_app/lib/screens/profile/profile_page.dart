@@ -27,15 +27,23 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late final TextEditingController _userNameController;
   late final FocusNode _userNameFocusNode;
-  late bool _isEditing;
+  late final TextEditingController _nameController;
+  late final FocusNode _nameFocusNode;
+  late bool _isEditingUserName;
+  late bool _isEditingName;
 
   @override
   void initState() {
     super.initState();
-    _isEditing = false;
+    _isEditingUserName = false;
     _userNameFocusNode = FocusNode();
     _userNameController = TextEditingController(
       text: context.read<BartStateProvider>().userProfile.userName,
+    );
+    _isEditingName = false;
+    _nameFocusNode = FocusNode();
+    _nameController = TextEditingController(
+      text: context.read<BartStateProvider>().userProfile.fullName,
     );
   }
 
@@ -52,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
       _userNameFocusNode.unfocus();
       Future.delayed(
         100.ms,
-        () => setState(() => _isEditing = false),
+        () => setState(() => _isEditingUserName = false),
       );
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
@@ -89,23 +97,84 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       }
     });
+  }
 
-    _userNameFocusNode.unfocus();
+  void editFullName(BartStateProvider stateProvider, String fullName) {
+    // check if the username is updated at all
+    if (fullName == stateProvider.userProfile.fullName) {
+      _nameFocusNode.unfocus();
+      Future.delayed(
+        100.ms,
+        () => setState(() => _isEditingName = false),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const BartSnackBar(
+          appearOnTop: true,
+          // message: context.tr('profile.page.username.unchanged'),
+          message: "Name is unchanged",
+          backgroundColor: Colors.amber,
+          icon: Icons.info,
+        ).build(context),
+      );
+      return;
+    }
+    // if not, check if the username exists in the database
+    stateProvider.doesFullNameExist(fullName).then(
+      (value) {
+        if (value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const BartSnackBar(
+              appearOnTop: true,
+              // message: context.tr('profile.page.username.exists'),
+              message: 'Name already exists',
+              backgroundColor: Colors.red,
+              icon: Icons.error,
+            ).build(context),
+          );
+          _nameController.text = stateProvider.userProfile.fullName;
+          return;
+        } else {
+          stateProvider.updateFullName(fullName);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const BartSnackBar(
+              appearOnTop: true,
+              // message: context.tr('profile.page.username.updated'),
+              message: 'Name updated',
+              backgroundColor: Colors.green,
+              icon: Icons.check,
+            ).build(context),
+          );
+        }
+      },
+    );
+
+    _nameFocusNode.unfocus();
     Future.delayed(
       100.ms,
-      () => setState(() => _isEditing = false),
+      () => setState(() => _isEditingName = false),
     );
     return;
   }
 
-  void openKeyboard() {
+  void openKeyboard1() {
     setState(() {
-      _isEditing = true;
+      _isEditingUserName = true;
     });
     // open the keyboard
     Future.delayed(
       400.ms,
       () => FocusScope.of(context).requestFocus(_userNameFocusNode),
+    );
+  }
+
+  void openKeyboard2() {
+    setState(() {
+      _isEditingName = true;
+    });
+    // open the keyboard
+    Future.delayed(
+      400.ms,
+      () => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -137,8 +206,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     userInfo.providerId,
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      fontSize: 18.spMin,
-                    ),
+                          fontSize: 18.spMin,
+                        ),
                   ),
                 ],
               ),
@@ -149,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
         Future.delayed(100.ms, () {
-          setState(() => _isEditing = false);
+          setState(() => _isEditingUserName = false);
         });
       },
       child: ListView(
@@ -229,7 +298,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: TextField(
                                 maxLines: 1,
                                 minLines: 1,
-                                enabled: _isEditing,
+                                enabled: _isEditingUserName,
                                 focusNode: _userNameFocusNode,
                                 controller: _userNameController,
                                 decoration: InputDecoration(
@@ -238,11 +307,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: Colors.transparent,
                                     ),
                                   ),
-                                  fillColor: _isEditing
+                                  fillColor: _isEditingUserName
                                       ? profileStyle.containerColor
                                       : Colors.transparent,
                                 ),
-                                onTap: _isEditing ? null : null,
+                                onTap: _isEditingUserName ? null : null,
                                 onEditingComplete: () => editUserName(
                                   stateProvider,
                                   _userNameController.text.trim(),
@@ -252,7 +321,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             const Spacer(flex: 1),
                             Expanded(
                               flex: 5,
-                              child: _isEditing
+                              child: _isEditingUserName
                                   ? IconButton(
                                       icon: const Icon(
                                         Icons.check,
@@ -265,12 +334,69 @@ class _ProfilePageState extends State<ProfilePage> {
                                     )
                                   : IconButton(
                                       icon: const Icon(Icons.edit),
-                                      onPressed: openKeyboard,
+                                      onPressed: openKeyboard1,
                                     ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 10.0),
+                        Text(
+                          // context.tr('profile.page.profile.username'),
+                          'Name:',
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    fontSize: 18.spMin,
+                                  ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 18,
+                              child: TextField(
+                                maxLines: 1,
+                                minLines: 1,
+                                enabled: _isEditingName,
+                                focusNode: _nameFocusNode,
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  disabledBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  fillColor: _isEditingName
+                                      ? profileStyle.containerColor
+                                      : Colors.transparent,
+                                ),
+                                onTap: _isEditingName ? null : null,
+                                onEditingComplete: () => editFullName(
+                                  stateProvider,
+                                  _nameController.text.trim(),
+                                ),
+                              ),
+                            ),
+                            const Spacer(flex: 1),
+                            Expanded(
+                              flex: 5,
+                              child: _isEditingName
+                                  ? IconButton(
+                                      icon: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                      onPressed: () => editFullName(
+                                        stateProvider,
+                                        _nameController.text.trim(),
+                                      ),
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: openKeyboard2,
+                                    ),
+                            ),
+                          ],
+                        ),
                         Text(
                           context.tr('profile.page.profile.email'),
                           style:
@@ -327,7 +453,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     const Duration(milliseconds: 2000),
                                     () {
                                       loadingOverlay.hide();
-                                      context.go('/login-base');
+                                      context.go('/login');
                                     },
                                   );
                                 } else {
