@@ -114,7 +114,7 @@ class TradeDetailsPageFooter {
                       return await BartFirestoreServices.sendMessageUsingChatID(
                         chatID,
                         trade.tradedItem.itemOwner.userID,
-                        descriptionTextController!.text,
+                        descriptionTextController!.text.trim(),
                         isSharedTrade: true,
                         tradeContent: trade,
                       ).then(

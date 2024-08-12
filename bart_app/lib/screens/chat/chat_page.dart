@@ -293,7 +293,7 @@ class _ChatPageState extends State<ChatPage> {
                             BartFirestoreServices.sendMessageUsingChatObj(
                               widget.chatData,
                               provider.userProfile.userID,
-                              _textEditController.text,
+                              _textEditController.text.trim(),
                             );
 
                             _textEditController.clear();

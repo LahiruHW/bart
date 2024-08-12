@@ -92,8 +92,8 @@ class _NewItemPageState extends State<NewItemPage> {
     TempStateProvider tempProvider,
   ) {
     final valid = validateForm(
-      name: _nameTextController.text,
-      description: _descriptionTextController.text,
+      name: _nameTextController.text.trim(),
+      description: _descriptionTextController.text.trim(),
       imgList: tempProvider.imagePaths,
     );
     if (!valid) return;
@@ -120,8 +120,8 @@ class _NewItemPageState extends State<NewItemPage> {
       final newItem = Item(
         itemID: newItemID,
         itemOwner: stateProvider.userProfile,
-        itemDescription: _descriptionTextController.text,
-        itemName: _nameTextController.text,
+        itemDescription: _descriptionTextController.text.trim(),
+        itemName: _nameTextController.text.trim(),
         imgs: imgList,
         preferredInReturn: [],
         postedOn: timestamp,
@@ -173,8 +173,8 @@ class _NewItemPageState extends State<NewItemPage> {
     TempStateProvider tempProvider,
   ) async {
     final valid = validateForm(
-      name: _nameTextController.text,
-      description: _descriptionTextController.text,
+      name: _nameTextController.text.trim(),
+      description: _descriptionTextController.text.trim(),
       imgList: tempProvider.imagePaths,
     );
     if (!valid) return;
@@ -200,11 +200,16 @@ class _NewItemPageState extends State<NewItemPage> {
       final newItem = Item(
         itemID: docID,
         itemOwner: stateProvider.userProfile,
-        itemDescription: _descriptionTextController.text,
-        itemName: _nameTextController.text,
+        itemDescription: _descriptionTextController.text.trim(),
+        itemName: _nameTextController.text.trim(),
         imgs: imgList,
         preferredInReturn: _returnsTextController.text.isNotEmpty
-            ? _returnsTextController.text.split(', ')
+            ? _returnsTextController.text
+                .split(', ')
+                .map(
+                  (itemStr) => itemStr.trim(),
+                )
+                .toList()
             : [],
         postedOn: timestamp,
       );

@@ -245,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 onTap: _isEditing ? null : null,
                                 onEditingComplete: () => editUserName(
                                   stateProvider,
-                                  _userNameController.text,
+                                  _userNameController.text.trim(),
                                 ),
                               ),
                             ),
@@ -260,7 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       onPressed: () => editUserName(
                                         stateProvider,
-                                        _userNameController.text,
+                                        _userNameController.text.trim(),
                                       ),
                                     )
                                   : IconButton(

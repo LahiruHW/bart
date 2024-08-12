@@ -266,7 +266,7 @@ class _ItemPageState extends State<ItemPage> {
                               .sendMessageUsingChatID(
                             chatID,
                             provider.userProfile.userID,
-                            _textEditController.text,
+                            _textEditController.text.trim(),
                             isSharedItem: true,
                             itemContent: item,
                           ).then(
