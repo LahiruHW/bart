@@ -20,20 +20,23 @@ class EnterFullNamePageView extends StatefulWidget {
 class EnterFullNamePageViewState extends State<EnterFullNamePageView> {
   late final FocusNode fullNameFocusNode;
   late final TextEditingController fullNameController;
+  late final BartStateProvider stateProvider;
 
   @override
   void initState() {
     super.initState();
+    stateProvider = Provider.of<BartStateProvider>(
+      context,
+      listen: false,
+    );
     fullNameFocusNode = FocusNode();
-    fullNameController = TextEditingController();
+    fullNameController = TextEditingController(
+      text: stateProvider.userProfile.fullName,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final stateProvider = Provider.of<BartStateProvider>(
-      context,
-      listen: false,
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,

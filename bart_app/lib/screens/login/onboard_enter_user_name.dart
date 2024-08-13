@@ -21,12 +21,19 @@ class EnterUserNamePageView extends StatefulWidget {
 class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
   late final FocusNode userNameFocusNode;
   late final TextEditingController userNameController;
+  late final BartStateProvider stateProvider;
 
   @override
   void initState() {
     super.initState();
+    stateProvider = Provider.of<BartStateProvider>(
+      context,
+      listen: false,
+    );
     userNameFocusNode = FocusNode();
-    userNameController = TextEditingController();
+    userNameController = TextEditingController(
+      text: stateProvider.userProfile.userName,
+    );
   }
 
   @override
@@ -38,10 +45,6 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
 
   @override
   Widget build(BuildContext context) {
-    final stateProvider = Provider.of<BartStateProvider>(
-      context,
-      listen: false,
-    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,24 +97,32 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
                 );
                 return;
               }
-              await stateProvider.doesUserNameExist(thisText).then(
-                (exists) {
-                  if (exists) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      BartSnackBar(
-                        icon: Icons.error,
-                        message: context.tr('profile.page.username.exists'),
-                        backgroundColor: Colors.red,
-                        appearOnTop: true,
-                      ).build(context),
-                    );
+              if (thisText != stateProvider.userProfile.userName) {
+                await stateProvider.doesUserNameExist(thisText).then(
+                  (exists) {
+                    if (exists) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        BartSnackBar(
+                          icon: Icons.error,
+                          message: context.tr('profile.page.username.exists'),
+                          backgroundColor: Colors.red,
+                          appearOnTop: true,
+                        ).build(context),
+                      );
+                      return;
+                    }
+                    stateProvider
+                        .updateUserName(userNameController.text.trim());
+                    userNameFocusNode.unfocus();
+                    widget.onSubmit();
                     return;
-                  }
-                  stateProvider.updateUserName(userNameController.text.trim());
-                  userNameFocusNode.unfocus();
-                  widget.onSubmit();
-                },
-              );
+                  },
+                );
+              }
+              else{
+                userNameFocusNode.unfocus();
+                widget.onSubmit();
+              }
             },
             child: Text(context.tr('next')),
           ),
