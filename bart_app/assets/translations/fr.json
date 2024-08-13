@@ -75,6 +75,7 @@
     "market.search.placeholder": "Recherche",
     "profile.page.profile.info.header": "Informations sur le profil: ",
     "profile.page.profile.username": "Nom de l'utilisateur: ",
+    "profile.page.profile.name": "Nom: ",
     "profile.page.profile.email": "Email: ",
     "profile.page.account.type.header": "Type de compte: ",
     "profile.page.username.updated": "Nom d'utilisateur mis à\njour avec succès",

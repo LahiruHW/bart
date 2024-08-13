@@ -341,8 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         const SizedBox(height: 10.0),
                         Text(
-                          // context.tr('profile.page.profile.username'),
-                          'Name:',
+                          context.tr('profile.page.profile.name'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 15.spMin,
