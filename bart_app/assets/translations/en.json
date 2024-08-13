@@ -152,6 +152,7 @@
     "app.version.info": "Bart (Version {versionNum} Build {buildNum})",
     "tute.start.header": "Start Tour",
     "tute.start.subHeader": "Take a tour of the app",
+    "tute.homepage.0": "Click here to go to the Home page",
     "tute.homepage.incoming": "You will see all your incoming trades under this section",
     "tute.homepage.outgoing": "You will see all outgoing trades you have made under this section",
     "tute.homepage.tbc.1": "A trade that is To Be Completed is either:",

@@ -23,6 +23,8 @@ class BartTutorialCoach {
 
   static void _handleTouches(TargetFocus target) {
     switch (target.identify) {
+      case 'bottomNavBarHome':
+        target.keyTarget!.currentContext!.go('/home');
       case 'bottomNavBarChat':
         target.keyTarget!.currentContext!.go('/chat');
       case 'bottomNavBarMarket':
@@ -98,6 +100,32 @@ class BartTutorialCoach {
     ///////////////////////// HOME PAGE //////////////////////////
     tute1Targets.add(
       TargetFocus(
+        identify: "bottomNavBarHome",
+        keyTarget: BartTuteWidgetKeys.bottomNavBarHome,
+        radius: 10,
+        paddingFocus: 10,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                nextText: tr('next'),
+                text: tr('tute.homepage.0'),
+                showPreviousBtn: false,
+                onSkip: () => _skip(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
+    );
+    tute1Targets.add(
+      TargetFocus(
         identify: "homePageIncomingTrades",
         keyTarget: BartTuteWidgetKeys.homePageIncomingTrades,
         shape: ShapeLightFocus.RRect,
@@ -113,7 +141,7 @@ class BartTutorialCoach {
               return BartTargetContent(
                 skipText: tr('skip'),
                 nextText: tr('next'),
-                showPreviousBtn: false,
+                previousText: tr('back'),
                 text: tr('tute.homepage.incoming'),
                 extraContent: Builder(builder: (context) {
                   return Column(
@@ -125,6 +153,7 @@ class BartTutorialCoach {
                 }),
                 onSkip: () => _skip(controller),
                 onNext: () => _next(controller),
+                onPrevious: () => _previous(controller),
               );
             },
           )
@@ -613,6 +642,7 @@ class BartTutorialCoach {
 
   static void showTutorial(BuildContext thisContext) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      BartAnalyticsEngine.userBeginsTutorial();
       tuteCoach1.show(
         context: thisContext,
         rootOverlay: true,
