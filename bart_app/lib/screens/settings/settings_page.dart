@@ -265,6 +265,24 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     Material(
                       child: InkWell(
+                        child: ListTile(
+                          title: Text(
+                            context.tr('my.account.onboarding.reset.top'),
+                          ),
+                          subtitle: Text(
+                            context.tr('my.account.onboarding.reset.bottom'),
+                          ),
+                          onTap: () async {
+                            provider.userProfile.isFirstLogin = true;
+                            await provider.updateUserProfile(provider.userProfile);
+                          },
+                          enabled: true,
+                          enableFeedback: true,
+                        ),
+                      ),
+                    ),
+                    Material(
+                      child: InkWell(
                         onLongPress: () => _deleteDialog(context, provider),
                         child: ListTile(
                           title: Text(

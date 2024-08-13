@@ -143,6 +143,8 @@
     "my.account.delete.dialog.header": "Delete My Account",
     "my.account.delete.dialog.body1": "Are you sure you want to delete your account?",
     "my.account.delete.dialog.body2": "You will not be able to recover your data after this.",
+    "my.account.onboarding.reset.top": "Refresh My Account",
+    "my.account.onboarding.reset.bottom": "You will be welcomed the next time you log in",
     "privacy.policy.header": "Privacy Policy",
     "privacy.policy.fileName": "privacy_policy_en.md",
     "personalisation.header": "Personalisation",

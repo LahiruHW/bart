@@ -143,6 +143,8 @@
     "my.account.delete.dialog.header": "Supprimer Mon Compte",
     "my.account.delete.dialog.body1": "Êtes-vous sûr de vouloir supprimer votre compte?",
     "my.account.delete.dialog.body2": "Vous ne pourrez plus récupérer vos données après cela.",
+    "my.account.onboarding.reset.top": "Rafraîchir Mon Compte",
+    "my.account.onboarding.reset.bottom": "Vous serez accueilli lors de votre prochaine connexion.",
     "privacy.policy.header": "Politique de confidentialité",
     "privacy.policy.fileName": "privacy_policy_en.md",
     "personalisation.header": "Personnalisation",
