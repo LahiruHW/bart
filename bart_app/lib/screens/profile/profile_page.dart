@@ -287,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.tr('profile.page.profile.username'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.spMin,
+                                    fontSize: 15.spMin,
                                   ),
                         ),
                         Row(
@@ -345,7 +345,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           'Name:',
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.spMin,
+                                    fontSize: 15.spMin,
                                   ),
                         ),
                         Row(
@@ -401,7 +401,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.tr('profile.page.profile.email'),
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 18.spMin,
+                                    fontSize: 15.spMin,
                                   ),
                         ),
                         stateProvider.user == null
@@ -436,12 +436,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         const SizedBox(height: 10.0),
                         ListView.separated(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, val) => providerList[val],
                           separatorBuilder: (context, val) =>
                               const SizedBox(height: 10),
                           itemCount: providerList.length,
                         ),
-                        const SizedBox(height: 30.0),
+                        SizedBox(height: 20.h),
                         BartMaterialButton(
                           label: context.tr('profile.page.btn.logout'),
                           onPressed: () async {

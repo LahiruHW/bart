@@ -187,7 +187,8 @@ class BartAppTheme {
         ),
       ),
       hintStyle: BartTextTheme.globalTextTheme.bodySmall!.copyWith(
-        fontSize: 20,
+        fontSize: 18.spMin,
+        color: Colors.black.withOpacity(0.3),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -450,7 +451,8 @@ class BartAppTheme {
         ),
       ),
       hintStyle: BartTextTheme.globalTextTheme.bodySmall!.copyWith(
-        fontSize: 20,
+        fontSize: 18.spMin,
+        color: Colors.white.withOpacity(0.3),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(

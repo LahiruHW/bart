@@ -216,39 +216,37 @@ class BartTutorialCoach {
                 extraContent: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Text(
                       tr('tute.homepage.tbc.2'),
-                      style: TextStyle(fontSize: 16.spMin),
+                      style: TextStyle(fontSize: 15.spMin),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     HomeWidgetsExample.buildTBCTrade1(),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
-                      tr(
-                        'or',
-                      ),
+                      tr('or'),
                       style: TextStyle(
-                        fontSize: 16.spMin,
+                        fontSize: 15.spMin,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       tr('tute.homepage.tbc.3'),
-                      style: TextStyle(fontSize: 16.spMin),
+                      style: TextStyle(fontSize: 15.spMin),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     HomeWidgetsExample.buildTBCTrade2(),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       tr('tute.homepage.tbc.4'),
-                      style: TextStyle(fontSize: 16.spMin),
+                      style: TextStyle(fontSize: 15.spMin),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Text(
                       tr('tute.homepage.tbc.5'),
-                      style: TextStyle(fontSize: 16.spMin),
+                      style: TextStyle(fontSize: 15.spMin),
                     ),
                   ],
                 ),

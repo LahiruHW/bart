@@ -13,7 +13,7 @@ class MarketListTile extends StatelessWidget {
     required this.item,
     required this.onTap,
     this.onLongPress,
-    this.cardHeight = 125,
+    this.cardHeight = 115,
   });
 
   final VoidCallback onTap;
@@ -81,19 +81,19 @@ class MarketListTile extends StatelessWidget {
                         style:
                             Theme.of(context).textTheme.headlineLarge!.copyWith(
                                   color: cardStyle.titleColor,
-                                  fontSize: 25.spMin,
+                                  fontSize: 23.spMin,
                                   fontWeight: FontWeight.bold,
                                 ),
                       ),
                       Divider(
-                        height: 10.h,
+                        height: 5.h,
                         color: Colors.transparent,
                       ),
                       Text(
                         'by ${item.itemOwner.userName}',
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20.spMin,
+                              fontSize: 18.spMin,
                             ),
                       ),
                       Text(
@@ -101,7 +101,7 @@ class MarketListTile extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          fontSize: 16.spMin,
+                          fontSize: 14.spMin,
                         ),
                       ),
                     ],
