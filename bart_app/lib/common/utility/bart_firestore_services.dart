@@ -1087,6 +1087,61 @@ class BartFirestoreServices {
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // UTILITY FUNCTIONS
 
+  static void updateUserProfileSchema() async {
+    final userList = await userCollection.get().then((snapshot) {
+      return snapshot.docs
+          .where((doc) => doc.id != "PLACEHOLDER")
+          .map((doc) => doc.id)
+          .toList();
+    });
+    debugPrint("$userList");
+    for (final userID in userList) {
+      userProfileDocRef(userID).get().then((doc) async {
+        if (doc.id == 'PLACEHOLDER') {
+          return;
+        }
+
+        final userData = doc.data() as Map<String, dynamic>;
+        final updatedDoc = Map<String, dynamic>.from(userData);
+
+        if (!userData.containsKey('chats')) {
+          updatedDoc['chats'] = FieldValue.arrayUnion([]);
+          debugPrint("missing 'chats' added to user $userID");
+        }
+        if (!userData.containsKey('imageUrl')) {
+          updatedDoc['imageUrl'] = '';
+          debugPrint("missing 'imageUrl' added to user $userID");
+        }
+        if (!userData.containsKey('isFirstLogin')) {
+          updatedDoc['isFirstLogin'] = false;
+          debugPrint("missing 'isFirstLogin' added to user $userID");
+        }
+        if (!userData.containsKey('lastUpdated')) {
+          updatedDoc['lastUpdated'] = Timestamp.now();
+          debugPrint("missing 'lastUpdated' added to user $userID");
+        }
+        if (!userData.containsKey('localeString')) {
+          updatedDoc['localeString'] = 'en';
+          debugPrint("missing 'localeString' added to user $userID");
+        }
+        if (!userData.containsKey('settings')) {
+          updatedDoc['settings'] = UserSettings();
+          debugPrint("missing 'settings' added to user $userID");
+        }
+        if (!userData.containsKey('userName')) {
+          updatedDoc['userName'] = BartAuthService.getRandomName();
+          debugPrint("missing 'userName' added to user $userID");
+        }
+        if (!userData.containsKey('fullName')) {
+          updatedDoc['fullName'] = '';
+          debugPrint("missing 'fullName' added to user $userID");
+        }
+
+        await doc.reference.update(updatedDoc);
+      });
+    }
+  }
+
   /// update the document structure of the item collection
   static void updateItemSchema() async {
     final itemIDList = await itemCollection.get().then((snapshot) {
