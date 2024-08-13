@@ -71,7 +71,8 @@ class EnterFullNamePageViewState extends State<EnterFullNamePageView> {
         Center(
           child: OutlinedButton(
             onPressed: () {
-              if (fullNameController.text.isEmpty) {
+              final thisText = fullNameController.text.trim();
+              if (thisText.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   BartSnackBar(
                     icon: Icons.error,
@@ -82,9 +83,12 @@ class EnterFullNamePageViewState extends State<EnterFullNamePageView> {
                 );
                 return;
               }
-              stateProvider.updateFullName(fullNameController.text.trim());
-              fullNameFocusNode.unfocus();
-              widget.onSubmit();
+              stateProvider.updateFullName(thisText).then(
+                (_) {
+                  fullNameFocusNode.unfocus();
+                  widget.onSubmit();
+                },
+              );
             },
             child: Text(context.tr('next')),
           ),
