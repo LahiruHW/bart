@@ -142,7 +142,7 @@ class TradeWidget extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Text(
                 trade.isRead ? context.tr('read') : context.tr("unread"),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
