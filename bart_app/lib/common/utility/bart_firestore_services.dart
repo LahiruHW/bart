@@ -87,8 +87,6 @@ class BartFirestoreServices {
         return userProfile;
       });
 
-      userProfile.isFirstLogin = false;
-
       returnMap['userProfile'] = userProfile;
 
       return returnMap;
@@ -296,6 +294,7 @@ class BartFirestoreServices {
     await itemCollection.doc(item.itemID).update(item.toJson());
   }
 
+  /// see if a username already exists in the user collection
   static Future<bool> doesUserNameExist(String newUserName) async {
     return await userCollection
         .where('userName', isEqualTo: newUserName)

@@ -71,7 +71,9 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                         const Duration(milliseconds: 1500),
                         () {
                           loadingOverlay.hide();
-                          GoRouter.of(context).go("/home");
+                          stateProvider.userProfile.isFirstLogin
+                              ? context.go("/onboard")
+                              : context.go("/home");
                         },
                       );
                     },

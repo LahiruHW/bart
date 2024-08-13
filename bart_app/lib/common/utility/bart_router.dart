@@ -28,14 +28,28 @@ class BartRouter {
             const MaterialPage(child: LoginTypeSelectPage()),
         redirect: (context, state) {
           debugPrint("**************** CHECKING REDIRECTION ****************");
-          final provider =
-              Provider.of<BartStateProvider>(context, listen: false);
-          if (provider.userProfile.userID.isNotEmpty) {
+          final provider = Provider.of<BartStateProvider>(
+            context,
+            listen: false,
+          );
+          final userProf = provider.userProfile;
+          if (userProf.userID.isNotEmpty) {
             BartAnalyticsEngine.setCurrentUID(provider.userProfile.userID);
+            if (userProf.isFirstLogin) {
+              return '/onboard';
+            }
             return '/home';
           }
           return null;
         },
+      ),
+
+      GoRoute(
+        name: "onboard",
+        path: '/onboard',
+        pageBuilder: (context, state) => const MaterialPage(
+          child: OnboardingPage(),
+        ),
       ),
 
       GoRoute(

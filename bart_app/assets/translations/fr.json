@@ -171,5 +171,19 @@
     "tute.profilePage.2": "Vous pouvez consulter les détails de votre profil et modifier votre nom d'utilisateur ici",
     "tute.settingsPage.1": "Cliquez ici pour ouvrir le menu latéral",
     "tute.settingsPage.2": "Cliquez ici pour ouvrir la page des paramètres",
-    "tute.settingsPage.3": "À partir de cette page, vous pouvez modifier votre thème de couleur, votre langue et gérer votre compte d'utilisateur."
+    "tute.settingsPage.3": "À partir de cette page, vous pouvez modifier votre thème de couleur, votre langue et gérer votre compte d'utilisateur.",
+    "onboarding.header": "Bonjour!",
+    "onboarding.subheader": "Bienvenue à Bart Community Trading🎉",
+    "onboarding.page.1.1": "Quel est votre nom?",
+    "onboarding.page.1.2": "Entrez votre nom",
+    "onboarding.page.1.snackbar": "Veuillez saisir votre nom",
+    "onboarding.page.2.1": "Créez votre propre nom d'utilisateur:",
+    "onboarding.page.2.2": "Saisir un nom d'utilisateur",
+    "onboarding.page.2.snackbar": "Veuillez saisir un nom d'utilisateur",
+    "onboarding.page.3.1": "Enchanté de vous rencontrer, ",
+    "onboarding.page.3.2": "Nous vous appellerons par votre nom d'utilisateur, ",
+    "onboarding.page.3.3": " pour notre confort, ",
+    "onboarding.page.3.4": "mais vous pouvez changer votre nom et votre nom d'utilisateur plus tard.",
+    "onboarding.page.3.5": "Il est temps de faire connaissance avec Bart et de commencer à échanger des objets!",
+    "onboarding.page.finish.btn": "Superbe, allons-y!"
 }

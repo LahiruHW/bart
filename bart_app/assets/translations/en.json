@@ -171,5 +171,19 @@
     "tute.profilePage.2": "You can view your profile details and edit your username here",
     "tute.settingsPage.1": "Click here to open the side menu",
     "tute.settingsPage.2": "Click here to open the settings page",
-    "tute.settingsPage.3": "From this page, you can change your colour theme, language and handle your user account"
+    "tute.settingsPage.3": "From this page, you can change your colour theme, language and handle your user account",
+    "onboarding.header": "Hi there!",
+    "onboarding.subheader": "Welcome to Bart Community Trading🎉",
+    "onboarding.page.1.1": "What is your name?",
+    "onboarding.page.1.2": "Enter your name",
+    "onboarding.page.1.snackbar": "Please enter your name",
+    "onboarding.page.2.1": "Create your own username:",
+    "onboarding.page.2.2": "Enter a username",
+    "onboarding.page.2.snackbar": "Please enter a username",
+    "onboarding.page.3.1": "Nice to meet you, ",
+    "onboarding.page.3.2": "We'll call you by your username, ",
+    "onboarding.page.3.3": " for short, ",
+    "onboarding.page.3.4": "but you can change your name and username later.",
+    "onboarding.page.3.5": "Let's get you aquainted with Bart and start trading!",
+    "onboarding.page.finish.btn": "Great, let's go!"
 }

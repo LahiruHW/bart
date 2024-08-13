@@ -2,6 +2,7 @@ export 'chat/chat_list_page.dart';
 export 'chat/chat_page.dart';
 export 'home/home_page.dart';
 export 'login/login_select.dart';
+export 'login/onboarding_page.dart';
 export 'marketplace/market_base.dart';
 export 'marketplace/market_listed_items_page.dart';
 export 'marketplace/item_page.dart';

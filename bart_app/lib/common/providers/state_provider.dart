@@ -158,7 +158,6 @@ class BartStateProvider extends ChangeNotifier {
   /// update the user's local profile userName and update the user Profile
   void updateUserName(String newUserName) {
     userProfile.userName = newUserName;
-    userProfile.isFirstLogin = false;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {
@@ -170,6 +169,16 @@ class BartStateProvider extends ChangeNotifier {
   /// update the user's local profile userName and update the user Profile
   void updateFullName(String newFullName) {
     userProfile.fullName = newFullName;
+    BartSharedPrefOps.saveUserProfile(userProfile);
+    // handling setting changes when user is logged out
+    if (userProfile.userID.isNotEmpty) {
+      BartFirestoreServices.updateUserProfile(userProfile);
+    }
+    notifyListeners();
+  }
+
+  void updateUserProfile(UserLocalProfile newProfile) {
+    userProfile = newProfile;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {
