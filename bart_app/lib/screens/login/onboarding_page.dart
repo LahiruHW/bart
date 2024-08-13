@@ -128,7 +128,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   flex: 1,
                   child: PageView.builder(
                     controller: pageController,
-                    // physics: const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: pages.length,
                     itemBuilder: (context, index) {
                       return Padding(
