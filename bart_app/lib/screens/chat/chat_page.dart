@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
@@ -91,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
                 date,
                 style: TextStyle(
                   color: Theme.of(context).dividerColor,
-                  fontSize: 14,
+                  fontSize: 12.spMin,
                 ),
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatInputGroup extends StatefulWidget {
   const ChatInputGroup({
@@ -21,7 +22,7 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
   Widget build(BuildContext context) {
     // the typing area
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: SizedBox.fromSize(
         size: const Size(double.infinity, 75),
         child: Row(
@@ -32,18 +33,18 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 focusNode: widget.focusNode,
                 controller: widget.controller,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontSize: 16,
+                      fontSize: 14.spMin,
                       fontWeight: FontWeight.normal,
                     ),
                 decoration: InputDecoration(
                   hintText: "Type a message...",
                   hintStyle: TextStyle(
                     color: Colors.grey[400],
-                    fontSize: 16,
+                    fontSize: 14.spMin,
                     fontWeight: FontWeight.normal,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     borderSide: const BorderSide(width: 0.2),
                   ),
                 ),
@@ -56,10 +57,9 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 icon: const Icon(Icons.send),
                 padding: const EdgeInsets.all(20),
                 style: ButtonStyle(
-                  // fixedSize: WidgetStateProperty.all(const Size.fromHeight(50)),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
                   ),
                 ),

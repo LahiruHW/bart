@@ -203,16 +203,21 @@ class _ProfilePageState extends State<ProfilePage> {
         : stateProvider.user!.providerData
             .map(
               (userInfo) => Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   userInfo.providerId == 'google.com'
-                      ? Image.asset("assets/icons/logo_google_96x96.png",
-                          height: 25, width: 25)
+                      ? Image.asset(
+                          "assets/icons/logo_google_96x96.png",
+                          height: 25.h,
+                          width: 25.w,
+                        )
                       : Container(),
-                  const SizedBox(width: 10.0),
+                  SizedBox(width: 10.w),
                   Text(
                     userInfo.providerId,
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontSize: 18.spMin,
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 16.spMin,
                         ),
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:bart_app/common/entity/message.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/bart_chat_bubble_style.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -120,13 +121,14 @@ class BubbleChildFactory extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 5,
-            horizontal: 8,
+          padding: EdgeInsets.symmetric(
+            vertical: 5.h,
+            horizontal: 8.w,
           ),
           child: Text(
             errorText,
-            style: const TextStyle(
+            style: TextStyle(
+              fontSize: 15.spMin,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -157,9 +159,9 @@ class BubbleChildFactory extends StatelessWidget {
               namedArgs: {'senderName': sender.userName},
             );
       return Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 5,
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.w,
+          vertical: 5.h,
         ),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -175,7 +177,7 @@ class BubbleChildFactory extends StatelessWidget {
                 senderText,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      fontSize: 12,
+                      fontSize: 12.spMin,
                       fontWeight: FontWeight.bold,
                       color: isSender
                           ? bubbleTheme.senderContextTextColor
@@ -236,9 +238,9 @@ class BubbleChildFactory extends StatelessWidget {
               namedArgs: {'senderName': message.senderName},
             );
       return Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 5,
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.w,
+          vertical: 5.h,
         ),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -271,7 +273,7 @@ class BubbleChildFactory extends StatelessWidget {
                   child: Text(
                     senderText,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          fontSize: 12,
+                          fontSize: 10.spMin,
                           fontWeight: FontWeight.bold,
                           color: isSender
                               ? bubbleTheme.senderContextTextColor
@@ -297,7 +299,7 @@ class BubbleChildFactory extends StatelessWidget {
           isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         _resolveChildBody(context),
-        const SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Text(
           message.text,
           style: bubbleTheme.textStyle.copyWith(
@@ -310,7 +312,7 @@ class BubbleChildFactory extends StatelessWidget {
           formatTime(),
           textAlign: TextAlign.end,
           style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                fontSize: 10,
+                fontSize: 9.spMin,
                 color: isSender
                     ? bubbleTheme.senderTextColor
                     : bubbleTheme.receiverTextColor,
