@@ -86,15 +86,16 @@ class _ProfilePageState extends State<ProfilePage> {
         _userNameController.text = stateProvider.userProfile.userName;
         return;
       } else {
-        stateProvider.updateUserName(userName);
-        ScaffoldMessenger.of(context).showSnackBar(
-          BartSnackBar(
-            appearOnTop: true,
-            message: context.tr('profile.page.username.updated'),
-            backgroundColor: Colors.green,
-            icon: Icons.check,
-          ).build(context),
-        );
+        stateProvider.updateUserName(userName).then(
+              (_) => ScaffoldMessenger.of(context).showSnackBar(
+                BartSnackBar(
+                  appearOnTop: true,
+                  message: context.tr('profile.page.username.updated'),
+                  backgroundColor: Colors.green,
+                  icon: Icons.check,
+                ).build(context),
+              ),
+            );
       }
     });
   }
@@ -134,16 +135,17 @@ class _ProfilePageState extends State<ProfilePage> {
           _nameController.text = stateProvider.userProfile.fullName;
           return;
         } else {
-          stateProvider.updateFullName(fullName);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const BartSnackBar(
-              appearOnTop: true,
-              // message: context.tr('profile.page.username.updated'),
-              message: 'Name updated',
-              backgroundColor: Colors.green,
-              icon: Icons.check,
-            ).build(context),
-          );
+          stateProvider.updateFullName(fullName).then(
+                (_) => ScaffoldMessenger.of(context).showSnackBar(
+                  const BartSnackBar(
+                    appearOnTop: true,
+                    // message: context.tr('profile.page.username.updated'),
+                    message: 'Name updated',
+                    backgroundColor: Colors.green,
+                    icon: Icons.check,
+                  ).build(context),
+                ),
+              );
         }
       },
     );
