@@ -294,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                           ),
                         ),
-                        const SizedBox(height: 5.0),
+                        SizedBox(height: 5.h),
                         Text(
                           context.tr('profile.page.profile.username'),
                           style:
@@ -313,6 +313,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 enabled: _isEditingUserName,
                                 focusNode: _userNameFocusNode,
                                 controller: _userNameController,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      fontSize: 18.spMin,
+                                    ),
                                 decoration: InputDecoration(
                                   disabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -351,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10.0),
+                        SizedBox(height: 8.h),
                         Text(
                           context.tr('profile.page.profile.name'),
                           style:
@@ -370,6 +376,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 enabled: _isEditingName,
                                 focusNode: _nameFocusNode,
                                 controller: _nameController,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      fontSize: 18.spMin,
+                                    ),
                                 decoration: InputDecoration(
                                   disabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
@@ -408,6 +420,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
+                        SizedBox(height: 8.h),
                         Text(
                           context.tr('profile.page.profile.email'),
                           style:
@@ -415,16 +428,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fontSize: 15.spMin,
                                   ),
                         ),
+                        SizedBox(height: 2.h),
                         stateProvider.user == null
                             ? BartTextShimmer(
                                 textHeight: 10,
                                 textLength: 100.sp,
                               )
-                            : Text(
-                                stateProvider.user!.email == null
-                                    ? '(Email not given by provider)'
-                                    : stateProvider.user!.email!,
-                                style: Theme.of(context).textTheme.labelLarge,
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 8,
+                                  left: 10,
+                                ),
+                                child: Text(
+                                  stateProvider.user!.email == null
+                                      ? '(Email not given by provider)'
+                                      : stateProvider.user!.email!,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ),
                         const SizedBox(height: 5.0),
                         Divider(
@@ -453,7 +473,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(height: 10),
                           itemCount: providerList.length,
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(height: 18.h),
                         BartMaterialButton(
                           label: context.tr('profile.page.btn.logout'),
                           onPressed: () async {
