@@ -19,11 +19,11 @@ class BartRouter {
 
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavKey,
-    initialLocation: '/login-base',
+    initialLocation: '/login',
     routes: [
       GoRoute(
-        name: "login-base",
-        path: '/login-base',
+        name: "login",
+        path: '/login',
         pageBuilder: (context, state) =>
             const MaterialPage(child: LoginTypeSelectPage()),
         redirect: (context, state) {

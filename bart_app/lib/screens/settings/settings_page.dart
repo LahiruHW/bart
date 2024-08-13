@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     (value) {
                       loadingOverlay.hide();
                       if (value) {
-                        parentContext.go('/login-base');
+                        parentContext.go('/login');
                       } else {
                         throw Exception('Account deletion failed');
                       }

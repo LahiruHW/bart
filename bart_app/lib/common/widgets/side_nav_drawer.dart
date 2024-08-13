@@ -98,7 +98,7 @@ class BartSideNavMenu extends StatelessWidget {
                       const Duration(milliseconds: 2000),
                       () {
                         loadingOverlay.hide();
-                        GoRouter.of(context).go('/login-base');
+                        GoRouter.of(context).go('/login');
                       },
                     );
                   } else {
