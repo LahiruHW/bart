@@ -72,17 +72,18 @@ class WelcomeUserPageView extends StatelessWidget {
           const SizedBox(height: 50),
           Center(
             child: OutlinedButton(
-              onPressed: () {
+              onPressed: () async {
                 provider.userProfile.isFirstLogin = false;
-                provider.updateUserProfile(provider.userProfile);
-                onSubmit();
+                provider.updateUserProfile(provider.userProfile).then(
+                      (_) => onSubmit(),
+                    );
               },
               child: Text(
                 context.tr('onboarding.page.finish.btn'),
               ),
             ).animate().shake(
-                  delay: 1000.ms,
-                  duration: 2000.ms,
+                  delay: 4500.ms,
+                  duration: 1800.ms,
                   hz: 2.5,
                   curve: Curves.easeInOut,
                 ),

@@ -156,33 +156,33 @@ class BartStateProvider extends ChangeNotifier {
   }
 
   /// update the user's local profile userName and update the user Profile
-  void updateUserName(String newUserName) {
+  Future<void> updateUserName(String newUserName) async {
     userProfile.userName = newUserName;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {
-      BartFirestoreServices.updateUserProfile(userProfile);
+      await BartFirestoreServices.updateUserProfile(userProfile);
     }
     notifyListeners();
   }
 
   /// update the user's local profile userName and update the user Profile
-  void updateFullName(String newFullName) {
+  Future<void> updateFullName(String newFullName) async {
     userProfile.fullName = newFullName;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {
-      BartFirestoreServices.updateUserProfile(userProfile);
+      await BartFirestoreServices.updateUserProfile(userProfile);
     }
     notifyListeners();
   }
 
-  void updateUserProfile(UserLocalProfile newProfile) {
+  Future<void> updateUserProfile(UserLocalProfile newProfile) async {
     userProfile = newProfile;
     BartSharedPrefOps.saveUserProfile(userProfile);
     // handling setting changes when user is logged out
     if (userProfile.userID.isNotEmpty) {
-      BartFirestoreServices.updateUserProfile(userProfile);
+      await BartFirestoreServices.updateUserProfile(userProfile);
     }
     notifyListeners();
   }

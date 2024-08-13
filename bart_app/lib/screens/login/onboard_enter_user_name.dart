@@ -111,15 +111,16 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
                       );
                       return;
                     }
-                    stateProvider
-                        .updateUserName(userNameController.text.trim());
-                    userNameFocusNode.unfocus();
-                    widget.onSubmit();
-                    return;
+                    stateProvider.updateUserName(thisText).then(
+                      (_) {
+                        userNameFocusNode.unfocus();
+                        widget.onSubmit();
+                        return;
+                      },
+                    );
                   },
                 );
-              }
-              else{
+              } else {
                 userNameFocusNode.unfocus();
                 widget.onSubmit();
               }
