@@ -55,13 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void editUserName(BartStateProvider stateProvider, String userName) {
+    closeKeyboard1();
     // check if the username is updated at all
     if (userName == stateProvider.userProfile.userName) {
-      _userNameFocusNode.unfocus();
-      Future.delayed(
-        100.ms,
-        () => setState(() => _isEditingUserName = false),
-      );
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
           appearOnTop: true,
@@ -101,13 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void editFullName(BartStateProvider stateProvider, String fullName) {
+    closeKeyboard2();
     // check if the username is updated at all
     if (fullName == stateProvider.userProfile.fullName) {
-      _nameFocusNode.unfocus();
-      Future.delayed(
-        100.ms,
-        () => setState(() => _isEditingName = false),
-      );
       ScaffoldMessenger.of(context).showSnackBar(
         const BartSnackBar(
           appearOnTop: true,
@@ -158,25 +150,37 @@ class _ProfilePageState extends State<ProfilePage> {
     return;
   }
 
+  // open the keyboard for the username text field
   void openKeyboard1() {
-    setState(() {
-      _isEditingUserName = true;
-    });
-    // open the keyboard
+    setState(() => _isEditingUserName = true);
     Future.delayed(
       400.ms,
       () => FocusScope.of(context).requestFocus(_userNameFocusNode),
     );
   }
 
+  // open the keyboard for the name text field
   void openKeyboard2() {
-    setState(() {
-      _isEditingName = true;
-    });
-    // open the keyboard
+    setState(() => _isEditingName = true);
     Future.delayed(
       400.ms,
       () => FocusScope.of(context).requestFocus(_nameFocusNode),
+    );
+  }
+
+  void closeKeyboard1() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Future.delayed(
+      100.ms,
+      () => setState(() => _isEditingUserName = false),
+    );
+  }
+
+  void closeKeyboard2() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Future.delayed(
+      100.ms,
+      () => setState(() => _isEditingName = false),
     );
   }
 
@@ -219,9 +223,15 @@ class _ProfilePageState extends State<ProfilePage> {
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
-        Future.delayed(100.ms, () {
-          setState(() => _isEditingUserName = false);
-        });
+        Future.delayed(
+          100.ms,
+          () {
+            setState(() {
+              _isEditingUserName = false;
+              _isEditingName = false;
+            });
+          },
+        );
       },
       child: ListView(
         children: [
