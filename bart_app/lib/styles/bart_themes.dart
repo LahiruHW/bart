@@ -204,6 +204,33 @@ class BartAppTheme {
       backgroundColor: Colors.white,
     ),
     dividerColor: Colors.black38,
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        alignment: Alignment.center,
+        fixedSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        minimumSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        maximumSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        foregroundColor: const WidgetStatePropertyAll(Colors.black),
+        overlayColor: const WidgetStatePropertyAll(Colors.green),
+        backgroundColor: const WidgetStatePropertyAll(Colors.white),
+        textStyle: WidgetStatePropertyAll(
+          BartTextTheme.globalTextTheme.labelSmall!.copyWith(
+            fontSize: 16,
+          ),
+        ),
+        shape: const WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        ),
+        side: const WidgetStatePropertyAll(
+          BorderSide(
+            width: 0.5,
+            color: Colors.transparent,
+          ),
+        ),
+      ),
+    ),
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -468,6 +495,33 @@ class BartAppTheme {
       backgroundColor: black1,
     ),
     dividerColor: Colors.white38,
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        alignment: Alignment.center,
+        fixedSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        minimumSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        maximumSize: WidgetStatePropertyAll(Size(250.w, 45)),
+        foregroundColor: const WidgetStatePropertyAll(Colors.black),
+        overlayColor: const WidgetStatePropertyAll(Colors.green),
+        backgroundColor: const WidgetStatePropertyAll(Colors.white),
+        textStyle: WidgetStatePropertyAll(
+          BartTextTheme.globalTextTheme.labelSmall!.copyWith(
+            fontSize: 16,
+          ),
+        ),
+        shape: const WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        ),
+        side: const WidgetStatePropertyAll(
+          BorderSide(
+            width: 0.5,
+            color: Colors.transparent,
+          ),
+        ),
+      ),
+    ),
     extensions: {
       BartBrandColours(
         logoColor: red1,
