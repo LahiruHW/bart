@@ -63,6 +63,8 @@ class _MarketBaseState extends State<MarketBase> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _searchFocusNode.unfocus(),
+      onVerticalDragDown: (_) => _searchFocusNode.unfocus(),
+      onHorizontalDragDown: (_) => _searchFocusNode.unfocus(),
       child: Scaffold(
         key: _scaffoldKey,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
