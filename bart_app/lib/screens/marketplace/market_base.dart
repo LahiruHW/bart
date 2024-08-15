@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,9 @@ class _MarketBaseState extends State<MarketBase> {
   late final TextEditingController _searchController;
   late final FocusNode _searchFocusNode;
   bool _showClearButton = false;
+  Timer? _debounce;
+  late final TempStateProvider tempProvider;
+  final Duration _debounceDuration = const Duration(milliseconds: 400);
 
   @override
   void initState() {
@@ -32,11 +36,12 @@ class _MarketBaseState extends State<MarketBase> {
     _searchController = TextEditingController(text: "");
     _searchController.addListener(updateText);
     _searchFocusNode = FocusNode();
+    tempProvider = Provider.of<TempStateProvider>(context, listen: false);
   }
 
   void updateText() {
-    final tempProvider = Provider.of<TempStateProvider>(context, listen: false);
-    setState(() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(_debounceDuration, () {
       tempProvider.setSearchText(_searchController.text);
       _showClearButton = tempProvider.searchText.isNotEmpty;
     });
