@@ -80,7 +80,10 @@ class BartAppTheme {
       selectedItemColor: red1,
       unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.shifting, // looks cool
-      // enableFeedback: true,
+      selectedLabelStyle: BartTextTheme.globalTextTheme.labelSmall!.copyWith(
+        color: red1,
+        fontSize: 12.spMin,
+      ),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       backgroundColor: Colors.white,
@@ -372,7 +375,10 @@ class BartAppTheme {
       selectedItemColor: red1,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.shifting, // looks cool
-      // enableFeedback: true,
+      selectedLabelStyle: BartTextTheme.globalTextTheme.labelSmall!.copyWith(
+        color: red1,
+        fontSize: 12.spMin,
+      ),
     ),
     expansionTileTheme: ExpansionTileThemeData(
       backgroundColor: black2,
