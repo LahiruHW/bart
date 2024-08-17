@@ -85,7 +85,7 @@ class _ChatListTileState extends State<ChatListTile> {
               radius: 30.r,
               child: const Icon(Icons.person),
             ),
-      trailing: unreadCount == 0
+      trailing: unreadCount <= 0
           ? Text(
               timeText,
               style: TextStyle(fontSize: 12.spMin),

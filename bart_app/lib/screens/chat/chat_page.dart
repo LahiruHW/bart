@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
@@ -38,13 +39,18 @@ class _ChatPageState extends State<ChatPage> {
   late final FocusNode _focusNode;
   final GlobalKey<ScaffoldState> globalKey = GlobalKey();
 
+  Timer? _debounce;
+  final Duration _debounceDuration = const Duration(milliseconds: 400);
+
   @override
   void initState() {
     super.initState();
     _textEditController = TextEditingController();
     _scrollController = ScrollController();
     _focusNode = FocusNode();
-
+    if (_debounce?.isActive ?? false) {
+      _debounce?.cancel();
+    }
     _focusNode.addListener(() {
       if (_focusNode.hasFocus || _focusNode.hasPrimaryFocus) {
         Future.delayed(
@@ -107,6 +113,7 @@ class _ChatPageState extends State<ChatPage> {
     _textEditController.dispose();
     _scrollController.dispose();
     _focusNode.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -209,13 +216,44 @@ class _ChatPageState extends State<ChatPage> {
                                 return VisibilityDetector(
                                   key: Key(message.messageID),
                                   onVisibilityChanged: (info) async {
-                                    if (info.visibleFraction == 1.0) {
-                                      BartFirestoreServices.updateReadMessage(
-                                        widget.chatData,
-                                        message,
-                                        provider.userProfile.userID,
+                                    // // while the timer is active:
+                                    // //    add all the unread messages to the batch
+                                    // //    that need to update the read status
+                                    // // when the timer is finished:
+                                    // //    update the read status of all the messages in the batch
+                                    // //    clear the batch
+
+                                    if (info.visibleFraction >= 0.6) {
+                                      if (_debounce?.isActive ?? false) {
+                                        if (!message.isRead!) {
+                                          BartFirestoreServices.updateMsgBatch(
+                                            widget.chatData,
+                                            message,
+                                            provider.userProfile.userID,
+                                          );
+                                        }
+                                        _debounce!.cancel();
+                                      }
+                                      _debounce = Timer(
+                                        _debounceDuration,
+                                        () {
+                                          BartFirestoreServices
+                                              .updateReadMessages(
+                                            widget.chatData,
+                                            provider.userProfile.userID,
+                                          );
+                                        },
                                       );
                                     }
+
+                                    // if (info.visibleFraction >= 0.6) {
+                                    //   BartFirestoreServices.updateReadMessage(
+                                    //     widget.chatData,
+                                    //     message,
+                                    //     provider.userProfile.userID,
+                                    //   );
+                                    // }
+
                                     // var visiblePT = info.visibleFraction * 100;
                                     // debugPrint('Widget ${info.key} is $visiblePT% visible');
                                   },
