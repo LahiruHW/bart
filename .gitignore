@@ -27,3 +27,4 @@ bart_env.g.dart
 
 .flutter-plugins
 .flutter-plugins-dependencies
+/bart_app/assets/secrets/

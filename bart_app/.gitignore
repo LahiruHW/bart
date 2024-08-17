@@ -52,3 +52,4 @@ storage.rules
 .firebaserc
 *.env
 bart_env.g.dart
+/assets/secrets/
