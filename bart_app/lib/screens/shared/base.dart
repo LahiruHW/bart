@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/widgets/bart_appbar.dart';
 import 'package:bart_app/common/widgets/bottom_nav_bar.dart';
@@ -26,7 +26,8 @@ class _BaseState extends State<Base> {
     return Scaffold(
       key: Base.globalKey,
       drawerEnableOpenDragGesture: true,
-      drawerEdgeDragWidth: MediaQuery.of(context).size.width / 8,
+      drawerEdgeDragWidth: MediaQuery.of(context).size.width * 0.75,
+      drawerDragStartBehavior: DragStartBehavior.start,
       extendBody: false,
       appBar: BartAppBar(
         showTitle: true,
