@@ -294,6 +294,17 @@ class BubbleChildFactory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final timeWidget = Text(
+      formatTime(),
+      textAlign: TextAlign.end,
+      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+            fontSize: 9.spMin,
+            color: isSender
+                ? bubbleTheme.senderTextColor
+                : bubbleTheme.receiverTextColor,
+          ),
+    );
+
     return Column(
       crossAxisAlignment:
           isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -308,16 +319,26 @@ class BubbleChildFactory extends StatelessWidget {
                 : bubbleTheme.receiverTextColor,
           ),
         ),
-        Text(
-          formatTime(),
-          textAlign: TextAlign.end,
-          style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                fontSize: 9.spMin,
-                color: isSender
-                    ? bubbleTheme.senderTextColor
-                    : bubbleTheme.receiverTextColor,
-              ),
-        ),
+        isSender
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  timeWidget,
+                  SizedBox(width: 5.w),
+                  message.isRead!
+                      ? Icon(
+                          Icons.done_all,
+                          size: 14.spMin,
+                          color: bubbleTheme.readTickColour,
+                        )
+                      : Icon(
+                          Icons.done,
+                          size: 14.spMin,
+                          color: bubbleTheme.unreadTickColour,
+                        ),
+                ],
+              )
+            : timeWidget,
       ],
     );
   }

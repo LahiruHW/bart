@@ -245,12 +245,14 @@ class BartAppTheme {
         receiverBackgroundColor: red1,
         textStyle: BartTextTheme.globalTextTheme.labelSmall!.copyWith(
           fontWeight: FontWeight.w600,
-          fontSize: 15,
+          fontSize: 12.spMin,
         ),
         senderContextBackgroundColor: Colors.white,
         receiverContextBackgroundColor: red6,
         senderContextTextColor: red1,
         receiverContextTextColor: red1,
+        unreadTickColour: Colors.grey,
+        readTickColour: Colors.blue,
       ),
       BartTradeWidgetStyle(
         incomingTextColour: Colors.white,
@@ -536,12 +538,14 @@ class BartAppTheme {
         receiverBackgroundColor: Colors.black,
         textStyle: BartTextTheme.globalTextTheme.labelSmall!.copyWith(
           fontWeight: FontWeight.w600,
-          fontSize: 15,
+          fontSize: 12.spMin,
         ),
         senderContextBackgroundColor: Colors.white,
         receiverContextBackgroundColor: red2,
         senderContextTextColor: Colors.black,
         receiverContextTextColor: Colors.black,
+        unreadTickColour: Colors.blue.shade200,
+        readTickColour: Colors.blue.shade300,
       ),
       BartTradeWidgetStyle(
         incomingTextColour: red8,

@@ -11,6 +11,8 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
     required this.receiverContextBackgroundColor,
     required this.senderContextTextColor,
     required this.receiverContextTextColor,
+    required this.unreadTickColour,
+    required this.readTickColour,
   });
 
   final Color senderBackgroundColor;
@@ -23,6 +25,8 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
   final Color receiverContextBackgroundColor;
   final Color senderContextTextColor;
   final Color receiverContextTextColor;
+  final Color unreadTickColour;
+  final Color readTickColour;
 
   @override
   ThemeExtension<BartChatBubbleStyle> copyWith({
@@ -35,6 +39,8 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
     Color? receiverContextBackgroundColor,
     Color? senderContextTextColor,
     Color? receiverContextTextColor,
+    Color? unreadTickColour,
+    Color? readTickColour,
   }) =>
       BartChatBubbleStyle(
         senderBackgroundColor:
@@ -52,6 +58,8 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
             senderContextTextColor ?? this.senderContextTextColor,
         receiverContextTextColor:
             receiverContextTextColor ?? this.receiverContextTextColor,
+        unreadTickColour: unreadTickColour ?? this.unreadTickColour,
+        readTickColour: readTickColour ?? this.readTickColour,
       );
 
   @override
@@ -80,6 +88,8 @@ class BartChatBubbleStyle extends ThemeExtension<BartChatBubbleStyle> {
             senderContextTextColor, other.senderContextTextColor, t)!,
         receiverContextTextColor: Color.lerp(
             receiverContextTextColor, other.receiverContextTextColor, t)!,
+        unreadTickColour: Color.lerp(unreadTickColour, other.unreadTickColour, t)!,
+        readTickColour: Color.lerp(readTickColour, other.readTickColour, t)!,
       );
     }
     return this;
