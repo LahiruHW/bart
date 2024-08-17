@@ -22,7 +22,6 @@ class MarketListTile extends StatelessWidget {
   final Item item;
 
   String getTimeDifferenceString(Timestamp timestamp) {
-    // String retStr = 'published ';
     String retStr = 'published ';
     final DateFormat timeFormatter = DateFormat('hh:mma');
     final DateFormat dateFormatter = DateFormat('dd/MM/yyyy');

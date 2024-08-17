@@ -47,7 +47,7 @@ class BartSideNavMenu extends StatelessWidget {
                 ),
               ),
               ListTile(
-                contentPadding: const EdgeInsets.only(left: 20),
+                contentPadding: const EdgeInsets.only(left: 20, right: 10),
                 leading: const Icon(Icons.tour_outlined),
                 title: Text(context.tr('tute.start.header')),
                 subtitle: Text(context.tr('tute.start.subHeader')),
