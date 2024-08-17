@@ -184,8 +184,10 @@ class _SettingsPageState extends State<SettingsPage> {
               width: 350.w,
               child: PageView(
                 children: [
+                  Image.asset('assets/secrets/img0.jpg'),
                   Image.asset('assets/secrets/img1.jpg'),
                   Image.asset('assets/secrets/img2.jpg'),
+                  Image.asset('assets/secrets/img3.jpg'),
                 ],
               ),
             ),
