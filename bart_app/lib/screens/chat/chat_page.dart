@@ -246,14 +246,6 @@ class _ChatPageState extends State<ChatPage> {
                                       );
                                     }
 
-                                    // if (info.visibleFraction >= 0.6) {
-                                    //   BartFirestoreServices.updateReadMessage(
-                                    //     widget.chatData,
-                                    //     message,
-                                    //     provider.userProfile.userID,
-                                    //   );
-                                    // }
-
                                     // var visiblePT = info.visibleFraction * 100;
                                     // debugPrint('Widget ${info.key} is $visiblePT% visible');
                                   },

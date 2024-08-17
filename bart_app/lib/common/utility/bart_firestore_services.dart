@@ -258,27 +258,6 @@ class BartFirestoreServices {
     });
   }
 
-  // static Future<void> updateReadMessage(
-  //   Chat chat,
-  //   Message msg,
-  //   String currentUserID,
-  // ) async {
-  //   final msgID = msg.messageID;
-  //   final senderID = msg.senderID;
-
-  //   // only update a message as read if the message is unread and the sender is not the current user
-  //   if (senderID != currentUserID && msg.isRead == false) {
-  //     msg.isRead = true;
-  //     // reduce the unread message count for the sender
-  //     final userVal = chat.unreadMsgCountMap[senderID] ?? 0;
-
-  //     chat.unreadMsgCountMap[senderID] = (userVal > 0) ? userVal - 1 : 0;
-  //     // chat.lastUpdated = Timestamp.fromDate(DateTime.now());
-  //     await chatDocRef(chat.chatID).update(chat.toMap());
-  //     await chatRoomCollection(chat.chatID).doc(msgID).update(msg.toMap());
-  //   }
-  // }
-
   static Future<void> updateMsgBatch(
     Chat chat,
     Message msg,
