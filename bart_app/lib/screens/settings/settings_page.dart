@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
@@ -10,6 +12,7 @@ import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
+import 'package:toast/toast.dart';
 
 const statusBarHeight = 35.0;
 
@@ -25,6 +28,17 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  Timer? _debounce;
+  int _tapCount = 0;
+  final _maxTaps = 7;
+  final _debounceDuration = const Duration(milliseconds: 200);
+
+  @override
+  void initState() {
+    ToastContext().init(context);
+    super.initState();
+  }
+
   void _deleteDialog(BuildContext parentContext, BartStateProvider provider) {
     final loadingOverlay = LoadingBlockFullScreen(
       context: parentContext,
@@ -152,6 +166,41 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showEasterEgg(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 380.h,
+              width: 350.w,
+              child: PageView(
+                children: [
+                  Image.asset('assets/secrets/img1.jpg'),
+                  Image.asset('assets/secrets/img2.jpg'),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              context.tr('easter.egg.dialog.1'),
+              style: TextStyle(fontSize: 14.spMin),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              context.tr('easter.egg.dialog.2'),
+              style: TextStyle(fontSize: 12.spMin),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -330,23 +379,63 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 maintainState: false,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      context.tr('about.text'),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      context.tr('app.version.info', namedArgs: {
-                        'versionNum': BartAppVersionData.version,
-                        'buildNum': BartAppVersionData.buildNumber,
-                      }),
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(fontSize: 16),
+                  Material(
+                    child: InkWell(
+                      onTap: () {
+                        if (_debounce?.isActive ?? false) {
+                          setState(() => _tapCount += 1);
+                          final tapsLeft = _maxTaps - _tapCount;
+                          if (tapsLeft > 0) {
+                            Toast.show(
+                              context.tr(
+                                tapsLeft == 1
+                                    ? "about.easter.egg.toast1"
+                                    : "about.easter.egg.toast2",
+                                namedArgs: {'tapsLeft': tapsLeft.toString()},
+                              ),
+                              duration: 2,
+                              gravity: Toast.bottom,
+                              backgroundColor: Colors.grey,
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.spMin,
+                              ),
+                            );
+                          }
+                          _debounce!.cancel();
+                        }
+                        _debounce = Timer(
+                          _debounceDuration,
+                          () {
+                            if (_tapCount >= _maxTaps) {
+                              _showEasterEgg(context);
+                            }
+                            setState(() => _tapCount = 0);
+                          },
+                        );
+                      },
+                      child: ListTile(
+                        title: Text(
+                          context.tr('about.text'),
+                          style: TextStyle(
+                            fontSize: 16.spMin,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Text(
+                            context.tr('app.version.info', namedArgs: {
+                              'versionNum': BartAppVersionData.version,
+                              'buildNum': BartAppVersionData.buildNumber,
+                            }),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        subtitleTextStyle: TextStyle(
+                          fontSize: 12.spMin,
+                        ),
+                      ),
                     ),
                   ),
                 ],

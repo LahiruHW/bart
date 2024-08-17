@@ -112,6 +112,7 @@ flutter:
     - assets/icons/logo_apple_white_100x100.png
     - assets/icons/logo_apple_white_150x150.png
     - assets/images/caution-tape.png
+    - assets/secrets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
