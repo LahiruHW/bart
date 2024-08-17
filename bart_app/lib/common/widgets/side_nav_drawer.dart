@@ -26,90 +26,101 @@ class BartSideNavMenu extends StatelessWidget {
     );
 
     return Consumer<BartStateProvider>(
-      builder: (context, stateProvider, child) => NavigationDrawer(
+      builder: (context, stateProvider, child) => Drawer(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 75,
-            padding: EdgeInsets.only(top: 20.h, left: 20.w),
-            margin: EdgeInsets.only(bottom: 15.h),
-            child: Text(
-              'bart.',
-              textAlign: TextAlign.start,
-              style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
-                    fontSize: 40.spMin,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.only(left: 20),
-            leading: const Icon(Icons.tour_outlined),
-            title: Text(context.tr('tute.start.header')),
-            subtitle: Text(context.tr('tute.start.subHeader')),
-            titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 22.spMin,
-            ),
-            subtitleTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontWeight: FontWeight.normal,
-              fontSize: 16.spMin,
-            ),
-            onTap: () {
-              Base.globalKey.currentState!.closeEndDrawer();
-              BartAnalyticsEngine.userBeginsTutorial();
-              Future.delayed(
-                const Duration(milliseconds: 200),
-                () => context.go('/home'),
-              ).then(
-                (val) => BartTutorialCoach.showTutorial(
-                  Base.globalKey.currentContext!,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20.h),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 75,
+                padding: EdgeInsets.only(top: 20.h, left: 20.w),
+                margin: EdgeInsets.only(bottom: 15.h),
+                child: Text(
+                  'bart.',
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
+                        fontSize: 40.spMin,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              );
-            },
-          ),
-          ListTile(
-            key: BartTuteWidgetKeys.sideNavMenuSettings,
-            contentPadding: const EdgeInsets.only(left: 20),
-            leading: const Icon(Icons.settings_outlined),
-            title: Text(context.tr('side.navmenu.settings')),
-            titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 22.spMin,
-            ),
-            onTap: () => GoRouter.of(context).push('/settings', extra: {'beginAllExpanded': false}),
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.only(left: 20),
-            leading: const Icon(
-              Icons.logout,
-              color: Colors.red,
-            ),
-            title: Text(context.tr('side.navmenu.logout')),
-            titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                  fontSize: 22.spMin,
-                ),
-            onTap: () async {
-              loadingOverlay.show();
-              await stateProvider.signOut().then(
-                (value) {
-                  if (value) {
-                    Future.delayed(
-                      const Duration(milliseconds: 2000),
-                      () {
-                        loadingOverlay.hide();
-                        GoRouter.of(context).go('/login');
-                      },
-                    );
-                  } else {
-                    loadingOverlay.hide();
-                    // TODO:_ SHOW ERROR MESSAGE HERE
-                  }
+              ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 20),
+                leading: const Icon(Icons.tour_outlined),
+                title: Text(context.tr('tute.start.header')),
+                subtitle: Text(context.tr('tute.start.subHeader')),
+                titleTextStyle:
+                    Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: 22.spMin,
+                        ),
+                subtitleTextStyle:
+                    Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16.spMin,
+                        ),
+                onTap: () {
+                  Base.globalKey.currentState!.closeEndDrawer();
+                  BartAnalyticsEngine.userBeginsTutorial();
+                  Future.delayed(
+                    const Duration(milliseconds: 200),
+                    () => context.go('/home'),
+                  ).then(
+                    (val) => BartTutorialCoach.showTutorial(
+                      Base.globalKey.currentContext!,
+                    ),
+                  );
                 },
-              );
-            },
+              ),
+              ListTile(
+                key: BartTuteWidgetKeys.sideNavMenuSettings,
+                contentPadding: const EdgeInsets.only(left: 20),
+                leading: const Icon(Icons.settings_outlined),
+                title: Text(context.tr('side.navmenu.settings')),
+                titleTextStyle:
+                    Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: 22.spMin,
+                        ),
+                onTap: () => GoRouter.of(context)
+                    .push('/settings', extra: {'beginAllExpanded': false}),
+              ),
+              Expanded(child: Container()),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 20),
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.red,
+                ),
+                title: Text(context.tr('side.navmenu.logout')),
+                titleTextStyle:
+                    Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 22.spMin,
+                        ),
+                onTap: () async {
+                  loadingOverlay.show();
+                  await stateProvider.signOut().then(
+                    (value) {
+                      if (value) {
+                        Future.delayed(
+                          const Duration(milliseconds: 2000),
+                          () {
+                            loadingOverlay.hide();
+                            GoRouter.of(context).go('/login');
+                          },
+                        );
+                      } else {
+                        loadingOverlay.hide();
+                        // TODO:_ SHOW ERROR MESSAGE HERE
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
