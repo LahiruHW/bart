@@ -1457,7 +1457,7 @@ class BartFirestoreServices {
         return itemID;
       }).toList();
 
-      print(storageItemIDs);
+      debugPrint('$storageItemIDs');
 
       // get all the item ids from the item collection
       itemCollection.get().then((snapshot) {

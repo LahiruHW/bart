@@ -17,14 +17,7 @@ class ChatPage extends StatefulWidget {
     super.key,
     required this.chatID,
     required this.chatData,
-    // this.extra,
   });
-
-  /**
-   * extra: {
-   *  'headerBannerText': to show in the banner 
-   * }
-   */
 
   final String chatID;
   final Chat chatData;
@@ -156,8 +149,7 @@ class _ChatPageState extends State<ChatPage> {
                               )
                             : CachedNetworkImage(
                                 key: UniqueKey(),
-                                cacheManager:
-                                    BartImageTools.customCacheManager,
+                                cacheManager: BartImageTools.customCacheManager,
                                 progressIndicatorBuilder:
                                     BartImageTools.progressLoader,
                                 imageUrl: widget.chatData.chatImageUrl,
@@ -168,12 +160,10 @@ class _ChatPageState extends State<ChatPage> {
                       const SizedBox(width: 10),
                       Text(
                         widget.chatData.chatName,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(
-                              fontSize: 18,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 18,
+                                ),
                       ),
                     ],
                   ),
@@ -258,12 +248,15 @@ class _ChatPageState extends State<ChatPage> {
                               separatorBuilder: (context, index) {
                                 final currentDT = DateTime.now();
                                 final currentMsg = snapshot.data![index];
-                                final currentMsgDT = currentMsg.timeSent.toDate();
+                                final currentMsgDT =
+                                    currentMsg.timeSent.toDate();
                                 final nextMsg = snapshot.data![index + 1];
                                 final nextMsgDT = nextMsg.timeSent.toDate();
-                                final showDate = !nextMsg.isSameDayAsMsg(currentMsg);
+                                final showDate =
+                                    !nextMsg.isSameDayAsMsg(currentMsg);
                                 if (showDate) {
-                                  final diff = currentDT.difference(nextMsgDT).inDays;
+                                  final diff =
+                                      currentDT.difference(nextMsgDT).inDays;
                                   final date = diff == 0
                                       ? "Today"
                                       : diff == 1
