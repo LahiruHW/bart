@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
-import 'package:bart_app/common/widgets/buttons/market_tab_button.dart';
+import 'package:bart_app/common/widgets/buttons/bart_page_tab_button.dart';
 
 class MarketBase extends StatefulWidget {
   const MarketBase({
@@ -93,7 +93,7 @@ class _MarketBaseState extends State<MarketBase> {
                 children: [
                   const SizedBox(width: 10),
                   Expanded(
-                    child: MarketPageTabButton(
+                    child: BartPageTabButton(
                       key: BartTuteWidgetKeys.marketPageTab1,
                       title: context.tr("market.page.tab.listedItems"),
                       enabled: _onListedItemsPage,
@@ -102,7 +102,7 @@ class _MarketBaseState extends State<MarketBase> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: MarketPageTabButton(
+                    child: BartPageTabButton(
                       key: BartTuteWidgetKeys.marketPageTab2,
                       title: context.tr("market.page.tab.requests"),
                       enabled: !_onListedItemsPage,

@@ -6,7 +6,7 @@ import 'package:bart_app/screens/shared/new_item_page.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/screens/marketplace/payment_page.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
-import 'package:bart_app/common/widgets/buttons/market_tab_button.dart';
+import 'package:bart_app/common/widgets/buttons/bart_page_tab_button.dart';
 
 class ReturnOfferPage extends StatefulWidget {
   const ReturnOfferPage({
@@ -44,7 +44,7 @@ class _ReturnOfferPageState extends State<ReturnOfferPage> {
                 children: [
                   const SizedBox(width: 10),
                   Expanded(
-                    child: MarketPageTabButton(
+                    child: BartPageTabButton(
                       title: context.tr('returnOffer.page.tab.returnItem'),
                       enabled: _onItemReturnPage,
                       onTap: _togglePage,
@@ -54,7 +54,7 @@ class _ReturnOfferPageState extends State<ReturnOfferPage> {
                   Text(context.tr('or')),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MarketPageTabButton(
+                    child: BartPageTabButton(
                       title: context.tr('returnOffer.page.tab.returnMoney'),
                       enabled: !_onItemReturnPage,
                       onTap: _togglePage,

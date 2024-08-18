@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bart_app/styles/market_tab_button_style.dart';
+import 'package:bart_app/styles/bart_page_tab_button_style.dart';
 
-class MarketPageTabButton extends StatelessWidget {
-  const MarketPageTabButton({
+class BartPageTabButton extends StatelessWidget {
+  const BartPageTabButton({
     required this.title,
     required this.onTap,
     required this.enabled,
@@ -16,7 +16,7 @@ class MarketPageTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabStyle = Theme.of(context).extension<BartMarketTabButtonStyle>()!;
+    final tabStyle = Theme.of(context).extension<BartTabButtonStyle>()!;
 
     return FilledButton(
       style: ButtonStyle(

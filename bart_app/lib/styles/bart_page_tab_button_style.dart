@@ -1,15 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class BartMarketTabButtonStyle
-    extends ThemeExtension<BartMarketTabButtonStyle> {
-  BartMarketTabButtonStyle(
-      {required this.enabledElevation,
-      required this.disabledElevation,
-      required this.enabledBackgroundColor,
-      required this.disabledBackgroundColor,
-      required this.enabledForegroundColor,
-      required this.disabledForegroundColor});
+class BartTabButtonStyle extends ThemeExtension<BartTabButtonStyle> {
+  BartTabButtonStyle({
+    required this.enabledElevation,
+    required this.disabledElevation,
+    required this.enabledBackgroundColor,
+    required this.disabledBackgroundColor,
+    required this.enabledForegroundColor,
+    required this.disabledForegroundColor,
+  });
 
   final double enabledElevation;
   final double disabledElevation;
@@ -40,7 +40,7 @@ class BartMarketTabButtonStyle
   }
 
   @override
-  ThemeExtension<BartMarketTabButtonStyle> copyWith({
+  ThemeExtension<BartTabButtonStyle> copyWith({
     double? enabledElevation,
     double? disabledElevation,
     Color? enabledBackgroundColor,
@@ -48,7 +48,7 @@ class BartMarketTabButtonStyle
     Color? enabledForegroundColor,
     Color? disabledForegroundColor,
   }) {
-    return BartMarketTabButtonStyle(
+    return BartTabButtonStyle(
         enabledElevation: enabledElevation ?? this.enabledElevation,
         disabledElevation: disabledElevation ?? this.disabledElevation,
         enabledBackgroundColor:
@@ -62,13 +62,13 @@ class BartMarketTabButtonStyle
   }
 
   @override
-  ThemeExtension<BartMarketTabButtonStyle> lerp(
-      covariant ThemeExtension<BartMarketTabButtonStyle>? other, double t) {
+  ThemeExtension<BartTabButtonStyle> lerp(
+      covariant ThemeExtension<BartTabButtonStyle>? other, double t) {
     if (other == null) {
       return this;
     }
-    if (other is BartMarketTabButtonStyle) {
-      return BartMarketTabButtonStyle(
+    if (other is BartTabButtonStyle) {
+      return BartTabButtonStyle(
         enabledElevation:
             lerpDouble(enabledElevation, other.enabledElevation, t)!,
         disabledElevation:
