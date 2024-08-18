@@ -190,11 +190,13 @@ class BartStateProvider extends ChangeNotifier {
   /// update the user's local profile data via the state provider
   void updateSettings({
     bool? isDarkMode,
+    bool? isLegacyUI,
     String? userName,
     String? imageUrl,
   }) {
     userProfile.settings!.updateSettings(
       isDarkMode: isDarkMode,
+      isLegacyUI: isLegacyUI,
     );
 
     // update the userProfile in the shared preferences also

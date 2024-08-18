@@ -1150,6 +1150,21 @@ class BartFirestoreServices {
         if (!userData.containsKey('settings')) {
           updatedDoc['settings'] = UserSettings();
           debugPrint("missing 'settings' added to user $userID");
+        } else {
+          // check if all the properties of the settings are present
+          final settings = userData['settings'] as Map<String, dynamic>;
+          if (!settings.containsKey('isDarkMode')) {
+            updatedDoc['settings']['isDarkMode'] = false;
+            debugPrint("missing 'settings.isDarkMode' added to user $userID");
+          }
+          if (!settings.containsKey('isLegacyUI')) {
+            updatedDoc['settings']['isLegacyUI'] = false;
+            debugPrint("missing 'settings.isLegacyUI' added to user $userID");
+          }
+          if (!settings.containsKey('lastUpdated')) {
+            updatedDoc['settings']['lastUpdated'] = Timestamp.now();
+            debugPrint("missing 'settings.lastUpdated' added to user $userID");
+          }
         }
         if (!userData.containsKey('userName')) {
           updatedDoc['userName'] = BartAuthService.getRandomName();
