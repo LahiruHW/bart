@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bart_app/styles/home_trade_widget_style.dart';
 import 'package:bart_app/common/widgets/home_trade_item.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item.dart';
@@ -40,24 +38,6 @@ class HomePageV1TradePanelBuilder {
         return tr('no.trade.history');
       default:
         return tr('no.trades.at.all');
-    }
-  }
-
-  Color getShimmerColour(BuildContext context, TradeCompType tradeType) {
-    final tradeStyle = Theme.of(context).extension<BartTradeWidgetStyle>()!;
-    switch (tradeType) {
-      case TradeCompType.incoming:
-        return tradeStyle.incomingTextColour;
-      case TradeCompType.outgoing:
-        return tradeStyle.outgoingTextColour;
-      case TradeCompType.toBeCompleted:
-        return tradeStyle.tbcTextColour;
-      case TradeCompType.tradeHistory:
-        return Colors.green;
-      case TradeCompType.failed:
-        return Colors.red;
-      default:
-        return Colors.amber;
     }
   }
 
@@ -120,7 +100,6 @@ class HomePageV1TradePanelBuilder {
   }
 
   ExpansionPanel build(BuildContext context) {
-    final shimmerColor = getShimmerColour(context, tradeType);
     return ExpansionPanel(
       isExpanded: isExpanded,
       canTapOnHeader: true,
@@ -134,9 +113,9 @@ class HomePageV1TradePanelBuilder {
       ),
       body: Column(
         children: tradeList.isNotEmpty // maybe implement the view limiter here?
-            ? tradeList.map(
-                (trade) {
-                  final thisTradeWidget = TradeWidget(
+            ? tradeList
+                .map(
+                  (trade) => TradeWidget(
                     userID: userID,
                     trade: trade,
                     tradeType: tradeType,
@@ -150,17 +129,9 @@ class HomePageV1TradePanelBuilder {
                         },
                       );
                     },
-                  );
-                  if (!trade.isRead) {
-                    return thisTradeWidget.animate().shimmer(
-                          color: shimmerColor,
-                          duration: 1000.ms,
-                          delay: 300.ms,
-                        );
-                  }
-                  return thisTradeWidget;
-                },
-              ).toList()
+                  ),
+                )
+                .toList()
             : tradeType == TradeCompType.none
                 ? [
                     const ShimmerHomeTradeWidget(),

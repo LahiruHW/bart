@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/home_trade_widget_style.dart';
@@ -94,67 +95,95 @@ class TradeWidget extends StatelessWidget {
     }
   }
 
+  Color getShimmerColour(BuildContext context, TradeCompType tradeType) {
+    final tradeStyle = Theme.of(context).extension<BartTradeWidgetStyle>()!;
+    switch (tradeType) {
+      case TradeCompType.incoming:
+        return tradeStyle.incomingTextColour;
+      case TradeCompType.outgoing:
+        return tradeStyle.outgoingTextColour;
+      case TradeCompType.toBeCompleted:
+        return tradeStyle.tbcTextColour;
+      case TradeCompType.tradeHistory:
+        return Colors.green;
+      case TradeCompType.failed:
+        return Colors.red;
+      default:
+        return Colors.amber;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final (backgroundColor, textColor, shadowColor) = getTileColors(context);
     final title = getTitle(trade);
+    final shimmerColor = getShimmerColour(context, tradeType);
+
+    final tradeWidget = Container(
+      margin: const EdgeInsets.only(
+        top: 2,
+        bottom: 10,
+        left: 12,
+        right: 12,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 12.w,
+        vertical: 18.h,
+      ),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(7),
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor,
+            blurRadius: 3,
+            offset: const Offset(0, 0.8),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 7,
+            child: Text(
+              title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: textColor,
+                    fontSize: 12.spMin,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            flex: 1,
+            child: Text(
+              trade.isRead ? context.tr('read') : context.tr("unread"),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: textColor,
+                    fontSize: 11.spMin,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12.0,
-          vertical: 12.0,
-        ),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: shadowColor,
-              blurRadius: 3,
-              offset: const Offset(0, 3.0),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 6,
-              child: Text(
-                title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: textColor,
-                      fontSize: 12.spMin,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              flex: 1,
-              child: Text(
-                trade.isRead ? context.tr('read') : context.tr("unread"),
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: textColor,
-                      fontSize: 11.spMin,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      child: (!trade.isRead)
+          ? tradeWidget.animate().shimmer(
+                color: shimmerColor,
+                duration: 1000.ms,
+                delay: 300.ms,
+              )
+          : tradeWidget,
     );
   }
 }
