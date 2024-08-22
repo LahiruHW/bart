@@ -11,7 +11,7 @@ class ShimmerHomeTradeWidgetList2 {
       materialGapSize: 0,
       elevation: 0,
       children: [
-        HomePagev1TradePanelBuilder(
+        HomePageV1TradePanelBuilder(
           title: "Completed Trade History",
           tradeList: [],
           isExpanded: true,

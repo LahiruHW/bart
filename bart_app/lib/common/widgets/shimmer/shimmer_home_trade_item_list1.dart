@@ -11,7 +11,7 @@ class ShimmerHomeTradeWidgetList1 {
       materialGapSize: 0,
       elevation: 0,
       children: [
-        HomePagev1TradePanelBuilder(
+        HomePageV1TradePanelBuilder(
           title: "Incoming Trades",
           tradeList: [],
           isExpanded: true,
@@ -19,7 +19,7 @@ class ShimmerHomeTradeWidgetList1 {
           userID: "",
           tuteKey: BartTuteWidgetKeys.homePageIncomingTrades,
         ).build(context),
-        HomePagev1TradePanelBuilder(
+        HomePageV1TradePanelBuilder(
           title: "Outgoing Trades",
           tradeList: [],
           isExpanded: true,
@@ -27,7 +27,7 @@ class ShimmerHomeTradeWidgetList1 {
           userID: "",
           tuteKey: BartTuteWidgetKeys.homePageOutgoingTrades,
         ).build(context),
-        HomePagev1TradePanelBuilder(
+        HomePageV1TradePanelBuilder(
           title: "Successful",
           tradeList: [],
           isExpanded: true,
