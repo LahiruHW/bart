@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
-import 'package:bart_app/common/widgets/home_page_expansion_panel.dart';
+import 'package:bart_app/common/widgets/home_page_v1_trade_panel.dart';
 
 class ShimmerHomeTradeWidgetList2 {
   ExpansionPanelList show(BuildContext context) {
@@ -11,7 +11,7 @@ class ShimmerHomeTradeWidgetList2 {
       materialGapSize: 0,
       elevation: 0,
       children: [
-        HomePageTradeExpansionPanelBuilder(
+        HomePagev1TradePanelBuilder(
           title: "Completed Trade History",
           tradeList: [],
           isExpanded: true,
