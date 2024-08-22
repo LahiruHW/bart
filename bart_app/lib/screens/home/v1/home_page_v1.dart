@@ -12,16 +12,16 @@ import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item_list1.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item_list2.dart';
 
-class HomePagev1 extends StatefulWidget {
-  const HomePagev1({
+class HomePageV1 extends StatefulWidget {
+  const HomePageV1({
     super.key,
   });
 
   @override
-  State<HomePagev1> createState() => _HomePagev1State();
+  State<HomePageV1> createState() => _HomePageV1State();
 }
 
-class _HomePagev1State extends State<HomePagev1> {
+class _HomePageV1State extends State<HomePageV1> {
   bool isITExpanded = true; // for incoming trades expansion panel
   bool isOTExpanded = true; // outgoing trades ""
   bool isSTExpanded = true; // successful trades ""
