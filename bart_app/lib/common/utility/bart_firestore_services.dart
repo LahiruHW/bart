@@ -38,6 +38,7 @@ class BartFirestoreServices {
 
   static final chatRoomCollection =
       (chatId) => chatDocRef(chatId).collection('chatRoom');
+  static WriteBatch? chatRoomBatch;
 
   static final itemCollection = _firestore.collection('item');
 
