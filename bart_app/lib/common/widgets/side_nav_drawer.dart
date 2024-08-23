@@ -47,6 +47,20 @@ class BartSideNavMenu extends StatelessWidget {
                 ),
               ),
               ListTile(
+                key: BartTuteWidgetKeys.sideNavMenuSettings,
+                contentPadding: const EdgeInsets.only(left: 20),
+                leading: const Icon(Icons.settings_outlined),
+                title: Text(context.tr('side.navmenu.settings')),
+                titleTextStyle:
+                    Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: 22.spMin,
+                        ),
+                onTap: () => context.push(
+                  '/settings',
+                  extra: {'beginAllExpanded': false},
+                ),
+              ),
+              ListTile(
                 contentPadding: const EdgeInsets.only(left: 20, right: 10),
                 leading: const Icon(Icons.tour_outlined),
                 title: Text(context.tr('tute.start.header')),
@@ -72,18 +86,6 @@ class BartSideNavMenu extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-              ListTile(
-                key: BartTuteWidgetKeys.sideNavMenuSettings,
-                contentPadding: const EdgeInsets.only(left: 20),
-                leading: const Icon(Icons.settings_outlined),
-                title: Text(context.tr('side.navmenu.settings')),
-                titleTextStyle:
-                    Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 22.spMin,
-                        ),
-                onTap: () => GoRouter.of(context)
-                    .push('/settings', extra: {'beginAllExpanded': false}),
               ),
               Expanded(child: Container()),
               ListTile(
