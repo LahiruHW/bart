@@ -38,9 +38,9 @@ class TradeWidget extends StatelessWidget {
         );
       case TradeCompType.toBeCompleted:
         return (
-          tileStyle.completeSuccessBackgroundColour,
-          tileStyle.completeSuccessTextColour,
-          tileStyle.completeSuccessShadowColour,
+          tileStyle.tbcBackgroundColour,
+          tileStyle.tbcTextColour,
+          tileStyle.tbcShadowColour,
         );
       case TradeCompType.failed:
         return (

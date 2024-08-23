@@ -8,9 +8,9 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
     required this.outgoingTextColour,
     required this.outgoingBackgroundColour,
     required this.outgoingShadowColour,
-    required this.completeSuccessTextColour,
-    required this.completeSuccessBackgroundColour,
-    required this.completeSuccessShadowColour,
+    required this.tbcTextColour,
+    required this.tbcBackgroundColour,
+    required this.tbcShadowColour,
     required this.completeFailTextColour,
     required this.completeFailBackgroundColour,
     required this.completeFailShadowColour,
@@ -25,9 +25,9 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
   final Color outgoingTextColour;
   final Color outgoingBackgroundColour;
   final Color outgoingShadowColour;
-  final Color completeSuccessTextColour;
-  final Color completeSuccessBackgroundColour;
-  final Color completeSuccessShadowColour;
+  final Color tbcTextColour;
+  final Color tbcBackgroundColour;
+  final Color tbcShadowColour;
   final Color completeFailTextColour;
   final Color completeFailBackgroundColour;
   final Color completeFailShadowColour;
@@ -43,9 +43,9 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
     Color? outgoingTextColour,
     Color? outgoingBackgroundColour,
     Color? outgoingShadowColour,
-    Color? completeSuccessTextColour,
-    Color? completeSuccessBackgroundColour,
-    Color? completeSuccessShadowColour,
+    Color? tbcTextColour,
+    Color? tbcBackgroundColour,
+    Color? tbcShadowColour,
     Color? completeFailTextColour,
     Color? completeFailBackgroundColour,
     Color? completeFailShadowColour,
@@ -62,12 +62,12 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
       outgoingBackgroundColour:
           outgoingBackgroundColour ?? this.outgoingBackgroundColour,
       outgoingShadowColour: outgoingShadowColour ?? this.outgoingShadowColour,
-      completeSuccessTextColour:
-          completeSuccessTextColour ?? this.completeSuccessTextColour,
-      completeSuccessBackgroundColour: completeSuccessBackgroundColour ??
-          this.completeSuccessBackgroundColour,
-      completeSuccessShadowColour:
-          completeSuccessShadowColour ?? this.completeSuccessShadowColour,
+      tbcTextColour:
+          tbcTextColour ?? this.tbcTextColour,
+      tbcBackgroundColour: tbcBackgroundColour ??
+          this.tbcBackgroundColour,
+      tbcShadowColour:
+          tbcShadowColour ?? this.tbcShadowColour,
       completeFailTextColour:
           completeFailTextColour ?? this.completeFailTextColour,
       completeFailBackgroundColour:
@@ -106,14 +106,14 @@ class BartTradeWidgetStyle extends ThemeExtension<BartTradeWidgetStyle> {
             outgoingBackgroundColour, other.outgoingBackgroundColour, t)!,
         outgoingShadowColour:
             Color.lerp(outgoingShadowColour, other.outgoingShadowColour, t)!,
-        completeSuccessTextColour: Color.lerp(
-            completeSuccessTextColour, other.completeSuccessTextColour, t)!,
-        completeSuccessBackgroundColour: Color.lerp(
-            completeSuccessBackgroundColour,
-            other.completeSuccessBackgroundColour,
+        tbcTextColour: Color.lerp(
+            tbcTextColour, other.tbcTextColour, t)!,
+        tbcBackgroundColour: Color.lerp(
+            tbcBackgroundColour,
+            other.tbcBackgroundColour,
             t)!,
-        completeSuccessShadowColour: Color.lerp(
-            completeSuccessShadowColour, other.completeSuccessShadowColour, t)!,
+        tbcShadowColour: Color.lerp(
+            tbcShadowColour, other.tbcShadowColour, t)!,
         completeFailTextColour: Color.lerp(
             completeFailTextColour, other.completeFailTextColour, t)!,
         completeFailBackgroundColour: Color.lerp(completeFailBackgroundColour,
