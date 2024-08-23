@@ -233,6 +233,18 @@ class BartAppTheme {
         ),
       ),
     ),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      selectedIcon: null,
+      style: ButtonStyle(
+        foregroundColor: const WidgetStatePropertyAll(Colors.black),
+        iconSize: WidgetStatePropertyAll(25.spMin),
+        visualDensity: const VisualDensity(horizontal: 4, vertical: 4),
+        animationDuration: const Duration(milliseconds: 200),
+        side: const WidgetStatePropertyAll(
+          BorderSide(color: Colors.grey, width: 0.25),
+        ),
+      ),
+    ),
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -526,6 +538,18 @@ class BartAppTheme {
             width: 0.5,
             color: Colors.transparent,
           ),
+        ),
+      ),
+    ),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      selectedIcon: null,
+      style: ButtonStyle(
+        foregroundColor: const WidgetStatePropertyAll(Colors.white),
+        iconSize: WidgetStatePropertyAll(25.spMin),
+        visualDensity: const VisualDensity(horizontal: 4, vertical: 4),
+        animationDuration: const Duration(milliseconds: 200),
+        side: const WidgetStatePropertyAll(
+          BorderSide(color: Colors.grey, width: 0.25),
         ),
       ),
     ),
