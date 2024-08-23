@@ -78,9 +78,9 @@ class BartTutorialCoach {
     BartAnalyticsEngine.userEndsTutorial();
     controller.skip();
     try {
-      Base.globalKey.currentContext!.go('/home');
+      Base.globalKey.currentContext!.go('/home-trades');
     } catch (e) {
-      SettingsPage.globalKey.currentContext!.go('/home');
+      SettingsPage.globalKey.currentContext!.go('/home-trades');
     }
   }
 
@@ -88,9 +88,9 @@ class BartTutorialCoach {
     BartAnalyticsEngine.userEndsTutorial();
     tuteCoach1.finish();
     try {
-      Base.globalKey.currentContext!.go('/home');
+      Base.globalKey.currentContext!.go('/home-trades');
     } catch (e) {
-      SettingsPage.globalKey.currentContext!.go('/home');
+      SettingsPage.globalKey.currentContext!.go('/home-trades');
     }
   }
 
@@ -319,7 +319,7 @@ class BartTutorialCoach {
                 text: tr('tute.chatPage.1'),
                 onSkip: () => _skip(controller),
                 onPrevious: () {
-                  Base.globalKey.currentContext!.go('/home');
+                  Base.globalKey.currentContext!.go('/home-trades');
                   _previous(controller);
                 },
                 onNext: () {
@@ -370,7 +370,7 @@ class BartTutorialCoach {
                 // ),
                 onSkip: () => _skip(controller),
                 onPrevious: () {
-                  Base.globalKey.currentContext!.go('/home');
+                  Base.globalKey.currentContext!.go('/home-trades');
                   _previous(controller);
                 },
                 onNext: () => _next(controller),

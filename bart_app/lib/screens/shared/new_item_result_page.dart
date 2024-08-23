@@ -61,7 +61,7 @@ class _NewItemResultPageState extends State<NewItemResultPage>
   void goBackHome() {
     final route = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
     if (route.startsWith('/home')) {
-      context.go('/home');
+      context.go('/home-trades');
     } else if (route.startsWith('/market')) {
       context.go('/market/listed-items');
     } else {

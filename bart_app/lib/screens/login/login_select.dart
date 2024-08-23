@@ -73,7 +73,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                           loadingOverlay.hide();
                           stateProvider.userProfile.isFirstLogin
                               ? context.go("/onboard")
-                              : context.go("/home");
+                              : context.go("/home-trades");
                         },
                       );
                     },

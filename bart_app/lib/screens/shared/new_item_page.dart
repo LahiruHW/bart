@@ -230,7 +230,7 @@ class _NewItemPageState extends State<NewItemPage> {
           'dateCreated': newItem.postedOn,
         };
         context.push(
-          '/home/newItem/newItemResult',
+          '/newItem/newItemResult',
           extra: obj,
         );
       });

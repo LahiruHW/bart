@@ -65,7 +65,7 @@ class BartSideNavMenu extends StatelessWidget {
                   BartAnalyticsEngine.userBeginsTutorial();
                   Future.delayed(
                     const Duration(milliseconds: 200),
-                    () => context.go('/home'),
+                    () => context.go('/home-trades'),
                   ).then(
                     (val) => BartTutorialCoach.showTutorial(
                       Base.globalKey.currentContext!,
