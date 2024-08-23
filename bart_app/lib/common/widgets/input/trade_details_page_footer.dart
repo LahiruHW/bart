@@ -66,7 +66,7 @@ class TradeDetailsPageFooter {
                     ).build(context),
                   );
                   Navigator.of(context).pop(); // THEN close the dialog
-                  context.go('/home'); // finally go back home
+                  context.go('/home-trades'); // finally go back home
                 }
               });
             },
@@ -181,7 +181,7 @@ class TradeDetailsPageFooter {
                             loadingOverlay.hide();
                             trade.tradeCompType = TradeCompType.toBeCompleted;
                             context.replace(
-                              '/home/viewTrade',
+                              '/viewTrade',
                               extra: {
                                 'trade': trade,
                                 'tradeType': trade.tradeCompType,
@@ -262,7 +262,7 @@ class TradeDetailsPageFooter {
                       label: context.tr('view.trade.page.btn.editTrade'),
                       onPressed: () {
                         context.push(
-                          '/home/viewTrade/editTrade',
+                          '/viewTrade/editTrade',
                           extra: {'trade': trade},
                         );
                       },
@@ -324,7 +324,7 @@ class TradeDetailsPageFooter {
                                     const Duration(milliseconds: 1500),
                                     () {
                                       onSent();
-                                      context.go('/home');
+                                      context.go('/home-trades');
                                       loadingOverlay.hide();
                                     },
                                   );
@@ -364,7 +364,7 @@ class TradeDetailsPageFooter {
                                     const Duration(milliseconds: 1500),
                                     () {
                                       onSent();
-                                      context.go('/home');
+                                      context.go('/home-trades');
                                       loadingOverlay.hide();
                                     },
                                   );

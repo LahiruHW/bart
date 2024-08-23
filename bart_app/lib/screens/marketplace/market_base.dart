@@ -77,7 +77,7 @@ class _MarketBaseState extends State<MarketBase> {
             ? FloatingActionButton(
                 onPressed: () {
                   if (_onListedItemsPage) {
-                    context.push('/home/newItem');
+                    context.push('/newItem');
                   }
                 },
                 child: const Icon(Icons.add),

@@ -125,7 +125,7 @@ class _HomePageV1State extends State<HomePageV1> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: StreamBuilder(
-                stream: BartFirestoreServices.getTradeListStreamZip(
+                stream: BartFirestoreServices.getTradeListStreamZipV1(
                   provider.userProfile.userID,
                 ),
                 builder: (context, snapshot) {

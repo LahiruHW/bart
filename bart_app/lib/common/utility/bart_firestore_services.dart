@@ -876,6 +876,26 @@ class BartFirestoreServices {
     );
   }
 
+  /// zip all three main trade streams (incoming, completed, successful) into one
+  static Stream<List<List<Trade>>> getTradeListStreamZipV2(
+    String userID,
+  ) {
+    return Rx.combineLatest4(
+      getIncomingTradeListStream(userID),
+      getOutgoingTradeListStream(userID),
+      getSuccessfulTradeListStream(userID),
+      getCompletedTradeHistoryListStream(userID),
+      (incomingList, outgoingList, successList, tradeHistoryList) {
+        return [
+          incomingList,
+          outgoingList,
+          successList,
+          tradeHistoryList,
+        ];
+      },
+    );
+  }
+
   /// get the stream of trades that are completed (i.e. trade history)
   static Stream<List<Trade>> getCompletedTradeHistoryListStream(String userID) {
     return getTradeListStream(userID).map(

@@ -1,6 +1,10 @@
 export 'chat/chat_list_page.dart';
 export 'chat/chat_page.dart';
-export 'home/home_page.dart';
+export 'home/home_page_base.dart';
+export 'home/v1/home_page_v1.dart';
+export 'home/v2/home_page_v2.dart';
+export 'home/v2/trades_page.dart';
+export 'home/v2/services_page.dart';
 export 'login/login_select.dart';
 export 'login/onboarding_page.dart';
 export 'marketplace/market_base.dart';

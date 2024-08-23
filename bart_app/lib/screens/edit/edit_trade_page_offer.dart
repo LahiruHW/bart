@@ -203,11 +203,15 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
                                   );
                                   tempProvider.clearAllTempData();
                                   setState(() => _isBtnEnabled = true);
-                                  context.go('/home/viewTrade', extra: {
-                                    'trade': editedTrade,
-                                    'tradeType': editedTrade.tradeCompType,
-                                    'userID': stateProvider.userProfile.userID,
-                                  });
+                                  context.go(
+                                    '/viewTrade',
+                                    extra: {
+                                      'trade': editedTrade,
+                                      'tradeType': editedTrade.tradeCompType,
+                                      'userID':
+                                          stateProvider.userProfile.userID,
+                                    },
+                                  );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     BartSnackBar(

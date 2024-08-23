@@ -11,6 +11,8 @@ import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 class BartRouter {
   static final _rootNavKey = GlobalKey<NavigatorState>();
   static final _homeNavKey = GlobalKey<NavigatorState>();
+  static final _homeTradesNavKey = GlobalKey<NavigatorState>();
+  static final _homeServicesNavKey = GlobalKey<NavigatorState>();
   static final _chatNavKey = GlobalKey<NavigatorState>();
   static final _marketNavKey = GlobalKey<NavigatorState>();
   static final _marketListedItemsNavKey = GlobalKey<NavigatorState>();
@@ -38,7 +40,7 @@ class BartRouter {
             if (userProf.isFirstLogin) {
               return '/onboard';
             }
-            return '/home';
+            return '/home-trades';
           }
           return null;
         },
@@ -106,68 +108,85 @@ class BartRouter {
             navigatorKey: _homeNavKey,
             restorationScopeId: 'home',
             routes: [
+              // new Sub StatefulShellBranch for the HOME tab ---------------------------------------------
+              StatefulShellRoute.indexedStack(
+                restorationScopeId: 'home-base',
+                pageBuilder: (context, state, child) {
+                  return MaterialPage(
+                    child: HomePageBase(bodyWidget: child),
+                  );
+                },
+                parentNavigatorKey: _homeNavKey,
+                branches: [
+                  StatefulShellBranch(
+                    navigatorKey: _homeTradesNavKey,
+                    routes: [
+                      GoRoute(
+                        name: 'home-trades',
+                        path: '/home-trades',
+                        parentNavigatorKey: _homeTradesNavKey,
+                        pageBuilder: (context, state) {
+                          return const MaterialPage(
+                            child: HomeTradesPage(),
+                          );
+                        },
+                        routes: const [],
+                      ),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    navigatorKey: _homeServicesNavKey,
+                    routes: [
+                      GoRoute(
+                        name: 'home-services',
+                        path: '/home-services',
+                        parentNavigatorKey: _homeServicesNavKey,
+                        pageBuilder: (context, state) => const MaterialPage(
+                          maintainState: true,
+                          child: HomeServicesPage(),
+                        ),
+                        routes: const [],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              // home page subroutes that use up the whole screen
               GoRoute(
-                name: 'home',
-                path: '/home',
+                parentNavigatorKey: _homeNavKey,
+                name: 'test1',
+                path: '/test1',
                 pageBuilder: (context, state) => const MaterialPage(
-                  child: HomePage(),
-                  maintainState: true,
+                  child: TestPage1(),
                 ),
+              ),
+
+              GoRoute(
+                name: 'viewTrade',
+                path: '/viewTrade',
+                parentNavigatorKey: _homeNavKey,
+                builder: (context, state) {
+                  final data = state.extra as Map<String, dynamic>;
+                  final trade = data['trade'] as Trade;
+                  final tradeType = data['tradeType'] as TradeCompType;
+                  final userID = data['userID'] as String;
+                  return ViewTradePage(
+                    trade: trade,
+                    tradeType: tradeType,
+                    userID: userID,
+                  );
+                },
                 routes: [
                   GoRoute(
-                    parentNavigatorKey: _homeNavKey,
-                    path: 'test1',
-                    name: 'test1',
-                    pageBuilder: (context, state) => const MaterialPage(
-                      child: TestPage1(),
-                    ),
-                  ),
-                  GoRoute(
-                    name: 'viewTrade',
-                    path: 'viewTrade',
-                    parentNavigatorKey: _homeNavKey,
+                    name: 'editTrade',
+                    path: 'editTrade',
                     builder: (context, state) {
                       final data = state.extra as Map<String, dynamic>;
                       final trade = data['trade'] as Trade;
-                      final tradeType = data['tradeType'] as TradeCompType;
-                      final userID = data['userID'] as String;
-                      return ViewTradePage(
-                        trade: trade,
-                        tradeType: tradeType,
-                        userID: userID,
-                      );
-                    },
-                    routes: [
-                      GoRoute(
-                        name: 'editTrade',
-                        path: 'editTrade',
-                        builder: (context, state) {
-                          final data = state.extra as Map<String, dynamic>;
-                          final trade = data['trade'] as Trade;
-                          return trade.offeredItem.isPayment
-                              ? EditTradePagePayment(trade: trade)
-                              : EditTradePageOffer(trade: trade);
-                        },
-                        onExit: (context, state) {
-                          final tempProvider = Provider.of<TempStateProvider>(
-                            context,
-                            listen: false,
-                          );
-                          tempProvider.clearAllTempData();
-                          return true;
-                        },
-                      )
-                    ],
-                  ),
-                  GoRoute(
-                    name: 'newItem',
-                    path: 'newItem',
-                    parentNavigatorKey: _homeNavKey,
-                    builder: (context, state) {
-                      return const NewItemPage(
-                        isReturnOffer: false,
-                        returnForItem: null,
-                      );
+                      return trade.offeredItem.isPayment
+                          ? EditTradePagePayment(trade: trade)
+                          : EditTradePageOffer(trade: trade);
                     },
                     onExit: (context, state) {
                       final tempProvider = Provider.of<TempStateProvider>(
@@ -177,23 +196,43 @@ class BartRouter {
                       tempProvider.clearAllTempData();
                       return true;
                     },
-                    routes: [
-                      GoRoute(
-                        name: 'newItemResult',
-                        path: 'newItemResult',
-                        builder: (context, state) {
-                          final data = state.extra as Map<String, dynamic>;
-                          Item item = data['item'] as Item;
-                          return NewItemResultPage(
-                            messageHeading: data['messageHeading'],
-                            message: data['message'],
-                            isSuccessful: data['isSuccessful'],
-                            item: item,
-                            dateCreated: data['dateCreated'],
-                          );
-                        },
-                      ),
-                    ],
+                  )
+                ],
+              ),
+
+              GoRoute(
+                name: 'newItem',
+                path: '/newItem',
+                parentNavigatorKey: _homeNavKey,
+                builder: (context, state) {
+                  return const NewItemPage(
+                    isReturnOffer: false,
+                    returnForItem: null,
+                  );
+                },
+                onExit: (context, state) {
+                  final tempProvider = Provider.of<TempStateProvider>(
+                    context,
+                    listen: false,
+                  );
+                  tempProvider.clearAllTempData();
+                  return true;
+                },
+                routes: [
+                  GoRoute(
+                    name: 'newItemResult',
+                    path: 'newItemResult',
+                    builder: (context, state) {
+                      final data = state.extra as Map<String, dynamic>;
+                      Item item = data['item'] as Item;
+                      return NewItemResultPage(
+                        messageHeading: data['messageHeading'],
+                        message: data['message'],
+                        isSuccessful: data['isSuccessful'],
+                        item: item,
+                        dateCreated: data['dateCreated'],
+                      );
+                    },
                   ),
                 ],
               ),

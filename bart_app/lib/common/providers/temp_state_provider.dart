@@ -8,12 +8,16 @@ class TempStateProvider extends ChangeNotifier {
 
   List<String>? _imagePaths;
   String? _marketSearchText;
+  Set<int>? _homeV2Index; 
 
   List<String> get imagePaths => _imagePaths ?? [];
   set imagePaths(List<String> imgs) => _imagePaths = imgs;
 
   String get searchText => _marketSearchText ?? '';
   set searchText(String searchTxt) => _marketSearchText = searchTxt;
+
+  Set<int> get homeV2Index => _homeV2Index ?? {0};
+  set homeV2Index(Set<int> index) => _homeV2Index = index;
 
   void setImagePaths(List<String> paths) {
     _imagePaths = paths;
@@ -33,6 +37,11 @@ class TempStateProvider extends ChangeNotifier {
 
   void setSearchText(String text) {
     _marketSearchText = text;
+    notifyListeners();
+  }
+
+  void setHomeV2Index(Set<int> values) {
+    _homeV2Index = values;
     notifyListeners();
   }
 
