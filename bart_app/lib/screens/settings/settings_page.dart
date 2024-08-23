@@ -10,6 +10,7 @@ import 'package:bart_app/common/utility/bart_app_version_data.dart';
 // import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
+import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:toast/toast.dart';
@@ -286,6 +287,57 @@ class _SettingsPageState extends State<SettingsPage> {
                       width: 100,
                       height: 40,
                       child: BartLocaleToggle(),
+                    ),
+                  ),
+                  Consumer<BartStateProvider>(
+                    builder: (context, provider, child) => Material(
+                      child: InkWell(
+                        child: ListTile(
+                          title: Text(
+                            provider.userProfile.settings!.isLegacyUI
+                                ? context.tr('switch.to.new.ui.1')
+                                : context.tr('switch.to.legacy.ui'),
+                            maxLines: 1,
+                          ),
+                          subtitle: provider.userProfile.settings!.isLegacyUI
+                              ? Text(context.tr('switch.to.new.ui.2'))
+                              : null,
+                          subtitleTextStyle: TextStyle(
+                            fontSize: 12.spMin,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          leading: provider.userProfile.settings!.isLegacyUI
+                              ? Badge(
+                                  backgroundColor: Colors.orange,
+                                  label: const Text('New'),
+                                  textStyle: TextStyle(fontSize: 12.spMin),
+                                )
+                              : null,
+                          onTap: () {
+                            setState(
+                              () {
+                                provider.updateSettings(
+                                  isLegacyUI: !provider
+                                      .userProfile.settings!.isLegacyUI,
+                                );
+                                BartTutorialCoach.createTutorial(context);
+                              },
+                            );
+                            Toast.show(
+                              provider.userProfile.settings!.isLegacyUI
+                                  ? 'Switching to Legacy UI'
+                                  : 'Switching to New UI',
+                              duration: 2,
+                              gravity: Toast.bottom,
+                              backgroundColor: Colors.grey,
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.spMin,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ],
