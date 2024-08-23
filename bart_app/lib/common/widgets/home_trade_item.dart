@@ -134,7 +134,7 @@ class TradeWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(7.r),
         boxShadow: [
           BoxShadow(
             color: shadowColor,
@@ -147,7 +147,7 @@ class TradeWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 7,
+            flex: 6,
             child: Text(
               title,
               maxLines: 2,
