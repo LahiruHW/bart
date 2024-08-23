@@ -147,7 +147,7 @@ class _HomePageV1State extends State<HomePageV1> {
                         isExpanded: isITExpanded,
                         tradeType: TradeCompType.incoming,
                         userID: provider.userProfile.userID,
-                        tuteKey: BartTuteWidgetKeys.homePageIncomingTrades,
+                        tuteKey: BartTuteWidgetKeys.homePageV1IncomingTrades,
                       ).build(context),
                       HomePageV1TradePanelBuilder(
                         title: context.tr('outgoing.trades.title'),
@@ -155,7 +155,7 @@ class _HomePageV1State extends State<HomePageV1> {
                         isExpanded: isOTExpanded,
                         tradeType: TradeCompType.outgoing,
                         userID: provider.userProfile.userID,
-                        tuteKey: BartTuteWidgetKeys.homePageOutgoingTrades,
+                        tuteKey: BartTuteWidgetKeys.homePageV1OutgoingTrades,
                       ).build(context),
                       HomePageV1TradePanelBuilder(
                         title: context.tr('tbc.trades.title'),
@@ -163,7 +163,7 @@ class _HomePageV1State extends State<HomePageV1> {
                         isExpanded: isSTExpanded,
                         tradeType: TradeCompType.toBeCompleted,
                         userID: provider.userProfile.userID,
-                        tuteKey: BartTuteWidgetKeys.homePageTBCTrades,
+                        tuteKey: BartTuteWidgetKeys.homePageV1TBCTrades,
                       ).build(context),
                     ],
                   );
@@ -232,7 +232,7 @@ class _HomePageV1State extends State<HomePageV1> {
                         isExpanded: isFTExpanded,
                         tradeType: TradeCompType.tradeHistory,
                         userID: provider.userProfile.userID,
-                        tuteKey: BartTuteWidgetKeys.homePageSTH,
+                        tuteKey: BartTuteWidgetKeys.homePageV1STH,
                       ).build(context),
                     ],
                   );

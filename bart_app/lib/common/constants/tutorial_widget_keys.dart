@@ -9,10 +9,14 @@ class BartTuteWidgetKeys {
   static final GlobalKey bottomNavBarMarket = GlobalKey();
   static final GlobalKey bottomNavBarProfile = GlobalKey();
 
-  static final GlobalKey homePageIncomingTrades = GlobalKey();
-  static final GlobalKey homePageOutgoingTrades = GlobalKey();
-  static final GlobalKey homePageTBCTrades = GlobalKey();
-  static final GlobalKey homePageSTH = GlobalKey();
+  static final GlobalKey homePageV1IncomingTrades = GlobalKey();
+  static final GlobalKey homePageV1OutgoingTrades = GlobalKey();
+  static final GlobalKey homePageV1TBCTrades = GlobalKey();
+  static final GlobalKey homePageV1STH = GlobalKey();
+  static final GlobalKey homePageV2IncomingTrades = GlobalKey();
+  static final GlobalKey homePageV2OutgoingTrades = GlobalKey();
+  static final GlobalKey homePageV2TBCTrades = GlobalKey();
+  static final GlobalKey homePageV2STH = GlobalKey();
 
   static final GlobalKey marketPageTab1 = GlobalKey();
   static final GlobalKey marketPageTab2 = GlobalKey();

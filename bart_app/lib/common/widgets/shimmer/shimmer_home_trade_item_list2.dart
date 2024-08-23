@@ -17,7 +17,7 @@ class ShimmerHomeTradeWidgetList2 {
           isExpanded: true,
           tradeType: TradeCompType.tradeHistory,
           userID: "",
-          tuteKey: BartTuteWidgetKeys.homePageSTH,
+          tuteKey: BartTuteWidgetKeys.homePageV1STH,
         ).build(context),
       ],
     );

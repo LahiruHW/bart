@@ -17,7 +17,7 @@ class ShimmerHomeTradeWidgetList1 {
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
-          tuteKey: BartTuteWidgetKeys.homePageIncomingTrades,
+          tuteKey: BartTuteWidgetKeys.homePageV1IncomingTrades,
         ).build(context),
         HomePageV1TradePanelBuilder(
           title: "Outgoing Trades",
@@ -25,7 +25,7 @@ class ShimmerHomeTradeWidgetList1 {
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
-          tuteKey: BartTuteWidgetKeys.homePageOutgoingTrades,
+          tuteKey: BartTuteWidgetKeys.homePageV1OutgoingTrades,
         ).build(context),
         HomePageV1TradePanelBuilder(
           title: "Successful",
@@ -33,7 +33,7 @@ class ShimmerHomeTradeWidgetList1 {
           isExpanded: true,
           tradeType: TradeCompType.none,
           userID: "",
-          tuteKey: BartTuteWidgetKeys.homePageTBCTrades,
+          tuteKey: BartTuteWidgetKeys.homePageV1TBCTrades,
         ).build(context),
       ],
     );
