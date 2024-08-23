@@ -8,9 +8,7 @@ class TestPage1 extends StatelessWidget {
     return Center(
       child: Text(
         'Test Page 1',
-        style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-              color: Colors.black,
-            ),
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
     );
   }
@@ -24,9 +22,7 @@ class TestPage2 extends StatelessWidget {
     return Center(
       child: Text(
         'Test Page 2',
-        style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-              color: Colors.black,
-            ),
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
     );
   }

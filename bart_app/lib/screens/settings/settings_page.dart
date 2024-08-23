@@ -32,12 +32,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Timer? _debounce;
   int _tapCount = 0;
   final _maxTaps = 7;
-  final _debounceDuration = const Duration(milliseconds: 200);
+  final _debounceDuration = const Duration(milliseconds: 400);
 
   @override
   void initState() {
-    ToastContext().init(context);
     super.initState();
+    ToastContext().init(context);
   }
 
   void _deleteDialog(BuildContext parentContext, BartStateProvider provider) {
@@ -377,7 +377,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           onTap: () async {
                             provider.userProfile.isFirstLogin = true;
-                            await provider.updateUserProfile(provider.userProfile);
+                            await provider.updateUserProfile(
+                              provider.userProfile,
+                            );
                           },
                           enabled: true,
                           enableFeedback: true,
@@ -488,6 +490,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         subtitleTextStyle: TextStyle(
                           fontSize: 12.spMin,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ),

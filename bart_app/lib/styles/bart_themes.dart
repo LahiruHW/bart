@@ -40,10 +40,9 @@ class BartAppTheme {
   static ColorScheme lightColorScheme = ColorScheme.fromSwatch(
     primarySwatch: Colors.red,
     accentColor: red1,
-    backgroundColor: Colors.white, // red4
-    // errorColor: Colors.red,
-    // cardColor: red4,
+    backgroundColor: Colors.white,
     cardColor: Colors.white,
+    errorColor: Colors.red,
     brightness: Brightness.light,
   );
 

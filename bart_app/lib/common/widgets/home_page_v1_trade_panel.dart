@@ -83,13 +83,11 @@ class HomePageV1TradePanelBuilder {
           Text(
             "$count",
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context)
-                              .colorScheme
-                              .surface
-                              .computeLuminance() >
-                          0.5
-                      ? Colors.black
-                      : Colors.white,
+                  color:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.black
+                          : Colors.white,
                   fontSize: 19.spMin,
                   fontWeight: FontWeight.bold,
                 ),

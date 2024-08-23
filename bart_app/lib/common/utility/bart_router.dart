@@ -26,8 +26,9 @@ class BartRouter {
       GoRoute(
         name: "login",
         path: '/login',
-        pageBuilder: (context, state) =>
-            const MaterialPage(child: LoginTypeSelectPage()),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: LoginTypeSelectPage(),
+        ),
         redirect: (context, state) {
           debugPrint("**************** CHECKING REDIRECTION ****************");
           final provider = Provider.of<BartStateProvider>(

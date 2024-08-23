@@ -51,7 +51,6 @@ class _BaseState extends State<Base> {
       ),
       bottomNavigationBar: BartBottomNavBar(
         navShell: widget.bodyWidget,
-        // index: widget.bodyWidget.currentIndex,
         index: index,
         curvedTopEdges: false,
       ),

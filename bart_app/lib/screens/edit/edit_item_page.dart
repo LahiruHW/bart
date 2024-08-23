@@ -3,10 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/item.dart';
+import 'package:bart_app/common/providers/index.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
-import 'package:bart_app/common/providers/state_provider.dart';
-import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/image_upload_input.dart';
 import 'package:bart_app/common/widgets/input/item_description_input.dart';
@@ -227,7 +226,8 @@ class _EditItemPageState extends State<EditItemPage> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     BartSnackBar(
                                       message: tr(
-                                          'edit.item.confirm.success.snackbar'),
+                                        'edit.item.confirm.success.snackbar',
+                                      ),
                                       backgroundColor: Colors.green,
                                       icon: Icons.error,
                                     ).build(context),

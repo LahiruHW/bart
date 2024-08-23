@@ -275,12 +275,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                       color: profileStyle.profileInfoCardColor,
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.black.withOpacity(0.6),
-                      //     blurRadius: 5.0,
-                      //   ),
-                      // ],
                     ),
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
