@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
+import 'package:bart_app/common/providers/index.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
@@ -22,9 +24,10 @@ class BartTutorialCoach {
   static const _animationDurationMS = 380;
 
   static void _handleTouches(TargetFocus target) {
+    final tempProvider = _context.read<TempStateProvider>();
     switch (target.identify) {
       case 'bottomNavBarHome':
-        target.keyTarget!.currentContext!.go('/home');
+        target.keyTarget!.currentContext!.go('/home-trades');
       case 'bottomNavBarChat':
         target.keyTarget!.currentContext!.go('/chat');
       case 'bottomNavBarMarket':
@@ -39,7 +42,13 @@ class BartTutorialCoach {
           extra: {'beginAllExpanded': true},
         );
       case 'settingsPage':
-        SettingsPage.globalKey.currentContext!.go('/home');
+        SettingsPage.globalKey.currentContext!.go('/home-trades');
+      case 'homePageIncomingTrades':
+        tempProvider.setHomeV2Index({1});
+      case 'homePageOutgoingTrades':
+        tempProvider.setHomeV2Index({2});
+      case 'homePageTBCTrades':
+        tempProvider.setHomeV2Index({3});
       default:
         break;
     }
@@ -94,40 +103,11 @@ class BartTutorialCoach {
     }
   }
 
-  static List<TargetFocus> _createTargets() {
-    List<TargetFocus> tute1Targets = [];
-    //////////////////////////////////////////////////////////////
-    ///////////////////////// HOME PAGE //////////////////////////
-    tute1Targets.add(
-      TargetFocus(
-        identify: "bottomNavBarHome",
-        keyTarget: BartTuteWidgetKeys.bottomNavBarHome,
-        radius: 10,
-        paddingFocus: 10,
-        enableOverlayTab: true,
-        enableTargetTab: true,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            padding: EdgeInsets.zero,
-            builder: (context, controller) {
-              return BartTargetContent(
-                skipText: tr('skip'),
-                nextText: tr('next'),
-                text: tr('tute.homepage.0'),
-                showPreviousBtn: false,
-                onSkip: () => _skip(controller),
-                onNext: () => _next(controller),
-              );
-            },
-          )
-        ],
-      ),
-    );
-    tute1Targets.add(
+  static List<TargetFocus> _homePageV1Targets() {
+    return [
       TargetFocus(
         identify: "homePageIncomingTrades",
-        keyTarget: BartTuteWidgetKeys.homePageIncomingTrades,
+        keyTarget: BartTuteWidgetKeys.homePageV1IncomingTrades,
         shape: ShapeLightFocus.RRect,
         radius: 10,
         paddingFocus: 10,
@@ -159,11 +139,9 @@ class BartTutorialCoach {
           )
         ],
       ),
-    );
-    tute1Targets.add(
       TargetFocus(
         identify: "homePageOutgoingTrades",
-        keyTarget: BartTuteWidgetKeys.homePageOutgoingTrades,
+        keyTarget: BartTuteWidgetKeys.homePageV1OutgoingTrades,
         shape: ShapeLightFocus.RRect,
         radius: 10,
         paddingFocus: 10,
@@ -193,11 +171,9 @@ class BartTutorialCoach {
           )
         ],
       ),
-    );
-    tute1Targets.add(
       TargetFocus(
         identify: "homePageTBCTrades",
-        keyTarget: BartTuteWidgetKeys.homePageTBCTrades,
+        keyTarget: BartTuteWidgetKeys.homePageV1TBCTrades,
         shape: ShapeLightFocus.RRect,
         radius: 10,
         paddingFocus: 10,
@@ -258,11 +234,9 @@ class BartTutorialCoach {
           )
         ],
       ),
-    );
-    tute1Targets.add(
       TargetFocus(
         identify: "homePageSTH",
-        keyTarget: BartTuteWidgetKeys.homePageSTH,
+        keyTarget: BartTuteWidgetKeys.homePageV1STH,
         shape: ShapeLightFocus.RRect,
         radius: 10,
         paddingFocus: 10,
@@ -295,7 +269,218 @@ class BartTutorialCoach {
           )
         ],
       ),
+    ];
+  }
+
+  static List<TargetFocus> _homePageV2Targets() {
+    return [
+      TargetFocus(
+        identify: "homePageIncomingTrades",
+        keyTarget: BartTuteWidgetKeys.homePageV2IncomingTrades,
+        radius: 10,
+        paddingFocus: 30,
+        shape: ShapeLightFocus.RRect,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                nextText: tr('next'),
+                previousText: tr('back'),
+                text: tr('tute.homepage.incoming'),
+                extraContent: Builder(
+                  builder: (context) {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        HomeWidgetsExample.buildIncomingTrade(),
+                      ],
+                    );
+                  },
+                ),
+                onSkip: () => _skip(controller),
+                onNext: () => _next(controller),
+                onPrevious: () => _previous(controller),
+              );
+            },
+          )
+        ],
+      ),
+      TargetFocus(
+        identify: "homePageOutgoingTrades",
+        keyTarget: BartTuteWidgetKeys.homePageV2OutgoingTrades,
+        radius: 10,
+        paddingFocus: 30,
+        shape: ShapeLightFocus.RRect,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                previousText: tr('back'),
+                nextText: tr('next'),
+                text: tr('tute.homepage.outgoing'),
+                extraContent: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    HomeWidgetsExample.buildOutgoingTrade(),
+                  ],
+                ),
+                onSkip: () => _skip(controller),
+                onPrevious: () => _previous(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
+      TargetFocus(
+        identify: "homePageTBCTrades",
+        keyTarget: BartTuteWidgetKeys.homePageV2TBCTrades,
+        radius: 10,
+        paddingFocus: 30,
+        shape: ShapeLightFocus.RRect,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                previousText: tr('back'),
+                nextText: tr('next'),
+                text: tr('tute.homepage.tbc.1'),
+                extraContent: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    Text(
+                      tr('tute.homepage.tbc.2'),
+                      style: TextStyle(fontSize: 15.spMin),
+                    ),
+                    const SizedBox(height: 5),
+                    HomeWidgetsExample.buildTBCTrade1(),
+                    const SizedBox(height: 5),
+                    Text(
+                      tr('or'),
+                      style: TextStyle(
+                        fontSize: 15.spMin,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      tr('tute.homepage.tbc.3'),
+                      style: TextStyle(fontSize: 15.spMin),
+                    ),
+                    const SizedBox(height: 5),
+                    HomeWidgetsExample.buildTBCTrade2(),
+                    const SizedBox(height: 5),
+                    Text(
+                      tr('tute.homepage.tbc.4'),
+                      style: TextStyle(fontSize: 15.spMin),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      tr('tute.homepage.tbc.5'),
+                      style: TextStyle(fontSize: 15.spMin),
+                    ),
+                  ],
+                ),
+                onSkip: () => _skip(controller),
+                onPrevious: () => _previous(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
+      TargetFocus(
+        identify: "homePageSTH",
+        keyTarget: BartTuteWidgetKeys.homePageV2STH,
+        radius: 10,
+        paddingFocus: 30,
+        shape: ShapeLightFocus.RRect,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                previousText: tr('back'),
+                nextText: tr('next'),
+                text: tr('tute.homepage.sth'),
+                extraContent: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    HomeWidgetsExample.buildSTHTrade1(),
+                    const SizedBox(height: 8),
+                    HomeWidgetsExample.buildSTHTrade2(),
+                  ],
+                ),
+                onSkip: () => _skip(controller),
+                onPrevious: () => _previous(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
+    ];
+  }
+
+  static List<TargetFocus> _createTargets() {
+    List<TargetFocus> tute1Targets = [];
+    //////////////////////////////////////////////////////////////
+    ///////////////////////// HOME PAGE //////////////////////////
+    tute1Targets.add(
+      TargetFocus(
+        identify: "bottomNavBarHome",
+        keyTarget: BartTuteWidgetKeys.bottomNavBarHome,
+        radius: 10,
+        paddingFocus: 10,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                nextText: tr('next'),
+                text: tr('tute.homepage.0'),
+                showPreviousBtn: false,
+                onSkip: () => _skip(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
     );
+    final isOldUI =
+        _context.read<BartStateProvider>().userProfile.settings!.isLegacyUI;
+
+    if (isOldUI) {
+      tute1Targets.addAll(_homePageV1Targets());
+    } else {
+      tute1Targets.addAll(_homePageV2Targets());
+    }
     //////////////////////////////////////////////////////////////
     ///////////////////////// CHAT PAGE //////////////////////////
     tute1Targets.add(
