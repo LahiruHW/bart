@@ -19,10 +19,25 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
     color: Colors.transparent,
   );
 
+  /// Checks if the current page can be popped based on both
+  /// the current location and the last matched location
+  bool canPop(BuildContext context) {
+    final GoRouter route = GoRouter.of(context);
+    final String location =
+        route.routerDelegate.currentConfiguration.last.matchedLocation;
+    final stackCheck = route.canPop();
+    final pathCheck = location == '/home-trades' ||
+        location == '/home-services' ||
+        location == '/chat' ||
+        location == '/market' ||
+        location == '/profile';
+    final canPop = stackCheck && !pathCheck;
+    return canPop;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final canPop = GoRouter.of(context).canPop();
-
+    final canPopCurrent = canPop(context);
     return Material(
       shadowColor: Theme.of(context).appBarTheme.shadowColor,
       elevation: 7,
@@ -55,9 +70,8 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     NavigationToolbar(
                       centerMiddle: true,
-                      leading: (!canPop)
-                          ? null
-                          : IconButton(
+                      leading: (canPopCurrent)
+                          ? IconButton(
                               icon: const Icon(Icons.arrow_back),
                               style: ButtonStyle(
                                 iconColor: WidgetStateProperty.all<Color>(
@@ -69,10 +83,10 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   Colors.transparent,
                                 ),
                               ),
-                              onPressed: () => canPop
-                                  ? GoRouter.of(context).pop()
-                                  : null,
-                            ),
+                              onPressed: () =>
+                                  canPopCurrent ? context.pop() : null,
+                            )
+                          : null,
                       middle: showTitle
                           ? Text(
                               "bart.",
