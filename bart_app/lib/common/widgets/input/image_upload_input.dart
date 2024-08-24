@@ -8,7 +8,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/image_with_popup.dart';
-import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/widgets/image_option_bottom_modal_sheet.dart';
 
@@ -113,22 +112,21 @@ class _BartImagePickerState extends State<BartImagePicker> {
                       scrollDirection: Axis.horizontal,
                       dragStartBehavior: DragStartBehavior.down,
                       shrinkWrap: true,
-                      itemCount: provider.imagePaths.length,
-                      itemBuilder: (context, index) => ImageWithPopUpMenu(
-                        key: ValueKey('img_$index'),
-                        imagePath: provider.imagePaths[index],
-                        onDelete: () {
-                          provider.removeImagePath(provider.imagePaths[index]);
-                        },
-                      ),
-                    )
-                      .animate(
-                        delay: 300.ms,
-                      )
-                      .fadeIn(
-                        duration: 400.ms,
-                        curve: Curves.easeInOutCubic,
-                      ),
+                      itemCount: provider.imagePaths.length < MAX_IMAGES
+                          ? provider.imagePaths.length + 1
+                          : provider.imagePaths.length,
+                      itemBuilder: (context, index) =>
+                          index == provider.imagePaths.length
+                              ? imgPlaceholder(isUploadButton: true)
+                              : ImageWithPopUpMenu(
+                                  key: ValueKey('img_$index'),
+                                  imagePath: provider.imagePaths[index],
+                                  onDelete: () {
+                                    provider.removeImagePath(
+                                        provider.imagePaths[index]);
+                                  },
+                                ),
+                    ),
             ),
             provider.imagePaths.isNotEmpty
                 ? Container(
