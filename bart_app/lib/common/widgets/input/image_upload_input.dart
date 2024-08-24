@@ -5,10 +5,12 @@ import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/image_with_popup.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
+import 'package:bart_app/common/widgets/image_option_bottom_modal_sheet.dart';
 
 const int MAX_IMAGES = 4; // Maximum number of images that can be uploaded
 
@@ -49,23 +51,11 @@ class _BartImagePickerState extends State<BartImagePicker> {
       builder: (context, provider, child) => GestureDetector(
         onTap: provider.imagePaths.length == MAX_IMAGES
             ? null
-            : () => BartImageTools.pickImagesFromGallery().then(
-                  (imgList) {
-                    final tempLst = [...provider.imagePaths, ...imgList];
-
-                    if (tempLst.length > MAX_IMAGES) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            tr('image.picker.snackbar'),
-                          ),
-                        ),
-                      );
-                      tempLst.removeRange(MAX_IMAGES, tempLst.length);
-                    }
-                    provider.setImagePaths(tempLst);
-                  },
-                ),
+            : () => ImageOptionBottomModalSheet(
+                  parentContext: BartRouter.rootNavKey.currentContext!,
+                  tempProvider: provider,
+                  maxImgCount: MAX_IMAGES,
+                ).show(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

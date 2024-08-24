@@ -22,6 +22,15 @@ class BartImageTools {
     return returnedImages.map((e) => e.path).toList();
   }
 
+  static Future<List<String>> captureImage(int maxImgCount) async {
+    // IMPLEMENT FUNCTION HERE
+    final returnedImages = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 50,
+    );
+    return [returnedImages!.path];
+  }
+
   static void viewImage(BuildContext context, String imagePath) {
     showDialog(
       context: context,
