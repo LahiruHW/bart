@@ -350,7 +350,10 @@ class BartFirestoreServices {
   ) async {
     userProfileDocRef(userID).update(
       // not using await here to trigger the update in a fire and forget manner
-      {'settings': newSettings.toMap()},
+      {
+        'settings': newSettings.toMap(),
+        'lastUpdated': Timestamp.now(),
+      },
     );
   }
 
