@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
@@ -72,6 +73,76 @@ class ListedItemBottomModalSheet {
     );
   }
 
+  ListTile _viewItemTile(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.remove_red_eye_rounded),
+      title: Text(
+        context.tr('item.page.btn.viewItem'),
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              fontSize: 18.spMin,
+            ),
+      ),
+      onTap: () {
+        Navigator.pop(context); // close the modal sheet
+        context.push(
+          '/item/${item.itemID}',
+          extra: item,
+        );
+      },
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 5,
+      ),
+    );
+  }
+
+  ListTile _editItemTile(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.edit),
+      title: Text(
+        context.tr('item.page.btn.editItem'),
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              fontSize: 18.spMin,
+            ),
+      ),
+      onTap: () {
+        Navigator.pop(context); // close the modal sheet
+        context.push(
+          '/item/${item.itemID}/editItem',
+          extra: {'item': item},
+        );
+      },
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 5,
+      ),
+    );
+  }
+
+  ListTile _deleteItemTile(BuildContext context) {
+    return ListTile(
+      leading: const Icon(
+        Icons.delete,
+        color: Colors.red,
+      ),
+      title: Text(
+        context.tr('item.page.btn.deleteItem'),
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              color: Colors.red,
+              fontSize: 18.spMin,
+            ),
+      ),
+      onTap: () async {
+        Navigator.pop(context); // close the modal sheet
+        await deleteConfirmationDialog(context);
+      },
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 5,
+      ),
+    );
+  }
+
   show() {
     showModalBottomSheet(
       context: parentContext,
@@ -82,9 +153,7 @@ class ListedItemBottomModalSheet {
         return Wrap(
           children: [
             Container(
-              padding: const EdgeInsets.only(
-                bottom: 30,
-              ),
+              padding: EdgeInsets.only(bottom: 30.h),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: isCurrentUser
@@ -94,54 +163,9 @@ class ListedItemBottomModalSheet {
                           onTap: () {},
                           onLongPress: () {},
                         ),
-                        ListTile(
-                          leading: const Icon(Icons.remove_red_eye_rounded),
-                          title: Text(context.tr('item.page.btn.viewItem')),
-                          onTap: () {
-                            Navigator.pop(context); // close the modal sheet
-                            context.push(
-                              '/item/${item.itemID}',
-                              extra: item,
-                            );
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.edit),
-                          title: Text(context.tr('item.page.btn.editItem')),
-                          onTap: () {
-                            Navigator.pop(context); // close the modal sheet
-                            context.push(
-                              '/item/${item.itemID}/editItem',
-                              extra: {'item': item},
-                            );
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          title: Text(
-                            context.tr('item.page.btn.deleteItem'),
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                          onTap: () async {
-                            Navigator.pop(context); // close the modal sheet
-                            await deleteConfirmationDialog(context);
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                        ),
+                        _viewItemTile(context),
+                        _editItemTile(context),
+                        _deleteItemTile(context),
                       ]
                     : [
                         MarketListTile(
@@ -149,25 +173,15 @@ class ListedItemBottomModalSheet {
                           onTap: () {},
                           onLongPress: () {},
                         ),
-                        ListTile(
-                          leading: const Icon(Icons.remove_red_eye_rounded),
-                          title: Text(context.tr('item.page.btn.viewItem')),
-                          onTap: () {
-                            Navigator.pop(context); // close the modal sheet
-                            context.push(
-                              '/item/${item.itemID}',
-                              extra: item,
-                            );
-                          },
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                        ),
+                        _viewItemTile(context),
                         const SizedBox(height: 10),
                         Text(
                           context.tr('item.page.btn.viewRestricted'),
                           textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    fontSize: 12.spMin,
+                                  ),
                         ),
                       ],
               ),
