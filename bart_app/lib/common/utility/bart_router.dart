@@ -100,7 +100,7 @@ class BartRouter {
 
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
-        parentNavigatorKey: _rootNavKey,
+        parentNavigatorKey: rootNavKey,
         restorationScopeId: 'root',
         builder: (context, state, child) => Base(bodyWidget: child),
         branches: [
@@ -293,11 +293,9 @@ class BartRouter {
                         path: '/market/listed-items',
                         pageBuilder: (context, state) {
                           BartAnalyticsEngine.userGoToListedItems();
-                          return MaterialPage(
-                            child: MarketListedItemsPage(
-                              modalContext: _rootNavKey.currentContext!,
-                            ),
+                          return const MaterialPage(
                             maintainState: true,
+                            child: MarketListedItemsPage(),
                           );
                         },
                         routes: const [],

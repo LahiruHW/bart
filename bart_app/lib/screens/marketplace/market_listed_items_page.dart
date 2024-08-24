@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/providers/index.dart';
+import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/listed_item_bottom_modal_sheet.dart';
@@ -12,10 +13,7 @@ import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile_list.da
 class MarketListedItemsPage extends StatelessWidget {
   const MarketListedItemsPage({
     super.key,
-    required this.modalContext,
   });
-
-  final BuildContext modalContext;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +59,7 @@ class MarketListedItemsPage extends StatelessWidget {
                           context: context,
                           dismissable: false,
                         ),
-                        parentContext: modalContext,
+                        parentContext: BartRouter.rootNavKey.currentContext!,
                         isCurrentUser: (stateProvider.userProfile.userID ==
                             thisItem.itemOwner.userID),
                       ).show(),
