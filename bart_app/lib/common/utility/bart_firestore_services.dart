@@ -1196,7 +1196,9 @@ class BartFirestoreServices {
           debugPrint("missing 'fullName' added to user $userID");
         }
 
-        await doc.reference.update(updatedDoc);
+        await doc.reference.update(updatedDoc).then(
+              (_) => debugPrint('updated user profile $userID'),
+            );
       });
     }
   }
@@ -1316,7 +1318,9 @@ class BartFirestoreServices {
           }
           // "text" is attached at sending time
           // "timeSent" is attached at sending time
-          await doc.reference.update(updatedDoc); // finally update the doc
+          await doc.reference.update(updatedDoc).then(
+                (_) => debugPrint('updated message $chatID/${doc.id}'),
+              ); // finally update the doc
         }
       });
     }
