@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
