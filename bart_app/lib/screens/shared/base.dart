@@ -26,7 +26,7 @@ class _BaseState extends State<Base> {
     return Scaffold(
       key: Base.globalKey,
       drawerEnableOpenDragGesture: true,
-      drawerEdgeDragWidth: MediaQuery.of(context).size.width * 0.75,
+      drawerEdgeDragWidth: MediaQuery.of(context).size.width * 0.3,
       drawerDragStartBehavior: DragStartBehavior.start,
       extendBody: false,
       appBar: BartAppBar(
