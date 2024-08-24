@@ -860,7 +860,7 @@ class BartFirestoreServices {
   }
 
   /// zip all three main trade streams (incoming, completed, successful) into one
-  static Stream<List<List<Trade>>> getTradeListStreamZip(
+  static Stream<List<List<Trade>>> getTradeListStreamZipV1(
     String userID,
   ) {
     return Rx.combineLatest3(
