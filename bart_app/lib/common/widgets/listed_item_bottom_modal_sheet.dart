@@ -76,6 +76,7 @@ class ListedItemBottomModalSheet {
   ListTile _viewItemTile(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.remove_red_eye_rounded),
+      tileColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       title: Text(
         context.tr('item.page.btn.viewItem'),
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -99,6 +100,7 @@ class ListedItemBottomModalSheet {
   ListTile _editItemTile(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.edit),
+      tileColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       title: Text(
         context.tr('item.page.btn.editItem'),
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -121,6 +123,7 @@ class ListedItemBottomModalSheet {
 
   ListTile _deleteItemTile(BuildContext context) {
     return ListTile(
+      tileColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       leading: const Icon(
         Icons.delete,
         color: Colors.red,

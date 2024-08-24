@@ -62,7 +62,6 @@ class _BartBottomNavBarState extends State<BartBottomNavBar> {
       backgroundColor:
           Theme.of(context).bottomNavigationBarTheme.backgroundColor,
       currentIndex: selectedIndex,
-      showUnselectedLabels: false,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           key: BartTuteWidgetKeys.bottomNavBarHome,
@@ -129,6 +128,7 @@ class _BartBottomNavBarState extends State<BartBottomNavBar> {
             ? BartAppTheme.black2
             : Colors.white,
         splashFactory: null,
+        canvasColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
       ),
       child: widget.curvedTopEdges
           ? buildTopCurvedBottomNavBar(context)

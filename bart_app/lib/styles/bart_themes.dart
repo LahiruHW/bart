@@ -57,6 +57,8 @@ class BartAppTheme {
 
   static ThemeData lightTheme = ThemeData(
     colorScheme: lightColorScheme,
+    scaffoldBackgroundColor: Colors.white,
+    dialogBackgroundColor: Colors.white,
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
     cardColor: Colors.white,
@@ -76,6 +78,7 @@ class BartAppTheme {
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 20.0,
       backgroundColor: Colors.white,
+      showUnselectedLabels: false,
       selectedItemColor: red1,
       unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.shifting, // looks cool
@@ -114,6 +117,7 @@ class BartAppTheme {
       ),
     ),
     listTileTheme: ListTileThemeData(
+      tileColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 10,
         vertical: 5,
@@ -366,6 +370,8 @@ class BartAppTheme {
 
   static ThemeData darkTheme = ThemeData(
     colorScheme: darkColorScheme,
+    scaffoldBackgroundColor: black2,
+    dialogBackgroundColor: black1,
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
     appBarTheme: AppBarTheme(
@@ -383,6 +389,7 @@ class BartAppTheme {
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 20.0,
       backgroundColor: black2,
+      showUnselectedLabels: false,
       selectedItemColor: red1,
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.shifting, // looks cool
@@ -422,6 +429,7 @@ class BartAppTheme {
       ),
     ),
     listTileTheme: ListTileThemeData(
+      tileColor: black2,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 10,
         vertical: 5,
