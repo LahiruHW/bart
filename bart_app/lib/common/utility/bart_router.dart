@@ -9,7 +9,7 @@ import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 class BartRouter {
-  static final _rootNavKey = GlobalKey<NavigatorState>();
+  static final rootNavKey = GlobalKey<NavigatorState>();
   static final _homeNavKey = GlobalKey<NavigatorState>();
   static final _homeTradesNavKey = GlobalKey<NavigatorState>();
   static final _homeServicesNavKey = GlobalKey<NavigatorState>();
@@ -20,7 +20,7 @@ class BartRouter {
   static final _profileNavKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
-    navigatorKey: _rootNavKey,
+    navigatorKey: rootNavKey,
     initialLocation: '/login',
     routes: [
       GoRoute(
