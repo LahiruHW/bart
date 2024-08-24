@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
@@ -74,13 +75,13 @@ class _ItemPageState extends State<ItemPage> {
                 ),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: BartAppTheme.red1,
-                      fontSize: 18,
+                      fontSize: 18.spMin,
                     ),
               ),
               Text(
                 item.itemName,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontSize: 28,
+                      fontSize: 28.spMin,
                     ),
               ),
               Container(
@@ -145,7 +146,7 @@ class _ItemPageState extends State<ItemPage> {
                 context.tr('item.page.prod.desc'),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: BartAppTheme.red1,
-                      fontSize: 20,
+                      fontSize: 20.spMin,
                     ),
               ),
               Container(
@@ -166,7 +167,7 @@ class _ItemPageState extends State<ItemPage> {
                 child: Text(
                   item.itemDescription,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontSize: 18,
+                        fontSize: 18.spMin,
                         fontWeight: FontWeight.normal,
                       ),
                 ),
@@ -179,7 +180,7 @@ class _ItemPageState extends State<ItemPage> {
                 ),
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: BartAppTheme.red1,
-                      fontSize: 20,
+                      fontSize: 20.spMin,
                     ),
               ),
               Container(
@@ -208,7 +209,7 @@ class _ItemPageState extends State<ItemPage> {
                                   .textTheme
                                   .bodySmall!
                                   .copyWith(
-                                    fontSize: 18,
+                                    fontSize: 18.spMin,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
@@ -222,7 +223,7 @@ class _ItemPageState extends State<ItemPage> {
                             ),
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      fontSize: 18,
+                                      fontSize: 18.spMin,
                                       fontWeight: FontWeight.normal,
                                       color: Colors.grey,
                                     ),
@@ -238,7 +239,7 @@ class _ItemPageState extends State<ItemPage> {
                       context.tr('view.trade.page.incoming.askQuestion'),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: BartAppTheme.red1,
-                            fontSize: 20,
+                            fontSize: 20.spMin,
                           ),
                     )
                   : const SizedBox(),

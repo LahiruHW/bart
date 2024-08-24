@@ -257,7 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // information container
                 Container(
                   margin: const EdgeInsets.only(top: 120.0),
-                  height: MediaQuery.of(context).size.height - 220,
+                  height: MediaQuery.of(context).size.height - 210,
                   padding: EdgeInsets.only(
                     top: 95.h,
                     left: 20.w,
@@ -495,6 +495,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             );
                           },
                         ),
+                        const SizedBox(height: 20.0),
                       ],
                     ),
                   ),

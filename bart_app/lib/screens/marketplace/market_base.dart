@@ -87,7 +87,7 @@ class _MarketBaseState extends State<MarketBase> {
           children: [
             // the tab button row
             SizedBox.fromSize(
-              size: const Size(double.infinity, 80),
+              size: Size(double.infinity, 80.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

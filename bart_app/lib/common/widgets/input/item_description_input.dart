@@ -42,7 +42,6 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
           ),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10),
-        // hintText: 'Description',
         hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
               fontSize: 14.spMin,
               fontWeight: FontWeight.normal,
@@ -55,7 +54,12 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
                           onPressed: widget.onSend,
                           icon: const Icon(Icons.send),
                         ),
-                        const Text("send")
+                        Text(
+                          "send",
+                          style: TextStyle(
+                            fontSize: 14.spMin,
+                          ),
+                        )
                       ]
                     : [
                         const IconButton(
@@ -65,9 +69,12 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
                           splashColor: Colors.transparent,
                           icon: Icon(Icons.more_horiz),
                         ),
-                        const Text(
+                        Text(
                           "sending",
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14.spMin,
+                          ),
                         )
                       ],
               )
