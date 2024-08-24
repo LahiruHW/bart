@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -65,12 +66,14 @@ class ImageWithPopUpMenu extends StatelessWidget {
             trailingIcon: Text(
               "delete",
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontSize: 16.spMin,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             child: Icon(
               Icons.delete,
+              size: 20.spMin,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
