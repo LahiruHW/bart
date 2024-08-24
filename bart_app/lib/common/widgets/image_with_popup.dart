@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -79,6 +80,13 @@ class ImageWithPopUpMenu extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
+        .animate(
+          delay: 300.ms,
+        )
+        .fadeIn(
+          duration: 400.ms,
+          curve: Curves.easeInOutCubic,
+        );
   }
 }
