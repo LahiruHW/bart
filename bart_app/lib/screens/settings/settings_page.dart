@@ -320,9 +320,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   isLegacyUI: !provider
                                       .userProfile.settings!.isLegacyUI,
                                 );
-                                BartTutorialCoach.createTutorial(context);
                               },
                             );
+                            BartTutorialCoach.createTutorial(context);
                             Toast.show(
                               provider.userProfile.settings!.isLegacyUI
                                   ? 'Switching to Legacy UI'

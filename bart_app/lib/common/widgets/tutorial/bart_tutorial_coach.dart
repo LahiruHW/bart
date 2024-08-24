@@ -20,14 +20,15 @@ class BartTutorialCoach {
   static late TutorialCoachMark tuteCoach2;
   static late BuildContext _context;
   static late Size _screenSize;
+  static late TempStateProvider tempProvider;
 
   static const _animationDurationMS = 380;
 
   static void _handleTouches(TargetFocus target) {
-    final tempProvider = _context.read<TempStateProvider>();
     switch (target.identify) {
       case 'bottomNavBarHome':
         target.keyTarget!.currentContext!.go('/home-trades');
+        tempProvider.setHomeV2Index({0});
       case 'bottomNavBarChat':
         target.keyTarget!.currentContext!.go('/chat');
       case 'bottomNavBarMarket':
@@ -54,9 +55,10 @@ class BartTutorialCoach {
     }
   }
 
-  static void createTutorial(BuildContext thisContext) {
+  static Future<void> createTutorial(BuildContext thisContext) async {
     _context = thisContext;
     _screenSize = MediaQuery.of(_context).size;
+    tempProvider = _context.read<TempStateProvider>();
     tuteCoach1 = TutorialCoachMark(
       targets: _createTargets(),
       focusAnimationDuration: const Duration(
@@ -85,6 +87,7 @@ class BartTutorialCoach {
 
   static void _skip(TutorialCoachMarkController controller) {
     BartAnalyticsEngine.userEndsTutorial();
+    tempProvider.setHomeV2Index({0});
     controller.skip();
     try {
       Base.globalKey.currentContext!.go('/home-trades');
@@ -95,6 +98,7 @@ class BartTutorialCoach {
 
   static void _finish(TutorialCoachMarkController controller) {
     BartAnalyticsEngine.userEndsTutorial();
+    tempProvider.setHomeV2Index({0});
     tuteCoach1.finish();
     try {
       Base.globalKey.currentContext!.go('/home-trades');
@@ -303,7 +307,10 @@ class BartTutorialCoach {
                   },
                 ),
                 onSkip: () => _skip(controller),
-                onNext: () => _next(controller),
+                onNext: () {
+                  tempProvider.setHomeV2Index({1});
+                  _next(controller);
+                },
                 onPrevious: () => _previous(controller),
               );
             },
@@ -335,8 +342,14 @@ class BartTutorialCoach {
                   ],
                 ),
                 onSkip: () => _skip(controller),
-                onPrevious: () => _previous(controller),
-                onNext: () => _next(controller),
+                onPrevious: () {
+                  tempProvider.setHomeV2Index({0});
+                  _previous(controller);
+                },
+                onNext: () {
+                  tempProvider.setHomeV2Index({2});
+                  _next(controller);
+                },
               );
             },
           )
@@ -398,8 +411,14 @@ class BartTutorialCoach {
                   ],
                 ),
                 onSkip: () => _skip(controller),
-                onPrevious: () => _previous(controller),
-                onNext: () => _next(controller),
+                onPrevious: () {
+                  tempProvider.setHomeV2Index({1});
+                  _previous(controller);
+                },
+                onNext: () {
+                  tempProvider.setHomeV2Index({3});
+                  _next(controller);
+                },
               );
             },
           )
@@ -433,7 +452,10 @@ class BartTutorialCoach {
                   ],
                 ),
                 onSkip: () => _skip(controller),
-                onPrevious: () => _previous(controller),
+                onPrevious: () {
+                  tempProvider.setHomeV2Index({2});
+                  _previous(controller);
+                },
                 onNext: () => _next(controller),
               );
             },
@@ -445,6 +467,8 @@ class BartTutorialCoach {
 
   static List<TargetFocus> _createTargets() {
     List<TargetFocus> tute1Targets = [];
+    final isOldUI =
+        _context.read<BartStateProvider>().userProfile.settings!.isLegacyUI;
     //////////////////////////////////////////////////////////////
     ///////////////////////// HOME PAGE //////////////////////////
     tute1Targets.add(
@@ -466,21 +490,17 @@ class BartTutorialCoach {
                 text: tr('tute.homepage.0'),
                 showPreviousBtn: false,
                 onSkip: () => _skip(controller),
-                onNext: () => _next(controller),
+                onNext: () {
+                  tempProvider.setHomeV2Index({0});
+                  _next(controller);
+                },
               );
             },
           )
         ],
       ),
     );
-    final isOldUI =
-        _context.read<BartStateProvider>().userProfile.settings!.isLegacyUI;
-
-    if (isOldUI) {
-      tute1Targets.addAll(_homePageV1Targets());
-    } else {
-      tute1Targets.addAll(_homePageV2Targets());
-    }
+    tute1Targets.addAll(isOldUI ? _homePageV1Targets() : _homePageV2Targets());
     //////////////////////////////////////////////////////////////
     ///////////////////////// CHAT PAGE //////////////////////////
     tute1Targets.add(
