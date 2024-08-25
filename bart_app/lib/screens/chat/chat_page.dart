@@ -123,178 +123,181 @@ class _ChatPageState extends State<ChatPage> {
               right: 5.0,
               bottom: 5.0,
             ),
-            child: Column(
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                // show the image and the name of the user you're chatting with
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 10),
-                      Container(
-                        width: 35,
-                        height: 35,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: widget.chatData.chatImageUrl.isEmpty
-                            ? const Icon(
-                                Icons.person,
-                                color: Colors.white,
-                              )
-                            : CachedNetworkImage(
-                                key: UniqueKey(),
-                                cacheManager: BartImageTools.customCacheManager,
-                                progressIndicatorBuilder:
-                                    BartImageTools.progressLoader,
-                                imageUrl: widget.chatData.chatImageUrl,
-                                alignment: Alignment.center,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        widget.chatData.chatName,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                Column(
+                  children: [
+                    // show the image and the name of the user you're chatting with
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 35,
+                            height: 35,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: widget.chatData.chatImageUrl.isEmpty
+                                ? const Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                  )
+                                : CachedNetworkImage(
+                                    key: UniqueKey(),
+                                    cacheManager:
+                                        BartImageTools.customCacheManager,
+                                    progressIndicatorBuilder:
+                                        BartImageTools.progressLoader,
+                                    imageUrl: widget.chatData.chatImageUrl,
+                                    alignment: Alignment.center,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            widget.chatData.chatName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
                                   fontSize: 18,
                                 ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-
-                Expanded(
-                  child: StreamBuilder(
-                    stream: BartFirestoreServices.chatRoomMessageListStream(
-                      widget.chatID,
-                      provider.userProfile.userID,
                     ),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // scroll down after the list is built
-                        WidgetsBinding.instance.addPostFrameCallback(
-                          (timeStamp) => scrollDown(),
-                        );
 
-                        final firstMsgDT =
-                            snapshot.data!.first.timeSent.toDate();
-                        final diff =
-                            DateTime.now().difference(firstMsgDT).inDays;
-                        final date = diff < 1
-                            ? "Today"
-                            : diff == 1
-                                ? "Yesterday"
-                                : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
+                    Expanded(
+                      child: StreamBuilder(
+                        stream: BartFirestoreServices.chatRoomMessageListStream(
+                          widget.chatID,
+                          provider.userProfile.userID,
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            // scroll down after the list is built
+                            WidgetsBinding.instance.addPostFrameCallback(
+                              (timeStamp) => scrollDown(),
+                            );
 
-                        return ListView(
-                          controller: _scrollController,
-                          children: [
-                            _dateSeparator(context, date),
-                            ListView.separated(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                final message = snapshot.data![index];
-                                return VisibilityDetector(
-                                  key: Key(message.messageID),
-                                  onVisibilityChanged: (info) async {
-                                    // // while the timer is active:
-                                    // //    add all the unread messages to the batch
-                                    // //    that need to update the read status
-                                    // // when the timer is finished:
-                                    // //    update the read status of all the messages in the batch
-                                    // //    clear the batch
+                            final firstMsgDT =
+                                snapshot.data!.first.timeSent.toDate();
+                            final diff =
+                                DateTime.now().difference(firstMsgDT).inDays;
+                            final date = diff < 1
+                                ? "Today"
+                                : diff == 1
+                                    ? "Yesterday"
+                                    : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
 
-                                    if (info.visibleFraction >= 0.6) {
-                                      if (_debounce?.isActive ?? false) {
-                                        if (!message.isRead!) {
-                                          BartFirestoreServices.updateMsgBatch(
-                                            widget.chatData,
-                                            message,
-                                            provider.userProfile.userID,
+                            return ListView(
+                              controller: _scrollController,
+                              children: [
+                                _dateSeparator(context, date),
+                                ListView.separated(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    final message = snapshot.data![index];
+                                    return VisibilityDetector(
+                                      key: Key(message.messageID),
+                                      onVisibilityChanged: (info) async {
+                                        // // while the timer is active:
+                                        // //    add all the unread messages to the batch
+                                        // //    that need to update the read status
+                                        // // when the timer is finished:
+                                        // //    update the read status of all the messages in the batch
+                                        // //    clear the batch
+
+                                        if (info.visibleFraction >= 0.6) {
+                                          if (_debounce?.isActive ?? false) {
+                                            if (!message.isRead!) {
+                                              BartFirestoreServices
+                                                  .updateMsgBatch(
+                                                widget.chatData,
+                                                message,
+                                                provider.userProfile.userID,
+                                              );
+                                            }
+                                            _debounce!.cancel();
+                                          }
+                                          _debounce = Timer(
+                                            _debounceDuration,
+                                            () {
+                                              BartFirestoreServices
+                                                  .updateReadMessages(
+                                                widget.chatData,
+                                                provider.userProfile.userID,
+                                              );
+                                            },
                                           );
                                         }
-                                        _debounce!.cancel();
-                                      }
-                                      _debounce = Timer(
-                                        _debounceDuration,
-                                        () {
-                                          BartFirestoreServices
-                                              .updateReadMessages(
-                                            widget.chatData,
-                                            provider.userProfile.userID,
-                                          );
-                                        },
-                                      );
-                                    }
 
-                                    // var visiblePT = info.visibleFraction * 100;
-                                    // debugPrint('Widget ${info.key} is $visiblePT% visible');
+                                        // var visiblePT = info.visibleFraction * 100;
+                                        // debugPrint('Widget ${info.key} is $visiblePT% visible');
+                                      },
+                                      child: BartChatBubble(
+                                        message: message,
+                                        currentUserID: provider.user!.uid,
+                                      ),
+                                    );
                                   },
-                                  child: BartChatBubble(
-                                    message: message,
-                                    currentUserID: provider.user!.uid,
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                final currentDT = DateTime.now();
-                                final currentMsg = snapshot.data![index];
-                                final currentMsgDT =
-                                    currentMsg.timeSent.toDate();
-                                final nextMsg = snapshot.data![index + 1];
-                                final nextMsgDT = nextMsg.timeSent.toDate();
-                                final showDate =
-                                    !nextMsg.isSameDayAsMsg(currentMsg);
-                                if (showDate) {
-                                  final diff =
-                                      currentDT.difference(nextMsgDT).inDays;
-                                  final date = diff == 0
-                                      ? "Today"
-                                      : diff == 1
-                                          ? "Yesterday"
-                                          : "${currentMsgDT.day}/${currentMsgDT.month}/${currentMsgDT.year}";
-                                  return _dateSeparator(context, date);
-                                }
-                                return const SizedBox(height: 1);
-                              },
-                            ),
-                          ],
-                        );
-                      } else {
-                        return const Center(
-                          child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.0,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                Divider(
-                  color:
-                      Theme.of(context).colorScheme.surface.computeLuminance() >
-                              0.5
-                          ? Colors.white
-                          : Colors.black,
-                  indent: 0,
-                  height: 1,
+                                  separatorBuilder: (context, index) {
+                                    final currentDT = DateTime.now();
+                                    final currentMsg = snapshot.data![index];
+                                    final currentMsgDT =
+                                        currentMsg.timeSent.toDate();
+                                    final nextMsg = snapshot.data![index + 1];
+                                    final nextMsgDT = nextMsg.timeSent.toDate();
+                                    final showDate =
+                                        !nextMsg.isSameDayAsMsg(currentMsg);
+                                    if (showDate) {
+                                      final diff = currentDT
+                                          .difference(nextMsgDT)
+                                          .inDays;
+                                      final date = diff == 0
+                                          ? "Today"
+                                          : diff == 1
+                                              ? "Yesterday"
+                                              : "${currentMsgDT.day}/${currentMsgDT.month}/${currentMsgDT.year}";
+                                      return _dateSeparator(context, date);
+                                    }
+                                    return const SizedBox(height: 1);
+                                  },
+                                ),
+                                const SizedBox(height: 80)
+                              ],
+                            );
+                          } else {
+                            return const Center(
+                              child: SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1.0,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    // CHAT INPUT GROUP CONDITIONAL WAS HERE BEFORE
+                    // TO REVERT, PUT IT HERE & REMOVE THE STACK
+                  ],
                 ),
 
                 // if there is a user in the chatData that is deleted, show a message
-
                 widget.chatData.users.contains(UserLocalProfile.empty())
                     ? Container(
                         alignment: Alignment.center,
@@ -307,23 +310,26 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                         ),
                       )
-                    : ChatInputGroup(
-                        controller: _textEditController,
-                        focusNode: _focusNode,
-                        onSend: () {
-                          if (_textEditController.text.isNotEmpty) {
-                            debugPrint(
-                                "Send message: ${_textEditController.text}");
-                            BartFirestoreServices.sendMessageUsingChatObj(
-                              widget.chatData,
-                              provider.userProfile.userID,
-                              _textEditController.text.trim(),
-                            );
+                    : Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ChatInputGroup(
+                          controller: _textEditController,
+                          focusNode: _focusNode,
+                          onSend: () {
+                            if (_textEditController.text.isNotEmpty) {
+                              debugPrint(
+                                  "Send message: ${_textEditController.text}");
+                              BartFirestoreServices.sendMessageUsingChatObj(
+                                widget.chatData,
+                                provider.userProfile.userID,
+                                _textEditController.text.trim(),
+                              );
 
-                            _textEditController.clear();
-                            scrollDown(offset: 100);
-                          }
-                        },
+                              _textEditController.clear();
+                              scrollDown(offset: 100);
+                            }
+                          },
+                        ),
                       ),
               ],
             ),
