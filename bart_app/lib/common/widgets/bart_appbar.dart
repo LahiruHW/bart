@@ -29,7 +29,8 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
     final pathCheck = location == '/home-trades' ||
         location == '/home-services' ||
         location == '/chat' ||
-        location == '/market' ||
+        location == '/market/listed-items' ||
+        location == '/market/services' ||
         location == '/profile';
     final canPop = stackCheck && !pathCheck;
     return canPop;
