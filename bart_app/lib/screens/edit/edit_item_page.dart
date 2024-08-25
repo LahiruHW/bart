@@ -214,7 +214,14 @@ class _EditItemPageState extends State<EditItemPage> {
                               itemDescription: _descriptionTextController.text,
                               imgs: tempProvider.imagePaths,
                               preferredInReturn:
-                                  _returnsTextController.text.split(", "),
+                                  _returnsTextController.text.isNotEmpty
+                                      ? _returnsTextController.text
+                                          .split(', ')
+                                          .map(
+                                            (itemStr) => itemStr.trim(),
+                                          )
+                                          .toList()
+                                      : [],
                             );
 
                             BartFirestoreServices.saveEditItemPostingChanges(
