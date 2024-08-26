@@ -50,21 +50,21 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              flex: 1,
-              child: IconButton.filled(
-                icon: const Icon(Icons.send),
-                padding: const EdgeInsets.all(20),
-                style: ButtonStyle(
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
+            SizedBox(width: 10.w),
+            IconButton.filled(
+              icon: Icon(Icons.send, size: 20.spMin),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 14,
+              ),
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                 ),
-                onPressed: widget.onSend ?? () {},
               ),
+              onPressed: widget.onSend ?? () {},
             ),
           ],
         ),
