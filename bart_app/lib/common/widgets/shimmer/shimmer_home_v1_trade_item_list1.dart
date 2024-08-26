@@ -3,7 +3,7 @@ import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/home_page_v1_trade_panel.dart';
 
-class ShimmerHomeTradeWidgetList1 {
+class ShimmerHomeV1TradeWidgetList1 {
   ExpansionPanelList show(BuildContext context) {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) => true,
