@@ -661,6 +661,43 @@ class BartTutorialCoach {
         ],
       ),
     );
+    tute1Targets.add(
+      TargetFocus(
+        identify: "marketPageListedItem",
+        shape: ShapeLightFocus.RRect,
+        keyTarget: BartTuteWidgetKeys.marketPageListedItem,
+        radius: 10,
+        paddingFocus: 10,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            padding: EdgeInsets.zero,
+            builder: (context, controller) {
+              return BartTargetContent(
+                skipText: tr('skip'),
+                previousText: tr('back'),
+                nextText: tr('next'),
+                text: tr('tute.marketPage.3.1'),
+                extraContent: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Text(
+                      tr('tute.marketPage.3.2'),
+                      style: TextStyle(fontSize: 16.spMin),
+                    ),
+                  ],
+                ),
+                onSkip: () => _skip(controller),
+                onPrevious: () => _previous(controller),
+                onNext: () => _next(controller),
+              );
+            },
+          )
+        ],
+      ),
+    );
     // ADD REQUESTS/SERVICE TAB TUTORIAL HERE
     //////////////////////////////////////////////////////////////
     //////////////////////// PROFILE PAGE ////////////////////////

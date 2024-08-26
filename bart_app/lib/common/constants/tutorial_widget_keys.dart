@@ -20,6 +20,7 @@ class BartTuteWidgetKeys {
 
   static final GlobalKey marketPageTab1 = GlobalKey();
   static final GlobalKey marketPageTab2 = GlobalKey();
+  static final GlobalKey marketPageListedItem = GlobalKey();
 
   static final GlobalKey appBarHamburgerMenu = GlobalKey();
   static final GlobalKey sideNavMenuSettings = GlobalKey();

@@ -5,6 +5,7 @@ import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/providers/index.dart';
 import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:bart_app/common/widgets/market_page_list_tile.dart';
+import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/listed_item_bottom_modal_sheet.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
@@ -44,7 +45,11 @@ class MarketListedItemsPage extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) {
                     final thisItem = data[index];
+
                     return MarketListTile(
+                      key: index == 0
+                          ? BartTuteWidgetKeys.marketPageListedItem
+                          : null,
                       item: thisItem,
                       onTap: () {
                         context.push(
