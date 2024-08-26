@@ -66,6 +66,7 @@
     "edit.trade.page.btn.confirm": "Confirmer\nEditer",
     "edit.trade.page.success.snackbar": "Mise à jour réussie de l'échange",
     "edit.trade.page.error.snackbar": "Erreur de mise à jour de cet échange",
+    "chat.user.is.deleted": "Cet utilisateur a supprimé son compte. Vous ne pouvez plus discuter avec leur.",
     "chat.bubble.trade.context.subText1": "Vous avez posé une question sur cet échange",
     "chat.bubble.trade.context.subText2": "{senderName} pose une question sur cet échange",
     "chat.bubble.item.context.subText1": "Vous avez posé une question sur cet article",

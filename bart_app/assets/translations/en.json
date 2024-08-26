@@ -66,6 +66,7 @@
     "edit.trade.page.btn.confirm": "Confirm\nChanges",
     "edit.trade.page.success.snackbar": "Trade updated successfully",
     "edit.trade.page.error.snackbar": "There was an error updating this trade",
+    "chat.user.is.deleted": "This user has deleted their account. You can no longer chat with them.",
     "chat.bubble.trade.context.subText1": "You asked about this trade",
     "chat.bubble.trade.context.subText2": "{senderName} is asking about this trade",
     "chat.bubble.item.context.subText1": "You asked about this item",

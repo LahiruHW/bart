@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/chat.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
@@ -224,16 +225,17 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
           )
               ? Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 10,
+                  ),
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
                       .withOpacity(0.85),
-                  child: const Text(
-                    "This user has deleted their account. You can no longer chat with them.",
+                  child: Text(
+                    context.tr('chat.user.is.deleted'),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(fontSize: 14.spMin),
                   ),
                 )
               : ChatInputGroup(
