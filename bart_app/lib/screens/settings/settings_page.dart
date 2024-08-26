@@ -449,7 +449,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     : "about.easter.egg.toast2",
                                 namedArgs: {'tapsLeft': tapsLeft.toString()},
                               ),
-                              duration: 2,
+                              duration: 3,
                               gravity: Toast.bottom,
                               backgroundColor: Colors.grey,
                               textStyle: TextStyle(
