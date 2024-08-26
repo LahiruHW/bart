@@ -78,11 +78,12 @@ class _ChatListTileState extends State<ChatListTile> {
               height: 60.h,
               imageBuilder: (context, imageProvider) => CircleAvatar(
                 backgroundImage: imageProvider,
+                radius: 30.w,
               ),
             )
           : CircleAvatar(
               backgroundColor: Colors.black,
-              radius: 30.r,
+              radius: 30.w,
               child: const Icon(Icons.person),
             ),
       trailing: unreadCount <= 0

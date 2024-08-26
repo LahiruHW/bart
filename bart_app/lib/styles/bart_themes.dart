@@ -172,9 +172,7 @@ class BartAppTheme {
         borderSide: BorderSide(
           color: Colors.black.withOpacity(0.2),
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
@@ -484,25 +482,19 @@ class BartAppTheme {
         borderSide: BorderSide(
           color: Colors.black.withOpacity(0.2),
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.white.withOpacity(0.1),
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: red1,
         ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10.r)),
       ),
       hintStyle: BartTextTheme.globalTextTheme.bodySmall!.copyWith(
         fontSize: 18.spMin,

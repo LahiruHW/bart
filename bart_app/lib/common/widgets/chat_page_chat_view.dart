@@ -223,8 +223,11 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
             UserLocalProfile.empty(),
           )
               ? Container(
+                  width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: Theme.of(context)
+                      .scaffoldBackgroundColor
+                      .withOpacity(0.85),
                   child: const Text(
                     "This user has deleted their account. You can no longer chat with them.",
                     textAlign: TextAlign.center,

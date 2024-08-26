@@ -22,9 +22,9 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
   Widget build(BuildContext context) {
     // the typing area
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: SizedBox.fromSize(
-        size: const Size(double.infinity, 75),
+        size: Size(double.infinity, 70.h),
         child: Row(
           children: [
             Expanded(
@@ -45,7 +45,7 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
-                    borderSide: const BorderSide(width: 0.2),
+                    borderSide: BorderSide(width: 0.2.w),
                   ),
                 ),
               ),
