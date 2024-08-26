@@ -21,6 +21,9 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onVerticalDragDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      onHorizontalDragDown: (_) =>
+          FocusManager.instance.primaryFocus?.unfocus(),
       child: Consumer<BartStateProvider>(
         builder: (context, provider, child) => Scaffold(
           key: globalKey,
