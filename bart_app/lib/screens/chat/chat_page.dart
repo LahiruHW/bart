@@ -5,8 +5,8 @@ import 'package:bart_app/common/widgets/chat_page_header.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/chat_page_chat_view.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({
+class ChatPage extends StatelessWidget {
+  ChatPage({
     super.key,
     required this.chatID,
     required this.chatData,
@@ -15,11 +15,6 @@ class ChatPage extends StatefulWidget {
   final String chatID;
   final Chat chatData;
 
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
   final GlobalKey<ScaffoldState> globalKey = GlobalKey();
 
   @override
@@ -37,12 +32,12 @@ class _ChatPageState extends State<ChatPage> {
             ),
             child: Column(
               children: [
-                ChatPageHeader(chatData: widget.chatData),
+                ChatPageHeader(chatData: chatData),
                 Expanded(
                   child: ChatPageChatView(
                     userID: provider.userProfile.userID,
-                    chatID: widget.chatID,
-                    chatData: widget.chatData,
+                    chatID: chatID,
+                    chatData: chatData,
                   ),
                 ),
               ],
