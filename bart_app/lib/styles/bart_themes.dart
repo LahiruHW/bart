@@ -664,7 +664,7 @@ class BartAppTheme {
       ),
       BartTutorialContentStyle(
         contentTextColour: Colors.white,
-        contentBackgroundColour: Colors.black,
+        contentBackgroundColour: black2,
         overlayShadowColour: Colors.red,
         buttonTextColor: Colors.red,
       ),
