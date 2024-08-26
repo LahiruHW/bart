@@ -33,19 +33,33 @@ class _ChatInputGroupState extends State<ChatInputGroup> {
                 focusNode: widget.focusNode,
                 controller: widget.controller,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontSize: 14.spMin,
+                      fontSize: 13.spMin,
                       fontWeight: FontWeight.normal,
                     ),
+                cursorOpacityAnimates: true,
                 decoration: InputDecoration(
                   hintText: "Type a message...",
                   hintStyle: TextStyle(
                     color: Colors.grey[400],
-                    fontSize: 14.spMin,
+                    fontSize: 13.spMin,
                     fontWeight: FontWeight.normal,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                    borderSide: BorderSide(width: 0.2.w),
+                  border: (Theme.of(context).inputDecorationTheme.border
+                          as OutlineInputBorder)
+                      .copyWith(
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                  enabledBorder: (Theme.of(context)
+                          .inputDecorationTheme
+                          .enabledBorder as OutlineInputBorder)
+                      .copyWith(
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
+                  focusedBorder: (Theme.of(context)
+                          .inputDecorationTheme
+                          .focusedBorder as OutlineInputBorder)
+                      .copyWith(
+                    borderRadius: BorderRadius.circular(15.r),
                   ),
                 ),
               ),
