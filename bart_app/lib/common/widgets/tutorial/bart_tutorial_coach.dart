@@ -28,7 +28,7 @@ class BartTutorialCoach {
     switch (target.identify) {
       case 'bottomNavBarHome':
         target.keyTarget!.currentContext!.go('/home-trades');
-        tempProvider.setHomeV2Index({0});
+        tempProvider.setHomeV2Index(0);
       case 'bottomNavBarChat':
         target.keyTarget!.currentContext!.go('/chat');
       case 'bottomNavBarMarket':
@@ -45,11 +45,11 @@ class BartTutorialCoach {
       case 'settingsPage':
         SettingsPage.globalKey.currentContext!.go('/home-trades');
       case 'homePageIncomingTrades':
-        tempProvider.setHomeV2Index({1});
+        tempProvider.setHomeV2Index(1);
       case 'homePageOutgoingTrades':
-        tempProvider.setHomeV2Index({2});
+        tempProvider.setHomeV2Index(2);
       case 'homePageTBCTrades':
-        tempProvider.setHomeV2Index({3});
+        tempProvider.setHomeV2Index(3);
       default:
         break;
     }
@@ -87,7 +87,7 @@ class BartTutorialCoach {
 
   static void _skip(TutorialCoachMarkController controller) {
     BartAnalyticsEngine.userEndsTutorial();
-    tempProvider.setHomeV2Index({0});
+    tempProvider.setHomeV2Index(0);
     controller.skip();
     try {
       Base.globalKey.currentContext!.go('/home-trades');
@@ -98,7 +98,7 @@ class BartTutorialCoach {
 
   static void _finish(TutorialCoachMarkController controller) {
     BartAnalyticsEngine.userEndsTutorial();
-    tempProvider.setHomeV2Index({0});
+    tempProvider.setHomeV2Index(0);
     tuteCoach1.finish();
     try {
       Base.globalKey.currentContext!.go('/home-trades');
@@ -308,7 +308,7 @@ class BartTutorialCoach {
                 ),
                 onSkip: () => _skip(controller),
                 onNext: () {
-                  tempProvider.setHomeV2Index({1});
+                  tempProvider.setHomeV2Index(1);
                   _next(controller);
                 },
                 onPrevious: () => _previous(controller),
@@ -343,11 +343,11 @@ class BartTutorialCoach {
                 ),
                 onSkip: () => _skip(controller),
                 onPrevious: () {
-                  tempProvider.setHomeV2Index({0});
+                  tempProvider.setHomeV2Index(0);
                   _previous(controller);
                 },
                 onNext: () {
-                  tempProvider.setHomeV2Index({2});
+                  tempProvider.setHomeV2Index(2);
                   _next(controller);
                 },
               );
@@ -412,11 +412,11 @@ class BartTutorialCoach {
                 ),
                 onSkip: () => _skip(controller),
                 onPrevious: () {
-                  tempProvider.setHomeV2Index({1});
+                  tempProvider.setHomeV2Index(1);
                   _previous(controller);
                 },
                 onNext: () {
-                  tempProvider.setHomeV2Index({3});
+                  tempProvider.setHomeV2Index(3);
                   _next(controller);
                 },
               );
@@ -453,7 +453,7 @@ class BartTutorialCoach {
                 ),
                 onSkip: () => _skip(controller),
                 onPrevious: () {
-                  tempProvider.setHomeV2Index({2});
+                  tempProvider.setHomeV2Index(2);
                   _previous(controller);
                 },
                 onNext: () => _next(controller),
@@ -491,7 +491,7 @@ class BartTutorialCoach {
                 showPreviousBtn: false,
                 onSkip: () => _skip(controller),
                 onNext: () {
-                  tempProvider.setHomeV2Index({0});
+                  tempProvider.setHomeV2Index(0);
                   _next(controller);
                 },
               );

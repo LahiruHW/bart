@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:bart_app/styles/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -247,6 +248,9 @@ class BartAppTheme {
         ),
       ),
     ),
+    cupertinoOverrideTheme: const NoDefaultCupertinoThemeData(
+      brightness: Brightness.light,
+    ),
     extensions: {
       BartBrandColours(
         logoColor: Colors.white,
@@ -362,6 +366,12 @@ class BartAppTheme {
         contentBackgroundColour: Colors.white,
         overlayShadowColour: Colors.red,
         buttonTextColor: Colors.red,
+      ),
+      BartSegmentSliderStyle(
+        iconColour: Colors.grey,
+        selectedIconColour: Colors.white,
+        thumbColor: red1,
+        backgroundColor: Colors.grey.withOpacity(0.2),
       ),
     },
   );
@@ -553,6 +563,9 @@ class BartAppTheme {
         ),
       ),
     ),
+    cupertinoOverrideTheme: const NoDefaultCupertinoThemeData(
+      brightness: Brightness.dark,
+    ),
     extensions: {
       BartBrandColours(
         logoColor: red1,
@@ -667,6 +680,12 @@ class BartAppTheme {
         contentBackgroundColour: black2,
         overlayShadowColour: Colors.red,
         buttonTextColor: Colors.red,
+      ),
+      BartSegmentSliderStyle(
+        iconColour: Colors.grey,
+        selectedIconColour: Colors.black,
+        thumbColor: red1,
+        backgroundColor: grey1,
       ),
     },
   );

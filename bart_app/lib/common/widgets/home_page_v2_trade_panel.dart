@@ -11,14 +11,14 @@ class HomePageV2TradePanel extends StatelessWidget {
     required this.title,
     required this.emptyContentText,
     required this.snapshot,
-    required this.multiArrayIndex,
+    required this.segmentIndex,
     required this.userID,
   });
 
   final String title;
   final String emptyContentText;
   final AsyncSnapshot snapshot;
-  final int multiArrayIndex;
+  final int segmentIndex;
   final String userID;
 
   @override
@@ -34,7 +34,7 @@ class HomePageV2TradePanel extends StatelessWidget {
       );
     }
 
-    final List<Trade> trades = snapshot.data![multiArrayIndex];
+    final List<Trade> trades = snapshot.data![segmentIndex];
 
     if (trades.isEmpty) {
       return SliverFillRemaining(

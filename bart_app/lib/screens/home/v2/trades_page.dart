@@ -25,12 +25,12 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
     tempProvider = Provider.of<TempStateProvider>(context, listen: false);
   }
 
-  void _handleSelection(Set<int> selected) {
-    setState(() => tempProvider.setHomeV2Index(selected));
+  void _handleSelection(int? selected) {
+    setState(() => tempProvider.setHomeV2Index(selected!));
   }
 
   (String, String) _getTitles() {
-    switch (tempProvider.homeV2Index.first) {
+    switch (tempProvider.homeV2Index) {
       case 0:
         return (
           context.tr('incoming.trades.title'),
@@ -81,7 +81,7 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
                   title: title,
                   emptyContentText: emptyContentText,
                   snapshot: snapshot,
-                  multiArrayIndex: tempProvider.homeV2Index.first,
+                  segmentIndex: tempProvider.homeV2Index,
                   userID: provider.userProfile.userID,
                 );
               },
