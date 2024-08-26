@@ -251,9 +251,8 @@ class BubbleChildFactory extends StatelessWidget {
             CachedNetworkImage(
               key: UniqueKey(),
               imageUrl: thisItem.imgs[0],
-              fit: BoxFit.contain,
-              height: 200,
-              width: 200,
+              fit: BoxFit.cover,
+              scale: 0.3.dg,
               progressIndicatorBuilder: BartImageTools.progressLoader,
               cacheManager: BartImageTools.customCacheManager,
             ),
