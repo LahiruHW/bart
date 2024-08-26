@@ -38,17 +38,17 @@ class ShimmerHomeTradeWidget extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Container(
-                width: 100,
-                height: 10,
+                width: 100.w,
+                height: 10.h,
                 color: shimmerStyle.highlightColor,
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Expanded(
               flex: 1,
               child: Container(
-                width: 100,
-                height: 10,
+                width: 100.w,
+                height: 10.h,
                 color: shimmerStyle.highlightColor,
               ),
             ),

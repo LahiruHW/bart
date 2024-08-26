@@ -1,5 +1,6 @@
-import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile.dart';
 
 class MarketListTileListShimmer extends StatelessWidget {
   const MarketListTileListShimmer({
@@ -10,8 +11,8 @@ class MarketListTileListShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: 10,
-      separatorBuilder: (context, index) => const Divider(
-        height: 8,
+      separatorBuilder: (context, index) => Divider(
+        height: 8.h,
         color: Colors.transparent,
       ),
       itemBuilder: (context, index) {

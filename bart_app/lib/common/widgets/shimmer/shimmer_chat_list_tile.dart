@@ -1,6 +1,7 @@
-import 'package:bart_app/styles/bart_shimmer_load_style.dart';
-import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/styles/bart_shimmer_load_style.dart';
 
 class ChatListTileShimmer extends StatelessWidget {
   const ChatListTileShimmer({
@@ -11,37 +12,33 @@ class ChatListTileShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     final shimmerStyle = Theme.of(context).extension<BartShimmerLoadStyle>()!;
     return Shimmer.fromColors(
-        baseColor: shimmerStyle.baseColor,
-        highlightColor: shimmerStyle.highlightColor,
-        child: ListTile(
-          // tileColor: Colors.grey[200]!,
-          tileColor: shimmerStyle.baseColor.withOpacity(0.2),
-          title: Container(
-            // color: Colors.grey,
-            color: shimmerStyle.baseColor,
-            width: 80,
-            height: 10,
-          ),
-          subtitle: Container(
-            // color: Colors.grey,
-            color: shimmerStyle.baseColor,
-            width: 50,
-            height: 10,
-          ),
-          leading: CircleAvatar(
-            // backgroundColor: Colors.grey,
-            backgroundColor: shimmerStyle.baseColor,
-            radius: 30,
-            child: const Icon(Icons.person),
-          ),
-          trailing: Container(
-            // color: Colors.grey,
-            color: shimmerStyle.baseColor,
-            width: 30,
-            height: 10,
-          ),
-          minLeadingWidth: 10,
-          style: ListTileStyle.drawer,
-        ));
+      baseColor: shimmerStyle.baseColor,
+      highlightColor: shimmerStyle.highlightColor,
+      child: ListTile(
+        tileColor: shimmerStyle.baseColor.withOpacity(0.2),
+        title: Container(
+          color: shimmerStyle.baseColor,
+          width: 80.w,
+          height: 10.h,
+        ),
+        subtitle: Container(
+          color: shimmerStyle.baseColor,
+          width: 50.w,
+          height: 10.h,
+        ),
+        leading: CircleAvatar(
+          backgroundColor: shimmerStyle.baseColor,
+          radius: 30.w,
+          child: const Icon(Icons.person),
+        ),
+        trailing: Container(
+          color: shimmerStyle.baseColor,
+          width: 30.w,
+          height: 10.h,
+        ),
+        minLeadingWidth: 10.w,
+        style: ListTileStyle.drawer,
+      ),
+    );
   }
 }

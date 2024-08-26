@@ -1,5 +1,6 @@
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/market_list_item_style.dart';
 import 'package:bart_app/styles/bart_shimmer_load_style.dart';
 
@@ -24,7 +25,7 @@ class MarketListTileShimmer extends StatelessWidget {
         baseColor: shimmerStyle.baseColor,
         highlightColor: shimmerStyle.highlightColor,
         child: Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: EdgeInsets.only(left: 15.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -37,28 +38,22 @@ class MarketListTileShimmer extends StatelessWidget {
                     // item name
                     Container(
                       color: shimmerStyle.baseColor,
-                      width: 150,
-                      height: 10,
+                      width: 150.w,
+                      height: 10.h,
                     ),
-                    const Divider(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
+                    Divider(height: 10.h, color: Colors.transparent),
                     // username
                     Container(
                       color: Colors.grey,
-                      width: 80,
-                      height: 10,
+                      width: 80.w,
+                      height: 10.h,
                     ),
-                    const Divider(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
+                    Divider(height: 10.h, color: Colors.transparent),
                     // date
                     Container(
                       color: shimmerStyle.baseColor,
                       width: double.infinity,
-                      height: 10,
+                      height: 10.h,
                     ),
                   ],
                 ),

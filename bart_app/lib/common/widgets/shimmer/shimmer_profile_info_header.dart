@@ -1,6 +1,7 @@
-import 'package:bart_app/styles/bart_shimmer_load_style.dart';
-import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/styles/bart_shimmer_load_style.dart';
 
 class ProfileInfoHeaderShimmer extends StatelessWidget {
   const ProfileInfoHeaderShimmer({
@@ -18,19 +19,19 @@ class ProfileInfoHeaderShimmer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 100,
-            height: 100,
-            margin: const EdgeInsets.only(top: 70.0),
+            width: 100.w,
+            height: 100.h,
+            margin: EdgeInsets.only(top: 70.h),
             decoration: BoxDecoration(
               color: shimmerStyle.baseColor,
-              borderRadius: BorderRadius.circular(50.0),
+              borderRadius: BorderRadius.circular(50.r),
             ),
           ),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.h),
           Container(
             color: shimmerStyle.baseColor,
-            width: 150,
-            height: 30,
+            width: 150.w,
+            height: 30.h,
           ),
         ],
       ),
