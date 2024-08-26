@@ -4,10 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:bart_app/common/utility/bart_image_tools.dart';
+import 'package:bart_app/common/widgets/chat_page_header.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
 import 'package:bart_app/common/widgets/input/chat_input_actions.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
@@ -48,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
       if (_focusNode.hasFocus || _focusNode.hasPrimaryFocus) {
         Future.delayed(
           const Duration(milliseconds: 500),
-          () => scrollDown(offset: 100),
+          () => scrollDown(),
         );
       }
     });
@@ -123,60 +122,14 @@ class _ChatPageState extends State<ChatPage> {
               right: 5.0,
               bottom: 5.0,
             ),
-            child: Stack(
-              fit: StackFit.expand,
+            child: Column(
               children: [
-                Column(
-                  children: [
-                    // show the image and the name of the user you're chatting with
-                    SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 10),
-                          Container(
-                            width: 35,
-                            height: 35,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: widget.chatData.chatImageUrl.isEmpty
-                                ? const Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                  )
-                                : CachedNetworkImage(
-                                    key: UniqueKey(),
-                                    cacheManager:
-                                        BartImageTools.customCacheManager,
-                                    progressIndicatorBuilder:
-                                        BartImageTools.progressLoader,
-                                    imageUrl: widget.chatData.chatImageUrl,
-                                    alignment: Alignment.center,
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            widget.chatData.chatName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .copyWith(
-                                  fontSize: 18,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    Expanded(
-                      child: StreamBuilder(
+                ChatPageHeader(chatData: widget.chatData),
+                Expanded(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      StreamBuilder(
                         stream: BartFirestoreServices.chatRoomMessageListStream(
                           widget.chatID,
                           provider.userProfile.userID,
@@ -212,13 +165,11 @@ class _ChatPageState extends State<ChatPage> {
                                     return VisibilityDetector(
                                       key: Key(message.messageID),
                                       onVisibilityChanged: (info) async {
-                                        // // while the timer is active:
-                                        // //    add all the unread messages to the batch
-                                        // //    that need to update the read status
-                                        // // when the timer is finished:
-                                        // //    update the read status of all the messages in the batch
-                                        // //    clear the batch
-
+                                        // while the timer is active:
+                                        //    add all the unread messages to the batch
+                                        // when the timer is finished:
+                                        //    update the read status of all the messages in the batch
+                                        //    clear the batch
                                         if (info.visibleFraction >= 0.6) {
                                           if (_debounce?.isActive ?? false) {
                                             if (!message.isRead!) {
@@ -242,7 +193,6 @@ class _ChatPageState extends State<ChatPage> {
                                             },
                                           );
                                         }
-
                                         // var visiblePT = info.visibleFraction * 100;
                                         // debugPrint('Widget ${info.key} is $visiblePT% visible');
                                       },
@@ -275,7 +225,7 @@ class _ChatPageState extends State<ChatPage> {
                                     return const SizedBox(height: 1);
                                   },
                                 ),
-                                const SizedBox(height: 80)
+                                const SizedBox(height: 80),
                               ],
                             );
                           } else {
@@ -291,46 +241,47 @@ class _ChatPageState extends State<ChatPage> {
                           }
                         },
                       ),
-                    ),
-                    // CHAT INPUT GROUP CONDITIONAL WAS HERE BEFORE
-                    // TO REVERT, PUT IT HERE & REMOVE THE STACK
-                  ],
-                ),
-
-                // if there is a user in the chatData that is deleted, show a message
-                widget.chatData.users.contains(UserLocalProfile.empty())
-                    ? Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: const Text(
-                          "This user has deleted their account. You can no longer chat with them.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      )
-                    : Align(
+                      Align(
                         alignment: Alignment.bottomCenter,
-                        child: ChatInputGroup(
-                          controller: _textEditController,
-                          focusNode: _focusNode,
-                          onSend: () {
-                            if (_textEditController.text.isNotEmpty) {
-                              debugPrint(
-                                  "Send message: ${_textEditController.text}");
-                              BartFirestoreServices.sendMessageUsingChatObj(
-                                widget.chatData,
-                                provider.userProfile.userID,
-                                _textEditController.text.trim(),
-                              );
+                        child: widget.chatData.users.contains(
+                          UserLocalProfile.empty(),
+                        )
+                            ? Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                child: const Text(
+                                  "This user has deleted their account. You can no longer chat with them.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              )
+                            : ChatInputGroup(
+                                controller: _textEditController,
+                                focusNode: _focusNode,
+                                onSend: () {
+                                  if (_textEditController.text.isNotEmpty) {
+                                    debugPrint(
+                                        "Send message: ${_textEditController.text}");
+                                    BartFirestoreServices
+                                        .sendMessageUsingChatObj(
+                                      widget.chatData,
+                                      provider.userProfile.userID,
+                                      _textEditController.text.trim(),
+                                    );
 
-                              _textEditController.clear();
-                              scrollDown(offset: 100);
-                            }
-                          },
-                        ),
+                                    _textEditController.clear();
+                                    scrollDown(offset: 100);
+                                  }
+                                },
+                              ),
                       ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
