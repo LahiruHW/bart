@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -94,6 +95,25 @@ class BartImageTools {
         strokeWidth: 1.0,
       ),
     );
+  }
+
+  static Future<Size> calculateImgSize(String imagePath) async {
+    final File imageFile = File(imagePath);
+    final Image image = Image.file(imageFile);
+    final Completer<Size> completer = Completer<Size>();
+    image.image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener(
+        (ImageInfo info, bool _) {
+          completer.complete(
+            Size(
+              info.image.width.toDouble(),
+              info.image.height.toDouble(),
+            ),
+          );
+        },
+      ),
+    );
+    return completer.future;
   }
 }
 
