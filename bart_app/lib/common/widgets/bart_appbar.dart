@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:bart_app/common/utility/bart_route_handler.dart';
 
 const statusBarHeight = 35.0;
 
@@ -19,26 +20,9 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
     color: Colors.transparent,
   );
 
-  /// Checks if the current page can be popped based on both
-  /// the current location and the last matched location
-  bool canPop(BuildContext context) {
-    final GoRouter route = GoRouter.of(context);
-    final String location =
-        route.routerDelegate.currentConfiguration.last.matchedLocation;
-    final stackCheck = route.canPop();
-    final pathCheck = location == '/home-trades' ||
-        location == '/home-services' ||
-        location == '/chat' ||
-        location == '/market/listed-items' ||
-        location == '/market/services' ||
-        location == '/profile';
-    final canPop = stackCheck && !pathCheck;
-    return canPop;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final canPopCurrent = canPop(context);
+    final canPopCurrent = BartRouteHandler.canPop(context);
     return Material(
       shadowColor: Theme.of(context).appBarTheme.shadowColor,
       elevation: 7,
