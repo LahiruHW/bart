@@ -104,7 +104,6 @@ class HomePageV2TradePanel extends StatelessWidget {
         SliverList.separated(
           itemCount: trades.length,
           itemBuilder: (context, index) {
-            print(index);
             final trade = trades[index];
             return TradeWidget(
               trade: trade,
