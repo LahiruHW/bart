@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:transparent_pointer/transparent_pointer.dart';
 import 'package:bart_app/common/widgets/home_trade_item.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item.dart';
 
@@ -105,20 +106,22 @@ class HomePageV2TradePanel extends StatelessWidget {
           itemCount: trades.length,
           itemBuilder: (context, index) {
             final trade = trades[index];
-            return TradeWidget(
-              trade: trade,
-              tradeType: trade.tradeCompType,
-              userID: userID,
-              onTap: () {
-                context.push(
-                  '/viewTrade',
-                  extra: {
-                    'trade': trades[index],
-                    'tradeType': trade.tradeCompType,
-                    'userID': userID,
-                  },
-                );
-              },
+            return TransparentPointer(
+              child: TradeWidget(
+                trade: trade,
+                tradeType: trade.tradeCompType,
+                userID: userID,
+                onTap: () {
+                  context.push(
+                    '/viewTrade',
+                    extra: {
+                      'trade': trades[index],
+                      'tradeType': trade.tradeCompType,
+                      'userID': userID,
+                    },
+                  );
+                },
+              ),
             );
           },
           separatorBuilder: (context, index) {

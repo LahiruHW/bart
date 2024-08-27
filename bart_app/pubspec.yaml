@@ -58,6 +58,7 @@ dependencies:
   flutter_markdown: ^0.7.2+1
   shared_preferences: ^2.2.3
   flutter_screenutil: ^5.9.0
+  transparent_pointer: ^1.0.1
   firebase_analytics: ^11.2.0
   firebase_messaging: ^15.0.0
   tutorial_coach_mark: ^1.2.11

@@ -93,6 +93,7 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             sliver: SliverStack(
               children: [
+                SliverToBoxAdapter(child: updateDragWrapper(context)),
                 StreamBuilder(
                   stream: BartFirestoreServices.getTradeListStreamZipV2(
                     provider.userProfile.userID,
@@ -107,7 +108,6 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
                     );
                   },
                 ),
-                SliverToBoxAdapter(child: updateDragWrapper(context)),
               ],
             ),
           ),
