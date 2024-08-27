@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
@@ -247,138 +248,141 @@ class _NewItemPageState extends State<NewItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<BartStateProvider, TempStateProvider>(
-      builder: (context, stateProvider, tempProvider, child) => GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          key: _scaffoldKey,
-          body: SingleChildScrollView(
-            padding: widget.isReturnOffer
-                ? const EdgeInsets.only(
-                    left: 12, right: 12, top: 10, bottom: 30)
-                : const EdgeInsets.only(
-                    left: 12, right: 12, top: 30, bottom: 30),
-            child: Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.tr('newItem.page.itemNameHeader'),
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: BartAppTheme.red1,
-                          fontSize: 18.spMin,
-                        ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: TextField(
-                      controller: _nameTextController,
+    return BartRouteHandler.popHandlerWrapper(
+      context: context,
+      child: Consumer2<BartStateProvider, TempStateProvider>(
+        builder: (context, stateProvider, tempProvider, child) => GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Scaffold(
+            key: _scaffoldKey,
+            body: SingleChildScrollView(
+              padding: widget.isReturnOffer
+                  ? const EdgeInsets.only(
+                      left: 12, right: 12, top: 10, bottom: 30)
+                  : const EdgeInsets.only(
+                      left: 12, right: 12, top: 30, bottom: 30),
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.tr('newItem.page.itemNameHeader'),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: BartAppTheme.red1,
+                            fontSize: 18.spMin,
+                          ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: TextField(
+                        controller: _nameTextController,
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              fontSize: 14.spMin,
+                              fontWeight: FontWeight.normal,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: context.tr('newItem.page.itemNameHint'),
+                          hintStyle: TextStyle(
                             fontSize: 14.spMin,
                             fontWeight: FontWeight.normal,
                           ),
-                      decoration: InputDecoration(
-                        hintText: context.tr('newItem.page.itemNameHint'),
-                        hintStyle: TextStyle(
-                          fontSize: 14.spMin,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    context.tr('newItem.page.itemImagesHeader'),
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: BartAppTheme.red1,
-                          fontSize: 18.spMin,
-                        ),
-                  ),
-                  const BartImagePicker(),
-                  const SizedBox(height: 10),
-                  Text(
-                    context.tr('newItem.page.itemDescHeader'),
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: BartAppTheme.red1,
-                          fontSize: 18.spMin,
-                        ),
-                  ),
-                  const SizedBox(height: 5),
-                  DescriptionTextField(
-                    textController: _descriptionTextController,
-                  ),
-                  const SizedBox(height: 10),
-
-                  _isReturnOffer
-                      ? const SizedBox(height: 0)
-                      : Text(
-                          context.tr("newItem.page.prefInReturnHeader"),
-                          style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: BartAppTheme.red1,
-                                    fontSize: 18.spMin,
+                    const SizedBox(height: 10),
+                    Text(
+                      context.tr('newItem.page.itemImagesHeader'),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: BartAppTheme.red1,
+                            fontSize: 18.spMin,
+                          ),
+                    ),
+                    const BartImagePicker(),
+                    const SizedBox(height: 10),
+                    Text(
+                      context.tr('newItem.page.itemDescHeader'),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: BartAppTheme.red1,
+                            fontSize: 18.spMin,
+                          ),
+                    ),
+                    const SizedBox(height: 5),
+                    DescriptionTextField(
+                      textController: _descriptionTextController,
+                    ),
+                    const SizedBox(height: 10),
+      
+                    _isReturnOffer
+                        ? const SizedBox(height: 0)
+                        : Text(
+                            context.tr("newItem.page.prefInReturnHeader"),
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      color: BartAppTheme.red1,
+                                      fontSize: 18.spMin,
+                                    ),
+                          ),
+                    _isReturnOffer
+                        ? const SizedBox(height: 0)
+                        : Text(
+                            context.tr('newItem.page.prefInReturnSub'),
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      color: BartAppTheme.red1,
+                                      fontSize: 10.spMin,
+                                    ),
+                          ),
+                    _isReturnOffer
+                        ? const SizedBox(height: 0)
+                        : Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TextField(
+                              controller: _returnsTextController,
+                              maxLength: 500,
+                              minLines: 1,
+                              maxLines: 5,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    fontSize: 14.spMin,
+                                    fontWeight: FontWeight.normal,
                                   ),
-                        ),
-                  _isReturnOffer
-                      ? const SizedBox(height: 0)
-                      : Text(
-                          context.tr('newItem.page.prefInReturnSub'),
-                          style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: BartAppTheme.red1,
-                                    fontSize: 10.spMin,
-                                  ),
-                        ),
-                  _isReturnOffer
-                      ? const SizedBox(height: 0)
-                      : Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          child: TextField(
-                            controller: _returnsTextController,
-                            maxLength: 500,
-                            minLines: 1,
-                            maxLines: 5,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
+                              decoration: InputDecoration(
+                                hintText: context.tr(
+                                  'newItem.page.prefInReturnHint',
+                                ),
+                                hintStyle: TextStyle(
                                   fontSize: 14.spMin,
                                   fontWeight: FontWeight.normal,
                                 ),
-                            decoration: InputDecoration(
-                              hintText: context.tr(
-                                'newItem.page.prefInReturnHint',
-                              ),
-                              hintStyle: TextStyle(
-                                fontSize: 14.spMin,
-                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ),
+                    // const SizedBox(height: 10),
+                    Center(
+                      child: SizedBox(
+                        width: 150,
+                        height: 75,
+                        child: BartMaterialButton(
+                          label: context.tr('newItem.page.btn.continue'),
+                          onPressed: () => _isReturnOffer
+                              ? returnOfferCallback(
+                                  stateProvider,
+                                  tempProvider,
+                                )
+                              : newItemCallback(
+                                  stateProvider,
+                                  tempProvider,
+                                ),
                         ),
-                  // const SizedBox(height: 10),
-                  Center(
-                    child: SizedBox(
-                      width: 150,
-                      height: 75,
-                      child: BartMaterialButton(
-                        label: context.tr('newItem.page.btn.continue'),
-                        onPressed: () => _isReturnOffer
-                            ? returnOfferCallback(
-                                stateProvider,
-                                tempProvider,
-                              )
-                            : newItemCallback(
-                                stateProvider,
-                                tempProvider,
-                              ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
