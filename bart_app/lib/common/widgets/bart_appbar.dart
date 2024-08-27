@@ -23,6 +23,8 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final canPopCurrent = BartRouteHandler.canPop(context);
+    final shouldShowED = BartRouteHandler.shouldShowExitDialog(context);
+    const showED = BartRouteHandler.showExitDialog;
     return Material(
       shadowColor: Theme.of(context).appBarTheme.shadowColor,
       elevation: 7,
@@ -68,8 +70,18 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   Colors.transparent,
                                 ),
                               ),
-                              onPressed: () =>
-                                  canPopCurrent ? context.pop() : null,
+                              onPressed: () async {
+                                if (canPopCurrent) {
+                                  if (shouldShowED) {
+                                    final shouldPop = await showED(context);
+                                    if (shouldPop! && context.mounted) {
+                                      context.pop();
+                                    }
+                                  } else {
+                                    context.mounted ? context.pop() : null;
+                                  }
+                                }
+                              },
                             )
                           : null,
                       middle: showTitle

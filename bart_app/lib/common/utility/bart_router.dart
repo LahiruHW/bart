@@ -57,6 +57,12 @@ class BartRouter {
         pageBuilder: (context, state) => const MaterialPage(
           child: OnboardingPage(),
         ),
+        onExit: (context, state) {
+          BartAnalyticsEngine.userEndsOnboarding();
+          BartAnalyticsEngine.logAppClose();
+          BartRouteHandler.preExitCallbacks(context);
+          return true;
+        },
       ),
 
       GoRoute(
@@ -365,6 +371,10 @@ class BartRouter {
                     builder: (context, state) {
                       Item item = state.extra as Item;
                       return ReturnOfferPage(returnForItem: item);
+                    },
+                    onExit: (context, state) {
+                      BartRouteHandler.preExitCallbacks(context);
+                      return true;
                     },
                     routes: [
                       GoRoute(
