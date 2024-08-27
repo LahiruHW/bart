@@ -65,14 +65,10 @@ class BartRouteHandler {
           BartAnalyticsEngine.logAppClose();
           return;
         }
-        final canPop = BartRouteHandler.canPop(context);
-        if (canPop) {
-          context.pop();
-        }
         final shouldPop =
             await BartRouteHandler.shouldExitDialog(context) ?? false;
 
-        if (context.mounted && shouldPop && !didPop) {
+        if (context.mounted && shouldPop) {
           context.pop();
           BartAnalyticsEngine.logAppClose();
         }
