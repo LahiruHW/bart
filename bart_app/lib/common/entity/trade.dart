@@ -135,6 +135,14 @@ class Trade {
     );
   }
 
+  bool isSameDayAsTrade(Trade other) {
+    final DateTime thisTime = timeCreated.toDate();
+    final DateTime otherTime = other.timeCreated.toDate();
+    return thisTime.day == otherTime.day &&
+        thisTime.month == otherTime.month &&
+        thisTime.year == otherTime.year;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'tradedItem': tradedItem.itemID,
