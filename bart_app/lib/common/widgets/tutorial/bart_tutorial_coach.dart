@@ -43,6 +43,7 @@ class BartTutorialCoach {
           extra: {'beginAllExpanded': true},
         );
       case 'settingsPage':
+        tempProvider.setHomeV2Index(0);
         SettingsPage.globalKey.currentContext!.go('/home-trades');
       case 'homePageIncomingTrades':
         tempProvider.setHomeV2Index(1);
