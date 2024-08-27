@@ -9,8 +9,8 @@ import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/home_page_v1_trade_panel.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
-import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item_list1.dart';
-import 'package:bart_app/common/widgets/shimmer/shimmer_home_trade_item_list2.dart';
+import 'package:bart_app/common/widgets/shimmer/shimmer_home_v1_trade_item_list1.dart';
+import 'package:bart_app/common/widgets/shimmer/shimmer_home_v1_trade_item_list2.dart';
 
 class HomePageV1 extends StatefulWidget {
   const HomePageV1({
@@ -130,7 +130,7 @@ class _HomePageV1State extends State<HomePageV1> {
                 ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return ShimmerHomeTradeWidgetList1().show(context);
+                    return ShimmerHomeV1TradeWidgetList1().show(context);
                   }
 
                   final trades = snapshot.data!;
@@ -217,7 +217,7 @@ class _HomePageV1State extends State<HomePageV1> {
                 ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return ShimmerHomeTradeWidgetList2().show(context);
+                    return ShimmerHomeV1TradeWidgetList2().show(context);
                   }
                   final trades = snapshot.data!;
                   return ExpansionPanelList(

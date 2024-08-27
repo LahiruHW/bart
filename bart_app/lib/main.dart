@@ -9,6 +9,7 @@ import 'package:bart_app/common/utility/bart_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firebase_messaging.dart';
@@ -75,8 +76,9 @@ class BartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (val) {
-        BartAnalyticsEngine.logAppClose();
+      onPopInvokedWithResult: (didPop, result) {
+        BartRouteHandler.preExitCallbacks(context);
+        return;
       },
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
