@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sliver_tools/sliver_tools.dart';
+import 'package:bart_app/common/providers/index.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/screens/home/v2/home_page_v2_header.dart';
-import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/home_page_v2_trade_panel.dart';
 
@@ -27,6 +28,23 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
 
   void _handleSelection(int? selected) {
     setState(() => tempProvider.setHomeV2Index(selected!));
+  }
+
+  Widget updateDragWrapper(BuildContext context) {
+    return GestureDetector(
+      onHorizontalDragEnd: (_) {
+        if (_.primaryVelocity! > 0) {
+          _handleSelection((tempProvider.homeV2Index + 1) % 4);
+        } else {
+          _handleSelection((tempProvider.homeV2Index - 1) % 4);
+        }
+      },
+      child: Container(
+        width: 1.0.sw,
+        height: 0.75.sh,
+        color: Colors.transparent,
+      ),
+    );
   }
 
   (String, String) _getTitles() {
@@ -61,6 +79,7 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
     final (title, emptyContentText) = _getTitles();
     return Consumer<BartStateProvider>(
       builder: (context, provider, child) => CustomScrollView(
+        scrollDirection: Axis.vertical,
         slivers: [
           SliverPersistentHeader(
             pinned: true,
@@ -72,19 +91,24 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            sliver: StreamBuilder(
-              stream: BartFirestoreServices.getTradeListStreamZipV2(
-                provider.userProfile.userID,
-              ),
-              builder: (context, snapshot) {
-                return HomePageV2TradePanel(
-                  title: title,
-                  emptyContentText: emptyContentText,
-                  snapshot: snapshot,
-                  segmentIndex: tempProvider.homeV2Index,
-                  userID: provider.userProfile.userID,
-                );
-              },
+            sliver: SliverStack(
+              children: [
+                StreamBuilder(
+                  stream: BartFirestoreServices.getTradeListStreamZipV2(
+                    provider.userProfile.userID,
+                  ),
+                  builder: (context, snapshot) {
+                    return HomePageV2TradePanel(
+                      title: title,
+                      emptyContentText: emptyContentText,
+                      snapshot: snapshot,
+                      segmentIndex: tempProvider.homeV2Index,
+                      userID: provider.userProfile.userID,
+                    );
+                  },
+                ),
+                SliverToBoxAdapter(child: updateDragWrapper(context)),
+              ],
             ),
           ),
         ],
