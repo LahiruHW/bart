@@ -36,7 +36,7 @@ class HomePageV2TradePanel extends StatelessWidget {
             color: Theme.of(context).dividerColor,
           ),
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.centerRight,
             child: Container(
               height: 20,
               width: 80,
