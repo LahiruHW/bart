@@ -15,7 +15,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
 
   final String segmentTitle;
   final Function(int?) onSelectionChanged;
-  final double _extent = 160.h;
+  final double _headerHeight = 166.h;
   final double _width = 270.w;
   final double _height = 60.h;
 
@@ -47,7 +47,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
-          SizedBox(height: 20.h),
+          SizedBox(height: 25.h),
           Consumer<TempStateProvider>(
             builder: (context, tempProvider, child) {
               return Stack(
@@ -61,10 +61,6 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                       backgroundColor: sliderStyle.backgroundColor,
                       thumbColor: sliderStyle.thumbColor,
                       groupValue: tempProvider.homeV2Index,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5.h,
-                        horizontal: 5.w,
-                      ),
                       children: buttonFactory(
                         [
                           const Icon(Icons.input_rounded),
@@ -114,7 +110,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
               );
             },
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: 35.h),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -153,10 +149,10 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => _extent;
+  double get maxExtent => _headerHeight;
 
   @override
-  double get minExtent => _extent;
+  double get minExtent => _headerHeight;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
