@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/index.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
-import 'package:bart_app/common/providers/temp_state_provider.dart';
+import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
@@ -29,6 +29,10 @@ class BartRouter {
         pageBuilder: (context, state) => const MaterialPage(
           child: LoginTypeSelectPage(),
         ),
+        onExit: (context, state) {
+          BartRouteHandler.preExitCallbacks(context);
+          return true;
+        },
         redirect: (context, state) {
           debugPrint("**************** CHECKING REDIRECTION ****************");
           final provider = Provider.of<BartStateProvider>(
@@ -190,11 +194,7 @@ class BartRouter {
                           : EditTradePageOffer(trade: trade);
                     },
                     onExit: (context, state) {
-                      final tempProvider = Provider.of<TempStateProvider>(
-                        context,
-                        listen: false,
-                      );
-                      tempProvider.clearAllTempData();
+                      BartRouteHandler.preExitCallbacks(context);
                       return true;
                     },
                   )
@@ -212,11 +212,7 @@ class BartRouter {
                   );
                 },
                 onExit: (context, state) {
-                  final tempProvider = Provider.of<TempStateProvider>(
-                    context,
-                    listen: false,
-                  );
-                  tempProvider.clearAllTempData();
+                  BartRouteHandler.preExitCallbacks(context);
                   return true;
                 },
                 routes: [
@@ -359,10 +355,7 @@ class BartRouter {
                       return EditItemPage(tradedItem: item);
                     },
                     onExit: (context, state) {
-                      final tempProvider = Provider.of<TempStateProvider>(
-                          context,
-                          listen: false);
-                      tempProvider.clearAllTempData();
+                      BartRouteHandler.preExitCallbacks(context);
                       return true;
                     },
                   ),

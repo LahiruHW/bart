@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 
 class BartRouteHandler {
@@ -54,6 +56,13 @@ class BartRouteHandler {
     );
   }
 
+  /// all the functions that are done before the app closes
+  static void preExitCallbacks(BuildContext context) {
+    final tempProvider = Provider.of<TempStateProvider>(context, listen: false);
+    tempProvider.clearAllTempData();
+    BartAnalyticsEngine.logAppClose();
+  }
+
   static Widget popHandlerWrapper({
     required BuildContext context,
     required Widget child,
@@ -62,7 +71,6 @@ class BartRouteHandler {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) {
-          BartAnalyticsEngine.logAppClose();
           return;
         }
         final shouldPop =
@@ -70,7 +78,6 @@ class BartRouteHandler {
 
         if (context.mounted && shouldPop) {
           context.pop();
-          BartAnalyticsEngine.logAppClose();
         }
       },
       child: child,
