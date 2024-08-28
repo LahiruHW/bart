@@ -54,6 +54,24 @@ class DevModeTools {
               ),
             ),
           ),
+          Material(
+            child: InkWell(
+              child: ListTile(
+                title: const Text(
+                  "Update Chat Schema",
+                  style: TextStyle(fontSize: 15),
+                ),
+                subtitle:const Text(
+                  "(Outer Collection)",
+                  style: TextStyle(fontSize: 10),
+                ), 
+                onTap: () {
+                  Toast.show('updating schema of all chats (outer collection)');
+                  BartFirestoreServices.updateChatSchema();
+                },
+              ),
+            ),
+          ),
         ],
       );
 }
