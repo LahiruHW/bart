@@ -31,7 +31,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
   late final FocusNode _focusNode;
 
   Timer? _debounce;
-  final Duration _debounceDuration = const Duration(milliseconds: 400);
+  final Duration _debounceDuration = const Duration(seconds: 2);
 
   @override
   void initState() {
@@ -119,6 +119,18 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
         ),
       );
 
+  void _createDebounce() {
+    _debounce = Timer(
+      _debounceDuration,
+      () {
+        BartFirestoreServices.updateReadMessages(
+          widget.chatData,
+          widget.userID,
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _textEditController.dispose();
@@ -157,6 +169,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
                       ? "Yesterday"
                       : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
 
+              _createDebounce();
               return ListView(
                 controller: _scrollController,
                 shrinkWrap: true,
@@ -188,15 +201,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
                               }
                               _debounce!.cancel();
                             }
-                            _debounce = Timer(
-                              _debounceDuration,
-                              () {
-                                BartFirestoreServices.updateReadMessages(
-                                  widget.chatData,
-                                  widget.userID,
-                                );
-                              },
-                            );
+                            _createDebounce();
                           }
                           // var visiblePT = info.visibleFraction * 100;
                           // debugPrint('Widget ${info.key} is $visiblePT% visible');

@@ -270,7 +270,7 @@ class BartFirestoreServices {
     final msgDR = chatRoomCollection(chat.chatID).doc(msg.messageID);
     final chatDR = chatDocRef(chat.chatID);
 
-    if (senderID != currentUserID && msg.isRead == false) {
+    if (senderID != currentUserID && !(msg.isRead!)) {
       msg.isRead = true;
 
       final userVal = chat.unreadMsgCountMap[senderID] ?? 0;
