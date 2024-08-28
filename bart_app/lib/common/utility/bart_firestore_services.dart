@@ -749,7 +749,7 @@ class BartFirestoreServices {
   static Stream<List<TradeFirestore>> _tradeCollectionListStream() {
     return tradeCollection
         .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
-        .orderBy('timeUpdated', descending: true)
+        .orderBy('timeCreated', descending: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.map(
