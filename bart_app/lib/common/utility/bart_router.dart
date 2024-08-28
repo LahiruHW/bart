@@ -30,7 +30,6 @@ class BartRouter {
           child: LoginTypeSelectPage(),
         ),
         onExit: (context, state) {
-          BartAnalyticsEngine.logAppClose();
           BartRouteHandler.preExitCallbacks(context);
           return true;
         },
