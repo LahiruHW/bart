@@ -24,16 +24,19 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
     BartSegmentSliderStyle style,
     int selectedIndex,
   ) {
-    Map<int, Widget> buttonMap = {};
-    for (int i = 0; i < iconList.length; i++) {
-      buttonMap[i] = IconButton(
-        icon: iconList[i],
-        disabledColor:
-            selectedIndex == i ? style.selectedIconColour : style.iconColour,
-        onPressed: null,
-      );
-    }
-    return buttonMap;
+    return iconList.asMap().map(
+          (key, thisIcon) => MapEntry(
+            key,
+            IconButton(
+              icon: thisIcon,
+              disabledColor: selectedIndex == key
+                  ? style.selectedIconColour
+                  : style.iconColour,
+              onPressed: null,
+            ),
+          ),
+        );
+  }
   }
 
   @override
