@@ -100,6 +100,25 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
     );
   }
 
+  Widget _emptyChatWidget(BuildContext context) => Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(bottom: 80.h),
+        child: Text(
+          // "No messages yet.\nType something and press \u{27A4} to begin chatting.",
+          context.tr('chat.page.empty'),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.normal,
+                fontSize: 12.spMin,
+                color: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .color!
+                    .withOpacity(0.5),
+              ),
+        ),
+      );
+
   @override
   void dispose() {
     _textEditController.dispose();
@@ -121,6 +140,10 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
           ),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              if (snapshot.data!.isEmpty) {
+                return _emptyChatWidget(context);
+              }
+
               // scroll down after the list is built
               WidgetsBinding.instance.addPostFrameCallback(
                 (timeStamp) => scrollDown(),
