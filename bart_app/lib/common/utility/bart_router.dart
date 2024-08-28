@@ -30,6 +30,7 @@ class BartRouter {
           child: LoginTypeSelectPage(),
         ),
         onExit: (context, state) {
+          BartAnalyticsEngine.logAppClose();
           BartRouteHandler.preExitCallbacks(context);
           return true;
         },
@@ -54,9 +55,12 @@ class BartRouter {
       GoRoute(
         name: "onboard",
         path: '/onboard',
-        pageBuilder: (context, state) => const MaterialPage(
-          child: OnboardingPage(),
-        ),
+        pageBuilder: (context, state) {
+          BartAnalyticsEngine.userBeginsOnboarding();
+          return const MaterialPage(
+            child: OnboardingPage(),
+          );
+        },
         onExit: (context, state) {
           BartAnalyticsEngine.userEndsOnboarding();
           BartAnalyticsEngine.logAppClose();

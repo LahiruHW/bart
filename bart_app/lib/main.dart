@@ -77,6 +77,7 @@ class BartApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
+        BartAnalyticsEngine.logAppClose();
         BartRouteHandler.preExitCallbacks(context);
         return;
       },

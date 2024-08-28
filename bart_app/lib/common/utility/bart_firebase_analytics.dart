@@ -57,6 +57,21 @@ class BartAnalyticsEngine {
     await _instance.logEvent(name: 'user_logout');
   }
 
+  static Future<void> userBeginsOnboarding() async {
+    debugPrint('--------------------- EVENT: userBeginsOnboarding');
+    await _instance.logEvent(name: 'begin_onboarding', parameters: {
+      'userID': _currentUID!,
+    });
+  }
+
+  static Future<void> userEndsOnboarding() async {
+    debugPrint('--------------------- EVENT: userEndsOnboarding');
+    await _instance.logEvent(name: 'end_onboarding', parameters: {
+      'userID': _currentUID!,
+    });
+  }
+
+
   static Future<void> userGoToListedItems() async {
     debugPrint('--------------------- EVENT: userGoToListedItems');
     await _instance.logEvent(name: 'go_to_listed_items');
