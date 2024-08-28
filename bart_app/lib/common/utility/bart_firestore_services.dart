@@ -1266,7 +1266,10 @@ class BartFirestoreServices {
           updatedDoc['preferredInReturn'] = FieldValue.arrayUnion([]);
           debugPrint("missing 'preferredInReturn' added to item $itemID");
         }
-        await doc.reference.update(updatedDoc);
+        await doc.reference.update(updatedDoc).then(
+              (_) => debugPrint('updated item $itemID'),
+            );
+        ;
       });
     }
   }
@@ -1397,7 +1400,9 @@ class BartFirestoreServices {
           }
         }
 
-        await doc.reference.update(updatedDoc);
+        await doc.reference.update(updatedDoc).then(
+              (_) => debugPrint('updated chat $chatID'),
+            );
       });
     }
   }
