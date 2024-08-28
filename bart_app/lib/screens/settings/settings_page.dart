@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:toast/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
+import 'package:bart_app/common/constants/use_dev_mode.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
 // import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
@@ -13,7 +16,6 @@ import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
-import 'package:toast/toast.dart';
 
 const statusBarHeight = 35.0;
 
@@ -497,6 +499,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
+              if (DevModeTools.isDevMode && kDebugMode)
+                DevModeTools.buildDevMenu(),
             ],
           ),
         ),
