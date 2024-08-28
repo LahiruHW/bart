@@ -26,6 +26,29 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
 
   bool showBadge(badgeIndex) => !(badgeIndex == 0);
 
+  List<Widget> badgeFactory(
+    BuildContext context,
+    int currentPos,
+    List<GlobalKey> keyList,
+    TradeWidgetBadgeStyle badgeStyle,
+  ) {
+    int index = 0;
+    return keyList
+        .map<Widget>(
+          (key) => Expanded(
+            flex: 1,
+            child: _buildBadge(
+              pos: index++,
+              context: context,
+              segmentIndex: currentPos,
+              badgeStyle: badgeStyle,
+              child: Container(key: key),
+            ),
+          ),
+        )
+        .toList();
+  }
+
   Widget _buildBadge({
     required BuildContext context,
     required int pos,
@@ -87,29 +110,6 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
         );
   }
 
-  List<Widget> badgeFactory(
-    BuildContext context,
-    int currentPos,
-    List<GlobalKey> keyList,
-    TradeWidgetBadgeStyle badgeStyle,
-  ) {
-    int index = 0;
-    return keyList
-        .map<Widget>(
-          (key) => Expanded(
-            flex: 1,
-            child: _buildBadge(
-              pos: index++,
-              context: context,
-              segmentIndex: currentPos,
-              badgeStyle: badgeStyle,
-              child: Container(key: key),
-            ),
-          ),
-        )
-        .toList();
-  }
-
   @override
   Widget build(
     BuildContext context,
@@ -118,7 +118,6 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
   ) {
     final sliderStyle = Theme.of(context).extension<BartSegmentSliderStyle>()!;
     final badgeStyle = Theme.of(context).extension<TradeWidgetBadgeStyle>()!;
-
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
