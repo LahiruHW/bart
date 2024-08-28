@@ -201,5 +201,7 @@
     "onboarding.page.3.3": " for short, ",
     "onboarding.page.3.4": "but you can change your name and username later.",
     "onboarding.page.3.5": "Let's get you aquainted with Bart and start trading!",
-    "onboarding.page.finish.btn": "Great, let's go!"
+    "onboarding.page.finish.btn": "Great, let's go!",
+    "pre.exit.dialog.header": "Are you sure?",
+    "pre.exit.dialog.body": "Are you sure you want to leave this page?\n\nYou will lose any unsaved changes."
 }

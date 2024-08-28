@@ -201,5 +201,7 @@
     "onboarding.page.3.3": " pour notre confort, ",
     "onboarding.page.3.4": "mais vous pouvez changer votre nom et votre nom d'utilisateur plus tard.",
     "onboarding.page.3.5": "Il est temps de faire connaissance avec Bart et de commencer à échanger des objets!",
-    "onboarding.page.finish.btn": "Superbe, allons-y!"
+    "onboarding.page.finish.btn": "Superbe, allons-y!",
+    "pre.exit.dialog.header": "Êtes-vous sûr?",
+    "pre.exit.dialog.body": "Êtes-vous sûr de vouloir quitter cette page?\n\nVous perdrez toutes les modifications non sauvegardées."
 }
