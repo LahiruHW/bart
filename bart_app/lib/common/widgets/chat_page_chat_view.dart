@@ -159,10 +159,11 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
 
               return ListView(
                 controller: _scrollController,
+                shrinkWrap: true,
+                padding: EdgeInsets.only(bottom: 80.h),
                 children: [
                   _dateSeparator(context, date),
                   ListView.separated(
-                    padding: const EdgeInsets.only(bottom: 10),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.length,
@@ -225,7 +226,6 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
                       return const SizedBox(height: 1);
                     },
                   ),
-                  const SizedBox(height: 80),
                 ],
               );
             } else {
