@@ -81,10 +81,12 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
         ),
       ),
       ignorePointer: true,
-      badgeAnimation: bgs.BadgeAnimation.scale(
-        curve: Curves.easeInOut,
-        animationDuration: 400.ms,
-        appearanceDisappearanceFadeAnimationEnabled: false,
+      badgeAnimation: bgs.BadgeAnimation.fade(
+        curve: Curves.easeInOutCubic,
+        animationDuration: 200.ms,
+        colorChangeAnimationDuration: 200.ms,
+        disappearanceFadeAnimationDuration: 200.ms,
+        colorChangeAnimationCurve: Curves.easeInOut,
       ),
       onTap: null,
       child: child,
