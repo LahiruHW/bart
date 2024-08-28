@@ -104,7 +104,6 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
         alignment: Alignment.center,
         margin: EdgeInsets.only(bottom: 80.h),
         child: Text(
-          // "No messages yet.\nType something and press \u{27A4} to begin chatting.",
           context.tr('chat.page.empty'),
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
