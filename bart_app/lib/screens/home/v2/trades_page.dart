@@ -78,41 +78,53 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
   Widget build(BuildContext context) {
     final (title, emptyContentText) = _getTitles();
     return Consumer<BartStateProvider>(
-      builder: (context, provider, child) => CustomScrollView(
-        scrollDirection: Axis.vertical,
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            floating: true,
-            delegate: HomePageV2PersistentHeader(
-              segmentTitle: title,
-              onSelectionChanged: _handleSelection,
-            ),
+      builder: (context, provider, child) => StreamBuilder(
+          stream: BartFirestoreServices.getTradeListStreamZipV2(
+            provider.userProfile.userID,
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            sliver: SliverStack(
-              children: [
-                SliverToBoxAdapter(child: updateDragWrapper(context)),
-                StreamBuilder(
-                  stream: BartFirestoreServices.getTradeListStreamZipV2(
-                    provider.userProfile.userID,
+          builder: (context, snapshot) {
+            final List<int> unreadCountArray = [];
+
+            if (snapshot.hasData) {
+              for (final x in snapshot.data!) {
+                unreadCountArray.add(x[1]);
+              }
+            } else {
+              for (final x in [0,0,0,0]) {
+                unreadCountArray.add(x);
+              }
+            }
+
+            return CustomScrollView(
+              scrollDirection: Axis.vertical,
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  floating: true,
+                  delegate: HomePageV2PersistentHeader(
+                    segmentTitle: title,
+                    onSelectionChanged: _handleSelection,
+                    unreadCountArray: unreadCountArray,
                   ),
-                  builder: (context, snapshot) {
-                    return HomePageV2TradePanel(
-                      title: title,
-                      emptyContentText: emptyContentText,
-                      snapshot: snapshot,
-                      segmentIndex: tempProvider.homeV2Index,
-                      userID: provider.userProfile.userID,
-                    );
-                  },
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  sliver: SliverStack(
+                    children: [
+                      SliverToBoxAdapter(child: updateDragWrapper(context)),
+                      HomePageV2TradePanel(
+                        title: title,
+                        emptyContentText: emptyContentText,
+                        snapshot: snapshot,
+                        segmentIndex: tempProvider.homeV2Index,
+                        userID: provider.userProfile.userID,
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 }

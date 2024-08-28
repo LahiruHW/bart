@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as bgs;
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/styles/trade_widget_badge_style.dart';
 import 'package:bart_app/styles/bart_segment_slider_style.dart';
 import 'package:bart_app/common/providers/temp_state_provider.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
@@ -11,13 +13,60 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
   HomePageV2PersistentHeader({
     required this.segmentTitle,
     required this.onSelectionChanged,
+    required this.unreadCountArray,
   });
 
   final String segmentTitle;
   final Function(int?) onSelectionChanged;
+  final List<int> unreadCountArray;
+
   final double _headerHeight = 166.h;
   final double _width = 270.w;
   final double _height = 60.h;
+
+  bool showBadge(badgeIndex) => !(badgeIndex == 0);
+
+  Widget _buildBadge({
+    required BuildContext context,
+    required int pos,
+    required int segmentIndex,
+    required Widget child,
+    required TradeWidgetBadgeStyle badgeStyle,
+  }) {
+    final unreadCount = unreadCountArray[pos];
+    return bgs.Badge(
+      badgeContent: Text(
+        unreadCount.toString(),
+        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+              color: (pos == segmentIndex)
+                  ? badgeStyle.selectedLabelColor
+                  : badgeStyle.labelColor,
+              fontSize: 12.spMin,
+            ),
+      ),
+      showBadge: showBadge(unreadCount),
+      position: bgs.BadgePosition.topEnd(end: 3, top: -7),
+      badgeStyle: bgs.BadgeStyle(
+        shape: bgs.BadgeShape.circle,
+        padding: EdgeInsets.all(6.w),
+        badgeColor: (pos == segmentIndex)
+            ? badgeStyle.selectedBadgeColor
+            : badgeStyle.badgeColor,
+        borderSide: BorderSide(
+          color: Colors.grey.withOpacity(0.25),
+          width: 0.3,
+        ),
+      ),
+      ignorePointer: true,
+      badgeAnimation: bgs.BadgeAnimation.scale(
+        curve: Curves.easeInOut,
+        animationDuration: 400.ms,
+        appearanceDisappearanceFadeAnimationEnabled: false,
+      ),
+      onTap: null,
+      child: child,
+    );
+  }
 
   Map<int, Widget> buttonFactory(
     List<Icon> iconList,
@@ -37,6 +86,28 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
           ),
         );
   }
+
+  List<Widget> badgeFactory(
+    BuildContext context,
+    int currentPos,
+    List<GlobalKey> keyList,
+    TradeWidgetBadgeStyle badgeStyle,
+  ) {
+    int index = 0;
+    return keyList
+        .map<Widget>(
+          (key) => Expanded(
+            flex: 1,
+            child: _buildBadge(
+              pos: index++,
+              context: context,
+              segmentIndex: currentPos,
+              badgeStyle: badgeStyle,
+              child: Container(key: key),
+            ),
+          ),
+        )
+        .toList();
   }
 
   @override
@@ -46,6 +117,8 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     final sliderStyle = Theme.of(context).extension<BartSegmentSliderStyle>()!;
+    final badgeStyle = Theme.of(context).extension<TradeWidgetBadgeStyle>()!;
+
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
@@ -53,6 +126,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
           SizedBox(height: 25.h),
           Consumer<TempStateProvider>(
             builder: (context, tempProvider, child) {
+              final currentPos = tempProvider.homeV2Index;
               return Stack(
                 alignment: Alignment.center,
                 fit: StackFit.passthrough,
@@ -63,7 +137,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                     child: CupertinoSlidingSegmentedControl(
                       backgroundColor: sliderStyle.backgroundColor,
                       thumbColor: sliderStyle.thumbColor,
-                      groupValue: tempProvider.homeV2Index,
+                      groupValue: currentPos,
                       children: buttonFactory(
                         [
                           const Icon(Icons.input_rounded),
@@ -72,7 +146,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                           const Icon(Icons.sports_score_rounded),
                         ],
                         sliderStyle,
-                        tempProvider.homeV2Index,
+                        currentPos,
                       ),
                       onValueChanged: onSelectionChanged,
                     ),
@@ -81,32 +155,17 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                     width: _width,
                     height: _height,
                     child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            key: BartTuteWidgetKeys.homePageV2IncomingTrades,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            key: BartTuteWidgetKeys.homePageV2OutgoingTrades,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            key: BartTuteWidgetKeys.homePageV2TBCTrades,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            key: BartTuteWidgetKeys.homePageV2STH,
-                          ),
-                        ),
-                      ],
+                      children: badgeFactory(
+                        context,
+                        currentPos,
+                        [
+                          BartTuteWidgetKeys.homePageV2IncomingTrades,
+                          BartTuteWidgetKeys.homePageV2OutgoingTrades,
+                          BartTuteWidgetKeys.homePageV2TBCTrades,
+                          BartTuteWidgetKeys.homePageV2STH,
+                        ],
+                        badgeStyle,
+                      ),
                     ),
                   ),
                 ],

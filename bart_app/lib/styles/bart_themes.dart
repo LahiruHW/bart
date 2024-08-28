@@ -373,6 +373,12 @@ class BartAppTheme {
         thumbColor: red1,
         backgroundColor: Colors.grey.withOpacity(0.2),
       ),
+      TradeWidgetBadgeStyle(
+        badgeColor: red1,
+        selectedBadgeColor: Colors.white,
+        labelColor: Colors.white,
+        selectedLabelColor: red1,
+      ),
     },
   );
 
@@ -686,6 +692,12 @@ class BartAppTheme {
         selectedIconColour: Colors.black,
         thumbColor: red1,
         backgroundColor: grey1,
+      ),
+      TradeWidgetBadgeStyle(
+        badgeColor: red1,
+        selectedBadgeColor: black2,
+        labelColor: black2,
+        selectedLabelColor: red1,
       ),
     },
   );

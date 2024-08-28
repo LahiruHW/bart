@@ -891,10 +891,26 @@ class BartFirestoreServices {
       getCompletedTradeHistoryListStream(userID),
       (incomingList, outgoingList, successList, tradeHistoryList) {
         return [
-          incomingList,
-          outgoingList,
-          successList,
-          tradeHistoryList,
+          [
+            incomingList,
+            incomingList.fold<int>(
+                0, (val, trade) => !trade.isRead ? val + 1 : val),
+          ],
+          [
+            outgoingList,
+            outgoingList.fold<int>(
+                0, (val, trade) => !trade.isRead ? val + 1 : val),
+          ],
+          [
+            successList,
+            successList.fold<int>(
+                0, (val, trade) => !trade.isRead ? val + 1 : val),
+          ],
+          [
+            tradeHistoryList,
+            tradeHistoryList.fold<int>(
+                0, (val, trade) => !trade.isRead ? val + 1 : val),
+          ],
         ];
       },
     );

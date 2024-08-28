@@ -70,7 +70,7 @@ class HomePageV2TradePanel extends StatelessWidget {
       );
     }
 
-    final List<Trade> trades = snapshot.data![segmentIndex];
+    final List<Trade> trades = snapshot.data![segmentIndex][0];
 
     if (trades.isEmpty) {
       return SliverFillRemaining(

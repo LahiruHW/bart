@@ -38,6 +38,7 @@ dependencies:
   intl: any
   toast: ^0.3.0
   bubble: ^1.2.1
+  badges: ^3.1.2
   rxdart: ^0.28.0
   shimmer: ^3.0.0
   envied: ^0.5.4+1
