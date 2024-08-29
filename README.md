@@ -45,7 +45,7 @@ TABLE OF CONTENTS
 
 
 
-1.1. Login
+Login
 ============
 
 <!-- <div align="center" style="display:flex; flex-direction: row; gap: 20px;"> -->
@@ -63,45 +63,33 @@ Lahiru: lahiruweliwitiya@gmail.com
 Hemaka: hemakagn@gmail.com
 ```
 
-1.2. Home
+Home
 ============
 
 Use this page to get a concise view of all the incoming trades, outgoing & successful interactions related to your activity on the app.
 
-1.2.1. Incoming Trades
+Incoming Trades
 ============
 
 - An "Incoming Trade" is defined as a return trade that another user is making for an item that you listed on the marketplace (go to )
 
-1.2.2. Outgoing Trades
+Outgoing Trades
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
 
 - TEST PHRASE HERE
 
-1.2.3. Successful
+Successful
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
 * TEST PHRASE HERE
 
-1.3. Chat
+Chat
 ============
 
 Chat with all your users
-
-1.3.1. Incoming Trade Chat
-============
-
-<div align="center">  [ UI IMAGE HERE ] </div>
-Getting an incoming trade? Ask questions about the product👍
-
-1.3.2. Request Chat
-============
-
-<div align="center">  [ UI IMAGE HERE ] </div>
-Want to answer a request made by someone? Hop into the chat with them to discuss the deets :smile:
 
 1.4. Marketplace
 ============
@@ -109,13 +97,13 @@ Want to answer a request made by someone? Hop into the chat with them to discuss
 <div align="center">  [ UI IMAGE HERE ] </div>
 TEST PHRASE HERE
 
-1.4.1. Listed Items
+Listed Items
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
 TEST PHRASE HERE
 
-1.4.2. Requests
+Services
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
