@@ -21,8 +21,8 @@ TABLE OF CONTENTS
   * [MarketPlace](#marketplace)
     * [Listed Items](#listed-items)
     * [Services](#services)
-  * [About](#about)
-    * [About the app](#about-the-app) 
+* About
+  * [About the app](#about-the-app) 
 
 <!---
 ## TABLE OF CONTENTS
