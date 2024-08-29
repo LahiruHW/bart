@@ -11,18 +11,41 @@ Founded by <a href="https://github.com/Hembugs" target="_blank">@Hembugs</a> and
 
 TABLE OF CONTENTS
 ============
-* Using the App
-  * [Login](#login)
-  * [Home](#home)
-  * [Incoming Trades](#incoming-trades)
-  * [Outgoing Trades](#outgoing-trades)
-  * [To Be Completed](#to-be-completed)
-  * [Chat](#chat)
-  * [MarketPlace](#marketplace)
+1. Using the App
+    * [Login](#login)
+    * [Home](#home)
+    * [Incoming Trades](#incoming-trades)
+    * [Outgoing Trades](#outgoing-trades)
+    * [To Be Completed](#to-be-completed)
+    * [Chat](#chat)
+    * [MarketPlace](#marketplace)
     * [Listed Items](#listed-items)
     * [Services](#services)
-* About
-  * [About the app](#about-the-app) 
+2. About
+    * [About the app](#about-the-app) 
+
+--------------------------------------------------------------------------------
+
+1. Using the App
+   1. [Login](#login)
+   2. [Home](#home)
+   3. [Incoming Trades](#incoming-trades)
+   4. [Outgoing Trades](#outgoing-trades)
+   5. [To Be Completed](#to-be-completed)
+   6. [Chat](#chat)
+   7. [MarketPlace](#marketplace)
+   8. [Listed Items](#listed-items)
+   9. [Services](#services)
+2. Basic Syntax
+   1. Headings
+   2. Lists
+   3. Links
+   4. Emphasis
+3. Advanced Features
+   1. Tables
+   2. Code blocks
+   3. Images
+
 
 <!---
 ## TABLE OF CONTENTS
@@ -80,7 +103,7 @@ Outgoing Trades
 
 - TEST PHRASE HERE
 
-Successful
+To Be Completed
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
@@ -91,7 +114,7 @@ Chat
 
 Chat with all your users
 
-1.4. Marketplace
+Marketplace
 ============
 
 <div align="center">  [ UI IMAGE HERE ] </div>
