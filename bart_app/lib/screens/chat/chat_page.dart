@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/common/entity/chat.dart';
-import 'package:bart_app/common/widgets/chat_page_header.dart';
+import 'package:bart_app/screens/chat/chat_page_header.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
-import 'package:bart_app/common/widgets/chat_page_chat_view.dart';
+import 'package:bart_app/screens/chat/chat_page_chat_view.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({
