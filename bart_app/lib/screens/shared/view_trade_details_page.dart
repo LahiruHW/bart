@@ -221,7 +221,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
                 ),
               ),
               const SizedBox(height: 10),
-              ...TradeDetailsPageFooter(
+              TradeDetailsPageFooter(
                 userID: widget.userID,
                 trade: widget.trade,
                 tradeType: widget.tradeType,
