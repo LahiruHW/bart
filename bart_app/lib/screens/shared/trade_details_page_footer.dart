@@ -48,9 +48,7 @@ class TradeDetailsPageFooter extends StatelessWidget {
 
       case TradeCompType.outgoing:
         return OutgoingTradeFooter(
-          userID: userID,
           trade: trade,
-          tradeType: tradeType,
           loadingOverlay: loadingOverlay,
           isMsgSending: isMsgSending,
           whileSending: whileSending,
@@ -61,7 +59,6 @@ class TradeDetailsPageFooter extends StatelessWidget {
         return TBCTradeFooter(
           userID: userID,
           trade: trade,
-          tradeType: tradeType,
           loadingOverlay: loadingOverlay,
           isMsgSending: isMsgSending,
           whileSending: whileSending,

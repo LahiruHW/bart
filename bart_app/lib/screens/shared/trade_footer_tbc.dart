@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
-import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
 import 'package:bart_app/common/constants/enum_material_button_types.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
@@ -15,9 +14,6 @@ class TBCTradeFooter extends StatelessWidget {
     super.key,
     required this.userID,
     required this.trade,
-    required this.tradeType,
-    this.descriptionTextController,
-    this.focusNode,
     required this.loadingOverlay,
     required this.isMsgSending,
     required this.whileSending,
@@ -26,9 +22,6 @@ class TBCTradeFooter extends StatelessWidget {
 
   final Trade trade;
   final String userID;
-  final FocusNode? focusNode;
-  final TradeCompType tradeType;
-  final TextEditingController? descriptionTextController;
   final LoadingBlockFullScreen loadingOverlay;
   final bool isMsgSending;
   final Function whileSending;
