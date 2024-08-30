@@ -8,8 +8,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/widgets/icons/icon_exchange.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
+import 'package:bart_app/screens/shared/trade_details_page_footer.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
-import 'package:bart_app/common/widgets/input/trade_details_page_footer.dart';
 
 class ViewTradePage extends StatefulWidget {
   const ViewTradePage({

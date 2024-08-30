@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
@@ -86,7 +88,6 @@ class TradeDetailsPageFooter {
       case TradeCompType.incoming:
         return [
           Text(
-            // 'Ask a question about the product: ',
             context.tr('view.trade.page.incoming.askQuestion'),
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: BartAppTheme.red1,
@@ -138,8 +139,10 @@ class TradeDetailsPageFooter {
                                         userID, chatID)
                                     .then(
                                   (chat) {
-                                    context.go('/chat/chatRoom/$chatID',
-                                        extra: chat);
+                                    context.go(
+                                      '/chat/chatRoom/$chatID',
+                                      extra: chat,
+                                    );
                                   },
                                 );
                               },
@@ -308,15 +311,17 @@ class TradeDetailsPageFooter {
                             buttonType: BartMaterialButtonType.green,
                             isEnabled: !isMsgSending,
                             label: trade.offeredItem.isPayment
-                                ? context
-                                    .tr('view.trade.page.btn.handover.done3')
-                                : context
-                                    .tr('view.trade.page.btn.handover.done1'),
-                            onPressed: () {
+                                ? context.tr(
+                                    'view.trade.page.btn.handover.done3',
+                                  )
+                                : context.tr(
+                                    'view.trade.page.btn.handover.done1',
+                                  ),
+                            onPressed: () async {
                               whileSending();
                               loadingOverlay.show();
                               // the tradee accepts the trade
-                              BartFirestoreServices.acceptTradeAsTradee(
+                              await BartFirestoreServices.acceptTradeAsTradee(
                                 trade.tradeID,
                               ).then(
                                 (value) {
@@ -341,8 +346,9 @@ class TradeDetailsPageFooter {
                           child: BartMaterialButton(
                             buttonType: BartMaterialButtonType.green,
                             isEnabled: !isMsgSending,
-                            label: context
-                                .tr('view.trade.page.btn.handover.done2'),
+                            label: context.tr(
+                              'view.trade.page.btn.handover.done2',
+                            ),
                             onPressed: () async {
                               whileSending();
                               loadingOverlay.show();
