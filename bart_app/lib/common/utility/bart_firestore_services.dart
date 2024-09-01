@@ -805,10 +805,7 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-        (trade) =>
-            (!trade.isAccepted) &&
-            (!trade.isCompleted) &&
-            trade.isTrader(userID),
+        (trade) => trade.isIncomingTrade(userID),
       )
           .map(
         (trade) {
@@ -826,10 +823,7 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-        (trade) =>
-            (!trade.isCompleted) &&
-            (!trade.isAccepted) &&
-            trade.isTradee(userID),
+        (trade) => trade.isOutgoingTrade(userID),
       )
           .map(
         (trade) {
@@ -847,11 +841,7 @@ class BartFirestoreServices {
         .map((tradeList) {
       return tradeList
           .where(
-        (trade) =>
-            (!trade.isCompleted) &&
-            (trade.isAccepted) &&
-            !trade.acceptedByBoth() &&
-            trade.isUserInTrade(userID),
+        (trade) => trade.isTBCTrade(userID),
       )
           .map(
         (trade) {
@@ -937,11 +927,7 @@ class BartFirestoreServices {
     return getTradeListStream(userID).map(
       (tradeList) => tradeList
           .where(
-        (trade) =>
-            // trade.isCompleted ||
-            // (trade.acceptedByTrader && trade.acceptedByTradee),
-            (trade.isCompleted && trade.isAccepted && trade.acceptedByBoth()) ||
-            (trade.isCompleted && !trade.isAccepted && !trade.acceptedByBoth()),
+        (trade) => trade.isCompletedTrade(userID),
       )
           .map((trade) {
         if (trade.isCompleted) {
