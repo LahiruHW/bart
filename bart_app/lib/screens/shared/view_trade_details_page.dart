@@ -83,6 +83,12 @@ class _ViewTradePageState extends State<ViewTradePage> {
     // somehow this line fixes the locale issue
     debugPrint('------------- ${context.locale.toString()}');
 
+    if (widget.tradeType != TradeCompType.outgoing) {
+      if (!widget.trade.isRead){
+        BartFirestoreServices.markTradeAsRead(widget.trade.tradeID);
+      }
+    }
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
