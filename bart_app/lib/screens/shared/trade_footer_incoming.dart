@@ -72,15 +72,6 @@ class IncomingTradeFooter extends StatelessWidget {
                         () {
                           onSent();
                           loadingOverlay.hide();
-                          trade.tradeCompType = TradeCompType.toBeCompleted;
-                          context.replace(
-                            '/viewTrade',
-                            extra: {
-                              'trade': trade,
-                              'tradeType': trade.tradeCompType,
-                              'userID': userID,
-                            },
-                          );
                         },
                       );
                     },
