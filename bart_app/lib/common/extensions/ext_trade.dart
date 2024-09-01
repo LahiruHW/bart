@@ -6,7 +6,7 @@ extension TradeTypeChecker on Trade {
       (!isAccepted && !isCompleted) && isTrader(userID);
 
   bool isOutgoingTrade(String userID) =>
-      (!isAccepted && !isCompleted) && !isTradee(userID);
+      (!isAccepted && !isCompleted) && isTradee(userID);
 
   bool isTBCTrade(String userID) =>
       (!isCompleted) &&
