@@ -1,4 +1,5 @@
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 extension TradeTypeChecker on Trade {
@@ -30,12 +31,67 @@ extension TradeTypeChecker on Trade {
         return (isAccepted && acceptedByBoth())
             ? TradeCompType.tradeHistory
             : TradeCompType.failed;
-      }
-      else{
+      } else {
         return TradeCompType.none;
       }
     } else {
       return TradeCompType.none;
+    }
+  }
+
+  (String, String) getTradeItemLabels() {
+    final trader = tradedItem.itemOwner.userName;
+    final tradee = offeredItem.itemOwner.userName;
+    switch (tradeCompType) {
+      case TradeCompType.incoming:
+        return (
+          tr('view.trade.page.incoming.label1'),
+          tr(
+            'view.trade.page.incoming.label2',
+            namedArgs: {'itemOwner': tradee},
+          ),
+        );
+      case TradeCompType.outgoing:
+        return (
+          tr(
+            'view.trade.page.outgoing.label1',
+            namedArgs: {'itemOwner': trader},
+          ),
+          tr('view.trade.page.outgoing.label2'),
+        );
+      case TradeCompType.toBeCompleted:
+        return (
+          tr(
+            'view.trade.page.successful.label1',
+            namedArgs: {'itemOwner': trader},
+          ),
+          tr(
+            'view.trade.page.successful.label2',
+            namedArgs: {'tradee': tradee, 'trader': trader},
+          ),
+        );
+      case TradeCompType.failed:
+        return (
+          tr(
+            'view.trade.page.completeFailed.label1',
+            namedArgs: {'itemOwner': trader},
+          ),
+          tr(
+            'view.trade.page.completeFailed.label2',
+            namedArgs: {'tradee': tradee, 'trader': trader},
+          ),
+        );
+      default:
+        return (
+          tr(
+            'view.trade.page.default.label1',
+            namedArgs: {'itemOwner': trader},
+          ),
+          tr(
+            'view.trade.page.default.label2',
+            namedArgs: {'itemOwner': tradee},
+          ),
+        );
     }
   }
 }

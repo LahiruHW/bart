@@ -862,6 +862,22 @@ class BartFirestoreServices {
     });
   }
 
+  /// get the stream to get the state of one trade
+  static Stream<Trade> getTradeStream(String userID, String tradeID) {
+    return getTradeListStream(userID).map(
+      (tradeList) {
+        final retTrade = tradeList.firstWhere(
+          (trade) => trade.tradeID == tradeID,
+          orElse: () => Trade.empty(),
+        );
+        if (!retTrade.isNull){
+          retTrade.tradeCompType = retTrade.getTradeCompType(userID);
+        }
+        return retTrade;
+      },
+    );
+  }
+
   /// zip all three main trade streams (incoming, completed, successful) into one
   static Stream<List<List<Trade>>> getTradeListStreamZipV1(
     String userID,

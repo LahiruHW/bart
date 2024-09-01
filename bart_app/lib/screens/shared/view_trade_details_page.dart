@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/extensions/ext_trade.dart';
 import 'package:bart_app/common/widgets/item_description.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/widgets/result_item_tile.dart';
@@ -76,62 +76,6 @@ class _ViewTradePageState extends State<ViewTradePage> {
         );
       },
     );
-  }
-
-  (String, String) getTradeItemLabels() {
-    final trader = widget.trade.tradedItem.itemOwner.userName;
-    final tradee = widget.trade.offeredItem.itemOwner.userName;
-    switch (widget.trade.tradeCompType) {
-      case TradeCompType.incoming:
-        return (
-          tr('view.trade.page.incoming.label1'),
-          tr(
-            'view.trade.page.incoming.label2',
-            namedArgs: {'itemOwner': tradee},
-          ),
-        );
-      case TradeCompType.outgoing:
-        return (
-          tr(
-            'view.trade.page.outgoing.label1',
-            namedArgs: {'itemOwner': trader},
-          ),
-          tr('view.trade.page.outgoing.label2'),
-        );
-      case TradeCompType.toBeCompleted:
-        return (
-          tr(
-            'view.trade.page.successful.label1',
-            namedArgs: {'itemOwner': trader},
-          ),
-          tr(
-            'view.trade.page.successful.label2',
-            namedArgs: {'tradee': tradee, 'trader': trader},
-          ),
-        );
-      case TradeCompType.failed:
-        return (
-          tr(
-            'view.trade.page.completeFailed.label1',
-            namedArgs: {'itemOwner': trader},
-          ),
-          tr(
-            'view.trade.page.completeFailed.label2',
-            namedArgs: {'tradee': tradee, 'trader': trader},
-          ),
-        );
-      default:
-        return (
-          tr(
-            'view.trade.page.default.label1',
-            namedArgs: {'itemOwner': trader},
-          ),
-          tr(
-            'view.trade.page.default.label2',
-            namedArgs: {'itemOwner': tradee},
-          ),
-        );
-    }
   }
 
   @override
