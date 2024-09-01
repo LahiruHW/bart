@@ -26,7 +26,14 @@ extension TradeTypeChecker on Trade {
     } else if (isTBCTrade(userID)) {
       return TradeCompType.toBeCompleted;
     } else if (isCompletedTrade(userID)) {
-      return TradeCompType.tradeHistory;
+      if (isCompleted) {
+        return (isAccepted && acceptedByBoth())
+            ? TradeCompType.tradeHistory
+            : TradeCompType.failed;
+      }
+      else{
+        return TradeCompType.none;
+      }
     } else {
       return TradeCompType.none;
     }
