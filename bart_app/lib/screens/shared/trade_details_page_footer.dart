@@ -39,6 +39,7 @@ class TradeDetailsPageFooter extends StatelessWidget {
         return IncomingTradeFooter(
           userID: userID,
           trade: trade,
+          focusNode: focusNode!,
           tradeType: tradeType,
           loadingOverlay: loadingOverlay,
           isMsgSending: isMsgSending,
