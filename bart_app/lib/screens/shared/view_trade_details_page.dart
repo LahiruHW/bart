@@ -83,71 +83,80 @@ class _ViewTradePageState extends State<ViewTradePage> {
     // somehow this line fixes the locale issue
     debugPrint('------------- ${context.locale.toString()}');
 
-    setState(() {
-      final labels = getTradeItemLabels();
-      lable1 = labels.$1;
-      lable2 = labels.$2;
-    });
-
-    if (widget.tradeType != TradeCompType.outgoing) {
-      if (!widget.trade.isRead) {
-        BartFirestoreServices.markTradeAsRead(widget.trade.tradeID);
-      }
-    }
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          padding: const EdgeInsets.symmetric(
-            vertical: 30,
-            horizontal: 15,
+        body: StreamBuilder<Trade>(
+          stream: BartFirestoreServices.getTradeStream(
+            widget.userID,
+            widget.trade.tradeID,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ResultItemTile(
-                key: ValueKey(context.locale),
-                label: lable1,
-                item: widget.trade.tradedItem,
-                onTap: () =>
-                    viewImage(context, widget.trade.tradedItem.imgs[0]),
+          initialData: widget.trade,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: Text('NO DATA'),
+              );
+            }
+
+            final Trade thisTrade = snapshot.data!;
+            final labels = thisTrade.getTradeItemLabels();
+            lable1 = labels.$1;
+            lable2 = labels.$2;
+
+            return SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(
+                vertical: 30,
+                horizontal: 15,
               ),
-              const SizedBox(height: 12),
-              const ExchangeIcon(),
-              const SizedBox(height: 12),
-              ResultItemTile(
-                key: ValueKey(context.locale.toString()),
-                label: lable2,
-                item: widget.trade.offeredItem,
-                onTap: !widget.trade.offeredItem.isPayment
-                    ? () => viewImage(context, widget.trade.offeredItem.imgs[0])
-                    : () {},
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ResultItemTile(
+                    key: ValueKey(context.locale),
+                    label: lable1,
+                    item: thisTrade.tradedItem,
+                    onTap: () =>
+                        viewImage(context, thisTrade.tradedItem.imgs[0]),
+                  ),
+                  const SizedBox(height: 12),
+                  const ExchangeIcon(),
+                  const SizedBox(height: 12),
+                  ResultItemTile(
+                    key: ValueKey(context.locale.toString()),
+                    label: lable2,
+                    item: thisTrade.offeredItem,
+                    onTap: !thisTrade.offeredItem.isPayment
+                        ? () =>
+                            viewImage(context, thisTrade.offeredItem.imgs[0])
+                        : () {},
+                  ),
+                  const SizedBox(height: 20),
+                  ItemDescription(item: thisTrade.offeredItem),
+                  const SizedBox(height: 10),
+                  TradeDetailsPageFooter(
+                    userID: widget.userID,
+                    trade: thisTrade,
+                    tradeType: thisTrade.tradeCompType,
+                    descriptionTextController: _descriptionTextController,
+                    focusNode: _focusNode,
+                    loadingOverlay: LoadingBlockFullScreen(
+                      context: context,
+                      dismissable: false,
+                    ),
+                    isMsgSending: _isMsgSending,
+                    whileSending: () {
+                      setState(() => _isMsgSending = true);
+                    },
+                    onSent: () {
+                      setState(() => _isMsgSending = false);
+                    },
+                  ).build(context),
+                ],
               ),
-              const SizedBox(height: 20),
-              ItemDescription(item: widget.trade.offeredItem),
-              const SizedBox(height: 10),
-              TradeDetailsPageFooter(
-                userID: widget.userID,
-                trade: widget.trade,
-                tradeType: widget.tradeType,
-                descriptionTextController: _descriptionTextController,
-                focusNode: _focusNode,
-                loadingOverlay: LoadingBlockFullScreen(
-                  context: context,
-                  dismissable: false,
-                ),
-                isMsgSending: _isMsgSending,
-                whileSending: () {
-                  setState(() => _isMsgSending = true);
-                },
-                onSent: () {
-                  setState(() => _isMsgSending = false);
-                },
-              ).build(context),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
