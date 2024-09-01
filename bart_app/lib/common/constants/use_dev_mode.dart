@@ -61,13 +61,27 @@ class DevModeTools {
                   "Update Chat Schema",
                   style: TextStyle(fontSize: 15),
                 ),
-                subtitle:const Text(
+                subtitle: const Text(
                   "(Outer Collection)",
                   style: TextStyle(fontSize: 10),
-                ), 
+                ),
                 onTap: () {
                   Toast.show('updating schema of all chats (outer collection)');
                   BartFirestoreServices.updateChatSchema();
+                },
+              ),
+            ),
+          ),
+          Material(
+            child: InkWell(
+              child: ListTile(
+                title: const Text(
+                  "Clear unused item image in Firebase storage",
+                  style: TextStyle(fontSize: 15),
+                ),
+                onTap: () {
+                  Toast.show("clearing unused item images in firebase storage");
+                  BartFirestoreServices.cleanupStorageItemImages();
                 },
               ),
             ),

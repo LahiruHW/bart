@@ -1513,7 +1513,7 @@ class BartFirestoreServices {
   }
 
   /// cleanup unused images in the storage folder
-  static void cleanupStorageImages() async {
+  static void cleanupStorageItemImages() async {
     // get all the item ids from the storage folder
     await BartFirebaseStorageServices.itemFolderRef.listAll().then((result) {
       final List<String> storageItemIDs = result.prefixes.map((item) {
