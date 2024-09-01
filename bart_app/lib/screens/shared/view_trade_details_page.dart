@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/common/widgets/item_description.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:bart_app/common/widgets/result_item_tile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -190,36 +190,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
                     : () {},
               ),
               const SizedBox(height: 20),
-              Text(
-                context.tr('view.trade.page.prodDesc'),
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: BartAppTheme.red1,
-                      fontSize: 20,
-                    ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.surface.computeLuminance() >
-                              0.5
-                          ? Colors.white
-                          : Colors.black,
-                  border: Border.all(
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  widget.trade.offeredItem.itemDescription,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                      ),
-                ),
-              ),
+              ItemDescription(item: widget.trade.offeredItem),
               const SizedBox(height: 10),
               TradeDetailsPageFooter(
                 userID: widget.userID,
