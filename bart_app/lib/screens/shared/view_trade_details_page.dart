@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,6 +10,7 @@ import 'package:bart_app/common/widgets/icons/icon_exchange.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/screens/shared/trade_details_page_footer.dart';
+import 'package:bart_app/common/extensions/ext_bart_scroll_controller.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class ViewTradePage extends StatefulWidget {
@@ -45,20 +47,10 @@ class _ViewTradePageState extends State<ViewTradePage> {
       if (_focusNode.hasFocus) {
         Future.delayed(
           const Duration(milliseconds: 300),
-          () => scrollDown(offset: 100),
+          () => _scrollController.scrollDown(offset: 100),
         );
       }
     });
-  }
-
-  void scrollDown({double offset = 0.0}) {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent + offset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOutCubic,
-      );
-    }
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:bart_app/common/widgets/bart_chat_bubble.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/widgets/input/chat_input_actions.dart';
+import 'package:bart_app/common/extensions/ext_bart_scroll_controller.dart';
 
 class ChatPageChatView extends StatefulWidget {
   const ChatPageChatView({
@@ -47,7 +48,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
       if (_focusNode.hasFocus || _focusNode.hasPrimaryFocus) {
         Future.delayed(
           const Duration(milliseconds: 500),
-          () => scrollDown(),
+          () => _scrollController.scrollDown(),
         );
       }
     });
@@ -55,19 +56,9 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(
         const Duration(milliseconds: 500),
-        () => scrollDown(),
+        () => _scrollController.scrollDown(),
       );
     });
-  }
-
-  void scrollDown({double offset = 0.0}) {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent + offset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOutCubic,
-      );
-    }
   }
 
   Widget _dateSeparator(BuildContext context, String date) {
@@ -157,7 +148,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
 
               // scroll down after the list is built
               WidgetsBinding.instance.addPostFrameCallback(
-                (timeStamp) => scrollDown(),
+                (timeStamp) => _scrollController.scrollDown(),
               );
 
               final firstMsgDT = snapshot.data!.first.timeSent.toDate();
@@ -278,7 +269,7 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
                       );
 
                       _textEditController.clear();
-                      scrollDown(offset: 100);
+                      _scrollController.scrollDown();
                     }
                   },
                 ),
