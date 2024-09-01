@@ -124,7 +124,7 @@
     "newItem.page.btn.continue": "Continue",
     "newItem.page.snackbar1": "Please provide a name for your item",
     "newItem.page.snackbar2": "Please upload at least one image\nof the item",
-    "newItem.page.snackbar3": "Please provide a description for your item",
+    "newItem.page.snackbar3": "Please provide a description\nfor your item",
     "newItem.confirmation.label": "Posted by you",
     "newItem.confirmation.title.heading.success": "Congratulations",
     "newItem.confirmation.title.heading.fail": "Sorry",
