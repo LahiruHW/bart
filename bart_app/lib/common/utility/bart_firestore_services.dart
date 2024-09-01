@@ -834,8 +834,8 @@ class BartFirestoreServices {
     });
   }
 
-  /// get the stream of trades pertaining to a user, that are successful
-  static Stream<List<Trade>> getSuccessfulTradeListStream(String userID) {
+  /// get the stream of trades pertaining to a user, that are to be completed
+  static Stream<List<Trade>> getTBCTradeListStream(String userID) {
     return getTradeListStream(userID)
         // .transform(_transformer1)
         .map((tradeList) {
@@ -875,7 +875,7 @@ class BartFirestoreServices {
     return Rx.combineLatest3(
       getIncomingTradeListStream(userID),
       getOutgoingTradeListStream(userID),
-      getSuccessfulTradeListStream(userID),
+      getTBCTradeListStream(userID),
       (incomingList, outgoingList, successList) {
         return [
           incomingList,
