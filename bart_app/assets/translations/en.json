@@ -41,7 +41,6 @@
     "home.btn.list.item": "List an item\nto trade",
     "home.page.tab.trades": "Trades",
     "home.page.tab.services": "Services",
-    "view.trade.page.prodDesc": "Product Description: ",
     "view.trade.page.incoming.label1": "Your listed item",
     "view.trade.page.incoming.label2": "{itemOwner} is offering you",
     "view.trade.page.incoming.askQuestion": "Ask a question about the product: ",
