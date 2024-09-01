@@ -893,7 +893,7 @@ class BartFirestoreServices {
     return Rx.combineLatest4(
       getIncomingTradeListStream(userID),
       getOutgoingTradeListStream(userID),
-      getSuccessfulTradeListStream(userID),
+      getTBCTradeListStream(userID),
       getCompletedTradeHistoryListStream(userID),
       (incomingList, outgoingList, successList, tradeHistoryList) {
         return [
