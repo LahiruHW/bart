@@ -48,7 +48,6 @@ class ItemQuestionFieldState extends State<ItemQuestionField> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        const SizedBox(height: 10),
         Text(
           context.tr('view.trade.page.incoming.askQuestion'),
           style: Theme.of(context).textTheme.titleSmall!.copyWith(

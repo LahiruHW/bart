@@ -40,6 +40,7 @@ class _DescriptionTextFieldState extends State<DescriptionTextField> {
             fontSize: 14.spMin,
             fontWeight: FontWeight.normal,
           ),
+      cursorOpacityAnimates: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10),
         hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(

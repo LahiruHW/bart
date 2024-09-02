@@ -40,7 +40,6 @@ class _HomePageV2State extends State<HomePageV2> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: BartPageTabButton(
-                    // key: BartTuteWidgetKeys.marketPageTab1,
                     title: context.tr("home.page.tab.trades"),
                     enabled: _onTradesPage,
                     onTap: _toggleHomeTab,
@@ -49,7 +48,6 @@ class _HomePageV2State extends State<HomePageV2> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: BartPageTabButton(
-                    // key: BartTuteWidgetKeys.marketPageTab2,
                     title: context.tr("home.page.tab.services"),
                     enabled: !_onTradesPage,
                     onTap: _toggleHomeTab,

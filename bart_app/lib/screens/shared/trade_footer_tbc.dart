@@ -40,83 +40,62 @@ class TBCTradeFooter extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                (trade.offeredItem.itemOwner.userID == userID)
-                    ? SizedBox(
-                        width: 150,
-                        height: 75,
-                        child: BartMaterialButton(
-                          buttonType: BartMaterialButtonType.green,
-                          isEnabled: !isMsgSending,
-                          label: trade.offeredItem.isPayment
-                              ? context.tr(
-                                  'view.trade.page.btn.handover.done3',
-                                )
-                              : context.tr(
-                                  'view.trade.page.btn.handover.done1',
-                                ),
-                          onPressed: () async {
-                            whileSending();
-                            loadingOverlay.show();
-                            // the tradee accepts the trade
-                            await BartFirestoreServices.acceptTradeAsTradee(
-                              trade.tradeID,
-                            ).then(
-                              (value) {
-                                Future.delayed(
-                                  const Duration(milliseconds: 1500),
-                                  () {
-                                    onSent();
-                                    context.go('/home-trades');
-                                    loadingOverlay.hide();
-                                  },
-                                );
-                              },
-                            );
+                if (trade.offeredItem.itemOwner.userID == userID)
+                  SizedBox(
+                    width: 150,
+                    height: 75,
+                    child: BartMaterialButton(
+                      buttonType: BartMaterialButtonType.green,
+                      isEnabled: !isMsgSending,
+                      label: trade.offeredItem.isPayment
+                          ? context.tr(
+                              'view.trade.page.btn.handover.done3',
+                            )
+                          : context.tr(
+                              'view.trade.page.btn.handover.done1',
+                            ),
+                      onPressed: () async {
+                        whileSending();
+                        loadingOverlay.show();
+                        // the tradee accepts the trade
+                        await BartFirestoreServices.acceptTradeAsTradee(
+                          trade.tradeID,
+                        ).then(
+                          (value) {
+                            onSent();
+                            loadingOverlay.hide();
+                            context.go('/home-trades');
                           },
-                        ),
-                      )
-                    : Container(),
-                (trade.tradedItem.itemOwner.userID == userID)
-                    ? SizedBox(
-                        width: 150,
-                        height: 75,
-                        child: BartMaterialButton(
-                          buttonType: BartMaterialButtonType.green,
-                          isEnabled: !isMsgSending,
-                          label: context.tr(
-                            'view.trade.page.btn.handover.done2',
-                          ),
-                          onPressed: () async {
-                            whileSending();
-                            loadingOverlay.show();
-                            // item is taken off the market
-                            trade.tradedItem.isListedInMarket = false;
-                            await Future.wait(
-                              [
-                                BartFirestoreServices.updateItem(
-                                  trade.tradedItem,
-                                ),
-                                // the trader accepts the trade
-                                BartFirestoreServices.acceptTradeAsTrader(
-                                  trade.tradeID,
-                                ),
-                              ],
-                            ).then(
-                              (value) {
-                                Future.delayed(
-                                  const Duration(milliseconds: 1500),
-                                  () {
-                                    onSent();
-                                    context.go('/home-trades');
-                                    loadingOverlay.hide();
-                                  },
-                                );
-                              },
-                            );
+                        );
+                      },
+                    ),
+                  ),
+                if (trade.tradedItem.itemOwner.userID == userID)
+                  SizedBox(
+                    width: 150,
+                    height: 75,
+                    child: BartMaterialButton(
+                      buttonType: BartMaterialButtonType.green,
+                      isEnabled: !isMsgSending,
+                      label: context.tr(
+                        'view.trade.page.btn.handover.done2',
+                      ),
+                      onPressed: () async {
+                        whileSending();
+                        loadingOverlay.show();
+                        // the trader accepts the trade
+                        await BartFirestoreServices.acceptTradeAsTrader(
+                          trade.tradeID,
+                        ).then(
+                          (value) {
+                            onSent();
+                            context.go('/home-trades');
+                            loadingOverlay.hide();
                           },
-                        ),
-                      )
-                    : Container(),
+                        );
+                      },
+                    ),
+                  ),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 150,

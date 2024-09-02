@@ -860,7 +860,7 @@ class BartFirestoreServices {
           (trade) => trade.tradeID == tradeID,
           orElse: () => Trade.empty(),
         );
-        if (!retTrade.isNull){
+        if (!retTrade.isNull) {
           retTrade.tradeCompType = retTrade.getTradeCompType(userID);
         }
         return retTrade;
@@ -1011,16 +1011,22 @@ class BartFirestoreServices {
   }
 
   /// cancel a trade
-  static Future<bool> cancelTrade(Trade trade) async {
+  static Future<bool> cancelTrade(
+    Trade trade, {
+    bool restoreTradedItem = true,
+  }) async {
     // delete all the images of the offered from the storage
     return await BartFirebaseStorageServices.deleteAllItemImages(
       trade.offeredItem.itemID,
     ).then(
       (_) async {
         debugPrint("1. ||||||||||||||||||||| DELETED ALL IMAGES FROM STORAGE");
-        // make sure the traded item put back onto the market
-        trade.tradedItem.isListedInMarket = true;
-        await updateItem(trade.tradedItem);
+
+        if (restoreTradedItem) {
+          // make sure the traded item put back onto the market
+          trade.tradedItem.isListedInMarket = true;
+          await updateItem(trade.tradedItem);
+        }
         // delete the offered item from the item collection
         return await itemCollection.doc(trade.offeredItem.itemID).delete().then(
           (_) async {
