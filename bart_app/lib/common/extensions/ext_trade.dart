@@ -3,6 +3,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 extension TradeTypeChecker on Trade {
+
+  bool isTrader(String userID) => tradedItem.itemOwner.userID == userID;
+  bool isTradee(String userID) => offeredItem.itemOwner.userID == userID;
+
+  bool isUserInTrade(String userID) {
+    return tradedItem.itemOwner.userID == userID ||
+        offeredItem.itemOwner.userID == userID;
+  }
+
+  bool acceptedByBoth() => acceptedByTrader && acceptedByTradee;
+
   bool isIncomingTrade(String userID) =>
       (!isAccepted && !isCompleted) && isTrader(userID);
 

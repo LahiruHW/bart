@@ -1,10 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/trade.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/widgets/item_ask_a_question.dart';
+import 'package:bart_app/common/widgets/item_unavailable_msg.dart';
 import 'package:bart_app/common/utility/bart_firestore_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 import 'package:bart_app/common/widgets/buttons/bart_material_button.dart';
@@ -40,75 +39,96 @@ class IncomingTradeFooter extends StatelessWidget {
     return ListView(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      children: [
-        if (!trade.offeredItem.isPayment)
-          ItemQuestionField(
-            item: trade.offeredItem,
-            userID: userID,
-            focusNode: focusNode,
-          ),
-        if (!trade.offeredItem.isPayment) const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              width: 150,
-              height: 75,
-              child: BartMaterialButton(
-                isEnabled: !isMsgSending,
-                buttonType: BartMaterialButtonType.green,
-                label: context.tr('accept'),
-                onPressed: () {
-                  whileSending();
-                  loadingOverlay.show();
+      children: (trade.tradedItem.isListedInMarket)
+          ? [
+              if (!trade.offeredItem.isPayment)
+                ItemQuestionField(
+                  item: trade.offeredItem,
+                  userID: userID,
+                  focusNode: focusNode,
+                ),
+              if (!trade.offeredItem.isPayment) const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 75,
+                    child: BartMaterialButton(
+                      isEnabled: !isMsgSending,
+                      buttonType: BartMaterialButtonType.green,
+                      label: context.tr('accept'),
+                      onPressed: () async {
+                        whileSending();
+                        // item is taken off the market
+                        trade.tradedItem.isListedInMarket = false;
+                        loadingOverlay.show();
+                        await Future.wait(
+                          [
+                            BartFirestoreServices.updateItem(
+                              trade.tradedItem,
+                            ),
+                            // accept & complete the trade
+                            BartFirestoreServices.markTradeAsAccepted(
+                              trade.tradeID,
+                            )
+                          ],
+                        ).then(
+                          (value) {
+                            onSent();
+                            loadingOverlay.hide();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 150,
+                    height: 75,
+                    child: BartMaterialButton(
+                      label: context.tr('decline'),
+                      isEnabled: !isMsgSending,
+                      onPressed: () {
+                        whileSending();
+                        loadingOverlay.show();
 
-                  // accept & complete the trade
-                  BartFirestoreServices.markTradeAsAccepted(
-                    trade.tradeID,
-                  ).then(
-                    (value) {
-                      Future.delayed(
-                        const Duration(milliseconds: 1500),
-                        () {
-                          onSent();
-                          loadingOverlay.hide();
-                        },
-                      );
-                    },
-                  );
-                },
+                        // accept & complete the trade
+                        BartFirestoreServices.declineTrade(trade.tradeID).then(
+                          (value) {
+                            onSent();
+                            loadingOverlay.hide();
+                            if (context.mounted) context.pop();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 150,
-              height: 75,
-              child: BartMaterialButton(
+            ]
+          : [
+              ItemUnavailableMsg(
+                userID: userID,
+                trade: trade,
+              ),
+              BartMaterialButton(
                 label: context.tr('decline'),
                 isEnabled: !isMsgSending,
                 onPressed: () {
                   whileSending();
                   loadingOverlay.show();
-
                   // accept & complete the trade
                   BartFirestoreServices.declineTrade(trade.tradeID).then(
                     (value) {
                       onSent();
-                      Future.delayed(
-                        const Duration(milliseconds: 1500),
-                        () {
-                          loadingOverlay.hide();
-                          GoRouter.of(context).pop();
-                        },
-                      );
+                      loadingOverlay.hide();
+                      if (context.mounted) context.pop();
                     },
                   );
                 },
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
     );
   }
 }

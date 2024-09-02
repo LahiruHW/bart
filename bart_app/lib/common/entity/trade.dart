@@ -36,16 +36,6 @@ class Trade {
   TradeCompType tradeCompType;
   bool isNull;
 
-  bool isUserInTrade(String userID) {
-    return tradedItem.itemOwner.userID == userID ||
-        offeredItem.itemOwner.userID == userID;
-  }
-
-  bool acceptedByBoth() => acceptedByTrader && acceptedByTradee;
-
-  bool isTrader(String userID) => tradedItem.itemOwner.userID == userID;
-  bool isTradee(String userID) => offeredItem.itemOwner.userID == userID;
-
   @override
   bool operator ==(Object other) {
     if (other is Trade) {

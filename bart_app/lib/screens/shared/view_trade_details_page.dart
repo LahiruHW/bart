@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/trade.dart';
+import 'package:bart_app/screens/shared/base.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/extensions/ext_trade.dart';
 import 'package:bart_app/common/widgets/item_description.dart';
@@ -84,7 +85,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
     debugPrint('------------- ${context.locale.toString()}');
 
     if (widget.tradeType != TradeCompType.outgoing) {
-      if (!widget.trade.isRead){
+      if (!widget.trade.isRead) {
         BartFirestoreServices.markTradeAsRead(widget.trade.tradeID);
       }
     }
@@ -101,7 +102,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
-                child: Text('NO DATA'),
+                child: Text('ERROR: NO DATA'),
               );
             }
 
@@ -109,6 +110,16 @@ class _ViewTradePageState extends State<ViewTradePage> {
             final labels = thisTrade.getTradeItemLabels();
             lable1 = labels.$1;
             lable2 = labels.$2;
+
+            if (thisTrade.tradedItem.isNull) {
+              return Center(
+                child: Text(
+                  thisTrade.isTrader(widget.userID)
+                      ? context.tr('view.trade.page.item.deleted.1')
+                      : context.tr('view.trade.page.item.deleted.2'),
+                ),
+              );
+            }
 
             return SingleChildScrollView(
               controller: _scrollController,
@@ -148,7 +159,7 @@ class _ViewTradePageState extends State<ViewTradePage> {
                     descriptionTextController: _descriptionTextController,
                     focusNode: _focusNode,
                     loadingOverlay: LoadingBlockFullScreen(
-                      context: context,
+                      context: Base.globalKey.currentContext!,
                       dismissable: false,
                     ),
                     isMsgSending: _isMsgSending,

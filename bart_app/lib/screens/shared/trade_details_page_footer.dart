@@ -49,6 +49,7 @@ class TradeDetailsPageFooter extends StatelessWidget {
 
       case TradeCompType.outgoing:
         return OutgoingTradeFooter(
+          userID: userID,
           trade: trade,
           loadingOverlay: loadingOverlay,
           isMsgSending: isMsgSending,
