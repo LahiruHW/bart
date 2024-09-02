@@ -899,23 +899,22 @@ class BartFirestoreServices {
         return [
           [
             incomingList,
-            incomingList.fold<int>(
-                0, (val, trade) => !trade.isRead ? val + 1 : val),
+            incomingList.length,
           ],
           [
             outgoingList,
             outgoingList.fold<int>(
-                0, (val, trade) => !trade.isRead ? val + 1 : val),
+              0,
+              (val, trade) => !trade.isRead ? val + 1 : val,
+            ),
           ],
           [
             successList,
-            successList.fold<int>(
-                0, (val, trade) => !trade.isRead ? val + 1 : val),
+            successList.length,
           ],
           [
             tradeHistoryList,
-            tradeHistoryList.fold<int>(
-                0, (val, trade) => !trade.isRead ? val + 1 : val),
+            0,
           ],
         ];
       },
