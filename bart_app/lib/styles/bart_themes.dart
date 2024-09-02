@@ -284,7 +284,7 @@ class BartAppTheme {
         tbcTextColour: purple3,
         tbcBackgroundColour: Colors.white,
         tbcShadowColour: purple3.withOpacity(0.8),
-        completeFailTextColour: Colors.red,
+        completeFailTextColour: Colors.black,
         completeFailBackgroundColour: Colors.grey,
         completeFailShadowColour: Colors.black.withOpacity(0.4),
         tradeHistoryTextColour: Colors.black,
