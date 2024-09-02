@@ -32,7 +32,7 @@
     "no.failed.trades": "Aucune transaction échouée à afficher",
     "failed.trade.label1": "{itemOwner} a rejeté votre offre",
     "failed.trade.label2": "Vous avez rejeté l'offre de {itemOwner}",
-    "trade.history.title": "Historique Commercial Reussi",
+    "trade.history.title": "Historique des échanges",
     "trade.history.label1": "Tu as échangé avec {itemOwner}",
     "trade.history.label2": "{itemOwner} a échangé avec to",
     "no.trade.history": "Aucun historique commercial à afficher",

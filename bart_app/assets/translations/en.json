@@ -32,7 +32,7 @@
     "no.failed.trades": "No failed trades to show",
     "failed.trade.label1": "{itemOwner} rejected your trade offer",
     "failed.trade.label2": "You rejected {itemOwner}'s offer",
-    "trade.history.title": "Successful Trade History",
+    "trade.history.title": "Trade History",
     "trade.history.label1": "You traded with {itemOwner}",
     "trade.history.label2": "{itemOwner} traded with you",
     "no.trade.history": "No trade history to show",
