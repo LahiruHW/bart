@@ -86,6 +86,34 @@ class DevModeTools {
               ),
             ),
           ),
+          Material(
+            child: InkWell(
+              child: ListTile(
+                title: const Text(
+                  "Clean up trades based on items",
+                  style: TextStyle(fontSize: 15),
+                ),
+                onTap: () {
+                  Toast.show("cleaning up trades that have null items");
+                  BartFirestoreServices.cleanupTradesBasedOnItems();
+                },
+              ),
+            ),
+          ),
+          Material(
+            child: InkWell(
+              child: ListTile(
+                title: const Text(
+                  "Remove unused chats based on their existence",
+                  style: TextStyle(fontSize: 15),
+                ),
+                onTap: () {
+                  Toast.show("cleaning up chats that haven't been used yet");
+                  BartFirestoreServices.cleanupChatsIfUnused();
+                },
+              ),
+            ),
+          ),
         ],
       );
 }
