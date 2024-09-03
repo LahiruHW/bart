@@ -974,7 +974,7 @@ class BartFirestoreServices {
       const bool acceptedByTradee = true;
       final isCompleted = (acceptedByTradee && acceptedByTrader);
       transaction.update(tradeDoc, {
-        'acceptedByTradee': acceptedByTrader,
+        'acceptedByTradee': acceptedByTradee,
         'isCompleted': isCompleted,
         'timeUpdated': Timestamp.fromDate(DateTime.now()),
       });
