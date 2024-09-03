@@ -19,32 +19,26 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      onVerticalDragDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      onHorizontalDragDown: (_) =>
-          FocusManager.instance.primaryFocus?.unfocus(),
-      child: Consumer<BartStateProvider>(
-        builder: (context, provider, child) => Scaffold(
-          key: globalKey,
-          body: Padding(
-            padding: const EdgeInsets.only(
-              left: 5.0,
-              right: 5.0,
-              bottom: 5.0,
-            ),
-            child: Column(
-              children: [
-                ChatPageHeader(chatData: chatData),
-                Expanded(
-                  child: ChatPageChatView(
-                    userID: provider.userProfile.userID,
-                    chatID: chatID,
-                    chatData: chatData,
-                  ),
+    return Consumer<BartStateProvider>(
+      builder: (context, provider, child) => Scaffold(
+        key: globalKey,
+        body: Padding(
+          padding: const EdgeInsets.only(
+            left: 5.0,
+            right: 5.0,
+            bottom: 5.0,
+          ),
+          child: Column(
+            children: [
+              ChatPageHeader(chatData: chatData),
+              Expanded(
+                child: ChatPageChatView(
+                  userID: provider.userProfile.userID,
+                  chatID: chatID,
+                  chatData: chatData,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

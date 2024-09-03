@@ -135,106 +135,113 @@ class _ChatPageChatViewState extends State<ChatPageChatView> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        StreamBuilder(
-          stream: BartFirestoreServices.chatRoomMessageListStream(
-            widget.chatID,
-            widget.userID,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data!.isEmpty) {
-                return _emptyChatWidget(context);
-              }
+        GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          onVerticalDragDown: (_) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
+          onHorizontalDragDown: (_) =>
+              FocusManager.instance.primaryFocus?.unfocus(),
+          child: StreamBuilder(
+            stream: BartFirestoreServices.chatRoomMessageListStream(
+              widget.chatID,
+              widget.userID,
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  return _emptyChatWidget(context);
+                }
 
-              // scroll down after the list is built
-              WidgetsBinding.instance.addPostFrameCallback(
-                (timeStamp) => _scrollController.scrollDown(),
-              );
+                // scroll down after the list is built
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (timeStamp) => _scrollController.scrollDown(),
+                );
 
-              final firstMsgDT = snapshot.data!.first.timeSent.toDate();
-              final diff = DateTime.now().difference(firstMsgDT).inDays;
-              final date = diff < 1
-                  ? "Today"
-                  : diff == 1
-                      ? "Yesterday"
-                      : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
+                final firstMsgDT = snapshot.data!.first.timeSent.toDate();
+                final diff = DateTime.now().difference(firstMsgDT).inDays;
+                final date = diff < 1
+                    ? "Today"
+                    : diff == 1
+                        ? "Yesterday"
+                        : "${firstMsgDT.day}/${firstMsgDT.month}/${firstMsgDT.year}";
 
-              _createDebounce();
-              return ListView(
-                controller: _scrollController,
-                shrinkWrap: true,
-                padding: EdgeInsets.only(bottom: 80.h),
-                children: [
-                  _dateSeparator(context, date),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      final message = snapshot.data![index];
-                      return VisibilityDetector(
-                        key: Key(message.messageID),
-                        onVisibilityChanged: (info) async {
-                          // while the timer is active:
-                          //    add all the unread messages to the batch
-                          // when the timer is finished:
-                          //    update the read status of all the messages in the batch
-                          //    clear the batch
-                          if (info.visibleFraction >= 0.6) {
-                            if (_debounce?.isActive ?? false) {
-                              if (!message.isRead!) {
-                                BartFirestoreServices.updateMsgBatch(
-                                  widget.chatData,
-                                  message,
-                                  widget.userID,
-                                );
+                _createDebounce();
+                return ListView(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: 80.h),
+                  children: [
+                    _dateSeparator(context, date),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final message = snapshot.data![index];
+                        return VisibilityDetector(
+                          key: Key(message.messageID),
+                          onVisibilityChanged: (info) async {
+                            // while the timer is active:
+                            //    add all the unread messages to the batch
+                            // when the timer is finished:
+                            //    update the read status of all the messages in the batch
+                            //    clear the batch
+                            if (info.visibleFraction >= 0.6) {
+                              if (_debounce?.isActive ?? false) {
+                                if (!message.isRead!) {
+                                  BartFirestoreServices.updateMsgBatch(
+                                    widget.chatData,
+                                    message,
+                                    widget.userID,
+                                  );
+                                }
+                                _debounce!.cancel();
                               }
-                              _debounce!.cancel();
+                              _createDebounce();
                             }
-                            _createDebounce();
-                          }
-                          // var visiblePT = info.visibleFraction * 100;
-                          // debugPrint('Widget ${info.key} is $visiblePT% visible');
-                        },
-                        child: BartChatBubble(
-                          message: message,
-                          currentUserID: widget.userID,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      final currentDT = DateTime.now();
-                      final currentMsg = snapshot.data![index];
-                      final currentMsgDT = currentMsg.timeSent.toDate();
-                      final nextMsg = snapshot.data![index + 1];
-                      final nextMsgDT = nextMsg.timeSent.toDate();
-                      final showDate = !nextMsg.isSameDayAsMsg(currentMsg);
-                      if (showDate) {
-                        final diff = currentDT.difference(nextMsgDT).inDays;
-                        final date = diff == 0
-                            ? "Today"
-                            : diff == 1
-                                ? "Yesterday"
-                                : "${currentMsgDT.day}/${currentMsgDT.month}/${currentMsgDT.year}";
-                        return _dateSeparator(context, date);
-                      }
-                      return const SizedBox(height: 1);
-                    },
+                            // var visiblePT = info.visibleFraction * 100;
+                            // debugPrint('Widget ${info.key} is $visiblePT% visible');
+                          },
+                          child: BartChatBubble(
+                            message: message,
+                            currentUserID: widget.userID,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        final currentDT = DateTime.now();
+                        final currentMsg = snapshot.data![index];
+                        final currentMsgDT = currentMsg.timeSent.toDate();
+                        final nextMsg = snapshot.data![index + 1];
+                        final nextMsgDT = nextMsg.timeSent.toDate();
+                        final showDate = !nextMsg.isSameDayAsMsg(currentMsg);
+                        if (showDate) {
+                          final diff = currentDT.difference(nextMsgDT).inDays;
+                          final date = diff == 0
+                              ? "Today"
+                              : diff == 1
+                                  ? "Yesterday"
+                                  : "${currentMsgDT.day}/${currentMsgDT.month}/${currentMsgDT.year}";
+                          return _dateSeparator(context, date);
+                        }
+                        return const SizedBox(height: 1);
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1.0,
+                    ),
                   ),
-                ],
-              );
-            } else {
-              return const Center(
-                child: SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1.0,
-                  ),
-                ),
-              );
-            }
-          },
+                );
+              }
+            },
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
