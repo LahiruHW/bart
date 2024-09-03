@@ -20,6 +20,8 @@ class LoginTypeSelectPage extends StatefulWidget {
     super.key,
   });
 
+  static final GlobalKey<ScaffoldState> globalKey = GlobalKey();
+
   @override
   State<LoginTypeSelectPage> createState() => _LoginTypeSelectPageState();
 }
@@ -46,6 +48,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
         Provider.of<BartStateProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: brandTheme.logoBackgroundColor,
+      key: LoginTypeSelectPage.globalKey,
       body: Center(
         child: SizedBox(
           height: 450.h,

@@ -25,7 +25,7 @@ Future<void> main() async {
   BartAnalyticsEngine.logAppOpen();
   BartFirestoreServices();
   BartFirebaseStorageServices();
-  BartFirebaseMessaging.initNotifications();
+  BartFirebaseMessaging.init();
   BartAppVersionData.initPackageInfo();
   BartSharedPrefOps.initSharedPreferences();
   final appRuntime = MultiProvider(
