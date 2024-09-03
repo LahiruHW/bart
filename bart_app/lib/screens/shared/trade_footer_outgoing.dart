@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
@@ -42,32 +40,35 @@ class OutgoingTradeFooter extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () async {
+              context.pop(); // first close the dialog
               whileSending();
-              loadingOverlay.show(); // first show the loading indicator
+              loadingOverlay.show(); // then show the loading indicator
               BartFirestoreServices.cancelTrade(
                 trade,
                 restoreTradedItem: true,
-              ).then((cancelled) {
-                debugPrint("||||||||||||||||||||| cancelled: $cancelled");
-                onSent();
-                loadingOverlay.hide();
-                if (cancelled) {
-                  ScaffoldMessenger.of(thisContext).showSnackBar(
-                    BartSnackBar(
-                      message: context.tr(
-                        'view.trade.page.outgoing.cancel.msg',
-                        namedArgs: {
-                          'itemOwner': trade.tradedItem.itemOwner.userName
-                        },
-                      ),
-                      backgroundColor: Colors.green,
-                      icon: Icons.check_circle,
-                    ).build(context),
-                  );
-                  Navigator.of(context).pop(); // THEN close the dialog
-                  context.go('/home-trades'); // finally go back home
-                }
-              });
+              ).then(
+                (cancelled) {
+                  debugPrint("||||||||||||||||||||| cancelled: $cancelled");
+                  onSent();
+                  loadingOverlay.hide();
+                  final parentContext = Base.globalKey.currentContext!;
+                  if (cancelled && parentContext.mounted) {
+                    ScaffoldMessenger.of(parentContext).showSnackBar(
+                      BartSnackBar(
+                        message: parentContext.tr(
+                          'view.trade.page.outgoing.cancel.msg',
+                          namedArgs: {
+                            'itemOwner': trade.tradedItem.itemOwner.userName
+                          },
+                        ),
+                        backgroundColor: Colors.green,
+                        icon: Icons.check_circle,
+                      ).build(parentContext),
+                    );
+                    parentContext.go('/home-trades');
+                  }
+                },
+              );
             },
             child: Text(context.tr('yes')),
           ),
