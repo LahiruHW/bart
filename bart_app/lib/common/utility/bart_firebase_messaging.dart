@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:bart_app/screens/index.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
+import 'package:bart_app/screens/login/login_select.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -21,6 +21,8 @@ class BartFirebaseMessaging {
   static late final bool isAuthorized;
   static late final AndroidNotificationChannel _androidChannel;
   static late final FlutterLocalNotificationsPlugin _localNotifications;
+  static const String _picPathSmall = "@drawable/notification_icon";
+  static const String _picPathBig = "@drawable/launcher_icon";
 
   static Future<void> init() async {
     debugPrint('--------------------- INITIALIZING NOTIFICATIONS');
@@ -59,15 +61,12 @@ class BartFirebaseMessaging {
     final String pathIfLoggedIn = remoteMsg.data['pathIfLoggedIn'];
     final String pathIfNotLoggedIn = remoteMsg.data['pathIfNotLoggedIn'];
 
-    // resolve the route path based on the payload, then redirect to that path
-
+    // TODO:_resolve the route path based on the payload, then redirect to that path
     try {
       Base.globalKey.currentContext!.go(pathIfLoggedIn);
     } catch (e) {
       LoginTypeSelectPage.globalKey.currentContext!.go(pathIfNotLoggedIn);
     }
-
-    // Base.globalKey.currentContext!.go('/chat');
   }
 
   static void setAuthorizedStatus(NotificationSettings status) {
@@ -114,7 +113,8 @@ class BartFirebaseMessaging {
               _androidChannel.name,
               channelDescription: _androidChannel.description,
               importance: _androidChannel.importance,
-              icon: '@drawable/launcher_icon',
+              icon: _picPathSmall,
+              largeIcon: const DrawableResourceAndroidBitmap(_picPathBig),
             ),
           ),
           payload: jsonEncode(msg.toMap()),
@@ -125,9 +125,7 @@ class BartFirebaseMessaging {
 
   static Future<void> initLocalNotifications() async {
     const iOS = DarwinInitializationSettings();
-    const android = AndroidInitializationSettings(
-      '@drawable/launcher_icon',
-    );
+    const android = AndroidInitializationSettings(_picPathSmall);
     const settings = InitializationSettings(android: android, iOS: iOS);
     await _localNotifications.initialize(
       settings,
