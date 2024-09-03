@@ -119,6 +119,7 @@ class OutgoingTradeFooter extends StatelessWidget {
                     height: 75,
                     child: BartMaterialButton(
                       label: context.tr('view.trade.page.btn.editTrade'),
+                      isEnabled: !isMsgSending,
                       onPressed: () {
                         context.push(
                           '/viewTrade/editTrade',
