@@ -17,10 +17,12 @@ class BartAppUpdateChecker {
   static const String keyForceUpdate = 'force_update';
   static const String keyLatestVersion = 'latest_version';
   static const String keyLatestBuild = 'latest_build';
+  static const String keyUpdateLink = 'update_link';
   static final Map<String, dynamic> thisConfig = {
     keyForceUpdate: false,
     keyLatestVersion: BartAppVersionData.version,
     keyLatestBuild: int.parse(BartAppVersionData.buildNumber),
+    keyUpdateLink: BartEnv.internalTestLink2,
   };
   static final GlobalKey alertKey = GlobalKey();
   static bool _shouldUpdate = false;
@@ -75,6 +77,8 @@ class BartAppUpdateChecker {
         thisConfig[keyLatestVersion] = config.getString(keyLatestVersion);
       case (keyLatestBuild):
         thisConfig[keyLatestBuild] = config.getValue(keyLatestBuild).asInt();
+      case (keyUpdateLink):
+        thisConfig[keyUpdateLink] = config.getString(keyUpdateLink);
       default:
         break;
     }
@@ -134,7 +138,8 @@ class BartAppUpdateChecker {
             actions: [
               TextButton(
                 onPressed: () {
-                  final uri = Uri.parse(BartEnv.internalTestLink2);
+                  // final uri = Uri.parse(BartEnv.internalTestLink2);
+                  final uri = Uri.parse(thisConfig[keyUpdateLink]);
                   launchUrl(uri).then((_) => SystemNavigator.pop());
                 },
                 child: Text(tr('update.dialog.1.btn')),
