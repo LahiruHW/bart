@@ -207,5 +207,8 @@
     "onboarding.page.3.5": "Il est temps de faire connaissance avec Bart et de commencer à échanger des objets!",
     "onboarding.page.finish.btn": "Superbe, allons-y!",
     "pre.exit.dialog.header": "Êtes-vous sûr?",
-    "pre.exit.dialog.body": "Êtes-vous sûr de vouloir quitter cette page?\n\nVous perdrez toutes les modifications non sauvegardées."
+    "pre.exit.dialog.body": "Êtes-vous sûr de vouloir quitter cette page?\n\nVous perdrez toutes les modifications non sauvegardées.",
+    "update.dialog.1.header": "Mise à jour Disponible",
+    "update.dialog.1.body": "Une nouvelle version de Bart est disponible. Veuillez la mettre à jour pour continuer à utiliser l'app.",
+    "update.dialog.1.btn": "Mise à jour"
 }

@@ -5,14 +5,10 @@ import 'package:bart_app/firebase_options.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:bart_app/common/utility/index.dart';
-import 'package:bart_app/common/utility/bart_router.dart';
+import 'package:bart_app/common/providers/index.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bart_app/common/providers/state_provider.dart';
-import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:bart_app/common/providers/temp_state_provider.dart';
-import 'package:bart_app/common/utility/bart_firebase_messaging.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 
 Future<void> main() async {
@@ -26,7 +22,8 @@ Future<void> main() async {
   BartFirestoreServices();
   BartFirebaseStorageServices();
   BartFirebaseMessaging.init();
-  BartAppVersionData.initPackageInfo();
+  await BartAppVersionData.initPackageInfo();
+  BartAppUpdateChecker.initConfig();
   BartSharedPrefOps.initSharedPreferences();
   final appRuntime = MultiProvider(
     providers: [

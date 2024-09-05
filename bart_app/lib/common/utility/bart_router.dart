@@ -5,6 +5,7 @@ import 'package:bart_app/screens/index.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_route_handler.dart';
+import 'package:bart_app/common/utility/bart_app_update_checker.dart';
 import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
@@ -26,9 +27,13 @@ class BartRouter {
       GoRoute(
         name: "login",
         path: '/login',
-        pageBuilder: (context, state) => const MaterialPage(
-          child: LoginTypeSelectPage(),
-        ),
+        pageBuilder: (context, state) {
+          debugPrint("opening checking startup config from bart_router 1");
+          BartAppUpdateChecker.startupConfigCheck(context);
+          return const MaterialPage(
+            child: LoginTypeSelectPage(),
+          );
+        },
         onExit: (context, state) {
           BartRouteHandler.preExitCallbacks(context);
           return true;
@@ -55,6 +60,7 @@ class BartRouter {
         name: "onboard",
         path: '/onboard',
         pageBuilder: (context, state) {
+          BartAppUpdateChecker.startupConfigCheck(context);
           BartAnalyticsEngine.userBeginsOnboarding();
           return const MaterialPage(
             child: OnboardingPage(),
@@ -140,6 +146,7 @@ class BartRouter {
                         path: '/home-trades',
                         parentNavigatorKey: _homeTradesNavKey,
                         pageBuilder: (context, state) {
+                          BartAppUpdateChecker.startupConfigCheck(context);
                           return const MaterialPage(
                             child: HomeTradesPage(),
                           );

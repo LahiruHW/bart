@@ -9,4 +9,8 @@ part 'bart_env.g.dart';
 abstract class BartEnv {
   @EnviedField(varName: 'sampleAPIKey')
   static const String sampleAPIKey = _BartEnv.sampleAPIKey;
+  @EnviedField(varName: 'internalTestLink1')
+  static const String internalTestLink1 = _BartEnv.internalTestLink1;
+  @EnviedField(varName: 'internalTestLink2')
+  static const String internalTestLink2 = _BartEnv.internalTestLink2;
 }

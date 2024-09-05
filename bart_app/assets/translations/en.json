@@ -207,5 +207,8 @@
     "onboarding.page.3.5": "Let's get you aquainted with Bart and start trading!",
     "onboarding.page.finish.btn": "Great, let's go!",
     "pre.exit.dialog.header": "Are you sure?",
-    "pre.exit.dialog.body": "Are you sure you want to leave this page?\n\nYou will lose any unsaved changes."
+    "pre.exit.dialog.body": "Are you sure you want to leave this page?\n\nYou will lose any unsaved changes.",
+    "update.dialog.1.header": "Update Available",
+    "update.dialog.1.body": "A new version of Bart is available. Please update to continue using the app.",
+    "update.dialog.1.btn": "Update Now"
 }

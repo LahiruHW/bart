@@ -8,7 +8,7 @@ class BartAppVersionData {
     debugPrint('------------------------------ AppVersionProvider initialized');
   }
 
-  static void initPackageInfo() async {
+  static Future<void> initPackageInfo() async {
     packageInfo = await PackageInfo.fromPlatform();
   }
 

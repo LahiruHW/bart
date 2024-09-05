@@ -106,4 +106,12 @@ class BartRouteHandler {
     final tempProvider = Provider.of<TempStateProvider>(context, listen: false);
     tempProvider.clearAllTempData();
   }
+
+  static Widget popResistantWrapper({required Widget child}) {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) => false,
+      child: child,
+    );
+  }
 }
