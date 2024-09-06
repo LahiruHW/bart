@@ -69,7 +69,7 @@ dependencies:
   flutter_cache_manager: ^3.3.2
   animated_toggle_switch: ^0.8.2
   firebase_remote_config: ^5.1.0
-  flutter_native_splash: ^2.3.10
+  flutter_native_splash: ^2.4.1
   flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^17.2.2
 
