@@ -179,7 +179,8 @@ class _PaymentPageState extends State<PaymentPage> {
       
                         // 3. take the currency & amount, and format it
                         final currency = currencyUnit;
-                        final amount = double.parse(_amountController.text.trim());
+                        final amountText = _amountController.text.trim();
+                        final amount = double.parse(amountText.replaceAll(',', ''));
                         final formattedAmount = NumberFormat.currency(
                           locale: context.locale.toString(),
                           symbol: currency,

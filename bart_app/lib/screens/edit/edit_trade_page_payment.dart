@@ -189,7 +189,8 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
 
                       // 3. take the currency & amount, and format it
                       final currency = currencyUnit;
-                      final amount = double.parse(_amountController.text);
+                      final amountText = _amountController.text;
+                      final amount = double.parse(amountText.replaceAll(',', ''));
                       final formattedAmount = NumberFormat.currency(
                         locale: context.locale.toString(),
                         symbol: currency,
