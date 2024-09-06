@@ -86,14 +86,12 @@ class BartApp extends StatelessWidget {
         builder: (context, widget) {
           return Consumer<BartStateProvider>(
             builder: (context, provider, child) => MaterialApp.router(
-              builder: (context, child) {
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: const TextScaler.linear(1.0),
-                  ),
-                  child: child!,
-                );
-              },
+              builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: const TextScaler.linear(1.0),
+                ),
+                child: child!,
+              ),
               debugShowCheckedModeBanner: false,
               routerConfig: BartRouter.router,
               localizationsDelegates: context.localizationDelegates,

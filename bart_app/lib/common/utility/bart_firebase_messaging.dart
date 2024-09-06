@@ -20,7 +20,8 @@ class BartFirebaseMessaging {
   static late String? _fcmToken;
   static late final bool isAuthorized;
   static late final AndroidNotificationChannel _androidChannel;
-  static late final FlutterLocalNotificationsPlugin _localNotifications;
+  static late final FlutterLocalNotificationsPlugin _localNotifs;
+  static late final NotificationDetails _notifDetails;
   static const String _picPathSmall = "@drawable/notification_icon";
   static const String _picPathBig = "@drawable/launcher_icon";
 
@@ -35,7 +36,19 @@ class BartFirebaseMessaging {
       description: 'This channel is used for important notifications',
       importance: Importance.high,
     );
-    _localNotifications = FlutterLocalNotificationsPlugin();
+
+    _notifDetails = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _androidChannel.id,
+        _androidChannel.name,
+        channelDescription: _androidChannel.description,
+        importance: _androidChannel.importance,
+        icon: _picPathSmall,
+        largeIcon: const DrawableResourceAndroidBitmap(_picPathBig),
+      ),
+    );
+
+    _localNotifs = FlutterLocalNotificationsPlugin();
 
     // request permission from user to send notifications
     await _fbMessaging
@@ -103,20 +116,11 @@ class BartFirebaseMessaging {
       (msg) {
         final notif = msg.notification;
         if (notif == null) return;
-        _localNotifications.show(
+        _localNotifs.show(
           notif.hashCode,
           notif.title,
           notif.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              _androidChannel.id,
-              _androidChannel.name,
-              channelDescription: _androidChannel.description,
-              importance: _androidChannel.importance,
-              icon: _picPathSmall,
-              largeIcon: const DrawableResourceAndroidBitmap(_picPathBig),
-            ),
-          ),
+          _notifDetails,
           payload: jsonEncode(msg.toMap()),
         );
       },
@@ -127,23 +131,15 @@ class BartFirebaseMessaging {
     const iOS = DarwinInitializationSettings();
     const android = AndroidInitializationSettings(_picPathSmall);
     const settings = InitializationSettings(android: android, iOS: iOS);
-    await _localNotifications.initialize(
+    await _localNotifs.initialize(
       settings,
       onDidReceiveNotificationResponse: (payload) {
-        print('||||||||||||||||||||||||| Received payload: ${payload.payload}');
         final message = RemoteMessage.fromMap(jsonDecode(payload.payload!));
-        print('||||||||||||||||||||||||| Received notification: $message');
         _handleMessage(message);
       },
-      // onDidReceiveBackgroundNotificationResponse: (payload) {
-      //   print('||||||||||||||||||||||||| Received payload: ${payload.payload}');
-      //   final message = RemoteMessage.fromMap(jsonDecode(payload.payload!));
-      //   print('||||||||||||||||||||||||| Received notification: $message');
-      //   _handleMessage(message);
-      // },
     );
 
-    final platform = _localNotifications.resolvePlatformSpecificImplementation<
+    final platform = _localNotifs.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
     await platform?.createNotificationChannel(_androidChannel);
   }
