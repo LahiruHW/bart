@@ -89,7 +89,7 @@ class BartAppUpdateChecker {
   static int get latestBuild => thisConfig[keyLatestBuild];
 
   static Future<void> shouldUpdate() async {
-    if (forceUpdate) return showUpdateDialog();
+    if (forceUpdate) return await showUpdateDialog();
     final List<int> currentVerArr =
         BartAppVersionData.version.split('.').map(int.parse).toList();
     final List<int> latestVerArr =
@@ -105,7 +105,7 @@ class BartAppUpdateChecker {
     final int currentBuild = int.parse(BartAppVersionData.buildNumber);
     final isBuildUpdated = latestBuild > currentBuild;
     _shouldUpdate = (isVersionUpdated || isBuildUpdated);
-    showUpdateDialog();
+    await showUpdateDialog();
   }
 
   static Future<void> showUpdateDialog() async {
@@ -122,12 +122,13 @@ class BartAppUpdateChecker {
       // if the dialog is already in view, don't show another one
       if (alertKey.currentContext != null) return;
 
+      debugPrint('--------------------- showing update dialog');
       // else show the dialog
       _context = LoginTypeSelectPage.globalKey.currentContext ??
           Base.globalKey.currentContext ??
           alertKey.currentContext!;
 
-      showDialog(
+      await showDialog(
         context: _context,
         barrierDismissible: false,
         builder: (context) => BartRouteHandler.popResistantWrapper(
