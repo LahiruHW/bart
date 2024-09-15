@@ -55,11 +55,21 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
   }
 
   bool validateAmount() {
-    final amount = _amountController.text;
+    final amount = _amountController.text.trim();
     if (amount.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         BartSnackBar(
           message: context.tr('returnOffer.page.amount.snackbar1'),
+          backgroundColor: Colors.red,
+          icon: Icons.info,
+        ).build(context),
+      );
+      return false;
+    }
+    if (amount.contains(",")) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        BartSnackBar(
+          message: context.tr('returnOffer.page.amount.snackbar2'),
           backgroundColor: Colors.red,
           icon: Icons.info,
         ).build(context),
@@ -179,7 +189,10 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
                     onPressed: () {
                       setState(() => _isBtnEnabled = false);
                       // 0. validate the amount
-                      if (!validateAmount()) return;
+                      if (!validateAmount()) {
+                        setState(() => _isBtnEnabled = true);
+                        return;
+                      }
 
                       // 1. get the timestamp of submission
                       final timestamp = Timestamp.fromDate(DateTime.now());
@@ -189,8 +202,9 @@ class _EditTradePagePaymentState extends State<EditTradePagePayment> {
 
                       // 3. take the currency & amount, and format it
                       final currency = currencyUnit;
-                      final amountText = _amountController.text;
-                      final amount = double.parse(amountText.replaceAll(',', ''));
+                      // final amount = _amountController.text.trim();
+                      final amount =
+                          double.parse(_amountController.text.trim());
                       final formattedAmount = NumberFormat.currency(
                         locale: context.locale.toString(),
                         symbol: currency,

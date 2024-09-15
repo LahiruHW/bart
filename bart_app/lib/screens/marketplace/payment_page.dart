@@ -55,6 +55,16 @@ class _PaymentPageState extends State<PaymentPage> {
       );
       return false;
     }
+    if (amount.contains(",")){
+      ScaffoldMessenger.of(context).showSnackBar(
+        BartSnackBar(
+          message: context.tr('returnOffer.page.amount.snackbar2'),
+          backgroundColor: Colors.red,
+          icon: Icons.info,
+        ).build(context),
+      );
+      return false;
+    }
     return true;
   }
 
@@ -179,8 +189,8 @@ class _PaymentPageState extends State<PaymentPage> {
       
                         // 3. take the currency & amount, and format it
                         final currency = currencyUnit;
-                        final amountText = _amountController.text.trim();
-                        final amount = double.parse(amountText.replaceAll(',', ''));
+                        // final amount = _amountController.text.trim();
+                        final amount = double.parse(_amountController.text.trim());
                         final formattedAmount = NumberFormat.currency(
                           locale: context.locale.toString(),
                           symbol: currency,
