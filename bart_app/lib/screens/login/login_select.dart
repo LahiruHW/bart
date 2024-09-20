@@ -70,15 +70,20 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
 
                   stateProvider.signInWithGoogle().then(
                     (value) {
-                      Future.delayed(
-                        const Duration(milliseconds: 1500),
-                        () {
-                          loadingOverlay.hide();
-                          stateProvider.userProfile.isFirstLogin
-                              ? context.go("/onboard")
-                              : context.go("/home-trades");
-                        },
-                      );
+                      debugPrint('|||||||||||||||||||||||||||||||||||||||||| $value');
+                      if (!value) {
+                        loadingOverlay.hide();
+                      } else {
+                        Future.delayed(
+                          const Duration(milliseconds: 1500),
+                          () {
+                            loadingOverlay.hide();
+                            stateProvider.userProfile.isFirstLogin
+                                ? context.go("/onboard")
+                                : context.go("/home-trades");
+                          },
+                        );
+                      }
                     },
                   );
                 }, // update the user state

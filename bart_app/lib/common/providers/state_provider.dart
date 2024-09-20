@@ -32,13 +32,18 @@ class BartStateProvider extends ChangeNotifier {
   }
 
   /// calls the sign in with google method from the auth service,
-  Future<void> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     await authService.signInWithGoogle().then((userCred) async {
       await setupUserAccount(userCred);
       BartAnalyticsEngine.userLogsInAE(LoginType.google, user!.uid);
+      return true;
     }).onError(
-      (error, stackTrace) => throw Exception(error),
+      (error, stackTrace) {
+        debugPrint(error.toString());
+        return false;
+      },
     );
+    return true;
   }
 
   Future<bool> deleteAccount() async {
