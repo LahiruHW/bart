@@ -23,7 +23,7 @@ Future<void> main() async {
   BartFirebaseStorageServices();
   BartFirebaseMessaging.init();
   await BartAppVersionData.initPackageInfo();
-  BartAppUpdateChecker.initConfig();
+  await BartAppUpdateChecker.initConfig();
   BartSharedPrefOps.initSharedPreferences();
   final appRuntime = MultiProvider(
     providers: [
@@ -45,23 +45,17 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // time delay to simulate loading time for the splash screen
-  Future.delayed(
-    const Duration(milliseconds: 2000),
-  ).then(
-    (value) {
-      FlutterNativeSplash.remove();
-      runApp(
-        EasyLocalization(
-          supportedLocales: const [
-            Locale('en'),
-            Locale('fr'),
-          ],
-          path: 'assets/translations',
-          child: appRuntime,
-        ),
-      );
-    },
+  // if any future issue arises, add a 2s time delay here again
+  FlutterNativeSplash.remove();
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fr'),
+      ],
+      path: 'assets/translations',
+      child: appRuntime,
+    ),
   );
 }
 
