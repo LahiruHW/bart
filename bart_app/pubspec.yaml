@@ -52,7 +52,7 @@ dependencies:
   word_generator: ^0.4.4
   pull_to_refresh: ^2.0.0
   flutter_animate: ^4.5.0
-  cloud_firestore: ^5.0.0
+  cloud_firestore: ^5.4.2
   easy_localization: ^3.0.6
   package_info_plus: ^8.0.0
   firebase_storage: ^12.3.1
