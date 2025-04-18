@@ -12,6 +12,7 @@ class UserLocalProfile {
   UserSettings? settings;
   String? localeString;
   bool isNull;
+  Timestamp? lastUpdated;
 
   UserLocalProfile({
     this.userID = "",
@@ -23,6 +24,7 @@ class UserLocalProfile {
     this.settings,
     this.localeString = "en",
     this.isNull = false,
+    this.lastUpdated,
   });
 
   static final UserLocalProfile _invalidObj = UserLocalProfile(
@@ -35,6 +37,7 @@ class UserLocalProfile {
     settings: null,
     localeString: null,
     isNull: true,
+    lastUpdated: null,
   );
   factory UserLocalProfile.empty() => _invalidObj;
 
@@ -48,6 +51,7 @@ class UserLocalProfile {
       imageUrl: json['imageUrl'],
       settings: UserSettings.fromMap(json['settings']),
       localeString: json['localeString'],
+      lastUpdated: json['lastUpdated'] ?? Timestamp.now(),
     );
   }
 
@@ -63,6 +67,7 @@ class UserLocalProfile {
       imageUrl: newObj.imageUrl,
       settings: UserSettings.mergeWithExisting(old.settings!, newObj.settings!),
       localeString: newObj.localeString,
+      lastUpdated: newObj.lastUpdated ?? Timestamp.now(),
     );
   }
 
@@ -74,6 +79,7 @@ class UserLocalProfile {
         'imageUrl': imageUrl ?? "",
         'settings': (settings ?? UserSettings()).toMap(),
         'localeString': localeString,
+        'lastUpdated': lastUpdated ?? Timestamp.now(),
       };
 
   /// for decoding from json (used by shared preferences)
@@ -87,6 +93,7 @@ class UserLocalProfile {
       imageUrl: json['imageUrl'],
       settings: UserSettings.fromJson(json['settings']),
       localeString: json['localeString'] ?? 'en',
+      lastUpdated: Timestamp.fromDate(DateTime.parse(json['lastUpdated'])),
     );
   }
 
@@ -100,6 +107,8 @@ class UserLocalProfile {
         'imageUrl': imageUrl,
         'settings': settings?.toJson(),
         'localeString': localeString,
+        'lastUpdated':
+            (lastUpdated ?? Timestamp.now()).toDate().toIso8601String(),
       };
 
   // get the Locale object from the string
@@ -116,6 +125,7 @@ class UserLocalProfile {
     localeString = locale.countryCode == null
         ? locale.languageCode
         : '${locale.languageCode}-${locale.countryCode}';
+    lastUpdated = Timestamp.now();
   }
 
   @override

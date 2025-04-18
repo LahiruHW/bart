@@ -35,7 +35,7 @@ class BartStateProvider extends ChangeNotifier {
   Future<bool> signInWithGoogle() async {
     await authService.signInWithGoogle().then((userCred) async {
       await setupUserAccount(userCred);
-      BartAnalyticsEngine.userLogsInAE(LoginType.google, user!.uid);
+      // BartAnalyticsEngine.userLogsInAE(LoginType.google, user!.uid);
       return true;
     }).onError(
       (error, stackTrace) {
@@ -118,7 +118,7 @@ class BartStateProvider extends ChangeNotifier {
       debugPrint('--------------------- StateProvider user signing out');
       await authService.signOut().then(
         (value) {
-          BartAnalyticsEngine.userLogsOutAE();
+          // BartAnalyticsEngine.userLogsOutAE();
           clearUserInstance();
         },
       ).onError(

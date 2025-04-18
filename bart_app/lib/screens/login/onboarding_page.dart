@@ -1,3 +1,4 @@
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
@@ -16,6 +17,8 @@ class OnboardingPage extends StatefulWidget {
   const OnboardingPage({
     super.key,
   });
+
+  static final GlobalKey<ScaffoldState> globalKey = GlobalKey();
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
@@ -41,8 +44,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final brandTheme = Theme.of(context).extension<BartBrandColours>()!;
     final animDuration = 1500.ms;
     const animCurve = Curves.easeInOutCubic;
+    final loadingOverlay = LoadingBlockFullScreen(
+      dismissable: false,
+      context: OnboardingPage.globalKey.currentContext ?? context,
+    );
     final pages = [
       EnterFullNamePageView(
+        loadOverlay: loadingOverlay,
         onSubmit: () {
           pageController.nextPage(
             duration: animDuration,
@@ -51,6 +59,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         },
       ),
       EnterUserNamePageView(
+        loadOverlay: loadingOverlay,
         onSubmit: () {
           pageController.nextPage(
             duration: animDuration,
@@ -59,6 +68,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         },
       ),
       WelcomeUserPageView(
+        loadOverlay: loadingOverlay,
         onSubmit: () {
           context.go('/login');
           Future.delayed(
@@ -80,6 +90,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
         ),
         child: Scaffold(
+          key: OnboardingPage.globalKey,
           backgroundColor: brandTheme.logoBackgroundColor,
           persistentFooterAlignment: AlignmentDirectional.bottomCenter,
           resizeToAvoidBottomInset: false,

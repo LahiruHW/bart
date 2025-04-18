@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
-import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
+// import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
@@ -76,7 +76,7 @@ class BartSideNavMenu extends StatelessWidget {
                         ),
                 onTap: () {
                   Base.globalKey.currentState!.closeEndDrawer();
-                  BartAnalyticsEngine.userBeginsTutorial();
+                  // BartAnalyticsEngine.userBeginsTutorial();
                   Future.delayed(
                     const Duration(milliseconds: 200),
                     () => context.go('/home-trades'),

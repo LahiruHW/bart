@@ -30,16 +30,6 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
   User? user;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final brandTheme = Theme.of(context).extension<BartBrandColours>()!;
     final loadingOverlay =

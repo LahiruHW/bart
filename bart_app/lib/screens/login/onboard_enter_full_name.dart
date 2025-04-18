@@ -4,14 +4,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class EnterFullNamePageView extends StatefulWidget {
   const EnterFullNamePageView({
     super.key,
     required this.onSubmit,
+    required this.loadOverlay,
   });
 
   final VoidCallback onSubmit;
+  final LoadingBlockFullScreen loadOverlay;
 
   @override
   State<StatefulWidget> createState() => EnterFullNamePageViewState();
@@ -70,7 +73,7 @@ class EnterFullNamePageViewState extends State<EnterFullNamePageView> {
         const SizedBox(height: 30),
         Center(
           child: OutlinedButton(
-            onPressed: () {
+            onPressed: () async {
               final thisText = fullNameController.text.trim();
               if (thisText.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -78,14 +81,16 @@ class EnterFullNamePageViewState extends State<EnterFullNamePageView> {
                     icon: Icons.error,
                     message: context.tr('onboarding.page.1.snackbar'),
                     appearOnTop: true,
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.yellow,
                   ).build(context),
                 );
                 return;
               }
-              stateProvider.updateFullName(thisText).then(
+              widget.loadOverlay.show();
+              await stateProvider.updateFullName(thisText).then(
                 (_) {
                   fullNameFocusNode.unfocus();
+                  widget.loadOverlay.hide();
                   widget.onSubmit();
                 },
               );

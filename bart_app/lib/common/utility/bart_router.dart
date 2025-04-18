@@ -6,7 +6,7 @@ import 'package:bart_app/common/entity/index.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:bart_app/common/utility/bart_app_update_checker.dart';
-import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
+// import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
 class BartRouter {
@@ -17,18 +17,19 @@ class BartRouter {
   static final _chatNavKey = GlobalKey<NavigatorState>();
   static final _marketNavKey = GlobalKey<NavigatorState>();
   static final _marketListedItemsNavKey = GlobalKey<NavigatorState>();
-  static final _marketRequestsNavKey = GlobalKey<NavigatorState>();
+  static final _marketServicesNavKey = GlobalKey<NavigatorState>();
   static final _profileNavKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
     initialLocation: '/login',
+    // redirect: (context, state) {
+    // },
     routes: [
       GoRoute(
         name: "login",
         path: '/login',
         pageBuilder: (context, state) {
-          debugPrint("opening checking startup config from bart_router 1");
           BartAppUpdateChecker.startupConfigCheck(context);
           return const MaterialPage(
             child: LoginTypeSelectPage(),
@@ -46,7 +47,7 @@ class BartRouter {
           );
           final userProf = provider.userProfile;
           if (userProf.userID.isNotEmpty) {
-            BartAnalyticsEngine.setCurrentUID(provider.userProfile.userID);
+            // BartAnalyticsEngine.setCurrentUID(provider.userProfile.userID);
             if (userProf.isFirstLogin) {
               return '/onboard';
             }
@@ -61,32 +62,33 @@ class BartRouter {
         path: '/onboard',
         pageBuilder: (context, state) {
           BartAppUpdateChecker.startupConfigCheck(context);
-          BartAnalyticsEngine.userBeginsOnboarding();
+          // BartAnalyticsEngine.userBeginsOnboarding();
           return const MaterialPage(
             child: OnboardingPage(),
           );
         },
         onExit: (context, state) {
-          BartAnalyticsEngine.userEndsOnboarding();
-          BartAnalyticsEngine.logAppClose();
+          // BartAnalyticsEngine.userEndsOnboarding();
+          // BartAnalyticsEngine.logAppClose();
           BartRouteHandler.preExitCallbacks(context);
           return true;
         },
       ),
 
       GoRoute(
-          name: "settings",
-          path: '/settings',
-          pageBuilder: (context, state) {
-            final data = state.extra as Map<String, dynamic>;
-            final bool expandAll = data['beginAllExpanded'] as bool;
-            return MaterialPage(
-              child: SettingsPage(
-                beginAllExpanded: expandAll,
-              ),
-              maintainState: false,
-            );
-          }),
+        name: "settings",
+        path: '/settings',
+        pageBuilder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          final bool expandAll = data['beginAllExpanded'] as bool;
+          return MaterialPage(
+            child: SettingsPage(
+              beginAllExpanded: expandAll,
+            ),
+            maintainState: false,
+          );
+        },
+      ),
 
       GoRoute(
         name: 'viewImage',
@@ -106,16 +108,25 @@ class BartRouter {
       ),
 
       GoRoute(
-          name: 'privacyPolicy',
-          path: '/privacyPolicy',
-          pageBuilder: (context, state) {
-            final fileName = state.extra as String;
-            return MaterialPage(
-              child: PrivacyPolicyPage(
-                fileName: fileName,
-              ),
-            );
-          }),
+        name: 'privacyPolicy',
+        path: '/privacyPolicy',
+        pageBuilder: (context, state) {
+          final fileName = state.extra as String;
+          return MaterialPage(
+            child: PrivacyPolicyPage(
+              fileName: fileName,
+            ),
+          );
+        },
+      ),
+
+      // GoRoute(
+      //   name:'unsupportedDevice',
+      //   path: '/unsupportedDevice',
+      //   pageBuilder: (context, state) {
+
+      //   },
+      // ),
 
       // ShellRoute for the app AFTER the user has logged in
       StatefulShellRoute.indexedStack(
@@ -304,7 +315,7 @@ class BartRouter {
                         name: "market/listed-items", // market/listed-items
                         path: '/market/listed-items',
                         pageBuilder: (context, state) {
-                          BartAnalyticsEngine.userGoToListedItems();
+                          // BartAnalyticsEngine.userGoToListedItems();
                           return const MaterialPage(
                             maintainState: true,
                             child: MarketListedItemsPage(),
@@ -315,17 +326,17 @@ class BartRouter {
                     ],
                   ),
                   StatefulShellBranch(
-                    navigatorKey: _marketRequestsNavKey,
-                    restorationScopeId: 'market-requests',
+                    navigatorKey: _marketServicesNavKey,
+                    restorationScopeId: 'market-services',
                     routes: [
                       GoRoute(
-                        parentNavigatorKey: _marketRequestsNavKey,
-                        name: 'market/requests',
-                        path: '/market/requests',
+                        parentNavigatorKey: _marketServicesNavKey,
+                        name: 'market/services',
+                        path: '/market/services',
                         pageBuilder: (context, state) {
                           return MaterialPage(
-                            child: MarketRequestsPage(
-                              parentContext: _rootNavKey.currentContext!,
+                            child: MarketServicesPage(
+                              parentContext: rootNavKey.currentContext!,
                             ),
                             maintainState: true,
                           );
@@ -344,7 +355,7 @@ class BartRouter {
                 pageBuilder: (context, state) {
                   final itemID = state.pathParameters['id']!;
                   Item item = state.extra as Item;
-                  BartAnalyticsEngine.userGoToItemPage(itemID);
+                  // BartAnalyticsEngine.userGoToItemPage(itemID);
                   return CustomTransitionPage(
                     child: ItemPage(item: item, itemID: itemID),
                     barrierColor: Theme.of(context).scaffoldBackgroundColor,

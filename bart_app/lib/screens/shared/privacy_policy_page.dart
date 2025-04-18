@@ -20,11 +20,13 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   late final ScrollController _scrollController;
   final Map<String, GlobalKey> _headerKeys = {};
   final Map<String, double> _scrollOffsetKeys = {};
+  late final Future<String> _future;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _future = rootBundle.loadString(widget.fileName);
   }
 
   /// Check if the link is a header link
@@ -119,8 +121,9 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         ),
       ),
       body: Center(
-        child: FutureBuilder(
-          future: rootBundle.loadString(widget.fileName),
+        child: FutureBuilder<String>(
+          // future: rootBundle.loadString(widget.fileName),
+          future: _future,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final String markdownData = snapshot.data!;
@@ -139,10 +142,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                   }
                   if (isJumpLink(text)) {
                     jumpToSection(
-                      text,
-                      _headerKeys[text]!,
-                      _scrollOffsetKeys[text]!
-                    );
+                        text, _headerKeys[text]!, _scrollOffsetKeys[text]!);
                     return;
                   }
                   if (isUrl(href)) {

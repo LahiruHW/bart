@@ -32,8 +32,8 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
 
   Widget updateDragWrapper(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragEnd: (_) {
-        if (_.primaryVelocity! > 0) {
+      onHorizontalDragEnd: (dragDetails) {
+        if (dragDetails.primaryVelocity! > 0) {
           _handleSelection((tempProvider.homeV2Index + 1) % 4);
         } else {
           _handleSelection((tempProvider.homeV2Index - 1) % 4);

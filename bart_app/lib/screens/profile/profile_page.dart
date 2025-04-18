@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -543,6 +544,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     imageUrl:
                                         stateProvider.userProfile.imageUrl!,
                                     fit: BoxFit.cover,
+                                    httpHeaders: (kIsWeb) ? const {
+                                      'Retry-After': '3600',
+                                      'Access-Control-Allow-Origin': '*',
+                                    } : null,
                                   ),
                                 ),
                                 const SizedBox(height: 10.0),

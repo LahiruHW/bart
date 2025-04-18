@@ -1,18 +1,21 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/styles/bart_brand_colour_style.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class WelcomeUserPageView extends StatelessWidget {
   const WelcomeUserPageView({
     super.key,
     required this.onSubmit,
+    required this.loadOverlay,
   });
 
   final VoidCallback onSubmit;
+  final LoadingBlockFullScreen loadOverlay;
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +76,14 @@ class WelcomeUserPageView extends StatelessWidget {
           Center(
             child: OutlinedButton(
               onPressed: () async {
+                loadOverlay.show();
                 provider.userProfile.isFirstLogin = false;
                 provider.updateUserProfile(provider.userProfile).then(
-                      (_) => onSubmit(),
-                    );
+                  (_) {
+                    loadOverlay.hide();
+                    onSubmit();
+                  },
+                );
               },
               child: Text(
                 context.tr('onboarding.page.finish.btn'),

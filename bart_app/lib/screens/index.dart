@@ -12,7 +12,7 @@ export 'marketplace/market_listed_items_page.dart';
 export 'marketplace/item_page.dart';
 export 'marketplace/return_offer_page.dart';
 export 'marketplace/payment_page.dart';
-export 'marketplace/market_requests_page.dart';
+export 'marketplace/market_services_page.dart';
 export 'profile/profile_page.dart';
 export 'test/testpages.dart';
 export 'settings/settings_page.dart';

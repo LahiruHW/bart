@@ -63,6 +63,11 @@ class BartAppTheme {
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
     cardColor: Colors.white,
+    scrollbarTheme: const ScrollbarThemeData(
+      thumbVisibility: WidgetStatePropertyAll(false),
+      trackVisibility: WidgetStatePropertyAll(false),
+      thumbColor: WidgetStatePropertyAll(Colors.transparent),
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       foregroundColor: red1,
@@ -388,6 +393,11 @@ class BartAppTheme {
     dialogBackgroundColor: black1,
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
+    scrollbarTheme: const ScrollbarThemeData(
+      thumbVisibility: WidgetStatePropertyAll(false),
+      trackVisibility: WidgetStatePropertyAll(false),
+      thumbColor: WidgetStatePropertyAll(Colors.transparent),
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.black,
       foregroundColor: red1,

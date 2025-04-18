@@ -454,6 +454,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               duration: 3,
                               gravity: Toast.bottom,
                               backgroundColor: Colors.grey,
+                              webTexColor: Colors.black,
                               textStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12.spMin,

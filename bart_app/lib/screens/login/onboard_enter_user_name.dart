@@ -5,14 +5,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class EnterUserNamePageView extends StatefulWidget {
   const EnterUserNamePageView({
     super.key,
     required this.onSubmit,
+    required this.loadOverlay,
   });
 
   final VoidCallback onSubmit;
+  final LoadingBlockFullScreen loadOverlay;
 
   @override
   State<StatefulWidget> createState() => EnterUserNamePageViewState();
@@ -85,13 +88,14 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
         Center(
           child: OutlinedButton(
             onPressed: () async {
+              widget.loadOverlay.show();
               final thisText = userNameController.text.trim();
               if (thisText.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   BartSnackBar(
                     icon: Icons.error,
                     message: context.tr('onboarding.page.2.snackbar'),
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.amber,
                     appearOnTop: true,
                   ).build(context),
                 );
@@ -99,19 +103,19 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
               }
               if (thisText != stateProvider.userProfile.userName) {
                 await stateProvider.doesUserNameExist(thisText).then(
-                  (exists) {
+                  (exists) async {
                     if (exists) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         BartSnackBar(
                           icon: Icons.error,
                           message: context.tr('profile.page.username.exists'),
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.amber,
                           appearOnTop: true,
                         ).build(context),
                       );
                       return;
                     }
-                    stateProvider.updateUserName(thisText).then(
+                    await stateProvider.updateUserName(thisText).then(
                       (_) {
                         userNameFocusNode.unfocus();
                         widget.onSubmit();
@@ -124,6 +128,7 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
                 userNameFocusNode.unfocus();
                 widget.onSubmit();
               }
+              widget.loadOverlay.hide();
             },
             child: Text(context.tr('next')),
           ),

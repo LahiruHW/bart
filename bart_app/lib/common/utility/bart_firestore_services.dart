@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/index.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bart_app/common/utility/bart_auth.dart';
+import 'package:bart_app/common/extensions/ext_trade.dart';
+import 'package:bart_app/common/constants/use_emulators.dart';
 // import 'package:bart_app/common/typedefs/typedef_home_item.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
+// import 'package:bart_app/common/utility/bart_notification_factory.dart';
 import 'package:bart_app/common/constants/enum_user_request_types.dart';
-
-import 'package:bart_app/common/constants/use_emulators.dart';
 
 class BartFirestoreServices {
   BartFirestoreServices() {
@@ -44,7 +45,7 @@ class BartFirestoreServices {
 
   static final tradeCollection = _firestore.collection('trade');
 
-  static final requestCollection = _firestore.collection('request');
+  static final serviceCollection = _firestore.collection('service');
   static final userRequestCollection = _firestore.collection('user_request');
 
   // static final _transformer1 =
@@ -530,6 +531,11 @@ class BartFirestoreServices {
               final recipient = (userProfileList2.isNotEmpty)
                   ? userProfileList2.first
                   : UserLocalProfile.empty();
+              // BartLNFactory.notifyNewChatMsgs(
+              //   chatFirestore.chatID,
+              //   chatFirestore.unreadMsgCountMap[userID] ?? 0,
+              //   recipient.userName,
+              // );
               return Chat(
                 chatID: chatFirestore.chatID,
                 chatImageUrl: recipient.imageUrl ?? "",
@@ -1118,18 +1124,17 @@ class BartFirestoreServices {
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // //////////////////////////////////////////////////////////////////////////////////////////////
-  // REQUEST STREAMS
+  // SERVICE STREAMS
 
-  static Stream<List<RequestFirestore>> _requestCollectionListStream() {
-    return requestCollection
+  static Stream<List<ServiceFirestore>> _serviceCollectionListStream() {
+    return serviceCollection
         .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
         .snapshots()
         .map(
           (event) => event.docs.map(
             (requestMap) {
               final data = {'id': requestMap.id, ...requestMap.data()};
-
-              return RequestFirestore.fromMap(data);
+              return ServiceFirestore.fromMap(data);
             },
           ).toList(),
         );
@@ -1276,7 +1281,6 @@ class BartFirestoreServices {
         await doc.reference.update(updatedDoc).then(
               (_) => debugPrint('updated item $itemID'),
             );
-        ;
       });
     }
   }
@@ -1412,6 +1416,20 @@ class BartFirestoreServices {
             );
       });
     }
+  }
+
+  /// remove all the documents in a collection, except the ones with the given document ids in the list
+  static void cleanupCollectionWithExceptions(
+    CollectionReference ref,
+    List<String> exceptionIDs,
+  ) {
+    ref.get().then((snapshot) {
+      for (DocumentSnapshot doc in snapshot.docs) {
+        if (!exceptionIDs.contains(doc.id)) {
+          doc.reference.delete();
+        }
+      }
+    });
   }
 
   /// delete a trade if any involved items in the trade does not exist

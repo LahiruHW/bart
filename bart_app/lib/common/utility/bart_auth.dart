@@ -1,4 +1,5 @@
 import "dart:io";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:word_generator/word_generator.dart";
@@ -63,9 +64,20 @@ class BartAuthService {
   Future<UserCredential> signInWithGoogle() async {
     try {
       // Create a new provider
-      GoogleAuthProvider googleProvider = GoogleAuthProvider();
-      UserCredential userCredential =
-          await _auth.signInWithProvider(googleProvider);
+      GoogleAuthProvider googleProvider = GoogleAuthProvider()
+        ..addScope(
+          'https://www.googleapis.com/auth/admin.datatransfer.readonly',
+        )
+        ..addScope(
+          'https://www.googleapis.com/auth/cloud-platform.read-only',
+        )
+        ..addScope(
+          'https://www.googleapis.com/auth/firebase.readonly',
+        );
+
+      UserCredential userCredential = (kIsWeb)
+          ? await _auth.signInWithPopup(googleProvider)
+          : await _auth.signInWithProvider(googleProvider);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);

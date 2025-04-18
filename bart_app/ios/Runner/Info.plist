@@ -23,7 +23,7 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true />
+		<true/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Used by this app to select images to upload</string>
 		<key>NSCameraUsageDescription</key>
@@ -46,15 +46,15 @@
 			<!-- <string>UIInterfaceOrientationLandscapeRight</string> -->
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true />
+		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true />
+		<true/>
 		<key>UIStatusBarHidden</key>
-		<false />
+		<false/>
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
-			<true />
+			<true/>
 		</dict>
 	</dict>
 </plist>

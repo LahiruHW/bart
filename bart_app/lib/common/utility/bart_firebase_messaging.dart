@@ -143,4 +143,9 @@ class BartFirebaseMessaging {
         AndroidFlutterLocalNotificationsPlugin>();
     await platform?.createNotificationChannel(_androidChannel);
   }
+
+  static Future<void> showLocalNotif(
+      int id, String title, String body, String payload) async {
+    await _localNotifs.show(id, title, body, _notifDetails, payload: payload); 
+  }
 }

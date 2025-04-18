@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -43,8 +44,10 @@ class BartAppUpdateChecker {
     // Fetch the values from Firebase Remote Config
     await config.fetchAndActivate();
 
-    // Optional: listen for & activate changes to the Remote Config values
-    config.onConfigUpdated.listen(updateCurrentConfig);
+    if (!kIsWeb) {
+      // Optional: listen for & activate changes to the Remote Config values
+      config.onConfigUpdated.listen(updateCurrentConfig);
+    } 
   }
 
   static Future<void> startupConfigCheck(BuildContext? context) async {

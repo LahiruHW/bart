@@ -61,7 +61,7 @@ class _MarketBaseState extends State<MarketBase> {
       _onListedItemsPage = !_onListedItemsPage;
       _onListedItemsPage
           ? context.go('/market/listed-items')
-          : context.go('/market/requests');
+          : context.go('/market/services');
     });
   }
 
@@ -105,7 +105,7 @@ class _MarketBaseState extends State<MarketBase> {
                   Expanded(
                     child: BartPageTabButton(
                       key: BartTuteWidgetKeys.marketPageTab2,
-                      title: context.tr("market.page.tab.requests"),
+                      title: context.tr("market.page.tab.services"),
                       enabled: !_onListedItemsPage,
                       onTap: _toggleMarketTab,
                     ),

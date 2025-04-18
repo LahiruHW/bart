@@ -30,7 +30,7 @@ class BartSnackBar {
               bottom: MediaQuery.of(context).size.height - 210,
             )
           : null,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 5),
       content: Row(
         children: <Widget>[
           Icon(

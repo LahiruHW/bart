@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/utility/bart_route_handler.dart';
 
@@ -40,11 +41,12 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Column(
             children: [
-              Container(
-                height: statusBarHeight,
-                width: double.infinity,
-                decoration: transparentDeco,
-              ),
+              if (!kIsWeb)
+                Container(
+                  height: statusBarHeight,
+                  width: double.infinity,
+                  decoration: transparentDeco,
+                ),
               Expanded(
                 child: Stack(
                   fit: StackFit.expand,
@@ -103,8 +105,10 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  // i.e. get the (width, height) of the appbar
   @override
   Size get preferredSize =>
-      // const Size(double.infinity, 70); // (width, height) of the appbar
-      const Size(double.infinity, 55); // (width, height) of the appbar
+      // kIsWeb ? Size(double.infinity, 75.h) : const Size(double.infinity, 55);
+      const Size(double.infinity, 55);
+      // const Size(double.infinity, 70);
 }

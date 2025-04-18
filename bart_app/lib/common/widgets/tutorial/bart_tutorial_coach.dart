@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:bart_app/screens/settings/settings_page.dart';
 import 'package:bart_app/common/constants/tutorial_widget_keys.dart';
-import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
+// import 'package:bart_app/common/utility/bart_firebase_analytics.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_target_content.dart';
 // import 'package:bart_app/common/widgets/tutorial/chat_list_tile_example.dart';
 import 'package:bart_app/common/widgets/tutorial/home_trade_widget_example.dart';
@@ -87,7 +87,7 @@ class BartTutorialCoach {
   }
 
   static void _skip(TutorialCoachMarkController controller) {
-    BartAnalyticsEngine.userEndsTutorial();
+    // BartAnalyticsEngine.userEndsTutorial();
     tempProvider.setHomeV2Index(0);
     controller.skip();
     try {
@@ -98,7 +98,7 @@ class BartTutorialCoach {
   }
 
   static void _finish(TutorialCoachMarkController controller) {
-    BartAnalyticsEngine.userEndsTutorial();
+    // BartAnalyticsEngine.userEndsTutorial();
     tempProvider.setHomeV2Index(0);
     tuteCoach1.finish();
     try {
@@ -883,7 +883,7 @@ class BartTutorialCoach {
 
   static void showTutorial(BuildContext thisContext) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BartAnalyticsEngine.userBeginsTutorial();
+      // BartAnalyticsEngine.userBeginsTutorial();
       tuteCoach1.show(
         context: thisContext,
         rootOverlay: true,
