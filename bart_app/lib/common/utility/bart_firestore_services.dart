@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'dart:async';
+import 'package:bart_app/common/utility/notifications/bart_firebase_notification_handler.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 import 'package:bart_app/common/entity/index.dart';
@@ -13,7 +14,6 @@ import 'package:bart_app/common/constants/use_emulators.dart';
 import 'package:bart_app/common/constants/enum_login_types.dart';
 import 'package:bart_app/common/utility/bart_storage_services.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
-// import 'package:bart_app/common/utility/bart_notification_factory.dart';
 import 'package:bart_app/common/constants/enum_user_request_types.dart';
 
 class BartFirestoreServices {
@@ -82,12 +82,17 @@ class BartFirestoreServices {
     if (userProfile.exists) {
       debugPrint("--------------- PROFILE ALREADY EXISTS IN FIREBASE");
 
-      final UserLocalProfile userProfile =
-          await getUserProfileData(userID).then((userProfileData) {
-        final userProfile = UserLocalProfile.fromMap(userProfileData);
-        debugPrint("--------------- LOCAL PROFILE: $userProfile");
-        return userProfile;
-      });
+      final UserLocalProfile userProfile = await getUserProfileData(
+        userID,
+      ).then(
+        (userProfileData) {
+          final userProfile = UserLocalProfile.fromMap(userProfileData);
+          userProfile.fcmToken = BartFirebaseNotificationHandler.currentToken;
+          debugPrint("--------------- LOCAL PROFILE: $userProfile");
+          return userProfile;
+        },
+      );
+      await updateUserProfile(userProfile); // update the fcmToken in firestore
 
       returnMap['userProfile'] = userProfile;
 
@@ -116,6 +121,7 @@ class BartFirestoreServices {
       isFirstLogin: true,
       userName: userName ?? '',
       settings: newSettings,
+      fcmToken: BartFirebaseNotificationHandler.currentToken,
     );
 
     Map<String, dynamic> returnMap = {
@@ -1217,6 +1223,10 @@ class BartFirestoreServices {
             updatedDoc['settings']['lastUpdated'] = Timestamp.now();
             debugPrint("missing 'settings.lastUpdated' added to user $userID");
           }
+        }
+        if (!userData.containsKey('fcmToken')) {
+          updatedDoc['fcmToken'] = "";
+          debugPrint("missing 'fcmToken' added to user $userID");
         }
         if (!userData.containsKey('userName')) {
           updatedDoc['userName'] = BartAuthService.getRandomName();

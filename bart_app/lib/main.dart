@@ -24,7 +24,8 @@ Future<void> main() async {
   // BartAnalyticsEngine.logAppOpen();
   BartFirestoreServices();
   BartFirebaseStorageServices();
-  BartFirebaseMessaging.init();
+  await BartLocalNotificationHandler.init();
+  BartFirebaseNotificationHandler.init(); // don't put await here
   await BartAppVersionData.initPackageInfo();
   await BartAppUpdateChecker.initConfig();
   BartSharedPrefOps.initSharedPreferences();

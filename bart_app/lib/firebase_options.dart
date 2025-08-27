@@ -41,13 +41,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCv4OWNP1BgKOTw4EvI2-l2PMctNKhtNWU',
-    appId: '1:525584307325:web:0329b81913b931611b0d14',
+    apiKey: 'AIzaSyAITaQOphywULgF5qJcJI8s0Q-kwkvvnmg',
+    appId: '1:525584307325:web:2c6c2b5f11e3a9731b0d14',
     messagingSenderId: '525584307325',
     projectId: 'bart-app-a79ac',
     authDomain: 'bart-app-a79ac.firebaseapp.com',
     storageBucket: 'bart-app-a79ac.appspot.com',
-    measurementId: 'G-3Q876LEMLC',
+    measurementId: 'G-L8E2F403NW',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '525584307325',
     projectId: 'bart-app-a79ac',
     storageBucket: 'bart-app-a79ac.appspot.com',
-    androidClientId: '525584307325-avlbvfd1s93mopr1crf1ait55du2o8ck.apps.googleusercontent.com',
+    androidClientId: '525584307325-2au8kihacfsqfqa04tgl6a5c168h4h82.apps.googleusercontent.com',
     iosClientId: '525584307325-1dknuudb72voh2k2m75ta9tl4vbueod0.apps.googleusercontent.com',
     iosBundleId: 'com.bart.trade.app',
   );

@@ -1,40 +1,72 @@
 {
   "project_info": {
-    "project_number": "909907642137",
-    "project_id": "digiprop-2cecd",
-    "storage_bucket": "digiprop-2cecd.firebasestorage.app"
+    "project_number": "525584307325",
+    "project_id": "bart-app-a79ac",
+    "storage_bucket": "bart-app-a79ac.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:909907642137:android:e80e5fb1f2e5098f7da788",
+        "mobilesdk_app_id": "1:525584307325:android:da49dfc8dda69dd01b0d14",
         "android_client_info": {
-          "package_name": "com.digiprop.digisnapper"
+          "package_name": "com.bart.trade.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "909907642137-tg5u00l8o6ksidfv0tpcd3cbir4i4qt4.apps.googleusercontent.com",
+          "client_id": "525584307325-2au8kihacfsqfqa04tgl6a5c168h4h82.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bart.trade.app",
+            "certificate_hash": "f8fdfd59b103bf0f7d5f69150797885de2845968"
+          }
+        },
+        {
+          "client_id": "525584307325-b9fdccs633q4i2q6r206abu4m7vklmgq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bart.trade.app",
+            "certificate_hash": "44e9ca6940ecce1546ee288b5d7f6674523d3449"
+          }
+        },
+        {
+          "client_id": "525584307325-ngoo2vr5aqhbqskcvln0fjhughg6bg21.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bart.trade.app",
+            "certificate_hash": "b47a88596837005fb7dde28618432228e3e2d9d5"
+          }
+        },
+        {
+          "client_id": "525584307325-p650dqkpje0a4cdobcokfc6mb4osdtev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bart.trade.app",
+            "certificate_hash": "38d9ed238813bf10653d141b38bfb295e8e9233a"
+          }
+        },
+        {
+          "client_id": "525584307325-acsluakujkm3gircod0rs7ho2cbb92tg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCsGcEQdCgQ-2Jsmwpo-M35mT2CWdbFnnk"
+          "current_key": "AIzaSyBaakM2GpjR6MUUpp-BWqvja1auTYt82kk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "909907642137-tg5u00l8o6ksidfv0tpcd3cbir4i4qt4.apps.googleusercontent.com",
+              "client_id": "525584307325-acsluakujkm3gircod0rs7ho2cbb92tg.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "909907642137-ro38bhh0hrhu1o0lhll51p0oo8p9rrjb.apps.googleusercontent.com",
+              "client_id": "525584307325-1dknuudb72voh2k2m75ta9tl4vbueod0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digiprop.digisnapper"
+                "bundle_id": "com.bart.trade.app"
               }
             }
           ]

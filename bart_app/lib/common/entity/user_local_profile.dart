@@ -11,6 +11,7 @@ class UserLocalProfile {
   String? imageUrl;
   UserSettings? settings;
   String? localeString;
+  String? fcmToken;
   bool isNull;
   Timestamp? lastUpdated;
 
@@ -23,6 +24,7 @@ class UserLocalProfile {
     this.imageUrl,
     this.settings,
     this.localeString = "en",
+    this.fcmToken = "",
     this.isNull = false,
     this.lastUpdated,
   });
@@ -36,6 +38,7 @@ class UserLocalProfile {
     imageUrl: null,
     settings: null,
     localeString: null,
+    fcmToken: null,
     isNull: true,
     lastUpdated: null,
   );
@@ -52,6 +55,7 @@ class UserLocalProfile {
       settings: UserSettings.fromMap(json['settings']),
       localeString: json['localeString'],
       lastUpdated: json['lastUpdated'] ?? Timestamp.now(),
+      fcmToken: json['fcmToken'] ?? "",
     );
   }
 
@@ -68,6 +72,7 @@ class UserLocalProfile {
       settings: UserSettings.mergeWithExisting(old.settings!, newObj.settings!),
       localeString: newObj.localeString,
       lastUpdated: newObj.lastUpdated ?? Timestamp.now(),
+      fcmToken: newObj.fcmToken ?? "",
     );
   }
 
@@ -80,6 +85,7 @@ class UserLocalProfile {
         'settings': (settings ?? UserSettings()).toMap(),
         'localeString': localeString,
         'lastUpdated': lastUpdated ?? Timestamp.now(),
+        'fcmToken': fcmToken ?? "",
       };
 
   /// for decoding from json (used by shared preferences)
@@ -94,6 +100,7 @@ class UserLocalProfile {
       settings: UserSettings.fromJson(json['settings']),
       localeString: json['localeString'] ?? 'en',
       lastUpdated: Timestamp.fromDate(DateTime.parse(json['lastUpdated'])),
+      fcmToken: json['fcmToken'] ?? "",
     );
   }
 
@@ -109,6 +116,7 @@ class UserLocalProfile {
         'localeString': localeString,
         'lastUpdated':
             (lastUpdated ?? Timestamp.now()).toDate().toIso8601String(),
+        'fcmToken': fcmToken ?? "",
       };
 
   // get the Locale object from the string

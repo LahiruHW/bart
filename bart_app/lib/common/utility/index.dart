@@ -9,3 +9,5 @@ export 'bart_firebase_messaging.dart';
 export 'bart_router.dart';
 export 'bart_route_handler.dart';
 export 'bart_app_update_checker.dart';
+export 'notifications/bart_local_notification_handler.dart';
+export 'notifications/bart_firebase_notification_handler.dart';
