@@ -58,6 +58,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
                           ? Colors.black
                           : Colors.white,
                       fontSize: 16.spMin,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
             ),
@@ -97,7 +98,7 @@ class _ResultItemTileState extends State<ResultItemTile> {
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 25.spMin,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

@@ -7,7 +7,7 @@ import 'package:bart_app/screens/shared/base.dart';
 import 'package:bart_app/screens/login/login_select.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bart_app/common/utility/bart_route_handler.dart';
-import 'package:bart_app/common/constants/env files/bart_env.dart';
+import 'package:bart_app/common/constants/env/bart_env.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:bart_app/common/utility/bart_app_version_data.dart';
 

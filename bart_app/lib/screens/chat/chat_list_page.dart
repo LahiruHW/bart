@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -18,11 +19,27 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
+  late final Stream<List<Chat>> _chatListStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _chatListStream = BartFirestoreServices.getChatListTileStream(
+      context.read<BartStateProvider>().userProfile.userID,
+    );
+  }
+
+  @override
+  void dispose() {
+    _chatListStream.drain();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return Consumer<BartStateProvider>(
-      builder: (context, provider, child) => SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.only(
           // top: 10.0,
           bottom: 15.0,
@@ -33,9 +50,7 @@ class _ChatListPageState extends State<ChatListPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             StreamBuilder(
-              stream: BartFirestoreServices.getChatListTileStream(
-                provider.userProfile.userID,
-              ),
+              stream: _chatListStream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final data = snapshot.data as List<Chat>;
@@ -67,23 +82,22 @@ class _ChatListPageState extends State<ChatListPage> {
                         )
                       : Padding(
                           padding: EdgeInsets.only(
-                            top: (screenHeight * 0.45) - (screenHeight * 0.1),
+                            top: kIsWeb
+                                ? (screenHeight * 0.45)
+                                : (screenHeight * 0.45) - (screenHeight * 0.1),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "No chats yet",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ],
+                          child: Center(
+                            child: Text(
+                              "No chats yet",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
                         );
                 } else {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bart_app/common/utility/bart_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bart_app/styles/bart_scrollbar_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bart_app/common/widgets/bart_snackbar.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
@@ -48,92 +49,104 @@ class EnterUserNamePageViewState extends State<EnterUserNamePageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.tr('onboarding.page.2.1'),
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
-                fontSize: 16.spMin,
-                fontWeight: FontWeight.normal,
+    final scrollbarTheme = Theme.of(context).extension<BartScrollbarStyle>()!;
+    final controller = ScrollController();
+    return ScrollbarTheme(
+      data: scrollbarTheme.themeData.copyWith(crossAxisMargin: -10),
+      child: Scrollbar(
+        controller: controller,
+        child: SingleChildScrollView(
+          controller: controller,
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.tr('onboarding.page.2.1'),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      fontSize: 16.spMin,
+                      fontWeight: FontWeight.normal,
+                    ),
               ),
-        ),
-        const SizedBox(height: 15),
-        TextField(
-          controller: userNameController,
-          focusNode: userNameFocusNode,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 18.spMin,
+              const SizedBox(height: 15),
+              TextField(
+                controller: userNameController,
+                focusNode: userNameFocusNode,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontSize: 18.spMin,
+                    ),
+                cursorOpacityAnimates: true,
+                decoration: InputDecoration(
+                  hintText: context.tr('onboarding.page.2.2'),
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.bolt_outlined),
+                    onPressed: () {
+                      setState(() {
+                        userNameController.text = BartAuthService.getRandomName();
+                      });
+                    },
+                  ),
+                ),
               ),
-          cursorOpacityAnimates: true,
-          decoration: InputDecoration(
-            hintText: context.tr('onboarding.page.2.2'),
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.bolt_outlined),
-              onPressed: () {
-                setState(() {
-                  userNameController.text = BartAuthService.getRandomName();
-                });
-              },
-            ),
-          ),
-        ),
-        const SizedBox(height: 30),
-        Center(
-          child: OutlinedButton(
-            onPressed: () async {
-              widget.loadOverlay.show();
-              final thisText = userNameController.text.trim();
-              if (thisText.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  BartSnackBar(
-                    icon: Icons.error,
-                    message: context.tr('onboarding.page.2.snackbar'),
-                    backgroundColor: Colors.amber,
-                    appearOnTop: true,
-                  ).build(context),
-                );
-                return;
-              }
-              if (thisText != stateProvider.userProfile.userName) {
-                await stateProvider.doesUserNameExist(thisText).then(
-                  (exists) async {
-                    if (exists) {
+              const SizedBox(height: 30),
+              Center(
+                child: OutlinedButton(
+                  onPressed: () async {
+                    widget.loadOverlay.show();
+                    final thisText = userNameController.text.trim();
+                    if (thisText.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         BartSnackBar(
                           icon: Icons.error,
-                          message: context.tr('profile.page.username.exists'),
+                          message: context.tr('onboarding.page.2.snackbar'),
                           backgroundColor: Colors.amber,
                           appearOnTop: true,
                         ).build(context),
                       );
                       return;
                     }
-                    await stateProvider.updateUserName(thisText).then(
-                      (_) {
-                        userNameFocusNode.unfocus();
-                        widget.onSubmit();
-                        return;
-                      },
-                    );
+                    if (thisText != stateProvider.userProfile.userName) {
+                      await stateProvider.doesUserNameExist(thisText).then(
+                        (exists) async {
+                          if (exists) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              BartSnackBar(
+                                icon: Icons.error,
+                                message: context.tr('profile.page.username.exists'),
+                                backgroundColor: Colors.amber,
+                                appearOnTop: true,
+                              ).build(context),
+                            );
+                            return;
+                          }
+                          await stateProvider.updateUserName(thisText).then(
+                            (_) {
+                              userNameFocusNode.unfocus();
+                              widget.onSubmit();
+                              return;
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      userNameFocusNode.unfocus();
+                      widget.onSubmit();
+                    }
+                    widget.loadOverlay.hide();
                   },
-                );
-              } else {
-                userNameFocusNode.unfocus();
-                widget.onSubmit();
-              }
-              widget.loadOverlay.hide();
-            },
-            child: Text(context.tr('next')),
+                  child: Text(context.tr('next')),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -11,26 +11,37 @@ import 'package:bart_app/common/widgets/listed_item_bottom_modal_sheet.dart';
 import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:bart_app/common/widgets/shimmer/shimmer_market_list_tile_list.dart';
 
-class MarketListedItemsPage extends StatelessWidget {
+class MarketListedItemsPage extends StatefulWidget {
   const MarketListedItemsPage({
     super.key,
   });
 
   @override
+  State<MarketListedItemsPage> createState() => _MarketListedItemsPageState();
+}
+
+class _MarketListedItemsPageState extends State<MarketListedItemsPage> {
+  late final Stream<List<Item>> itemListStream;
+
+  @override
+  void initState() {
+    super.initState();
+    itemListStream = BartFirestoreServices.getMarketplaceItemListStream();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer2<BartStateProvider, TempStateProvider>(
       builder: (context, stateProvider, tempProvider, child) {
-        final searchText = tempProvider.searchText;
         return SizedBox.expand(
           child: StreamBuilder(
-            stream: BartFirestoreServices.getMarketplaceItemListStream().map(
-              (itemList) => itemList
-                  .where((item) => item.doesItemContainQuery(searchText))
-                  .toList(),
-            ),
+            stream: itemListStream,
             builder: (context, snapshot) {
+              final searchText = tempProvider.searchText;
               if (snapshot.hasData) {
-                final data = snapshot.data as List<Item>;
+                final data = (snapshot.data as List<Item>)
+                    .where((item) => item.doesItemContainQuery(searchText))
+                    .toList();
                 // filter the data based on the search text
                 searchText.isNotEmpty
                     ? data
@@ -53,7 +64,8 @@ class MarketListedItemsPage extends StatelessWidget {
                       item: thisItem,
                       onTap: () {
                         context.push(
-                          '/item/${thisItem.itemID}',
+                          // '/item/${thisItem.itemID}',
+                          '/item',
                           extra: thisItem,
                         );
                       },

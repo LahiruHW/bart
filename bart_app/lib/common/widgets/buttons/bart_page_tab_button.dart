@@ -33,7 +33,7 @@ class BartPageTabButton extends StatelessWidget {
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 14.spMin),
+        style: TextStyle(fontSize: 14.spMin, fontWeight: FontWeight.w600),
       ),
     );
   }

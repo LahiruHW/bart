@@ -222,10 +222,11 @@ class _SettingsPageState extends State<SettingsPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: statusBarHeight,
-                width: double.infinity,
-              ),
+              if (!kIsWeb)
+                const SizedBox(
+                  height: statusBarHeight,
+                  width: double.infinity,
+                ),
               SizedBox(
                 width: double.infinity,
                 height: 70,
@@ -324,7 +325,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 );
                               },
                             );
-                            BartTutorialCoach.createTutorial(context);
+                            if (!kIsWeb) {
+                              BartTutorialCoach.createTutorial(context);
+                            }
                             Toast.show(
                               provider.userProfile.settings!.isLegacyUI
                                   ? 'Switching to Legacy UI'

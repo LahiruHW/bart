@@ -59,7 +59,7 @@ class BartAppTheme {
   static ThemeData lightTheme = ThemeData(
     colorScheme: lightColorScheme,
     scaffoldBackgroundColor: Colors.white,
-    dialogBackgroundColor: Colors.white,
+    dialogTheme: DialogThemeData(backgroundColor: Colors.white),
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
     cardColor: Colors.white,
@@ -93,6 +93,14 @@ class BartAppTheme {
         fontSize: 12.spMin,
       ),
     ),
+    // navigationRailTheme: NavigationRailThemeData(
+    //   backgroundColor: Colors.white,
+    //   useIndicator: true,
+    //   minExtendedWidth: 0.1.sw,
+    //   minWidth: 0.09.sw,
+    //   indicatorColor: red1,
+    //   groupAlignment: 1.0,
+    // ),
     expansionTileTheme: const ExpansionTileThemeData(
       backgroundColor: Colors.white,
       collapsedBackgroundColor: Colors.white,
@@ -225,7 +233,7 @@ class BartAppTheme {
         backgroundColor: const WidgetStatePropertyAll(Colors.white),
         textStyle: WidgetStatePropertyAll(
           BartTextTheme.globalTextTheme.labelSmall!.copyWith(
-            fontSize: 16,
+            fontSize: 16.spMin,
           ),
         ),
         shape: const WidgetStatePropertyAll(
@@ -384,13 +392,23 @@ class BartAppTheme {
         labelColor: Colors.white,
         selectedLabelColor: red1,
       ),
+      BartScrollbarStyle(
+        themeData: ScrollbarThemeData(
+          thumbVisibility: const WidgetStatePropertyAll(true),
+          trackVisibility: const WidgetStatePropertyAll(false),
+          radius: Radius.circular(5.r),
+          thickness: const WidgetStatePropertyAll(2),
+          thumbColor: const WidgetStatePropertyAll(Colors.white10),
+          crossAxisMargin: -10,
+        ),
+      ),
     },
   );
 
   static ThemeData darkTheme = ThemeData(
     colorScheme: darkColorScheme,
     scaffoldBackgroundColor: black2,
-    dialogBackgroundColor: black1,
+    dialogTheme: DialogThemeData(backgroundColor: black1),
     textTheme: BartTextTheme.globalTextTheme,
     useMaterial3: true,
     scrollbarTheme: const ScrollbarThemeData(
@@ -422,6 +440,13 @@ class BartAppTheme {
         fontSize: 12.spMin,
       ),
     ),
+    // navigationRailTheme: NavigationRailThemeData(
+    //   backgroundColor: black2,
+    //   useIndicator: true,
+    //   minExtendedWidth: 250.w,
+    //   minWidth: 100.w,
+    //   indicatorColor: red1,
+    // ),
     expansionTileTheme: ExpansionTileThemeData(
       backgroundColor: black2,
       collapsedBackgroundColor: black2,
@@ -708,6 +733,16 @@ class BartAppTheme {
         selectedBadgeColor: black2,
         labelColor: black2,
         selectedLabelColor: red1,
+      ),
+      BartScrollbarStyle(
+        themeData: ScrollbarThemeData(
+          thumbVisibility: const WidgetStatePropertyAll(true),
+          trackVisibility: const WidgetStatePropertyAll(false),
+          radius: Radius.circular(5.r),
+          thickness: const WidgetStatePropertyAll(2),
+          thumbColor: const WidgetStatePropertyAll(Colors.white10),
+          crossAxisMargin: -10,
+        ),
       ),
     },
   );

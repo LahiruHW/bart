@@ -20,7 +20,7 @@ class ImageOptionBottomModalSheet {
   void onGalleryPick() {
     BartImageTools.pickImagesFromGallery().then(
       (imgList) {
-        final tempLst = [...tempProvider.imagePaths, ...imgList];
+        final tempLst = [...tempProvider.images, ...imgList];
         if (tempLst.length > maxImgCount) {
           ScaffoldMessenger.of(parentContext).showSnackBar(
             BartSnackBar(
@@ -36,7 +36,7 @@ class ImageOptionBottomModalSheet {
           );
           tempLst.removeRange(maxImgCount, tempLst.length);
         }
-        tempProvider.setImagePaths(tempLst);
+        tempProvider.setImages(tempLst);
       },
     );
   }
@@ -45,7 +45,7 @@ class ImageOptionBottomModalSheet {
   void onCameraPick() {
     BartImageTools.captureImage(maxImgCount).then(
       (imgList) {
-        final tempLst = [...tempProvider.imagePaths, ...imgList];
+        final tempLst = [...tempProvider.images, ...imgList];
         if (tempLst.length > maxImgCount) {
           ScaffoldMessenger.of(parentContext).showSnackBar(
             BartSnackBar(
@@ -61,12 +61,12 @@ class ImageOptionBottomModalSheet {
           );
           tempLst.removeRange(maxImgCount, tempLst.length);
         }
-        tempProvider.setImagePaths(tempLst);
+        tempProvider.setImages(tempLst);
       },
     );
   }
 
-  show() {
+  void show() {
     showModalBottomSheet(
       context: parentContext,
       isScrollControlled: true,
@@ -87,6 +87,7 @@ class ImageOptionBottomModalSheet {
                       context.tr('item.img.from.camera'),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontSize: 18.spMin,
+                            fontWeight: FontWeight.w500,
                           ),
                     ),
                     onTap: () {
@@ -101,6 +102,7 @@ class ImageOptionBottomModalSheet {
                       context.tr('item.img.from.gallery'),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontSize: 18.spMin,
+                            fontWeight: FontWeight.w500,
                           ),
                     ),
                     onTap: () {

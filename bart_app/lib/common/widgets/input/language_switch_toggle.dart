@@ -8,24 +8,13 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 class BartLocaleToggle extends StatefulWidget {
   const BartLocaleToggle({
     super.key,
-    this.localeStr = 'en',
   });
-
-  final String localeStr;
 
   @override
   State<BartLocaleToggle> createState() => _BartLocaleToggleState();
 }
 
 class _BartLocaleToggleState extends State<BartLocaleToggle> {
-  late String isEnglish;
-
-  @override
-  void initState() {
-    super.initState();
-    isEnglish = widget.localeStr;
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<BartStateProvider>(context, listen: false);
@@ -39,11 +28,14 @@ class _BartLocaleToggleState extends State<BartLocaleToggle> {
       'FR',
       style: TextStyle(color: switchStyle.iconColor, fontSize: 15.spMin),
     );
-    return SizedBox(
-      child: AnimatedToggleSwitch<String>.dual(
+    return Selector<BartStateProvider, String>(
+      selector: (context, provider) => provider.userProfile.localeString!,
+      builder: (context, localeString, child) => SizedBox(
+        child: AnimatedToggleSwitch<String>.dual(
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 300),
-          current: provider.userProfile.localeString!,
+          // current: provider.userProfile.localeString!,
+          current: localeString,
           first: 'en',
           second: 'fr',
           spacing: 5,
@@ -52,27 +44,22 @@ class _BartLocaleToggleState extends State<BartLocaleToggle> {
           iconBuilder: (String value) => value == 'en' ? enText : frText,
           textBuilder: (String value) => value == 'en' ? frText : enText,
           styleBuilder: (val) => ToggleStyle(
-                backgroundColor: switchStyle.backgroundColor,
-                borderColor: Colors.transparent,
-                indicatorColor: switchStyle.indicatorColor,
-              ),
-          // onTap: (prop) => setState(() {
-          //   if (prop.tapped != null) {
-          //     provider.updateSettings(isDarkMode: prop.tapped!.value);
-          //   }
-          // }),
+            backgroundColor: switchStyle.backgroundColor,
+            borderColor: Colors.transparent,
+            indicatorColor: switchStyle.indicatorColor,
+          ),
           onTap: (prop) {
             if (prop.tapped != null) {
               setState(
-                  () => provider.switchLocale(prop.tapped!.value, context));
+                () => provider.switchLocale(prop.tapped!.value, context),
+              );
             }
           },
-          // onChanged: (val) => setState(
-          //   () => provider.updateSettings(isDarkMode: val),
-          // ),
           onChanged: (value) {
             setState(() => provider.switchLocale(value, context));
-          }),
+          },
+        ),
+      ),
     );
   }
 }

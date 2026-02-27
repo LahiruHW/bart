@@ -23,7 +23,7 @@ class UserLocalProfile {
     this.chats = const [],
     this.imageUrl,
     this.settings,
-    this.localeString = "en",
+    this.localeString = "fr",
     this.fcmToken = "",
     this.isNull = false,
     this.lastUpdated,
@@ -138,6 +138,6 @@ class UserLocalProfile {
 
   @override
   String toString() {
-    return 'UserLocalProfile: {userID: $userID, userName: $userName, fullName: $fullName, locale: $localeString, isFirstLogin: $isFirstLogin, imageUrl: $imageUrl, $settings, chats: $chats}';
+    return 'UserLocalProfile: ${toJson()}';
   }
 }

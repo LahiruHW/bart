@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BartExitDialogue {
-  static show(BuildContext context) {
+  static void show(BuildContext context) {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {

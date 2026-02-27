@@ -42,6 +42,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
       body: Center(
         child: SizedBox(
           height: 450.h,
+          width: 0.6.sh,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -50,6 +51,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 90.spMin,
                       color: brandTheme.logoColor,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
               const SizedBox(height: 15),

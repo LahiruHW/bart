@@ -36,17 +36,14 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
   void initState() {
     super.initState();
     _scaffoldKey = GlobalKey<ScaffoldState>();
-    final TempStateProvider tempProvider = Provider.of<TempStateProvider>(
-      context,
-      listen: false,
-    );
+    // final TempStateProvider tempProvider = context.read<TempStateProvider>();
     _descriptionTextController = TextEditingController(
       text: widget.trade.offeredItem.itemDescription,
     );
     _nameTextController = TextEditingController(
       text: widget.trade.offeredItem.itemName,
     );
-    tempProvider.imagePaths = widget.trade.offeredItem.imgs;
+    // tempProvider.imagePaths = widget.trade.offeredItem.imgs;
   }
 
   bool validateForm({
@@ -181,7 +178,8 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
                               final editedOfferedItem =
                                   widget.trade.offeredItem.copyWith(
                                 itemName: _nameTextController.text,
-                                itemDescription: _descriptionTextController.text,
+                                itemDescription:
+                                    _descriptionTextController.text,
                                 imgs: tempProvider.imagePaths,
                               );
                               final editedTrade = widget.trade.copyWith(
@@ -217,8 +215,8 @@ class _EditTradePageOfferState extends State<EditTradePageOffer> {
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       BartSnackBar(
-                                        message:
-                                            tr('edit.trade.page.error.snackbar'),
+                                        message: tr(
+                                            'edit.trade.page.error.snackbar'),
                                         backgroundColor: Colors.red,
                                         icon: Icons.error,
                                       ).build(context),

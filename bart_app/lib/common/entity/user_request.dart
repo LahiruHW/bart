@@ -21,7 +21,7 @@ class UserRequest {
     );
   }
 
-  toMap(){
+  Map<String, Object> toMap(){
     return {
       'userID': userID,
       'requestType': requestType.toString(),

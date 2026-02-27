@@ -31,39 +31,44 @@ class _BartThemeModeToggleState extends State<BartThemeModeToggle> {
     final switchStyle =
         Theme.of(context).extension<BartThemeModeToggleStyle>()!;
 
-    return SizedBox(
-      child: AnimatedToggleSwitch<bool>.dual(
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 300),
-        current: provider.userProfile.settings!.isDarkMode,
-        first: true,
-        second: false,
-        spacing: 5,
-        height: 40,
-        fittingMode: FittingMode.preventHorizontalOverlapping,
-        iconBuilder: (bool value) => Icon(
-          value ? Icons.nightlight_round : Icons.wb_sunny_rounded,
-          size: 20,
-          color: switchStyle.iconColor,
-        ),
-        textBuilder: (bool value) => Icon(
-          value ? Icons.wb_sunny_rounded : Icons.nightlight_round,
-          size: 20,
-          color: switchStyle.iconColor,
-        ),
-        styleBuilder: (val) => ToggleStyle(
-          backgroundColor: switchStyle.backgroundColor,
-          borderColor: Colors.transparent,
-          // indicatorColor: Theme.of(context).colorScheme.primary.withBlue(90),
-          indicatorColor: switchStyle.indicatorColor,
-        ),
-        onTap: (prop) => setState(() {
-          if (prop.tapped != null) {
-            provider.updateSettings(isDarkMode: prop.tapped!.value);
-          }
-        }),
-        onChanged: (val) => setState(
-          () => provider.updateSettings(isDarkMode: val),
+    return Selector<BartStateProvider, bool>(
+      selector: (context, provider) =>
+          provider.userProfile.settings!.isDarkMode,
+      builder: (context, isDarkMode, child) => SizedBox(
+        child: AnimatedToggleSwitch<bool>.dual(
+          animationCurve: Curves.easeInOut,
+          animationDuration: const Duration(milliseconds: 300),
+          // current: provider.userProfile.settings!.isDarkMode,
+          current: isDarkMode,
+          first: true,
+          second: false,
+          spacing: 5,
+          height: 40,
+          fittingMode: FittingMode.preventHorizontalOverlapping,
+          iconBuilder: (bool value) => Icon(
+            value ? Icons.nightlight_round : Icons.wb_sunny_rounded,
+            size: 20,
+            color: switchStyle.iconColor,
+          ),
+          textBuilder: (bool value) => Icon(
+            value ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+            size: 20,
+            color: switchStyle.iconColor,
+          ),
+          styleBuilder: (val) => ToggleStyle(
+            backgroundColor: switchStyle.backgroundColor,
+            borderColor: Colors.transparent,
+            // indicatorColor: Theme.of(context).colorScheme.primary.withBlue(90),
+            indicatorColor: switchStyle.indicatorColor,
+          ),
+          onTap: (prop) => setState(() {
+            if (prop.tapped != null) {
+              provider.updateSettings(isDarkMode: prop.tapped!.value);
+            }
+          }),
+          onChanged: (val) => setState(
+            () => provider.updateSettings(isDarkMode: val),
+          ),
         ),
       ),
     );

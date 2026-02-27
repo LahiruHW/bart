@@ -46,100 +46,102 @@ class _BartImagePickerState extends State<BartImagePicker> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TempStateProvider>(
-      builder: (context, provider, child) => GestureDetector(
-        onTap: provider.imagePaths.length == MAX_IMAGES
-            ? null
-            : () => ImageOptionBottomModalSheet(
-                  parentContext: BartRouter.rootNavKey.currentContext!,
-                  tempProvider: provider,
-                  maxImgCount: MAX_IMAGES,
-                ).show(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 150,
-              padding: provider.imagePaths.isEmpty
-                  ? const EdgeInsets.symmetric(vertical: 45)
-                  : const EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 2.5,
-                    ),
-              margin: const EdgeInsets.only(top: 10),
-              decoration: BoxDecoration(
-                color:
-                    Theme.of(context).colorScheme.surface.computeLuminance() >
-                            0.5
-                        ? Colors.white
-                        : Colors.black,
-                border: Border.all(
-                  color: Colors.black.withOpacity(0.2),
+      builder: (context, provider, child) {
+        final imagePaths = provider.imagePaths;
+        return GestureDetector(
+          onTap: imagePaths.length == MAX_IMAGES
+              ? null
+              : () => ImageOptionBottomModalSheet(
+                    parentContext: BartRouter.rootNavKey.currentContext!,
+                    tempProvider: provider,
+                    maxImgCount: MAX_IMAGES,
+                  ).show(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 150,
+                padding: imagePaths.isEmpty
+                    ? const EdgeInsets.symmetric(vertical: 45)
+                    : const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 2.5,
+                      ),
+                margin: const EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(
+                  color:
+                      Theme.of(context).colorScheme.surface.computeLuminance() >
+                              0.5
+                          ? Colors.white
+                          : Colors.black,
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: provider.imagePaths.isEmpty
-                  ? FittedBox(
-                      alignment: Alignment.center,
-                      fit: BoxFit.scaleDown,
-                      child: SizedBox(
-                        width: 0.95.sw,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.upload),
-                            const SizedBox(height: 10),
-                            Text(
-                              context.tr('image.picker.text'),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    fontSize: 12.spMin,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ],
+                child: imagePaths.isEmpty
+                    ? FittedBox(
+                        alignment: Alignment.center,
+                        fit: BoxFit.scaleDown,
+                        child: SizedBox(
+                          width: 0.95.sw,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.upload),
+                              const SizedBox(height: 10),
+                              Text(
+                                context.tr('image.picker.text'),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      fontSize: 12.spMin,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        dragStartBehavior: DragStartBehavior.down,
+                        shrinkWrap: true,
+                        itemCount: imagePaths.length < MAX_IMAGES
+                            ? imagePaths.length + 1
+                            : imagePaths.length,
+                        itemBuilder: (context, index) => index ==
+                                imagePaths.length
+                            ? imgPlaceholder(isUploadButton: true)
+                            : ImageWithPopUpMenu(
+                                key: ValueKey('img_$index'),
+                                imagePath: imagePaths[index],
+                                onDelete: () {
+                                  provider.removeImagePath(imagePaths[index]);
+                                },
+                              ),
+                      ),
+              ),
+              imagePaths.isNotEmpty
+                  ? Container(
+                      margin: const EdgeInsets.only(bottom: 10, left: 2.5),
+                      child: Text(
+                        context.tr('image.picker.see.delete.btn'),
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     )
-                  : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      dragStartBehavior: DragStartBehavior.down,
-                      shrinkWrap: true,
-                      itemCount: provider.imagePaths.length < MAX_IMAGES
-                          ? provider.imagePaths.length + 1
-                          : provider.imagePaths.length,
-                      itemBuilder: (context, index) =>
-                          index == provider.imagePaths.length
-                              ? imgPlaceholder(isUploadButton: true)
-                              : ImageWithPopUpMenu(
-                                  key: ValueKey('img_$index'),
-                                  imagePath: provider.imagePaths[index],
-                                  onDelete: () {
-                                    provider.removeImagePath(
-                                        provider.imagePaths[index]);
-                                  },
-                                ),
-                    ),
-            ),
-            provider.imagePaths.isNotEmpty
-                ? Container(
-                    margin: const EdgeInsets.only(bottom: 10, left: 2.5),
-                    child: Text(
-                      context.tr('image.picker.see.delete.btn'),
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  )
-                : const SizedBox(height: 10)
-          ],
-        ),
-      ),
+                  : const SizedBox(height: 10)
+            ],
+          ),
+        );
+      },
     );
   }
 }

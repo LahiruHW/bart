@@ -1,17 +1,20 @@
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// used to store temporary state that is not related to any specific screen
 /// (e.g. image paths for images that are being uploaded)
 /// MUST BE CLEARED WHEN NOT IN USE
 class TempStateProvider extends ChangeNotifier {
-
-  List<String>? _imagePaths;
+  List<XFile>? _images;
   String? _marketSearchText;
-  int? _homeV2Index; 
+  int? _homeV2Index;
 
-  List<String> get imagePaths => _imagePaths ?? [];
-  set imagePaths(List<String> imgs) => _imagePaths = imgs;
+  List<String> get imagePaths => List<String>.from(
+        (_images ?? []).map((i) => i.path),
+      );
+  List<XFile> get images => _images ?? [];
+  set images(List<XFile> imgs) => _images = imgs;
 
   String get searchText => _marketSearchText ?? '';
   set searchText(String searchTxt) => _marketSearchText = searchTxt;
@@ -19,19 +22,19 @@ class TempStateProvider extends ChangeNotifier {
   int get homeV2Index => _homeV2Index ?? 0;
   set homeV2Index(int index) => _homeV2Index = index;
 
-  void setImagePaths(List<String> paths) {
-    _imagePaths = paths;
+  void setImages(List<XFile> paths) {
+    _images = paths;
     notifyListeners();
   }
 
   void removeImagePath(String path) {
-    _imagePaths!.remove(path);
+    _images!.remove(path);
     notifyListeners();
   }
 
   void clearAllTempData() {
     debugPrint('----------------------------------- Clearing all temp data');
-    _imagePaths = [];
+    _images = [];
     notifyListeners();
   }
 
@@ -44,5 +47,4 @@ class TempStateProvider extends ChangeNotifier {
     _homeV2Index = value;
     notifyListeners();
   }
-
 }

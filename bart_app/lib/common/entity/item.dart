@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bart_app/common/entity/item_firestore.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
@@ -9,6 +10,7 @@ class Item {
     required this.itemName,
     required this.itemOwner,
     required this.imgs,
+    this.imgFiles = const [],
     this.preferredInReturn = const [],
     required this.postedOn,
     this.isListedInMarket = true,
@@ -22,6 +24,7 @@ class Item {
   final UserLocalProfile itemOwner;
   final String itemDescription;
   final List<String> imgs;
+  final List<XFile> imgFiles;
   final List<String>? preferredInReturn;
   final Timestamp postedOn;
   bool isListedInMarket;

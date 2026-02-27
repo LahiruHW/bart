@@ -206,15 +206,16 @@ class _ProfilePageState extends State<ProfilePage> {
               (userInfo) => Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   userInfo.providerId == 'google.com'
                       ? Image.asset(
                           "assets/icons/logo_google_96x96.png",
-                          height: 25.h,
-                          width: 25.w,
+                          height: 25,
+                          width: 25,
                         )
-                      : Container(),
-                  SizedBox(width: 10.w),
+                      : const SizedBox.shrink(),
+                  const SizedBox(width: 10),
                   Text(
                     userInfo.providerId,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
@@ -239,347 +240,386 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         );
       },
-      child: ListView(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.center,
-                stops: const [0.01, 0.3],
-                colors: [
-                  profileStyle.gradientColourTop,
-                  profileStyle.gradientColourBottom,
+      child: Scaffold(
+        backgroundColor: profileStyle.containerColor,
+        body: ListView(
+          shrinkWrap: true,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.center,
+                  stops: const [0.01, 0.3],
+                  colors: [
+                    profileStyle.gradientColourTop,
+                    profileStyle.gradientColourBottom,
+                  ],
+                ),
+              ),
+              // width: 0.6.sh,
+
+              child: Stack(
+                children: [
+                  // information container
+                  Container(
+                    margin: const EdgeInsets.only(top: 130.0),
+                    // height: MediaQuery.of(context).size.height - 210,
+                    padding: EdgeInsets.only(
+                      top: 95.h,
+                      left: 20.w,
+                      right: 20.w,
+                      bottom: 20.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: profileStyle.containerColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: profileStyle.profileInfoCardColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                        ),
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                context.tr('profile.page.profile.info.header'),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                      fontSize: 25.spMin,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            // username
+                            Text(
+                              context.tr('profile.page.profile.username'),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    fontSize: 15.spMin,
+                                  ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 18,
+                                  child: TextField(
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    enabled: _isEditingUserName,
+                                    focusNode: _userNameFocusNode,
+                                    controller: _userNameController,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontSize: 18.spMin,
+                                        ),
+                                    decoration: InputDecoration(
+                                      disabledBorder:
+                                          const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      fillColor: _isEditingUserName
+                                          ? profileStyle.containerColor
+                                          : Colors.transparent,
+                                    ),
+                                    onTap: _isEditingUserName ? null : null,
+                                    onEditingComplete: () => editUserName(
+                                      stateProvider,
+                                      _userNameController.text.trim(),
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(flex: 1),
+                                _isEditingUserName
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        ),
+                                        onPressed: () => editUserName(
+                                          stateProvider,
+                                          _userNameController.text.trim(),
+                                        ),
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: openKeyboard1,
+                                      ),
+                              ],
+                            ),
+                            SizedBox(height: 8.h),
+                            // name
+                            Text(
+                              context.tr('profile.page.profile.name'),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    fontSize: 15.spMin,
+                                  ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 18,
+                                  child: TextField(
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    enabled: _isEditingName,
+                                    focusNode: _nameFocusNode,
+                                    controller: _nameController,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontSize: 18.spMin,
+                                        ),
+                                    decoration: InputDecoration(
+                                      disabledBorder:
+                                          const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      fillColor: _isEditingName
+                                          ? profileStyle.containerColor
+                                          : Colors.transparent,
+                                    ),
+                                    onTap: _isEditingName ? null : null,
+                                    onEditingComplete: () => editFullName(
+                                      stateProvider,
+                                      _nameController.text.trim(),
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(flex: 1),
+                                _isEditingName
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        ),
+                                        onPressed: () => editFullName(
+                                          stateProvider,
+                                          _nameController.text.trim(),
+                                        ),
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(Icons.edit),
+                                        onPressed: openKeyboard2,
+                                      ),
+                              ],
+                            ),
+                            SizedBox(height: 8.h),
+                            // email
+                            Text(
+                              context.tr('profile.page.profile.email'),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    fontSize: 15.spMin,
+                                  ),
+                            ),
+                            SizedBox(height: 2.h),
+                            stateProvider.user == null
+                                ? BartTextShimmer(
+                                    textHeight: 10,
+                                    textLength: 100.sp,
+                                  )
+                                : Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 8.h, left: 10),
+                                    child: Text(
+                                      stateProvider.user!.email == null
+                                          ? '(Email not given by provider)'
+                                          : stateProvider.user!.email!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ),
+                            SizedBox(height: 5.h),
+                            Divider(
+                              color: profileStyle.textColor.withOpacity(0.1),
+                            ),
+                            SizedBox(height: 10.h),
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                context.tr('profile.page.account.type.header'),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                      fontSize: 25.spMin,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, val) => providerList[val],
+                              separatorBuilder: (context, val) =>
+                                  const SizedBox(height: 10),
+                              itemCount: providerList.length,
+                            ),
+                            SizedBox(height: 18.h),
+                            BartMaterialButton(
+                              label: context.tr('profile.page.btn.logout'),
+                              onPressed: () async {
+                                loadingOverlay.show();
+                                await stateProvider.signOut().then(
+                                  (value) {
+                                    if (value) {
+                                      Future.delayed(
+                                        const Duration(milliseconds: 2000),
+                                        () {
+                                          loadingOverlay.hide();
+                                          context.go('/login');
+                                        },
+                                      );
+                                    } else {
+                                      loadingOverlay.hide();
+                                      // TODO:_ SHOW ERROR MESSAGE HERE
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 20.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animate().moveY(
+                      begin: MediaQuery.of(context).size.height + 100,
+                      end: 0.0,
+                      duration: const Duration(milliseconds: 800),
+                      curve: Curves.easeInOutCubic,
+                      delay: 400.ms),
+
+                  // profile image + username container
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: stateProvider.user == null
+                        ? const ProfileInfoHeaderShimmer()
+                        : StreamBuilder(
+                            stream: BartFirestoreServices
+                                .getCurrentUserProfileStream(
+                              stateProvider.user!.uid,
+                            ),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const ProfileInfoHeaderShimmer();
+                              }
+
+                              return Column(
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    margin: const EdgeInsets.only(top: 70.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                    clipBehavior: Clip.hardEdge,
+                                    // this should be a column with  [image, username]
+                                    child: CachedNetworkImage(
+                                      key: UniqueKey(),
+                                      cacheManager:
+                                          BartImageTools.customCacheManager,
+                                      cacheKey: 'profile_image',
+                                      progressIndicatorBuilder:
+                                          BartImageTools.progressLoader,
+                                      imageUrl:
+                                          stateProvider.userProfile.imageUrl!,
+                                      fit: BoxFit.cover,
+                                      httpHeaders: (kIsWeb)
+                                          ? const {
+                                              'Retry-After': '3600',
+                                              'Access-Control-Allow-Origin':
+                                                  '*',
+                                            }
+                                          : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      stateProvider.userProfile.userName,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge!
+                                          .copyWith(
+                                            fontSize: 20.spMin,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                  ).animate().fadeIn(
+                        duration: 400.ms,
+                        curve: Curves.easeInOutCubic,
+                        delay: 1600.ms,
+                      ),
                 ],
               ),
             ),
-            child: Stack(
-              children: [
-                // information container
-                Container(
-                  margin: const EdgeInsets.only(top: 120.0),
-                  height: MediaQuery.of(context).size.height - 210,
-                  padding: EdgeInsets.only(
-                    top: 95.h,
-                    left: 20.w,
-                    right: 20.w,
-                    bottom: 20.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: profileStyle.containerColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: profileStyle.profileInfoCardColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            context.tr('profile.page.profile.info.header'),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                                  fontSize: 25.spMin,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
+          ].animate().fadeIn(
+                duration: 400.ms,
+                curve: Curves.easeInOutCubic,
+              ),
+        ),
+        floatingActionButton: kIsWeb
+            ? FloatingActionButton.extended(
+                label: Text(context.tr('side.navmenu.settings')),
+                onPressed: () => context.push(
+                  '/settings',
+                  extra: {'beginAllExpanded': false},
+                ),
+                icon: const Icon(Icons.settings_outlined),
+                extendedTextStyle:
+                    Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontSize: 16.spMin,
                         ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          context.tr('profile.page.profile.username'),
-                          style:
-                              Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 15.spMin,
-                                  ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 18,
-                              child: TextField(
-                                maxLines: 1,
-                                minLines: 1,
-                                enabled: _isEditingUserName,
-                                focusNode: _userNameFocusNode,
-                                controller: _userNameController,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      fontSize: 18.spMin,
-                                    ),
-                                decoration: InputDecoration(
-                                  disabledBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  fillColor: _isEditingUserName
-                                      ? profileStyle.containerColor
-                                      : Colors.transparent,
-                                ),
-                                onTap: _isEditingUserName ? null : null,
-                                onEditingComplete: () => editUserName(
-                                  stateProvider,
-                                  _userNameController.text.trim(),
-                                ),
-                              ),
-                            ),
-                            const Spacer(flex: 1),
-                            Expanded(
-                              flex: 5,
-                              child: _isEditingUserName
-                                  ? IconButton(
-                                      icon: const Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                      ),
-                                      onPressed: () => editUserName(
-                                        stateProvider,
-                                        _userNameController.text.trim(),
-                                      ),
-                                    )
-                                  : IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: openKeyboard1,
-                                    ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          context.tr('profile.page.profile.name'),
-                          style:
-                              Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 15.spMin,
-                                  ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 18,
-                              child: TextField(
-                                maxLines: 1,
-                                minLines: 1,
-                                enabled: _isEditingName,
-                                focusNode: _nameFocusNode,
-                                controller: _nameController,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      fontSize: 18.spMin,
-                                    ),
-                                decoration: InputDecoration(
-                                  disabledBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  fillColor: _isEditingName
-                                      ? profileStyle.containerColor
-                                      : Colors.transparent,
-                                ),
-                                onTap: _isEditingName ? null : null,
-                                onEditingComplete: () => editFullName(
-                                  stateProvider,
-                                  _nameController.text.trim(),
-                                ),
-                              ),
-                            ),
-                            const Spacer(flex: 1),
-                            Expanded(
-                              flex: 5,
-                              child: _isEditingName
-                                  ? IconButton(
-                                      icon: const Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                      ),
-                                      onPressed: () => editFullName(
-                                        stateProvider,
-                                        _nameController.text.trim(),
-                                      ),
-                                    )
-                                  : IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: openKeyboard2,
-                                    ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          context.tr('profile.page.profile.email'),
-                          style:
-                              Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    fontSize: 15.spMin,
-                                  ),
-                        ),
-                        SizedBox(height: 2.h),
-                        stateProvider.user == null
-                            ? BartTextShimmer(
-                                textHeight: 10,
-                                textLength: 100.sp,
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8,
-                                  left: 10,
-                                ),
-                                child: Text(
-                                  stateProvider.user!.email == null
-                                      ? '(Email not given by provider)'
-                                      : stateProvider.user!.email!,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                        const SizedBox(height: 5.0),
-                        Divider(
-                          color: profileStyle.textColor.withOpacity(0.1),
-                        ),
-                        const SizedBox(height: 10.0),
-                        FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            context.tr('profile.page.account.type.header'),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                                  fontSize: 25.spMin,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, val) => providerList[val],
-                          separatorBuilder: (context, val) =>
-                              const SizedBox(height: 10),
-                          itemCount: providerList.length,
-                        ),
-                        SizedBox(height: 18.h),
-                        BartMaterialButton(
-                          label: context.tr('profile.page.btn.logout'),
-                          onPressed: () async {
-                            loadingOverlay.show();
-                            await stateProvider.signOut().then(
-                              (value) {
-                                if (value) {
-                                  Future.delayed(
-                                    const Duration(milliseconds: 2000),
-                                    () {
-                                      loadingOverlay.hide();
-                                      context.go('/login');
-                                    },
-                                  );
-                                } else {
-                                  loadingOverlay.hide();
-                                  // TODO:_ SHOW ERROR MESSAGE HERE
-                                }
-                              },
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 20.0),
-                      ],
-                    ),
-                  ),
-                ).animate().moveY(
-                    begin: MediaQuery.of(context).size.height + 100,
-                    end: 0.0,
-                    duration: const Duration(milliseconds: 800),
-                    curve: Curves.easeInOutCubic,
-                    delay: 400.ms),
-
-                // profile image + username container
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: stateProvider.user == null
-                      ? const ProfileInfoHeaderShimmer()
-                      : StreamBuilder(
-                          stream:
-                              BartFirestoreServices.getCurrentUserProfileStream(
-                            stateProvider.user!.uid,
-                          ),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const ProfileInfoHeaderShimmer();
-                            }
-
-                            return Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  margin: const EdgeInsets.only(top: 70.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  clipBehavior: Clip.hardEdge,
-                                  // this should be a column with  [image, username]
-                                  child: CachedNetworkImage(
-                                    key: UniqueKey(),
-                                    cacheManager:
-                                        BartImageTools.customCacheManager,
-                                    cacheKey: 'profile_image',
-                                    progressIndicatorBuilder:
-                                        BartImageTools.progressLoader,
-                                    imageUrl:
-                                        stateProvider.userProfile.imageUrl!,
-                                    fit: BoxFit.cover,
-                                    httpHeaders: (kIsWeb) ? const {
-                                      'Retry-After': '3600',
-                                      'Access-Control-Allow-Origin': '*',
-                                    } : null,
-                                  ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    stateProvider.userProfile.userName,
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .copyWith(
-                                          fontSize: 20.sp,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                ).animate().fadeIn(
-                      duration: 400.ms,
-                      curve: Curves.easeInOutCubic,
-                      delay: 1600.ms,
-                    ),
-              ],
-            ),
-          ),
-        ].animate().fadeIn(
-              duration: 400.ms,
-              curve: Curves.easeInOutCubic,
-            ),
+                extendedIconLabelSpacing: 5,
+                extendedPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+              )
+            : null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }

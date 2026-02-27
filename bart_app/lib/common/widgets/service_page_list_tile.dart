@@ -1,6 +1,6 @@
-import 'package:bart_app/styles/market_list_item_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:bart_app/styles/market_list_item_style.dart';
 
 class ServicePageListTile extends StatelessWidget {
   const ServicePageListTile({
@@ -10,7 +10,7 @@ class ServicePageListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardStyle = Theme.of(context).extension<BartMarketListItemStyle>()!;
-    final cardHeight = 115.h;
+    // final cardHeight = 115.h;
 
     return Card(
       elevation: 7,

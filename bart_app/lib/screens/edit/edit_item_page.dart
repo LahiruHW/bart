@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:bart_app/common/entity/item.dart';
 import 'package:bart_app/common/providers/index.dart';
@@ -37,17 +37,14 @@ class _EditItemPageState extends State<EditItemPage> {
   void initState() {
     super.initState();
     _scaffoldKey = GlobalKey<ScaffoldState>();
-    final TempStateProvider tempProvider = Provider.of<TempStateProvider>(
-      context,
-      listen: false,
-    );
+    // final TempStateProvider tempProvider = context.read<TempStateProvider>();
     _descriptionTextController = TextEditingController(
       text: widget.tradedItem.itemDescription,
     );
     _nameTextController = TextEditingController(
       text: widget.tradedItem.itemName,
     );
-    tempProvider.imagePaths = widget.tradedItem.imgs;
+    // tempProvider.imagePaths = widget.tradedItem.imgs;
     final prefRetList = widget.tradedItem.preferredInReturn;
     final prefString = prefRetList != null ? prefRetList.join(', ') : '';
     _returnsTextController = TextEditingController(
@@ -191,7 +188,8 @@ class _EditItemPageState extends State<EditItemPage> {
                           minLines: 1,
                           maxLines: 5,
                           decoration: InputDecoration(
-                            hintText: context.tr('newItem.page.prefInReturnHint'),
+                            hintText:
+                                context.tr('newItem.page.prefInReturnHint'),
                           ),
                         ),
                       ),
@@ -212,9 +210,11 @@ class _EditItemPageState extends State<EditItemPage> {
                               );
                               if (!isFormValid) return;
                               loadOverlay.show();
-                              final editedTradedItem = widget.tradedItem.copyWith(
+                              final editedTradedItem =
+                                  widget.tradedItem.copyWith(
                                 itemName: _nameTextController.text,
-                                itemDescription: _descriptionTextController.text,
+                                itemDescription:
+                                    _descriptionTextController.text,
                                 imgs: tempProvider.imagePaths,
                                 preferredInReturn:
                                     _returnsTextController.text.isNotEmpty
@@ -226,7 +226,7 @@ class _EditItemPageState extends State<EditItemPage> {
                                             .toList()
                                         : [],
                               );
-      
+
                               BartFirestoreServices.saveEditItemPostingChanges(
                                 editedTradedItem,
                               ).then(

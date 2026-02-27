@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
+import 'package:bart_app/screens/shared/view_image_page.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -50,13 +52,36 @@ class _ItemImagesPageViewState extends State<ItemImagesPageView> {
               itemBuilder: (context, index) {
                 final imgKey = 'item_${widget.item.itemID}_$index';
                 final innerChild = GestureDetector(
-                  onTap: () => context.push(
-                    '/viewImage',
-                    extra: {
-                      'imgUrl': widget.item.imgs[index],
-                      'imgKey': imgKey,
-                    },
-                  ),
+                  onTap: () {
+                    if (kIsWeb) {
+                      showDialog(
+                        context: context,
+                        useRootNavigator: false,
+                        barrierDismissible: true,
+                        useSafeArea: true,
+                        barrierColor: Colors.black,
+                        builder: (context) => Dialog(
+                          insetPadding: EdgeInsets.zero,
+                          backgroundColor: Colors.transparent,
+                          child: ViewImagePage(
+                            imgUrl: widget.item.imgs[index],
+                            imgKey: imgKey,
+                          ),
+                        ),
+                      );
+                    } else {
+                      context.pushNamed(
+                        'viewImage',
+                        extra: {
+                          'imgUrl': widget.item.imgs[index],
+                          'imgKey': imgKey,
+                        },
+                      );
+                    }
+                  },
+
+                  // onTap: () {},
+
                   child: CachedNetworkImage(
                     key: UniqueKey(),
                     imageUrl: widget.item.imgs[index],

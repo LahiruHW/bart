@@ -6,30 +6,33 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class BartImageTools {
-  static Future<String> pickImageFromGallery() async {
+  static Future<XFile> pickImageFromGallery() async {
     final returnedImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 50,
     );
 
-    return returnedImage!.path;
+    // return returnedImage!.path;
+    return returnedImage!;
   }
 
-  static Future<List<String>> pickImagesFromGallery() async {
+  static Future<List<XFile>> pickImagesFromGallery() async {
     final returnedImages = await ImagePicker().pickMultiImage(
       imageQuality: 50,
     );
 
-    return returnedImages.map((e) => e.path).toList();
+    // return returnedImages.map((e) => e.path).toList();
+    return returnedImages;
   }
 
-  static Future<List<String>> captureImage(int maxImgCount) async {
+  static Future<List<XFile>> captureImage(int maxImgCount) async {
     // IMPLEMENT FUNCTION HERE
     final returnedImages = await ImagePicker().pickImage(
       source: ImageSource.camera,
       imageQuality: 50,
     );
-    return [returnedImages!.path];
+    // return [returnedImages!.path];
+    return [returnedImages!];
   }
 
   static void viewImage(BuildContext context, String imagePath) {

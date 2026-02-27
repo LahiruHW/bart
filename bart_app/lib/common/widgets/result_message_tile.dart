@@ -48,7 +48,7 @@ class TradeResultMessageTile extends StatelessWidget {
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: isSuccessful ? Colors.green : Colors.red,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
             ),
             const Divider(height: 20, color: Colors.transparent),
@@ -78,7 +78,7 @@ class TradeResultMessageTile extends StatelessWidget {
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: isSuccessful ? Colors.green : Colors.red,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
             ),
           ],

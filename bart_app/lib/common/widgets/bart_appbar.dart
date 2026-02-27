@@ -89,8 +89,12 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
                       middle: showTitle
                           ? Text(
                               "bart.",
-                              style:
-                                  Theme.of(context).appBarTheme.titleTextStyle,
+                              style: Theme.of(context)
+                                  .appBarTheme
+                                  .titleTextStyle!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             )
                           : null,
                       trailing: trailing,
@@ -110,5 +114,5 @@ class BartAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize =>
       // kIsWeb ? Size(double.infinity, 75.h) : const Size(double.infinity, 55);
       const Size(double.infinity, 55);
-      // const Size(double.infinity, 70);
+  // const Size(double.infinity, 70);
 }

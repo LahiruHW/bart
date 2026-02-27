@@ -68,8 +68,11 @@ class BartFirestoreServices {
 
   /// initialize user profile - username can be null for a firstime google login
   static Future<Map<String, dynamic>> setupUserProfile(
-      String userID, String? userName, String? imageUrl,
-      {LoginType? loginType}) async {
+    String userID,
+    String? userName,
+    String? imageUrl, {
+    LoginType? loginType,
+  }) async {
     // only initialize the user profile if it doesn't exist - needed for google login
     final userProfile = await userProfileDocRef(userID).get();
 
@@ -348,6 +351,7 @@ class BartFirestoreServices {
 
   /// update the user's profile
   static Future<void> updateUserProfile(UserLocalProfile newProfile) async {
+    newProfile.lastUpdated = Timestamp.now();
     await userProfileDocRef(newProfile.userID).update(newProfile.toMap());
   }
 
@@ -537,11 +541,6 @@ class BartFirestoreServices {
               final recipient = (userProfileList2.isNotEmpty)
                   ? userProfileList2.first
                   : UserLocalProfile.empty();
-              // BartLNFactory.notifyNewChatMsgs(
-              //   chatFirestore.chatID,
-              //   chatFirestore.unreadMsgCountMap[userID] ?? 0,
-              //   recipient.userName,
-              // );
               return Chat(
                 chatID: chatFirestore.chatID,
                 chatImageUrl: recipient.imageUrl ?? "",
@@ -706,7 +705,8 @@ class BartFirestoreServices {
   static Future<bool> saveEditItemPostingChanges(Item item) async {
     // 1. go through the list of images and upload ones that aren't urls onto storage
     return await BartFirebaseStorageServices.uploadItemImages(
-      item.imgs,
+      // item.imgs,
+      item.imgFiles,
       item.itemID,
     ).then(
       (imgList) async {
@@ -1074,7 +1074,8 @@ class BartFirestoreServices {
   static Future<bool> saveEditItemTradeChanges(Trade trade) async {
     // 1. go through the list of images and upload ones that aren't urls onto storage
     return await BartFirebaseStorageServices.uploadItemImages(
-      trade.offeredItem.imgs,
+      // trade.offeredItem.imgs,
+      trade.offeredItem.imgFiles,
       trade.offeredItem.itemID,
     ).then(
       (imgList) async {
@@ -1132,19 +1133,19 @@ class BartFirestoreServices {
   // //////////////////////////////////////////////////////////////////////////////////////////////
   // SERVICE STREAMS
 
-  static Stream<List<ServiceFirestore>> _serviceCollectionListStream() {
-    return serviceCollection
-        .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
-        .snapshots()
-        .map(
-          (event) => event.docs.map(
-            (requestMap) {
-              final data = {'id': requestMap.id, ...requestMap.data()};
-              return ServiceFirestore.fromMap(data);
-            },
-          ).toList(),
-        );
-  }
+  // static Stream<List<ServiceFirestore>> _serviceCollectionListStream() {
+  //   return serviceCollection
+  //       .where(FieldPath.documentId, isNotEqualTo: 'PLACEHOLDER')
+  //       .snapshots()
+  //       .map(
+  //         (event) => event.docs.map(
+  //           (requestMap) {
+  //             final data = {'id': requestMap.id, ...requestMap.data()};
+  //             return ServiceFirestore.fromMap(data);
+  //           },
+  //         ).toList(),
+  //       );
+  // }
 
   // the above stream of requests must be combined with the user profile stream to get the user's profile data
 

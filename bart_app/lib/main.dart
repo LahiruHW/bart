@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+// import 'package:go_router/go_router.dart';
 import 'package:bart_app/firebase_options.dart';
 import 'package:bart_app/styles/bart_themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,10 +21,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // .then(BartAnalyticsEngine.init);
-  // BartAnalyticsEngine.logAppOpen();
   BartFirestoreServices();
   BartFirebaseStorageServices();
+  await BartAnalyticsEngine.init();
   await BartLocalNotificationHandler.init();
   BartFirebaseNotificationHandler.init(); // don't put await here
   await BartAppVersionData.initPackageInfo();
@@ -39,7 +39,9 @@ Future<void> main() async {
       ),
     ],
     builder: (context, child) {
-      BartTutorialCoach.createTutorial(context);
+      if (!kIsWeb) {
+        BartTutorialCoach.createTutorial(context);
+      }
       return const BartApp();
     },
   );
@@ -47,6 +49,8 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  if (kIsWeb) await BrowserContextMenu.disableContextMenu();
+  // GoRouter.optionURLReflectsImperativeAPIs = true;
   // if any future issue arises, add a 2s time delay here again
   FlutterNativeSplash.remove();
   runApp(
@@ -55,6 +59,7 @@ Future<void> main() async {
         Locale('en'),
         Locale('fr'),
       ],
+      startLocale: const Locale('fr'),
       path: 'assets/translations',
       child: appRuntime,
     ),
@@ -86,33 +91,11 @@ class BartApp extends StatelessWidget {
                 data: MediaQuery.of(context).copyWith(
                   textScaler: (kIsWeb) ? null : const TextScaler.linear(1.0),
                 ),
-                // child: child!,
                 child: LayoutBuilder(
-                  // key: UniqueKey(),
                   builder: (context, constraints) {
                     final w = constraints.maxWidth;
                     final h = constraints.maxHeight;
-                    final aspectRatio = w / h;
-
-                    // Restricting unsupported devices
-                    final isSupportedAspectRatio = aspectRatio <= 1.5;
-                    final isSmallScreen =
-                        w <= 900 && h <= 1200; // Adjust for tablets
-
-                    // return (aspectRatio <= 1.5)
-                    //     ? child!
-                    //     : const UnsupportedDeviceScreen();
-
-                    // final isMobileOrTablet =
-                    //     isSupportedAspectRatio && isSmallScreen;
-                    // return (kIsWeb || !isMobileOrTablet)
-                    //     ? const UnsupportedDeviceScreen()
-                    //     : child!;
-
-                    // return (!isSupportedAspectRatio || !isSmallScreen)
-                    //     ? const UnsupportedDeviceScreen()
-                    //     : child!;
-
+                    // return child!;
                     return w > h ? const UnsupportedDeviceScreen() : child!;
                   },
                 ),

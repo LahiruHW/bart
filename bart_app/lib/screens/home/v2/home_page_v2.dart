@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:bart_app/common/utility/bart_email_handler.dart';
 import 'package:bart_app/common/widgets/buttons/bart_page_tab_button.dart';
 
 class HomePageV2 extends StatefulWidget {
@@ -60,6 +62,12 @@ class _HomePageV2State extends State<HomePageV2> {
           Expanded(child: widget.bodyWidget),
         ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //         onPressed: () async {
+      //           await BartEmailHandler().sendMail();
+      //         },
+      //         child: const Icon(Icons.email),
+      //       ),
     );
   }
 }

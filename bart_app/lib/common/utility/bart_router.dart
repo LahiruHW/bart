@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/index.dart';
 import 'package:bart_app/common/entity/index.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:bart_app/common/providers/state_provider.dart';
 import 'package:bart_app/common/utility/bart_route_handler.dart';
 import 'package:bart_app/common/utility/bart_app_update_checker.dart';
@@ -23,8 +24,10 @@ class BartRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
     initialLocation: '/login',
-    // redirect: (context, state) {
-    // },
+    redirectLimit: 20,
+    observers: [
+      PosthogObserver(),
+    ],
     routes: [
       GoRoute(
         name: "login",
@@ -47,7 +50,6 @@ class BartRouter {
           );
           final userProf = provider.userProfile;
           if (userProf.userID.isNotEmpty) {
-            // BartAnalyticsEngine.setCurrentUID(provider.userProfile.userID);
             if (userProf.isFirstLogin) {
               return '/onboard';
             }
@@ -62,14 +64,11 @@ class BartRouter {
         path: '/onboard',
         pageBuilder: (context, state) {
           BartAppUpdateChecker.startupConfigCheck(context);
-          // BartAnalyticsEngine.userBeginsOnboarding();
           return const MaterialPage(
             child: OnboardingPage(),
           );
         },
         onExit: (context, state) {
-          // BartAnalyticsEngine.userEndsOnboarding();
-          // BartAnalyticsEngine.logAppClose();
           BartRouteHandler.preExitCallbacks(context);
           return true;
         },
@@ -315,7 +314,6 @@ class BartRouter {
                         name: "market/listed-items", // market/listed-items
                         path: '/market/listed-items',
                         pageBuilder: (context, state) {
-                          // BartAnalyticsEngine.userGoToListedItems();
                           return const MaterialPage(
                             maintainState: true,
                             child: MarketListedItemsPage(),
@@ -349,15 +347,15 @@ class BartRouter {
 
               // market subsection that used up the whole screen
               GoRoute(
-                name: 'item', // /item/:id
-                path: '/item/:id',
+                name: 'item',
+                path: '/item',
                 parentNavigatorKey: _marketNavKey,
                 pageBuilder: (context, state) {
-                  final itemID = state.pathParameters['id']!;
                   Item item = state.extra as Item;
-                  // BartAnalyticsEngine.userGoToItemPage(itemID);
                   return CustomTransitionPage(
-                    child: ItemPage(item: item, itemID: itemID),
+                    key: state.pageKey,
+                    maintainState: true,
+                    child: ItemPage(item: item, itemID: item.itemID),
                     barrierColor: Theme.of(context).scaffoldBackgroundColor,
                     transitionsBuilder: (
                       context,

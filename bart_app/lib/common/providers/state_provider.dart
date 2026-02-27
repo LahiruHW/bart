@@ -17,6 +17,7 @@ class BartStateProvider extends ChangeNotifier {
     if (BartSharedPrefOps.hasUserProfile()) {
       userProfile = BartSharedPrefOps.getUserProfile();
       user = authService.currentUser;
+      BartAnalyticsEngine.identify(userProfile, user!.email!);
       debugPrint(
           '-------- StateProvider userProfile uid ${userProfile.userID} loaded from shared prefs');
     }
@@ -35,7 +36,7 @@ class BartStateProvider extends ChangeNotifier {
   Future<bool> signInWithGoogle() async {
     await authService.signInWithGoogle().then((userCred) async {
       await setupUserAccount(userCred);
-      // BartAnalyticsEngine.userLogsInAE(LoginType.google, user!.uid);
+      await BartAnalyticsEngine.identify(userProfile, userCred.user!.email!);
       return true;
     }).onError(
       (error, stackTrace) {

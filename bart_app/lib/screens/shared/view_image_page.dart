@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:bart_app/common/utility/bart_image_tools.dart';
@@ -85,37 +86,60 @@ class _ViewImagePageState extends State<ViewImagePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        primary: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
-        ),
-      ),
-      body: Center(
-        child: SizedBox.expand(
-          child: InteractiveViewer(
-            panAxis: PanAxis.free,
-            panEnabled: true,
-            scaleEnabled: true,
-            minScale: 1.0,
-            maxScale: 5.0,
-            transformationController: _transformationController,
-            child: GestureDetector(
-              onDoubleTapDown: (d) => setState(() => _doubleTapDetails = d),
-              onDoubleTap: _handleImageZoom,
-              child: Hero(
-                tag: widget.imgKey,
-                transitionOnUserGestures: true,
-                child: _buildImage(),
-              ),
+    final imgWidget = Center(
+      child: SizedBox.expand(
+        child: InteractiveViewer(
+          panAxis: PanAxis.free,
+          panEnabled: true,
+          scaleEnabled: true,
+          minScale: 1.0,
+          maxScale: 5.0,
+          transformationController: _transformationController,
+          child: GestureDetector(
+            onDoubleTapDown: (d) => setState(() => _doubleTapDetails = d),
+            onDoubleTap: _handleImageZoom,
+            child: Hero(
+              tag: widget.imgKey,
+              transitionOnUserGestures: true,
+              child: _buildImage(),
             ),
           ),
         ),
       ),
     );
+
+    return kIsWeb
+        ? Stack(
+            children: [
+              imgWidget,
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  constraints: const BoxConstraints.tightForFinite(),
+                  // alignment: Alignment.center,
+                  color: Colors.white,
+                  style: const ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(Colors.white),
+                    alignment: Alignment.center,
+                  ),
+                  icon: const Icon(Icons.close, color: Colors.black, size: 15),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          )
+        : Scaffold(
+            backgroundColor: Colors.black,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              primary: true,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => context.pop(),
+              ),
+            ),
+            body: imgWidget,
+          );
   }
 }

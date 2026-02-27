@@ -42,7 +42,7 @@ class BartSideNavMenu extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
                         fontSize: 40.spMin,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                       ),
                 ),
               ),

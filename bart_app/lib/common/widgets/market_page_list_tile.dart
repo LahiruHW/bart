@@ -50,83 +50,86 @@ class MarketListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardStyle = Theme.of(context).extension<BartMarketListItemStyle>()!;
-    return Card(
-      elevation: 7,
-      color: cardStyle.cardTheme.color,
-      shape: cardStyle.cardTheme.shape,
-      margin: cardStyle.cardTheme.margin,
-      clipBehavior: cardStyle.cardTheme.clipBehavior,
-      surfaceTintColor: cardStyle.cardTheme.surfaceTintColor,
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress ?? () {},
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        item.itemName,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            Theme.of(context).textTheme.headlineLarge!.copyWith(
-                                  color: cardStyle.titleColor,
-                                  fontSize: 23.spMin,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                      Divider(
-                        height: 5.h,
-                        color: Colors.transparent,
-                      ),
-                      Text(
-                        'by ${item.itemOwner.userName}',
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.spMin,
-                            ),
-                      ),
-                      Text(
-                        getTimeDifferenceString(item.postedOn),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          fontSize: 14.spMin,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: cardHeight.h,
-                child: AspectRatio(
-                  aspectRatio: 1.0,
+    return GestureDetector(
+      onSecondaryTap: onLongPress ?? () {},
+      child: Card(
+        elevation: 7,
+        color: cardStyle.cardTheme.color,
+        shape: cardStyle.cardTheme.shape,
+        margin: cardStyle.cardTheme.margin,
+        clipBehavior: cardStyle.cardTheme.clipBehavior,
+        surfaceTintColor: cardStyle.cardTheme.surfaceTintColor,
+        child: InkWell(
+          onTap: onTap,
+          onLongPress: onLongPress ?? () {},
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: CachedNetworkImage(
-                      key: UniqueKey(),
-                      cacheKey: 'item_${item.itemID}_0',
-                      imageUrl: item.imgs[0],
-                      cacheManager: BartImageTools.customCacheManager,
-                      fit: BoxFit.contain,
-                      progressIndicatorBuilder: BartImageTools.progressLoader,
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          item.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.headlineLarge!.copyWith(
+                                    color: cardStyle.titleColor,
+                                    fontSize: 23.spMin,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        Divider(
+                          height: 5.h,
+                          color: Colors.transparent,
+                        ),
+                        Text(
+                          'by ${item.itemOwner.userName}',
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18.spMin,
+                              ),
+                        ),
+                        Text(
+                          getTimeDifferenceString(item.postedOn),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            fontSize: 14.spMin,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: cardHeight.h,
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CachedNetworkImage(
+                        key: UniqueKey(),
+                        cacheKey: 'item_${item.itemID}_0',
+                        imageUrl: item.imgs[0],
+                        cacheManager: BartImageTools.customCacheManager,
+                        fit: BoxFit.contain,
+                        progressIndicatorBuilder: BartImageTools.progressLoader,
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

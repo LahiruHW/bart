@@ -7,7 +7,7 @@ import 'package:bart_app/common/entity/user_local_profile.dart';
 class BartSharedPrefOps {
   static late final SharedPreferences _prefs;
 
-  static const String _userProfileKey = 'USER_PROFILE';
+  static const String _userProfileKey = 'BART_USER_PROFILE';
 
   /// get the shared preferences instance for this app
   static void initSharedPreferences() async {
@@ -49,5 +49,16 @@ class BartSharedPrefOps {
     debugPrint(
         '------------------------------ CLEARING SharedPrefOps: ${_prefs.getString(_userProfileKey)}');
     _prefs.remove(_userProfileKey);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////////
+
+  static Future<void> clearUnnecessaryData() async {
+    // clear all the unnecessary data from the shared preferences
+    // this is called when the user logs out or deletes their account
+    await _prefs.clear();
+    debugPrint('------------------------------ CLEARED SharedPreferences');
   }
 }

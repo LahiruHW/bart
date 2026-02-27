@@ -65,6 +65,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                   ? badgeStyle.selectedLabelColor
                   : badgeStyle.labelColor,
               fontSize: 12.spMin,
+              fontWeight: FontWeight.w500,
             ),
       ),
       showBadge: showBadge(unreadCount),
@@ -192,7 +193,7 @@ class HomePageV2PersistentHeader extends SliverPersistentHeaderDelegate {
                           ? Colors.black
                           : Colors.white,
                       fontSize: 18.spMin,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
             ),

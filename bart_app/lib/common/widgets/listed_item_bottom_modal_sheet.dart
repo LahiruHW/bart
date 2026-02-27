@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/common/entity/item.dart';
@@ -81,14 +83,12 @@ class ListedItemBottomModalSheet {
         context.tr('item.page.btn.viewItem'),
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
               fontSize: 18.spMin,
+              fontWeight: FontWeight.w500,
             ),
       ),
       onTap: () {
         Navigator.pop(context); // close the modal sheet
-        context.push(
-          '/item/${item.itemID}',
-          extra: item,
-        );
+        context.push('/item', extra: item);
       },
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 15,
@@ -105,6 +105,7 @@ class ListedItemBottomModalSheet {
         context.tr('item.page.btn.editItem'),
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
               fontSize: 18.spMin,
+              fontWeight: FontWeight.w500,
             ),
       ),
       onTap: () {
@@ -133,6 +134,7 @@ class ListedItemBottomModalSheet {
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: Colors.red,
               fontSize: 18.spMin,
+              fontWeight: FontWeight.w500,
             ),
       ),
       onTap: () async {
@@ -146,7 +148,7 @@ class ListedItemBottomModalSheet {
     );
   }
 
-  show() {
+  void show() {
     showModalBottomSheet(
       context: parentContext,
       isScrollControlled: true,

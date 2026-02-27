@@ -19,11 +19,15 @@ class HomeTradesPage extends StatefulWidget {
 
 class _HomeTradesPageState extends State<HomeTradesPage> {
   late final TempStateProvider tempProvider;
+  late final String userID;
+  late final Stream<List<List<dynamic>>> tradeListZipStream;
 
   @override
   void initState() {
     super.initState();
     tempProvider = Provider.of<TempStateProvider>(context, listen: false);
+    userID = context.read<BartStateProvider>().userProfile.userID;
+    tradeListZipStream = BartFirestoreServices.getTradeListStreamZipV2(userID);
   }
 
   void _handleSelection(int? selected) {
@@ -77,54 +81,51 @@ class _HomeTradesPageState extends State<HomeTradesPage> {
   @override
   Widget build(BuildContext context) {
     final (title, emptyContentText) = _getTitles();
-    return Consumer<BartStateProvider>(
-      builder: (context, provider, child) => StreamBuilder(
-          stream: BartFirestoreServices.getTradeListStreamZipV2(
-            provider.userProfile.userID,
-          ),
-          builder: (context, snapshot) {
-            final List<int> unreadCountArray = [];
+    return StreamBuilder(
+      stream: tradeListZipStream,
+      builder: (context, snapshot) {
+        final List<int> unreadCountArray = [];
 
-            if (snapshot.hasData) {
-              for (final x in snapshot.data!) {
-                unreadCountArray.add(x[1]);
-              }
-            } else {
-              for (final x in [0,0,0,0]) {
-                unreadCountArray.add(x);
-              }
-            }
+        if (snapshot.hasData) {
+          for (final x in snapshot.data!) {
+            unreadCountArray.add(x[1]);
+          }
+        } else {
+          for (final x in [0, 0, 0, 0]) {
+            unreadCountArray.add(x);
+          }
+        }
 
-            return CustomScrollView(
-              scrollDirection: Axis.vertical,
-              slivers: [
-                SliverPersistentHeader(
-                  pinned: true,
-                  floating: true,
-                  delegate: HomePageV2PersistentHeader(
-                    segmentTitle: title,
-                    onSelectionChanged: _handleSelection,
-                    unreadCountArray: unreadCountArray,
+        return CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: [
+            SliverPersistentHeader(
+              pinned: true,
+              floating: true,
+              delegate: HomePageV2PersistentHeader(
+                segmentTitle: title,
+                onSelectionChanged: _handleSelection,
+                unreadCountArray: unreadCountArray,
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              sliver: SliverStack(
+                children: [
+                  SliverToBoxAdapter(child: updateDragWrapper(context)),
+                  HomePageV2TradePanel(
+                    title: title,
+                    emptyContentText: emptyContentText,
+                    snapshot: snapshot,
+                    segmentIndex: tempProvider.homeV2Index,
+                    userID: userID,
                   ),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  sliver: SliverStack(
-                    children: [
-                      SliverToBoxAdapter(child: updateDragWrapper(context)),
-                      HomePageV2TradePanel(
-                        title: title,
-                        emptyContentText: emptyContentText,
-                        snapshot: snapshot,
-                        segmentIndex: tempProvider.homeV2Index,
-                        userID: provider.userProfile.userID,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

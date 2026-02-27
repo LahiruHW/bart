@@ -1,5 +1,5 @@
-import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bart_app/screens/shared/base.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,6 +12,7 @@ import 'package:bart_app/screens/login/onboard_enter_user_name.dart';
 import 'package:bart_app/common/widgets/input/colour_switch_toggle.dart';
 import 'package:bart_app/common/widgets/tutorial/bart_tutorial_coach.dart';
 import 'package:bart_app/common/widgets/input/language_switch_toggle.dart';
+import 'package:bart_app/common/widgets/overlays/login_loading_overlay.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({
@@ -71,12 +72,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
         loadOverlay: loadingOverlay,
         onSubmit: () {
           context.go('/login');
-          Future.delayed(
-            const Duration(milliseconds: 500),
-            () => BartTutorialCoach.showTutorial(
-              Base.globalKey.currentContext!,
-            ),
-          );
+          if (!kIsWeb) {
+            Future.delayed(
+              const Duration(milliseconds: 500),
+              () => BartTutorialCoach.showTutorial(
+                Base.globalKey.currentContext!,
+              ),
+            );
+          }
         },
       ),
     ];
@@ -107,11 +110,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
           ],
           body: Container(
-            margin: EdgeInsets.only(
-              left: 20.w,
-              right: 20.w,
-              top: 140.h,
-            ),
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.only(top: 0.2.sh),
+            alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -134,9 +135,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         fontWeight: FontWeight.normal,
                       ),
                 ),
-                SizedBox(height: 35.h),
+                SizedBox(height: 20.h),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: PageView.builder(
                     controller: pageController,
                     physics: const NeverScrollableScrollPhysics(),
@@ -149,19 +150,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 30),
-                const UnconstrainedBox(
-                  alignment: Alignment.bottomCenter,
-                  constrainedAxis: Axis.horizontal,
-                  child: Center(child: BartThemeModeToggle()),
+                SizedBox(height: 20.h),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 90,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.center,
+                        child: BartThemeModeToggle(),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    SizedBox(
+                      width: 90,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.center,
+                        child: BartLocaleToggle(),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                const UnconstrainedBox(
-                  alignment: Alignment.bottomCenter,
-                  constrainedAxis: Axis.horizontal,
-                  child: Center(child: BartLocaleToggle()),
-                ),
-                const SizedBox(height: 30),
               ]
                   .animate(
                     delay: 800.ms,

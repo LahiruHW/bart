@@ -114,7 +114,7 @@ class _NewItemPageState extends State<NewItemPage> {
 
     // 2. upload the images to the firebase storage, and get their links back
     BartFirebaseStorageServices.uploadItemImages(
-      tempProvider.imagePaths,
+      tempProvider.images,
       newItemID,
     ).then((imgList) {
       // 3. create a new Item object
@@ -161,7 +161,7 @@ class _NewItemPageState extends State<NewItemPage> {
             'dateCreated': newTrade.timeCreated,
           };
           context.push(
-            '/item/${widget.returnForItem!.itemID}/returnItem/tradeResult',
+            '/item/returnItem/tradeResult',
             extra: obj,
           );
         });
@@ -194,7 +194,7 @@ class _NewItemPageState extends State<NewItemPage> {
 
     // 2. upload the images to the firebase storage, and get their links back
     BartFirebaseStorageServices.uploadItemImages(
-      tempProvider.imagePaths,
+      tempProvider.images,
       docID,
     ).then((imgList) async {
       // 3. create a new Item object
@@ -251,7 +251,8 @@ class _NewItemPageState extends State<NewItemPage> {
     return BartRouteHandler.popHandlerWrapper(
       context: context,
       child: Consumer2<BartStateProvider, TempStateProvider>(
-        builder: (context, stateProvider, tempProvider, child) => GestureDetector(
+        builder: (context, stateProvider, tempProvider, child) =>
+            GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
             key: _scaffoldKey,
@@ -270,6 +271,7 @@ class _NewItemPageState extends State<NewItemPage> {
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: BartAppTheme.red1,
                             fontSize: 18.spMin,
+                            fontWeight: FontWeight.w600,
                           ),
                     ),
                     Container(
@@ -298,6 +300,7 @@ class _NewItemPageState extends State<NewItemPage> {
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: BartAppTheme.red1,
                             fontSize: 18.spMin,
+                            fontWeight: FontWeight.w600,
                           ),
                     ),
                     const BartImagePicker(),
@@ -307,6 +310,7 @@ class _NewItemPageState extends State<NewItemPage> {
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: BartAppTheme.red1,
                             fontSize: 18.spMin,
+                            fontWeight: FontWeight.w600,
                           ),
                     ),
                     const SizedBox(height: 5),
@@ -314,26 +318,32 @@ class _NewItemPageState extends State<NewItemPage> {
                       textController: _descriptionTextController,
                     ),
                     const SizedBox(height: 10),
-      
+
                     _isReturnOffer
                         ? const SizedBox(height: 0)
                         : Text(
                             context.tr("newItem.page.prefInReturnHeader"),
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      color: BartAppTheme.red1,
-                                      fontSize: 18.spMin,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  color: BartAppTheme.red1,
+                                  fontSize: 18.spMin,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                     _isReturnOffer
                         ? const SizedBox(height: 0)
                         : Text(
                             context.tr('newItem.page.prefInReturnSub'),
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      color: BartAppTheme.red1,
-                                      fontSize: 10.spMin,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  color: BartAppTheme.red1,
+                                  fontSize: 10.spMin,
+                                  fontWeight: FontWeight.w500,
+                                ),
                           ),
                     _isReturnOffer
                         ? const SizedBox(height: 0)

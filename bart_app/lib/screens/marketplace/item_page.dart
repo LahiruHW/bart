@@ -68,12 +68,14 @@ class _ItemPageState extends State<ItemPage> {
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: BartAppTheme.red1,
                       fontSize: 18.spMin,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
               Text(
                 item.itemName,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontSize: 28.spMin,
+                      fontWeight: FontWeight.w500,
                     ),
               ),
               ItemImagesPageView(item: item),
@@ -111,7 +113,7 @@ class _ItemPageState extends State<ItemPage> {
                         }
 
                         context.push(
-                          '/item/${item.itemID}/returnItem',
+                          '/item/returnItem',
                           extra: item,
                         );
                       },

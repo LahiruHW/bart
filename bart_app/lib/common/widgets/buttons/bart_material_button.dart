@@ -111,7 +111,7 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
                     textAlign: TextAlign.center,
                     style: BartTextTheme.labelStyle.copyWith(
                       fontSize: 19.spMin,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
