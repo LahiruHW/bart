@@ -42,18 +42,20 @@ class BartLocalNotificationHandler {
     final platform =
         flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
-    await platform!.requestNotificationsPermission().then((value) {
-      debugPrint(
-          '--------------------------------- Notification Permission: ${value! ? "✅" : "❌"}');
-    });
-    await platform.requestExactAlarmsPermission().then((value) {
-      debugPrint(
-          '--------------------------------- Exact Alarms Permission: ${value! ? "✅" : "❌"}');
-    });
-    await platform.requestFullScreenIntentPermission().then((value) {
-      debugPrint(
-          '--------------------------------- Full Screen Intent Permission: ${value! ? "✅" : "❌"}');
-    });
+    if (platform != null) {
+      await platform.requestNotificationsPermission().then((value) {
+        debugPrint(
+            '--------------------------------- Notification Permission: ${value! ? "✅" : "❌"}');
+      });
+      await platform.requestExactAlarmsPermission().then((value) {
+        debugPrint(
+            '--------------------------------- Exact Alarms Permission: ${value! ? "✅" : "❌"}');
+      });
+      await platform.requestFullScreenIntentPermission().then((value) {
+        debugPrint(
+            '--------------------------------- Full Screen Intent Permission: ${value! ? "✅" : "❌"}');
+      });
+    }
 
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,

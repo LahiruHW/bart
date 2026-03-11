@@ -24,7 +24,10 @@ class LoadingBlockFullScreen {
   }
 
   void hide() {
+    if (!isShowing) return;
     isShowing = false;
-    Navigator.of(context, rootNavigator: true).pop();
+    if (context.mounted) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
   }
 }

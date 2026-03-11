@@ -28,6 +28,10 @@ class BartRouter {
     observers: [
       PosthogObserver(),
     ],
+    onException: (context, state, router) {
+      // Firebase Auth callback deep links should be ignored
+      debugPrint('GoRouter unmatched route: ${state.uri}');
+    },
     routes: [
       GoRoute(
         name: "login",
