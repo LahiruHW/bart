@@ -17,7 +17,9 @@ class BartStateProvider extends ChangeNotifier {
     if (BartSharedPrefOps.hasUserProfile()) {
       userProfile = BartSharedPrefOps.getUserProfile();
       user = authService.currentUser;
-      BartAnalyticsEngine.identify(userProfile, user!.email!);
+      if (user?.email != null) {
+        BartAnalyticsEngine.identify(userProfile, user!.email!);
+      }
       debugPrint(
           '-------- StateProvider userProfile uid ${userProfile.userID} loaded from shared prefs');
     }
