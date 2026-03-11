@@ -64,5 +64,24 @@
 		<true/>
 		<key>com.posthog.posthog.AUTO_INIT</key>
     	<false/>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>app-1-525584307325-ios-69e1cb79699d18001b0d14</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.525584307325-e8lnj26i6sr71sp4ne8pqsbtti5gmlj4</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>
