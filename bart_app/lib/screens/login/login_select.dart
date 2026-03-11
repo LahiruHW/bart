@@ -40,11 +40,12 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
       backgroundColor: brandTheme.logoBackgroundColor,
       key: LoginTypeSelectPage.globalKey,
       body: Center(
-        child: SizedBox(
-          height: 450.h,
-          width: 0.6.sh,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: 450.h,
+            width: 0.6.sh,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 "bart.",
@@ -70,6 +71,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                           const Duration(milliseconds: 1500),
                           () {
                             loadingOverlay.hide();
+                            if (!mounted) return;
                             stateProvider.userProfile.isFirstLogin
                                 ? context.go("/onboard")
                                 : context.go("/home-trades");
@@ -146,6 +148,7 @@ class _LoginTypeSelectPageState extends State<LoginTypeSelectPage> {
                   curve: Curves.easeInOut,
                 ),
           ),
+        ),
         ),
       ),
     );
