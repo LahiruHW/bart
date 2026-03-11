@@ -1,7 +1,7 @@
 {
     "login.with.google": "Login with Google",
     "login.with.apple.id": "Login with Apple ID",
-    "login.with.apple.id.missing": "Sorry, Apple ID login isn't available yet",
+    "login.with.apple.id.missing": "Apple ID login not available yet",
     "bottom.navbar.home": "Home",
     "bottom.navbar.chat": "Chat",
     "bottom.navbar.market": "Market",
