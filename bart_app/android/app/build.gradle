@@ -37,7 +37,12 @@ android {
     // compileSdk flutter.compileSdkVersion
     compileSdk 36
     // ndkVersion flutter.ndkVersion
-    ndkVersion "28.0.12916984"
+    // Must be the HIGHEST NDK required by any plugin (they are backward
+    // compatible) — this is the value `flutter build` itself recommends.
+    // Most Firebase plugins want 27.0.12077973, but integration_test and jni
+    // require 28.2.13676358, so that is the floor. The previous pin,
+    // 28.0.12916984, satisfied neither group and matched no plugin.
+    ndkVersion "28.2.13676358"
 
     compileOptions {
         coreLibraryDesugaringEnabled true

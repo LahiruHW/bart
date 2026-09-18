@@ -121,6 +121,25 @@ jobs:
           channel: stable
           cache: true
 
+      # Gradle installs the NDK pinned in android/app/build.gradle on demand,
+      # but refuses to unless the SDK licences have been accepted. A clean
+      # runner has accepted none, so the install fails with
+      # LicenceNotAcceptedException before compilation even starts.
+      # Runs from the repo root: there is no Flutter project involved.
+      - name: Accept Android SDK licences
+        working-directory: .
+        run: |
+          SDKMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "$SDKMANAGER" ] || [ ! -x "$SDKMANAGER" ]; then
+            echo "::error::sdkmanager not found under ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+            exit 1
+          fi
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          echo "Android SDK licences accepted"
+
       - name: Write a placeholder .env for code generation
         run: |
           cat > .env <<'ENVFILE'
