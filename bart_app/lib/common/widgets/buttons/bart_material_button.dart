@@ -102,16 +102,23 @@ class _BartMaterialButtonState extends State<BartMaterialButton> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FittedBox(
-                  child: Text(
-                    widget.label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    style: BartTextTheme.labelStyle.copyWith(
-                      fontSize: 19.spMin,
-                      fontWeight: FontWeight.w600,
+                // Flexible bounds the FittedBox on the main axis. Without it a
+                // Row hands its children an unbounded width, so the FittedBox
+                // has nothing to scale against and just adopts the label's full
+                // natural width — long labels then overflow the button instead
+                // of shrinking to fit.
+                Flexible(
+                  child: FittedBox(
+                    child: Text(
+                      widget.label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style: BartTextTheme.labelStyle.copyWith(
+                        fontSize: 19.spMin,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

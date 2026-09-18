@@ -6,19 +6,30 @@ import 'package:bart_app/common/entity/settings.dart';
 import 'package:bart_app/common/entity/user_local_profile.dart';
 import 'package:bart_app/common/constants/enum_trade_comp_types.dart';
 
+// These are deliberately LOCAL DateTimes, not DateTime.utc.
+//
+// `Timestamp.toDate()` returns local time, and `Trade.isSameDayAsTrade` /
+// `Message.isSameDayAsMsg` compare the local day/month/year. Building the
+// fixtures in UTC makes those comparisons depend on the machine's timezone:
+// 21:05 UTC is still 14 June in CI (which runs in UTC) but already 15 June
+// anywhere east of it, so the suite would pass in CI and fail on a developer's
+// machine. Local fixtures round-trip identically in every timezone, and they
+// match what the app actually stores, since `UserSettings.toJson` serialises
+// `Timestamp.now().toDate()` — also local.
+
 /// A fixed instant so nothing in the suite depends on the wall clock.
 final Timestamp kFixedTimestamp = Timestamp.fromDate(
-  DateTime.utc(2025, 6, 14, 9, 30),
+  DateTime(2025, 6, 14, 9, 30),
 );
 
 /// Same calendar day as [kFixedTimestamp], different hour — for the
 /// `isSameDayAs*` helpers.
 final Timestamp kSameDayTimestamp = Timestamp.fromDate(
-  DateTime.utc(2025, 6, 14, 21, 5),
+  DateTime(2025, 6, 14, 21, 5),
 );
 
 final Timestamp kNextDayTimestamp = Timestamp.fromDate(
-  DateTime.utc(2025, 6, 15, 9, 30),
+  DateTime(2025, 6, 15, 9, 30),
 );
 
 UserSettings buildSettings({

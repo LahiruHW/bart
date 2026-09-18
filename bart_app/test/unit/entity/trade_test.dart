@@ -24,6 +24,9 @@ void main() {
     });
 
     test('a trade is never equal to a non-Trade', () {
+      // Comparing against a String is the point: it exercises the non-Trade
+      // branch of `operator ==`, which falls back to identity.
+      // ignore: unrelated_type_equality_checks
       expect(buildTrade() == 'trade-1', isFalse);
     });
 
