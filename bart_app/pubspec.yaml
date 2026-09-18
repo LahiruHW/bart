@@ -18,8 +18,12 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 0.1.14+144
 
+# Raised from ">=3.3.1" to match what the dependency set below actually needs:
+# firebase_core 4.x, go_router 17.x and flutter_lints 6.x all require a newer
+# Dart than 3.3.1, so the old floor could never have resolved.
+# Dart 3.9 ships with Flutter 3.35; CI pins Flutter 3.41.6 (Dart 3.11.4).
 environment:
-  sdk: ">=3.3.1 <4.0.0"
+  sdk: ">=3.9.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -79,6 +83,10 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+
+  # Drives the suite under integration_test/ on a real device or emulator.
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to

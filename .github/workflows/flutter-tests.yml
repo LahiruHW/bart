@@ -1,0 +1,155 @@
+name: Flutter tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+# A newer push to the same branch cancels the older, still-running job.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Matches the Flutter version the app is developed against. Pinned rather
+  # than tracking `stable`, so an upstream Flutter release can never break CI
+  # without a commit in this repo.
+  FLUTTER_VERSION: "3.41.6"
+
+jobs:
+  test:
+    name: Unit and widget tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: bart_app
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter ${{ env.FLUTTER_VERSION }}
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      # `lib/common/constants/env/bart_env.dart` declares `part
+      # 'bart_env.g.dart'`, and both that generated file and the `.env` it is
+      # generated from are gitignored. Without this step the package does not
+      # compile on a clean checkout, so CI synthesises a throwaway .env.
+      # These are placeholders: no test sends mail or opens these links.
+      - name: Write a placeholder .env for code generation
+        run: |
+          cat > .env <<'ENVFILE'
+          sampleAPIKey=ci-placeholder-api-key
+          internalTestLink1=https://example.invalid/internal-test-1
+          internalTestLink2=https://example.invalid/internal-test-2
+          fcmWebPushPrivate=ci-placeholder-fcm-web-push-private
+          fcmVapidKey=ci-placeholder-fcm-vapid-key
+          mailerUser=ci@example.invalid
+          mailerPassword=ci-placeholder-mailer-password
+          ENVFILE
+
+      # `assets/secrets/` is declared in pubspec.yaml but gitignored, and
+      # `flutter test` builds the asset bundle, so the directory has to exist.
+      - name: Create the placeholder asset directory
+        run: |
+          mkdir -p assets/secrets
+          for i in 0 1 2 3; do
+            [ -f "assets/secrets/img$i.jpg" ] || : > "assets/secrets/img$i.jpg"
+          done
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate the envied bindings
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      # Reported but not enforced: the codebase predates this workflow and has
+      # not been through an analyze/format pass. Drop `continue-on-error` once
+      # it is clean to make these blocking.
+      - name: Analyze
+        continue-on-error: true
+        run: flutter analyze
+
+      - name: Check formatting
+        continue-on-error: true
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Run unit and widget tests
+        run: flutter test --coverage --reporter expanded
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: bart_app/coverage/lcov.info
+          if-no-files-found: ignore
+
+  integration-build:
+    name: Integration test compile check
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    # No point paying for a 20-minute Android build if the fast tests failed.
+    needs: test
+
+    defaults:
+      run:
+        working-directory: bart_app
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter ${{ env.FLUTTER_VERSION }}
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Write a placeholder .env for code generation
+        run: |
+          cat > .env <<'ENVFILE'
+          sampleAPIKey=ci-placeholder-api-key
+          internalTestLink1=https://example.invalid/internal-test-1
+          internalTestLink2=https://example.invalid/internal-test-2
+          fcmWebPushPrivate=ci-placeholder-fcm-web-push-private
+          fcmVapidKey=ci-placeholder-fcm-vapid-key
+          mailerUser=ci@example.invalid
+          mailerPassword=ci-placeholder-mailer-password
+          ENVFILE
+
+      - name: Create the placeholder asset directory
+        run: |
+          mkdir -p assets/secrets
+          for i in 0 1 2 3; do
+            [ -f "assets/secrets/img$i.jpg" ] || : > "assets/secrets/img$i.jpg"
+          done
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate the envied bindings
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      # Actually running the integration suite needs a booted device plus live
+      # Firebase credentials, which CI has neither of. Building a debug APK
+      # with the suite as the entrypoint still compiles every integration test
+      # against the real app code, so a broken test cannot be merged unnoticed.
+      # To run them for real, see integration_test/README.md.
+      - name: Build the integration test entrypoint
+        run: flutter build apk --debug --target=integration_test/app_test.dart
